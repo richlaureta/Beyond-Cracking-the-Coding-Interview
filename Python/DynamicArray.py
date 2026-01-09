@@ -82,43 +82,21 @@ class DynamicArray:
             self.decreaseSize()
             
         return poppedElement
+    
+    def contains(self, element):
+        if self.size == 0:
+            raise IndexError("The array is empty.")
+        
+        for index in range(self.size):
+            if element == self.fixedArray[index]:
+                return True
+            
+        return False
         
 if __name__ == "__main__":
     dynamicArray1 = DynamicArray()
     
-    dynamicArray1.append(1)
-    dynamicArray1.append(2)
-    dynamicArray1.append(3)
-    dynamicArray1.append(4)
-    dynamicArray1.append(5)
-    dynamicArray1.append(6)
-
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.pop(2)
-    
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.pop(0)
-    
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.pop(0)
-    
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.pop(0)
-    
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.pop(0)
-    
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.pop(0)
-    
-    dynamicArray1.printDynamicArray()
-    
-    dynamicArray1.getSize()
-    
-    dynamicArray1.pop(0)
+    if dynamicArray1.contains(7):
+        print("It is in the array.")
+    else:
+        print("It is not in the array.")
