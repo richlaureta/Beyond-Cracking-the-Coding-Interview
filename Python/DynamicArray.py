@@ -50,7 +50,7 @@ class DynamicArray:
         
         self.size -= 1
         
-        if self.size / self.capacity <= 0.25 and self.capacity > 10:
+        if self.size / self.capacity < 0.25 and self.capacity > 10:
             self.decreaseSize()
     
     def printDynamicArray(self):
@@ -63,6 +63,62 @@ class DynamicArray:
             print(self.fixedArray[index], end = ", ")
         
         print("]")
+    
+    def pop(self, popIndex):
+        if popIndex < 0 or popIndex >= self.size:
+            if self.size == 0:
+                raise IndexError("Array is empty.")
+            
+            raise IndexError("Index is out of bounds.")
+        
+        poppedElement = self.fixedArray[popIndex]
+        
+        for index in range(popIndex + 1, self.size):
+            self.fixedArray[index - 1] = self.fixedArray[index]
+        
+        self.size -= 1
+        
+        if self.size / self.capacity < 0.25 and self.capacity > 10:
+            self.decreaseSize()
+            
+        return poppedElement
         
 if __name__ == "__main__":
     dynamicArray1 = DynamicArray()
+    
+    dynamicArray1.append(1)
+    dynamicArray1.append(2)
+    dynamicArray1.append(3)
+    dynamicArray1.append(4)
+    dynamicArray1.append(5)
+    dynamicArray1.append(6)
+
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.pop(2)
+    
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.pop(0)
+    
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.pop(0)
+    
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.pop(0)
+    
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.pop(0)
+    
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.pop(0)
+    
+    dynamicArray1.printDynamicArray()
+    
+    dynamicArray1.getSize()
+    
+    dynamicArray1.pop(0)
