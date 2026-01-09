@@ -92,11 +92,44 @@ class DynamicArray:
                 return True
             
         return False
+    
+    def insert(self, insertIndex, element):
+        if insertIndex < 0 or insertIndex >= self.size:
+            raise IndexError("Index is out of bounds.")
         
+        self.size += 1
+        
+        if self.size == self.capacity:
+            self.increaseSize()
+        
+        shiftRightElements = []
+        for index in range(insertIndex, self.size - 1):
+            shiftRightElements.append(self.fixedArray[index])
+            
+        self.fixedArray[insertIndex] = element
+        
+        tempInsertIndex = insertIndex
+        for index1 in range(len(shiftRightElements)):
+            self.fixedArray[tempInsertIndex + 1] = shiftRightElements[index1]
+            tempInsertIndex += 1
+        
+        del shiftRightElements
+         
 if __name__ == "__main__":
     dynamicArray1 = DynamicArray()
     
-    if dynamicArray1.contains(7):
-        print("It is in the array.")
-    else:
-        print("It is not in the array.")
+    dynamicArray1.append(1)
+    dynamicArray1.append(2)
+    dynamicArray1.append(3)
+    dynamicArray1.append(4)
+    dynamicArray1.append(5)
+    dynamicArray1.append(6)
+    dynamicArray1.append(7)
+    
+    dynamicArray1.insert(0, 8)
+    dynamicArray1.insert(0, 8)
+    dynamicArray1.insert(0, 8)
+    dynamicArray1.insert(0, 8)
+    dynamicArray1.insert(0, True)
+        
+    dynamicArray1.printDynamicArray()
