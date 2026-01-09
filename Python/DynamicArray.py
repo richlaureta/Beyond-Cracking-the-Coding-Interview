@@ -112,9 +112,15 @@ class DynamicArray:
         for index1 in range(len(shiftRightElements)):
             self.fixedArray[tempInsertIndex + 1] = shiftRightElements[index1]
             tempInsertIndex += 1
-        
-        del shiftRightElements
-         
+
+    def remove(self, element):
+        for index in range(self.size):
+            if element == self.fixedArray[index]:
+                self.pop(index)
+                return index
+
+        return -1
+    
 if __name__ == "__main__":
     dynamicArray1 = DynamicArray()
     
@@ -131,5 +137,27 @@ if __name__ == "__main__":
     dynamicArray1.insert(0, 8)
     dynamicArray1.insert(0, 8)
     dynamicArray1.insert(0, True)
-        
+    
     dynamicArray1.printDynamicArray()
+    
+    print(dynamicArray1.remove(8))
+    
+    dynamicArray1.printDynamicArray()
+    
+    print(dynamicArray1.remove(8))
+    
+    dynamicArray1.printDynamicArray()
+    
+    print(dynamicArray1.remove(8))
+    
+    dynamicArray1.printDynamicArray()
+    
+    print(dynamicArray1.remove(8))
+    
+    dynamicArray1.printDynamicArray()
+    
+    print(dynamicArray1.remove(8))
+    
+    dynamicArray1.printDynamicArray()
+    
+    
