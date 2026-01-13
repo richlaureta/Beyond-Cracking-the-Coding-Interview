@@ -53,6 +53,7 @@ def split(s: str, c: str) -> list[str]:
     return splitArray
     
 if __name__ == "__main__":
-    s = "?"
-    c = 'a'
+    s = ""
+    c = '?'
+    print(s.split('?'))
     print(split(s, c))
