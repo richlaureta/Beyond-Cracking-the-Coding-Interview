@@ -1,4 +1,4 @@
-#Character Manipulation Problem Set
+#Character Manipulation Problem Set - Page 289
 
 #Question 1: Implement a function is_alphanumeric(c) that returns whether a character c is a lowercase or
 #uppercase English letter or a digit between '0' and '9'.
@@ -15,5 +15,14 @@ def is_numeric(c: str) -> bool:
 def is_alphanumeric(c: str) -> bool:
     return is_lowercase(c) or is_uppercase(c) or is_numeric(c)
 
+#Question 2: Implement a function to_uppercase(c) that converts a lowercase character c to uppercase. If c is not a
+#lowercase character, the function does nothing.
+
+def to_uppercase(c: str) -> str:
+    if is_lowercase(c):
+        return chr(ord(c) - 32)
+    
+    return c
+
 if __name__ == "__main__":
-    print(is_alphanumeric('&'))
+    print(to_uppercase('a'))
