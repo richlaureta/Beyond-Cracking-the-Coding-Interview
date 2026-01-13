@@ -55,5 +55,5 @@ def split(s: str, c: str) -> list[str]:
 if __name__ == "__main__":
     s = ""
     c = '?'
-    print(s.split('?'))
+    print(s.split(c))
     print(split(s, c))
