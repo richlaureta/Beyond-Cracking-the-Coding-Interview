@@ -31,8 +31,8 @@ def split(s: str, c: str) -> list[str]:
     #method, which recieves an array of strings, arr, and a string, s, and returns a single string 
     #consisting of the strings in arr with s in between them.
     
-    if len(s) == 0:
-        return []
+    # if len(s) == 0:
+    #     return []
     
     splitArray = []
     tempString = ""
