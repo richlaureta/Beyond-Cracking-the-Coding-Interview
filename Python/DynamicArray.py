@@ -130,34 +130,5 @@ if __name__ == "__main__":
     dynamicArray1.append(4)
     dynamicArray1.append(5)
     dynamicArray1.append(6)
-    dynamicArray1.append(7)
-    
-    dynamicArray1.insert(0, 8)
-    dynamicArray1.insert(0, 8)
-    dynamicArray1.insert(0, 8)
-    dynamicArray1.insert(0, 8)
-    dynamicArray1.insert(0, True)
-    
-    dynamicArray1.printDynamicArray()
-    
-    print(dynamicArray1.remove(8))
-    
-    dynamicArray1.printDynamicArray()
-    
-    print(dynamicArray1.remove(8))
-    
-    dynamicArray1.printDynamicArray()
-    
-    print(dynamicArray1.remove(8))
-    
-    dynamicArray1.printDynamicArray()
-    
-    print(dynamicArray1.remove(8))
-    
-    dynamicArray1.printDynamicArray()
-    
-    print(dynamicArray1.remove(8))
-    
-    dynamicArray1.printDynamicArray()
     
     
