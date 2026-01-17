@@ -5,10 +5,17 @@
 //  Created by Richmond Laureta on 1/16/26.
 //
 
-#include <iostream>
+#include "Header.hpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    //Problem 26.1 String Split
+    
+    vector<string> splitStrings = split("/home/./..//Documents/", '/');
+    
+    for(int index = 0; index < splitStrings.size(); index++)
+    {
+        cout << splitStrings[index] << endl;
+    }
+    
     return EXIT_SUCCESS;
 }
