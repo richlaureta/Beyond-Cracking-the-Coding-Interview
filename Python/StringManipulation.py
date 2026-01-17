@@ -31,29 +31,29 @@ def split(s: str, c: str) -> list[str]:
     #method, which recieves an array of strings, arr, and a string, s, and returns a single string 
     #consisting of the strings in arr with s in between them.
     
-    # if len(s) == 0:
-    #     return []
+    if len(s) == 0:
+        return []
     
     splitArray = []
-    tempString = ""
+    tempArray = []
     
     for index, character in enumerate(s):
         if character == c:
-            if index > 0 and s[index - 1] == c:
+            if s[index - 1] == c:
                 splitArray.append("")
                 continue
-            splitArray.append(tempString)
-            tempString = ""
+            splitArray.append(''.join(tempArray))
+            tempArray = []
             continue
         
-        tempString += character
+        tempArray.append(character)
     
-    splitArray.append(tempString)
+    splitArray.append(''.join(tempArray))
     
     return splitArray
     
 if __name__ == "__main__":
-    s = ""
-    c = '?'
-    print(s.split(c))
+    s = "/home/./..//Documents/"
+    c = '/'
+    
     print(split(s, c))
