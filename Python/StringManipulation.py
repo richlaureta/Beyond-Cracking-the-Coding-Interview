@@ -53,7 +53,7 @@ def split(s: str, c: str) -> list[str]:
     return splitArray
     
 if __name__ == "__main__":
-    s = "/home/./..//Documents/"
+    s = ""
     c = '/'
     
     print(split(s, c))
