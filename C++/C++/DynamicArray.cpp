@@ -117,7 +117,7 @@ int DynamicArray::pop(int index)
 {
     if(index < 0 or index >= _size)
     {
-        if(_size == 0) throw ("Dynamic array is empty.");
+        if(_size == 0) throw out_of_range("The dynamic array is empty.");
         
         throw out_of_range("Index is out of bounds.");
     };
@@ -145,4 +145,34 @@ bool DynamicArray::contains(int digit)
     }
     
     return false;
+}
+
+void DynamicArray::insert(int i, int element)
+{
+    if(i < 0 or i >= _size)
+    {
+        throw out_of_range("Index is out of bounds.");
+    }
+    
+    int *temporaryArray = new int[_size - i - 1];
+    
+    int temporaryIndex = 0;
+    for(int index = i; index < _size; index++)
+    {
+        temporaryArray[temporaryIndex] = fixedArray[index];
+        temporaryIndex++;
+    }
+    
+    fixedArray[i] = element;
+    
+    if(_size == capacity()) resizeIncrease();
+    
+    int temporaryIndex1 = 0;
+    for(int index1 = i + 1; index1 < _size + 1; index1++)
+    {
+        fixedArray[index1] = temporaryArray[temporaryIndex1];
+        temporaryIndex1++;
+    }
+    
+    _size++;
 }

@@ -11,7 +11,7 @@
 int main(int argc, const char * argv[]) {
     //Problem 25.1 Implement Dynamic Array
     DynamicArray testingDynamicArray;
-    
+
     testingDynamicArray.append(1);
     testingDynamicArray.append(2);
     testingDynamicArray.append(3);
@@ -41,6 +41,34 @@ int main(int argc, const char * argv[]) {
     
     cout << "The capacity is: " << testingDynamicArray.size() << endl;
     cout << "The size is: " << testingDynamicArray.capacity() << endl;
+    
+    if(testingDynamicArray.contains(3)) cout << "The number is in the dynamic array." << endl;
+    else cout << "The number is not in the dynamic array." << endl;
+    
+    testingDynamicArray.insert(5, 67);
+    
+    for(int index = 0; index < testingDynamicArray.size(); index++)
+    {
+        cout << testingDynamicArray.get(index) << endl;
+    }
+    
+    cout << "_________________" << endl;
+    
+    testingDynamicArray.insert(0, 69);
+    
+    for(int index = 0; index < testingDynamicArray.size(); index++)
+    {
+        cout << testingDynamicArray.get(index) << endl;
+    }
+    
+    cout << "_________________" << endl;
+    
+    testingDynamicArray.insert(10, 68);
+    
+    for(int index = 0; index < testingDynamicArray.size(); index++)
+    {
+        cout << testingDynamicArray.get(index) << endl;
+    }
     //Problem 26.1 String Split
 //    
 //    vector<string> splitStrings = split("/home/./..//Documents/", '/');

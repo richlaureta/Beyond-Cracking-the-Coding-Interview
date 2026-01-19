@@ -39,10 +39,13 @@ public:
     //Extra added functions
     int pop(int index);
     bool contains(int number);
+    void insert(int index1, int element);
+    int remove(int x);
     
     //Added for testing
     int capacity() const ;
 };
+
 vector<string> split(const string &s, char c);
 
 #endif // HEADER_HPP
