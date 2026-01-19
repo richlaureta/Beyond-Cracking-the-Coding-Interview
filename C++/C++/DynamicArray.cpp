@@ -33,7 +33,7 @@ DynamicArray::DynamicArray(const DynamicArray &other)
 
 int DynamicArray::get(int index) const
 {
-    if(index < 0 and index >= _size)
+    if(index < 0 or index >= _size)
     {
         throw out_of_range("Index out of bounds.");
     }
@@ -43,7 +43,7 @@ int DynamicArray::get(int index) const
 
 void DynamicArray::set(int index, int number)
 {
-    if(index < 0 and index >= _size)
+    if(index < 0 or index >= _size)
     {
         throw out_of_range("Index out of bounds.");
     }
@@ -111,4 +111,38 @@ void DynamicArray::popBack()
 int DynamicArray::capacity() const
 {
     return _capacity;
+}
+
+int DynamicArray::pop(int index)
+{
+    if(index < 0 or index >= _size)
+    {
+        if(_size == 0) throw ("Dynamic array is empty.");
+        
+        throw out_of_range("Index is out of bounds.");
+    };
+    
+    int poppedNumber = fixedArray[index];
+    
+    for(int index1 = index; index1 < _size; index1++)
+    {
+        fixedArray[index1] = fixedArray[index1 + 1];
+    }
+    
+    _size--;
+    
+    return poppedNumber;
+}
+
+bool DynamicArray::contains(int digit)
+{
+    for(int index = 0; index < _size; index++)
+    {
+        if(digit == fixedArray[index])
+        {
+            return true;
+        }
+    }
+    
+    return false;
 }

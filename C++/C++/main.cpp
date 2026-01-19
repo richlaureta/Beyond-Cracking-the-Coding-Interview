@@ -23,51 +23,24 @@ int main(int argc, const char * argv[]) {
     testingDynamicArray.append(9);
     testingDynamicArray.append(10);
     testingDynamicArray.append(11);
+    
     for(int index = 0; index < testingDynamicArray.size(); index++)
     {
         cout << testingDynamicArray.get(index) << endl;
     }
     
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
+    cout << "The capacity is: " << testingDynamicArray.size() << endl;
+    cout << "The size is: " << testingDynamicArray.capacity() << endl;
     
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
+    cout << "This is the popped number: " << testingDynamicArray.pop(10) << endl;
     
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
-    testingDynamicArray.popBack();
-    cout << "The size is: " << testingDynamicArray.size() << endl;
-    cout << "The capacity is: " << testingDynamicArray.capacity() << endl;
+    for(int index = 0; index < testingDynamicArray.size(); index++)
+    {
+        cout << testingDynamicArray.get(index) << endl;
+    }
+    
+    cout << "The capacity is: " << testingDynamicArray.size() << endl;
+    cout << "The size is: " << testingDynamicArray.capacity() << endl;
     //Problem 26.1 String Split
 //    
 //    vector<string> splitStrings = split("/home/./..//Documents/", '/');
@@ -76,6 +49,5 @@ int main(int argc, const char * argv[]) {
 //    {
 //        cout << splitStrings[index] << endl;
 //    }
-//    
-//    return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

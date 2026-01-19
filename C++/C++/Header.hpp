@@ -36,6 +36,10 @@ public:
     void resizeDecrease();
     void popBack();
     
+    //Extra added functions
+    int pop(int index);
+    bool contains(int number);
+    
     //Added for testing
     int capacity() const ;
 };
