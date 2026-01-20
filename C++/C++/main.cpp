@@ -9,12 +9,14 @@
 #include "Header.hpp"
 
 int main(int argc, const char * argv[]) {
-    //String Manipulation - Is it lower case
+    //String Manipulation - Is it lower case?
 //    cout << isLowerCase('B') << endl;
-    //String Manipulation - Is it uppercase
+    //String Manipulation - Is it uppercase?
 //    cout << isUpperCase('8') << endl;
-    //String Manipulation - Is it uppercase
+    //String Manipulation - Is it uppercase?
 //    cout << isDigit('/') << endl;
+    //String Manipulation - Is it alpha numeric?
+    cout << isAlphaNumeric('(') << endl;
     //Problem 25.1 Implement Dynamic Array
 //    DynamicArray testingDynamicArray;
 //

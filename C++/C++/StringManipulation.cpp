@@ -25,6 +25,11 @@ bool isDigit(char c)
     return false;
 }
 
+bool isAlphaNumeric(char c)
+{
+    return isLowerCase(c) or isUpperCase(c) or isDigit(c);
+}
+
 vector<string> split(const string &s, char c)
 {
     //Beyond Cracking the Coding Interview - Problem 26.1 String Split
