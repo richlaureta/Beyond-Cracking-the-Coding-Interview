@@ -9,15 +9,19 @@
 
 bool isLowerCase(char c)
 {
-    if((int)c > 96 and (int)c < 123)
-        return true;
-    
+    if((int)c > 96 and (int)c < 123) return true;
     return false;
 }
 
 bool isUpperCase(char c)
 {
     if((int)c > 64 and (int)c < 91) return true;
+    return false;
+}
+
+bool isDigit(char c)
+{
+    if((int)c > 47 and (int)c  < 58) return true;
     return false;
 }
 

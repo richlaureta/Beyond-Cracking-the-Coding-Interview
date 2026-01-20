@@ -12,7 +12,9 @@ int main(int argc, const char * argv[]) {
     //String Manipulation - Is it lower case
 //    cout << isLowerCase('B') << endl;
     //String Manipulation - Is it uppercase
-    cout << isUpperCase('8') << endl;
+//    cout << isUpperCase('8') << endl;
+    //String Manipulation - Is it uppercase
+//    cout << isDigit('/') << endl;
     //Problem 25.1 Implement Dynamic Array
 //    DynamicArray testingDynamicArray;
 //

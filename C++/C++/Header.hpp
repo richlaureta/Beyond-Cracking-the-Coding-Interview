@@ -51,5 +51,5 @@ public:
 vector<string> split(const string &s, char c);
 bool isLowerCase(char c);
 bool isUpperCase(char c);
-
+bool isDigit(char c);
 #endif // HEADER_HPP
