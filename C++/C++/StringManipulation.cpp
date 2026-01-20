@@ -15,6 +15,11 @@ bool isLowerCase(char c)
     return false;
 }
 
+bool isUpperCase(char c)
+{
+    if((int)c > 64 and (int)c < 91) return true;
+    return false;
+}
 
 vector<string> split(const string &s, char c)
 {
