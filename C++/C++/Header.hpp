@@ -40,7 +40,7 @@ public:
     int pop(int index);
     bool contains(int number);
     void insert(int index1, int element);
-    int remove(int x);
+    int remove(int element);
     
     //Added for testing
     int capacity() const ;

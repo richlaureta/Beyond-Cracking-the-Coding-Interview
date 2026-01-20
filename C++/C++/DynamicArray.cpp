@@ -176,3 +176,17 @@ void DynamicArray::insert(int i, int element)
     
     _size++;
 }
+
+int DynamicArray::remove(int element)
+{
+    for(int i = 0; i < _size; i++)
+    {
+        if(element == fixedArray[i])
+        {
+            pop(i);
+            return i;
+        }
+    }
+    
+    return -1;
+}

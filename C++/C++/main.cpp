@@ -69,6 +69,16 @@ int main(int argc, const char * argv[]) {
     {
         cout << testingDynamicArray.get(index) << endl;
     }
+    
+    cout << "___________________" << endl;
+    
+    cout << "The removed number is at index: " << testingDynamicArray.remove(69) << endl;
+    
+    for(int index = 0; index < testingDynamicArray.size(); index++)
+    {
+        cout << testingDynamicArray.get(index) << endl;
+    }
+    
     //Problem 26.1 String Split
 //    
 //    vector<string> splitStrings = split("/home/./..//Documents/", '/');
