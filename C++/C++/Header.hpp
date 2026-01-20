@@ -13,6 +13,7 @@
 
 using namespace std;
 
+//Dynamic Array Questions
 class DynamicArray
 {
 private:
@@ -46,6 +47,9 @@ public:
     int capacity() const ;
 };
 
+//String Manipulation
 vector<string> split(const string &s, char c);
+bool isLowerCase(char c);
+bool isUpperCase(char c);
 
 #endif // HEADER_HPP

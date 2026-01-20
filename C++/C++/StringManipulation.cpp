@@ -7,6 +7,15 @@
 
 #include "Header.hpp"
 
+bool isLowerCase(char c)
+{
+    if((int)c > 96 and (int)c < 123)
+        return true;
+    
+    return false;
+}
+
+
 vector<string> split(const string &s, char c)
 {
     //Beyond Cracking the Coding Interview - Problem 26.1 String Split
