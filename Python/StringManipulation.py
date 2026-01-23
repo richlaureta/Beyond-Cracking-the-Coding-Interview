@@ -80,7 +80,7 @@ def join(arr: list[str], s: str) -> str:
     return arrayToString(stringArray)
  
 if __name__ == "__main__":
-    arr = ["", "home", ".", "..", "", "Documents", ""]
-    s = "/"
+    arr = []
+    s = "x"
     
     print(join(arr, s))

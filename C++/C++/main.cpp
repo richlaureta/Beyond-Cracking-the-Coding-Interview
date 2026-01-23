@@ -16,7 +16,7 @@ int main(int argc, const char * argv[]) {
     //String Manipulation - Is it uppercase?
 //    cout << isDigit('/') << endl;
     //String Manipulation - Is it alpha numeric?
-    cout << isAlphaNumeric('(') << endl;
+//    cout << isAlphaNumeric('(') << endl;
     //Problem 25.1 Implement Dynamic Array
 //    DynamicArray testingDynamicArray;
 //
@@ -95,5 +95,12 @@ int main(int argc, const char * argv[]) {
 //    {
 //        cout << splitStrings[index] << endl;
 //    }
+    
+    //Problem 26.2 String Join
+    vector<string> arr = {"", "home", ".", "..", "", "Documents", ""};
+    string s = "/";
+    
+    cout << join(arr, s) << endl;
+    
     return EXIT_SUCCESS;
 }

@@ -60,3 +60,32 @@ vector<string> split(const string &s, char c)
     
     return splitStringVector;
 }
+
+string join(const vector<string> &arr, const string &s)
+{
+    //Problem 26.2 String Join
+    
+    string combinedString = "";
+    
+    for(int i = 0; i < arr.size(); i++)
+    {
+        if(arr[i] == s)
+        {
+            combinedString.append(s);
+        }
+        
+        if(i == arr.size() -1 and arr[i] == "") continue;
+        
+        if(arr[i] == "")
+        {
+            combinedString.append(s);
+            continue;
+        }
+        
+        combinedString.append(arr[i]);
+        
+        if(i < arr.size() - 1) combinedString.append(s);
+    }
+    
+    return combinedString;
+}
