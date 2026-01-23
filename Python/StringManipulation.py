@@ -78,9 +78,30 @@ def join(arr: list[str], s: str) -> str:
             stringArray.append(s)
     
     return arrayToString(stringArray)
- 
-if __name__ == "__main__":
-    arr = []
-    s = "x"
+
+def indexOf(s: str, t: str) -> int:
+    #Problem #26.3 String Matching
     
-    print(join(arr, s))
+    if len(t) == 0:
+        return 0
+    
+    for index in range(len(s)):
+        if s[index] == t[0]:
+            temporaryIndex = index + 1
+            temporaryIndex1 = 1
+            while temporaryIndex < len(s) and temporaryIndex1 < len(t):
+                if s[temporaryIndex] != t[temporaryIndex1]:
+                    break
+                
+                if temporaryIndex1 == len(t) - 1:
+                    return index
+                
+                temporaryIndex1 += 1
+                temporaryIndex += 1
+    return -1
+      
+if __name__ == "__main__":
+    s = "needle in a haystack"
+    t = ""
+    
+    print(indexOf(s, t))
