@@ -64,11 +64,14 @@ def join(arr: list[str], s: str) -> str:
                 characterArray.append(character)
             continue
         
+        if index == len(arr) - 1 and arr[index] == "":
+            continue
+        
         if arr[index] == "":
             for character in s:
                 characterArray.append(character)
             continue
-        
+            
         for characters in arr[index]:
             characterArray.append(characters)
         
@@ -82,7 +85,7 @@ def join(arr: list[str], s: str) -> str:
     return myString
  
 if __name__ == "__main__":
-    arr = ["join", "by ", "space"]
-    s = " "
+    arr = ["b", "", "k", "", "p", "r n", "", "d", "d!!", ""]
+    s = "ee"
     
     print(join(arr, s))
