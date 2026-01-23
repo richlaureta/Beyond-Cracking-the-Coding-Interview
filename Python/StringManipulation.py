@@ -52,40 +52,35 @@ def split(s: str, c: str) -> list[str]:
     
     return splitArray
 
+def arrayToString(stringArray: list[str]) -> str:
+    return "".join(stringArray)
+
 def join(arr: list[str], s: str) -> str:
     #Problem 26.2 Without using a built-in string join method, implement a join(arr, s) method, which receives an array
     #of strings, arr, and a string, s, and returns a single string consisting of the strings in arr with s 
-    #in between them.
-    
-    characterArray = []
+    #in between them.    
+    stringArray = []
     for index in range(len(arr)):
         if arr[index] == s:
-            for character in s:
-                characterArray.append(character)
+            stringArray.append(s)
             continue
         
         if index == len(arr) - 1 and arr[index] == "":
             continue
         
         if arr[index] == "":
-            for character in s:
-                characterArray.append(character)
+            stringArray.append(s)
             continue
             
-        for characters in arr[index]:
-            characterArray.append(characters)
+        stringArray.append(arr[index])
         
         if index < len(arr) - 1:
-            for character in s:
-                characterArray.append(character)
+            stringArray.append(s)
     
-    byteList = [ord(char) for char in characterArray] 
-    myString = bytearray(byteList).decode("utf-8")
-    
-    return myString
+    return arrayToString(stringArray)
  
 if __name__ == "__main__":
-    arr = ["b", "", "k", "", "p", "r n", "", "d", "d!!", ""]
-    s = "ee"
+    arr = ["", "home", ".", "..", "", "Documents", ""]
+    s = "/"
     
     print(join(arr, s))
