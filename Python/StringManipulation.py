@@ -51,30 +51,42 @@ def split(s: str, c: str) -> list[str]:
     splitArray.append(''.join(tempArray))
     
     return splitArray
- 
+
+def arrayToString(characterArray: list[str]) -> str:
+    
+    byteList = [ord(char) for char in characterArray] 
+    myString = bytearray(byteList).decode("utf-8")
+    
+    return myString
+
 def join(arr: list[str], s: str) -> str:
     #Problem 26.2 Without using a built-in string join method, implement a join(arr, s) method, which receives an array
     #of strings, arr, and a string, s, and returns a single string consisting of the strings in arr with s 
     #in between them.
     
-    joinStrings = ""
+    characterArray = []
     for index in range(len(arr)):
         if arr[index] == s:
-            joinStrings += s
+            for character in s:
+                characterArray.append(character)
             continue
         
         if arr[index] == "":
-            joinStrings += s
+            for character in s:
+                characterArray.append(character)
             continue
         
-        joinStrings += arr[index]
+        for characters in arr[index]:
+            characterArray.append(characters)
         
         if index < len(arr) - 1:
-            joinStrings += s
+            for character in s:
+                characterArray.append(character)
     
-    return  joinStrings
+    return  arrayToString(characterArray)
+ 
 if __name__ == "__main__":
-    arr = ["join", "by", "space"]
-    s = " "
+    arr = ["b", "",  "k", "", "p", "r n", "", "d", "d!!"]
+    s = "ee"
     
     print(join(arr, s))
