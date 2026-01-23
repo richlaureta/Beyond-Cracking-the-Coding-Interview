@@ -81,27 +81,12 @@ def join(arr: list[str], s: str) -> str:
 
 def indexOf(s: str, t: str) -> int:
     #Problem #26.3 String Matching
-    
-    if len(t) == 0:
-        return 0
-    
-    for index in range(len(s)):
-        if s[index] == t[0]:
-            temporaryIndex = index + 1
-            temporaryIndex1 = 1
-            while temporaryIndex < len(s) and temporaryIndex1 < len(t):
-                if s[temporaryIndex] != t[temporaryIndex1]:
-                    break
-                
-                if temporaryIndex1 == len(t) - 1:
-                    return index
-                
-                temporaryIndex1 += 1
-                temporaryIndex += 1
-    return -1
+    if  s.find(t) == -1:
+        return -1
+    return s.index(t)
       
 if __name__ == "__main__":
     s = "needle in a haystack"
-    t = ""
+    t = "b"
     
     print(indexOf(s, t))
