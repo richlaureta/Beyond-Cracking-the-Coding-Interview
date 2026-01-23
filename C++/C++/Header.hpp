@@ -54,5 +54,6 @@ bool isUpperCase(char c);
 bool isDigit(char c);
 bool isAlphaNumeric(char c);
 string join(const vector<string> &arr, const string &s);
+int indexOf(const string &s, const string &t);
 
 #endif // HEADER_HPP
