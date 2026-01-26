@@ -87,26 +87,6 @@ def indexOf(s: str, t: str) -> int:
         return -1
     return s.index(t)
 
-def indexOf1(theString: str, pattern: str) -> int:
-    #Problem 26.3 String Matching
-    
-    stringDictionary = defaultdict(list)
-    for index in range(len(theString)):
-        stringDictionary[theString[index]].append(index)
-    
-    for index1 in stringDictionary[pattern[0]]:
-        temporaryIndex = index1 
-        for index2 in range(0, len(pattern)):
-            if temporaryIndex not in stringDictionary[pattern[index2]]:
-                break
-            temporaryIndex += 1
-            if temporaryIndex == len(pattern) + index1:
-                return index1
-    
-    return -1
-
 if __name__ == "__main__":
     s = "a"
     t = "a"
-    
-    print(indexOf1(s, t))
