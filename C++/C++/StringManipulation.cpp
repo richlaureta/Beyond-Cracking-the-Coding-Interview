@@ -93,12 +93,11 @@ string join(const vector<string> &arr, const string &s)
 int indexOf(string &s, string &t)
 {
     //Problem 26.3 String Matching
+    if(t.size() == 0) return 0;
     
     size_t index = s.find(t);
     
     if(index != string::npos) return (int)index;
     
     return -1;
-    
-    
 }
