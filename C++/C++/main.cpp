@@ -97,10 +97,16 @@ int main(int argc, const char * argv[]) {
 //    }
     
     //Problem 26.2 String Join
-    vector<string> arr = {"", "home", ".", "..", "", "Documents", ""};
-    string s = "/";
+//    vector<string> arr = {"", "home", ".", "..", "", "Documents", ""};
+//    string s = "/";
+//    
+//    cout << join(arr, s) << endl;
     
-    cout << join(arr, s) << endl;
+    //Problem #28 Find the Index of the First Occurrence in a String - Easy
+    string haystack = "butsad";
+    string needle = "sad";
+    
+    cout << strStr(haystack, needle) << endl;
     
     return EXIT_SUCCESS;
 }

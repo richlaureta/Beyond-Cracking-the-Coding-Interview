@@ -91,6 +91,7 @@ def strStr(haystack: str, needle: str) -> int:
     #Problem #28 Find the index of the First Occurrence in a String - Easy
     if len(needle) > len(haystack):
         return -1
+    
     needleSum = 0
     for character in needle:
         needleSum += ord(character)

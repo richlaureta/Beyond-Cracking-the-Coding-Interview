@@ -55,5 +55,6 @@ bool isDigit(char c);
 bool isAlphaNumeric(char c);
 string join(const vector<string> &arr, const string &s);
 int indexOf(const string &s, const string &t);
+int strStr(string haystack, string needle);
 
 #endif // HEADER_HPP

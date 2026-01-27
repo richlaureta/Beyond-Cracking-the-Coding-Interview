@@ -101,3 +101,49 @@ int indexOf(string &s, string &t)
     
     return -1;
 }
+
+int strStr(string haystack, string needle)
+{
+    //Problem #28 Find the Index of the First Occurrence in a String - Easy
+    
+    if(haystack.size() < needle.size()) return -1;
+    
+    int needleSum = 0;
+    for(char letter: needle) needleSum += int(letter);
+    
+    int hayStackSum = 0;
+    
+    for(int index = 0; index < needle.size(); index++) hayStackSum += (int) haystack[index];
+    
+    int initialIndex = 0;
+    if(needleSum == hayStackSum)
+    {
+        for(char letter1: needle)
+        {
+            if(letter1 != haystack[initialIndex]) break;
+            initialIndex++;
+            if(initialIndex == (int)needle.size()) return 0;
+        }
+    }
+    
+    int subtractIndex = 0;
+    for(int index1 = (int)needle.size(); index1 < (int)haystack.size(); index1++)
+    {
+        hayStackSum -= (int)haystack[subtractIndex];
+        hayStackSum += (int)haystack[index1];
+        int temporaryIndex = subtractIndex + 1;
+        if(needleSum == hayStackSum)
+        {
+            for(char letter2: needle)
+            {
+                if(letter2 != haystack[temporaryIndex]) break;
+                temporaryIndex ++;
+                
+                if (temporaryIndex == index1 + 1) return subtractIndex + 1;
+            }
+        }
+        subtractIndex++;
+    }
+    
+    return -1;
+}
