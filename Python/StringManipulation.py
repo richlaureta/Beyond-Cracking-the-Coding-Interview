@@ -87,6 +87,45 @@ def indexOf(s: str, t: str) -> int:
         return -1
     return s.index(t)
 
+def strStr(haystack: str, needle: str) -> int:
+    #Problem #28 Find the index of the First Occurrence in a String - Easy
+    if len(needle) > len(haystack):
+        return -1
+    needleSum = 0
+    for character in needle:
+        needleSum += ord(character)
+    
+    hayStackSum = 0
+    for index in range(0, len(needle)):
+        hayStackSum += ord(haystack[index])
+    
+    initialIndex = 0
+    if needleSum == hayStackSum:
+        for character in needle:
+            if character != haystack[initialIndex]:
+                break
+            initialIndex += 1
+            if initialIndex == len(needle):
+                return 0
+    
+    subtractIndex = 0
+    for index1 in range(len(needle), len(haystack)):
+        hayStackSum -= ord(haystack[subtractIndex])
+        hayStackSum += ord(haystack[index1])
+        temporaryIndex = subtractIndex + 1
+        if needleSum == hayStackSum:
+            for character in needle:
+                if character != haystack[temporaryIndex]:
+                    break
+                temporaryIndex += 1
+                
+                if temporaryIndex == index1 + 1 :
+                    return subtractIndex + 1
+        subtractIndex += 1
+    
+    return -1
 if __name__ == "__main__":
-    s = "a"
-    t = "a"
+    s = "ssadbutsad"
+    t = "sad"
+    
+    print(strStr(s, t))
