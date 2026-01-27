@@ -128,7 +128,7 @@ def strStr(haystack: str, needle: str) -> int:
 
 def strStr1(haystack: str, needle: str) -> int:
     #Problem #28 Find the Index of the First Occurrence in a String - Easy - KMP Algorithm Approach - AI generated - Understanding the Solution
-    
+    #TESTING
     preprocessNeedle = [0] * len(needle)
     suffixIndex = 0
     currentIndex = 1
