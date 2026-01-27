@@ -88,7 +88,7 @@ def indexOf(s: str, t: str) -> int:
     return s.index(t)
 
 def strStr(haystack: str, needle: str) -> int:
-    #Problem #28 Find the index of the First Occurrence in a String - Easy
+    #Problem #28 Find the Index of the First Occurrence in a String - Easy - Rolling Hash Algorithm Approach
     if len(needle) > len(haystack):
         return -1
     
@@ -125,8 +125,47 @@ def strStr(haystack: str, needle: str) -> int:
         subtractIndex += 1
     
     return -1
-if __name__ == "__main__":
-    s = "ssadbutsad"
-    t = "sad"
+
+def strStr1(haystack: str, needle: str) -> int:
+    #Problem #28 Find the Index of the First Occurrence in a String - Easy - KMP Algorithm Approach - AI generated - Understanding the Solution
     
-    print(strStr(s, t))
+    preprocessNeedle = [0] * len(needle)
+    suffixIndex = 0
+    currentIndex = 1
+    
+    while currentIndex < len(needle):
+        if needle[currentIndex] == needle[suffixIndex]:
+            suffixIndex += 1
+            preprocessNeedle[currentIndex] = suffixIndex
+            currentIndex += 1
+        else:
+            if suffixIndex != 0:
+                suffixIndex = preprocessNeedle[suffixIndex - 1]
+            else:
+                preprocessNeedle[currentIndex] = 0
+                currentIndex += 1
+    
+    needleIndex = 0
+    mainIndex = 0
+    
+    while mainIndex < len(haystack):
+        if needle[needleIndex] == haystack[mainIndex]:
+            mainIndex += 1
+            needleIndex += 1
+        
+        if needleIndex == len(needle):
+            return mainIndex - needleIndex
+        
+        elif mainIndex < len(haystack) and needle[needleIndex] != haystack[mainIndex]:
+            if needleIndex != 0:
+                needleIndex = preprocessNeedle[needleIndex -1]
+            else:
+                mainIndex += 1
+    
+    return -1
+            
+if __name__ == "__main__":
+    s = "ABABDABACDABABCABAB"
+    t = "ABABCABAB"
+    
+    print(strStr1(s, t))
