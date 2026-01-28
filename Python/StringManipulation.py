@@ -1,4 +1,5 @@
 from collections import defaultdict
+import random
 #Character Manipulation Problem Set - Page 289
 
 #Question 1: Implement a function is_alphanumeric(c) that returns whether a character c is a lowercase or
@@ -163,9 +164,45 @@ def strStr1(haystack: str, needle: str) -> int:
                 mainIndex += 1
     
     return -1
-            
-if __name__ == "__main__":
-    s = "ABABDABACDABABCABAB"
-    t = "ABABCABAB"
+
+def randomPasswordGenerator(passwordLength: int = 16) -> str:
+    #Generate a Password of a Given Length
     
-    print(strStr1(s, t))
+    if passwordLength < 16:
+        print("The minimum password length is 16. Choose a number length greater than or equal to 16.")
+        return ""
+    
+    
+    arrayCharacter = ['0'] * passwordLength
+    randomIndex = set()
+    
+    uppercaseIndex = random.randint(0, passwordLength)
+    randomIndex.add(uppercaseIndex)
+    
+    randomUppercase = chr(random.randint(65, 90))
+    arrayCharacter[uppercaseIndex] = randomUppercase
+    
+    lowercaseIndex = random.randint(0, passwordLength)
+    while lowercaseIndex in randomIndex:
+        lowercaseIndex = random.randint(0, passwordLength)
+    randomIndex.add(lowercaseIndex)
+    
+    randomLowercase = chr(random.randint(97, 122))
+    arrayCharacter[lowercaseIndex] = randomLowercase
+    
+    numberIndex = random.randint(0, passwordLength)
+    while numberIndex in randomIndex:
+        numberIndex = random.randint(0, passwordLength)
+    randomIndex.add(numberIndex)
+    
+    randomNumber = chr(random.randint(48, 57))
+    arrayCharacter[numberIndex] = randomNumber
+    
+    symbolIndex = random.randint(0, passwordLength)
+    while symbolIndex in randomIndex:
+        symbolIndex = random.randint(0, passwordLength)
+    randomIndex.add(symbolIndex)
+     
+        
+if __name__ == "__main__":
+   randomPasswordGenerator()
