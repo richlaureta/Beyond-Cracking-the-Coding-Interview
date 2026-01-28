@@ -169,40 +169,69 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
     #Generate a Password of a Given Length
     
     if passwordLength < 16:
-        print("The minimum password length is 16. Choose a number length greater than or equal to 16.")
-        return ""
+        raise ValueError("The minimum password length is 16. Choose a number length greater than or equal to 16.")
+        
     
     
     arrayCharacter = ['0'] * passwordLength
     randomIndex = set()
     
-    uppercaseIndex = random.randint(0, passwordLength)
+    uppercaseIndex = random.randint(0, passwordLength - 1)
     randomIndex.add(uppercaseIndex)
     
     randomUppercase = chr(random.randint(65, 90))
     arrayCharacter[uppercaseIndex] = randomUppercase
     
-    lowercaseIndex = random.randint(0, passwordLength)
+    lowercaseIndex = random.randint(0, passwordLength - 1)
     while lowercaseIndex in randomIndex:
-        lowercaseIndex = random.randint(0, passwordLength)
+        lowercaseIndex = random.randint(0, passwordLength - 1)
     randomIndex.add(lowercaseIndex)
     
     randomLowercase = chr(random.randint(97, 122))
     arrayCharacter[lowercaseIndex] = randomLowercase
     
-    numberIndex = random.randint(0, passwordLength)
+    numberIndex = random.randint(0, passwordLength - 1)
     while numberIndex in randomIndex:
-        numberIndex = random.randint(0, passwordLength)
+        numberIndex = random.randint(0, passwordLength - 1)
     randomIndex.add(numberIndex)
     
     randomNumber = chr(random.randint(48, 57))
     arrayCharacter[numberIndex] = randomNumber
     
-    symbolIndex = random.randint(0, passwordLength)
+    symbolIndex = random.randint(0, passwordLength - 1)
     while symbolIndex in randomIndex:
-        symbolIndex = random.randint(0, passwordLength)
+        symbolIndex = random.randint(0, passwordLength - 1)
     randomIndex.add(symbolIndex)
-     
+    
+    randomSwitch = random.randint(1, 4)
+    randomSymbol = 0
+    randomSymbol1 = '*'
+    if randomSwitch == 1:
+        randomSymbol = random.randint(33, 47)
+        randomSymbol1 = chr(randomSymbol)
+    elif randomSwitch == 2:
+        randomSymbol = random.randint(58, 64)
+        randomSymbol1 = chr(randomSymbol)
+    elif randomSwitch == 3:
+            randomSymbol = random.randint(91, 96)
+            randomSymbol1 = chr(randomSymbol)
+    else:
+        randomSymbol = random.randint(123, 126)
+        randomSymbol1 = chr(randomSymbol)
+            
+    arrayCharacter[symbolIndex] = randomSymbol1
+    
+    for index in range(passwordLength):
+        if index in randomIndex:
+            continue
         
+        arrayCharacter[index] = chr(random.randint(33, 126))
+    
+    passwordString = "".join(arrayCharacter)
+    return passwordString
+
 if __name__ == "__main__":
-   randomPasswordGenerator()
+    password = randomPasswordGenerator(20)
+    print(password)
+    print(len(password))
+    
