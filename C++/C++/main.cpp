@@ -103,10 +103,14 @@ int main(int argc, const char * argv[]) {
 //    cout << join(arr, s) << endl;
     
     //Problem #28 Find the Index of the First Occurrence in a String - Easy
-    string haystack = "butsad";
-    string needle = "sad";
+//    string haystack = "butsad";
+//    string needle = "sad";
+//    
+//    cout << strStr(haystack, needle) << endl;
     
-    cout << strStr(haystack, needle) << endl;
+    //Problem 27.1 Palindrome Check
+    
+    cout << palindrome("ba") << endl;
     
     return EXIT_SUCCESS;
 }

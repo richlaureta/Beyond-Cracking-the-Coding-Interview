@@ -57,4 +57,7 @@ string join(const vector<string> &arr, const string &s);
 int indexOf(const string &s, const string &t);
 int strStr(string haystack, string needle);
 
+//Two Pointers
+bool palindrome(string s);
+
 #endif // HEADER_HPP
