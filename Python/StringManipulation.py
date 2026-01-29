@@ -1,5 +1,5 @@
 from collections import defaultdict
-import random
+import secrets
 #Character Manipulation Problem Set - Page 289
 
 #Question 1: Implement a function is_alphanumeric(c) that returns whether a character c is a lowercase or
@@ -174,47 +174,47 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
     arrayCharacter = ['0'] * passwordLength
     randomIndex = set()
     
-    uppercaseIndex = random.randint(0, passwordLength - 1)
+    uppercaseIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     randomIndex.add(uppercaseIndex)
     
-    randomUppercase = chr(random.randint(65, 90))
+    randomUppercase = chr(secrets.SystemRandom().randrange(65, 90))
     arrayCharacter[uppercaseIndex] = randomUppercase
     
-    lowercaseIndex = random.randint(0, passwordLength - 1)
+    lowercaseIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     while lowercaseIndex in randomIndex:
-        lowercaseIndex = random.randint(0, passwordLength - 1)
+        lowercaseIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     randomIndex.add(lowercaseIndex)
     
-    randomLowercase = chr(random.randint(97, 122))
+    randomLowercase = chr(secrets.SystemRandom().randrange(97, 122))
     arrayCharacter[lowercaseIndex] = randomLowercase
     
-    numberIndex = random.randint(0, passwordLength - 1)
+    numberIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     while numberIndex in randomIndex:
-        numberIndex = random.randint(0, passwordLength - 1)
+        numberIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     randomIndex.add(numberIndex)
     
-    randomNumber = chr(random.randint(48, 57))
+    randomNumber = chr(secrets.SystemRandom().randrange(48, 57))
     arrayCharacter[numberIndex] = randomNumber
     
-    symbolIndex = random.randint(0, passwordLength - 1)
+    symbolIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     while symbolIndex in randomIndex:
-        symbolIndex = random.randint(0, passwordLength - 1)
+        symbolIndex = secrets.SystemRandom().randrange(0, passwordLength - 1)
     randomIndex.add(symbolIndex)
     
-    randomSwitch = random.randint(1, 4)
+    randomSwitch = secrets.SystemRandom().randrange(1, 4)
     randomSymbol = 0
     randomSymbol1 = '*'
     if randomSwitch == 1:
-        randomSymbol = random.randint(33, 47)
+        randomSymbol = secrets.SystemRandom().randrange(33, 47)
         randomSymbol1 = chr(randomSymbol)
     elif randomSwitch == 2:
-        randomSymbol = random.randint(58, 64)
+        randomSymbol = secrets.SystemRandom().randrange(58, 64)
         randomSymbol1 = chr(randomSymbol)
     elif randomSwitch == 3:
-            randomSymbol = random.randint(91, 96)
+            randomSymbol = secrets.SystemRandom().randrange(91, 96)
             randomSymbol1 = chr(randomSymbol)
     else:
-        randomSymbol = random.randint(123, 126)
+        randomSymbol = secrets.SystemRandom().randrange(123, 126)
         randomSymbol1 = chr(randomSymbol)
             
     arrayCharacter[symbolIndex] = randomSymbol1
@@ -223,13 +223,13 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
         if index in randomIndex:
             continue
         
-        arrayCharacter[index] = chr(random.randint(33, 126))
+        arrayCharacter[index] = chr(secrets.SystemRandom().randrange(33, 126))
     
     passwordString = "".join(arrayCharacter)
     return passwordString
 
 if __name__ == "__main__":
-    password = randomPasswordGenerator()
+    password = randomPasswordGenerator(20)
     print(password)
     print(len(password))
     
