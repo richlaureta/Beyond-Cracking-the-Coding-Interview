@@ -171,8 +171,6 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
     if passwordLength < 16:
         raise ValueError("The minimum password length is 16. Choose a number length greater than or equal to 16.")
         
-    
-    
     arrayCharacter = ['0'] * passwordLength
     randomIndex = set()
     
@@ -231,7 +229,7 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
     return passwordString
 
 if __name__ == "__main__":
-    password = randomPasswordGenerator(20)
+    password = randomPasswordGenerator()
     print(password)
     print(len(password))
     
