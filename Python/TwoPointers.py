@@ -13,7 +13,7 @@ def palindrome(s: str) -> bool:
     return True
 
 def smallerPrefixes(arr: list[int]) -> bool:
-    #Problem 27.2 Smaller Prefixes
+    #Problem 27.2 Smaller Prefixes - Incomplete Solution
     
     for index in range(1, len(arr)):
         arr[index]  += arr[index - 1]
@@ -23,7 +23,32 @@ def smallerPrefixes(arr: list[int]) -> bool:
             return False
     
     return True
-if __name__ =="__main__":
-    arr = [-2, 1, -4, 5, -3, 7]
-    print(smallerPrefixes(arr))
+
+def commonElements(arr1, arr2) -> list[int]:
+    #Problem 27.3 Array Intersection
     
+    arr1Pointer = 0
+    arr2Pointer = 0
+    
+    intersectionList = []
+    
+    while(arr1Pointer < len(arr1) and arr2Pointer < len(arr2)):
+        if arr1[arr1Pointer] == arr2[arr2Pointer]:
+            intersectionList.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+            arr2Pointer += 1
+            continue
+        
+        if arr1[arr1Pointer] < arr2[arr2Pointer]:
+            arr1Pointer += 1
+            continue
+        
+        if arr2[arr2Pointer] < arr1[arr1Pointer]:
+            arr2Pointer += 1
+    
+    return intersectionList 
+if __name__ =="__main__":
+    arr1 = [1, 2, 2, 3]
+    arr2 = [2, 2, 3]
+    
+    print(commonElements(arr1, arr2))
