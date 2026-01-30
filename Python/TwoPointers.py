@@ -37,18 +37,15 @@ def commonElements(arr1, arr2) -> list[int]:
             intersectionList.append(arr1[arr1Pointer])
             arr1Pointer += 1
             arr2Pointer += 1
-            continue
-        
-        if arr1[arr1Pointer] < arr2[arr2Pointer]:
+        elif arr1[arr1Pointer] < arr2[arr2Pointer]:
             arr1Pointer += 1
-            continue
-        
-        if arr2[arr2Pointer] < arr1[arr1Pointer]:
+        else:
             arr2Pointer += 1
     
-    return intersectionList 
+    return intersectionList
+ 
 if __name__ =="__main__":
-    arr1 = [1, 2, 2, 3]
-    arr2 = [2, 2, 3]
+    arr1 = [1, 2, 3]
+    arr2 = [1, 3, 5]
     
     print(commonElements(arr1, arr2))

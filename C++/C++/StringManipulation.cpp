@@ -32,7 +32,7 @@ bool isAlphaNumeric(char c)
 
 vector<string> split(const string &s, char c)
 {
-    //Beyond Cracking the Coding Interview - Problem 26.1 String Split
+    //Problem 26.1 - String Split
     
     if((int) s.size() == 0) return {};
     
@@ -63,7 +63,7 @@ vector<string> split(const string &s, char c)
 
 string join(const vector<string> &arr, const string &s)
 {
-    //Problem 26.2 String Join
+    //Problem 26.2 - String Join
     
     string combinedString = "";
     
@@ -92,7 +92,7 @@ string join(const vector<string> &arr, const string &s)
 
 int indexOf(string &s, string &t)
 {
-    //Problem 26.3 String Matching
+    //Problem 26.3 - String Matching
     if(t.size() == 0) return 0;
     
     size_t index = s.find(t);

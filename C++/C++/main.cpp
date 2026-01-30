@@ -96,7 +96,7 @@ int main(int argc, const char * argv[]) {
 //        cout << splitStrings[index] << endl;
 //    }
     
-    //Problem 26.2 String Join
+    //Problem 26.2 - String Join
 //    vector<string> arr = {"", "home", ".", "..", "", "Documents", ""};
 //    string s = "/";
 //    
@@ -108,9 +108,17 @@ int main(int argc, const char * argv[]) {
 //    
 //    cout << strStr(haystack, needle) << endl;
     
-    //Problem 27.1 Palindrome Check
+    //Problem 27.1 - Palindrome Check
     
-    cout << palindrome("ba") << endl;
+//    cout << palindrome("ba") << endl;
+    //Problem 27.3 Array Intersection
+    
+    vector<int> arr1 = {1, 2, 2, 3};
+    vector<int> arr2 = {2, 2, 3};
+    
+    vector<int> intersections = commonElements(arr1, arr2);
+    
+    for(int element: intersections) cout << element << endl;
     
     return EXIT_SUCCESS;
 }
