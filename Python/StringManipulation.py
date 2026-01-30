@@ -229,7 +229,7 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
     return passwordString
 
 if __name__ == "__main__":
-    password = randomPasswordGenerator(20)
+    password = randomPasswordGenerator(30)
     print(password)
     print(len(password))
     
