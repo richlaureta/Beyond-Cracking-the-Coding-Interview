@@ -44,8 +44,26 @@ def commonElements(arr1, arr2) -> list[int]:
     
     return intersectionList
  
-if __name__ =="__main__":
-    arr1 = [1, 2, 3]
-    arr2 = [1, 3, 5]
+def palindromicSentence(s: str) -> bool:
+    #Problem 27.4 Palindromic Sentence
     
-    print(commonElements(arr1, arr2))
+    leftPointer = 0
+    rightPointer = len(s) - 1
+    
+    while leftPointer < rightPointer:
+        while not s[leftPointer].isalpha():
+            leftPointer += 1
+        while not s[rightPointer].isalpha():
+            rightPointer -= 1
+        
+        if s[leftPointer].lower() != s[rightPointer].lower():
+            return False
+        leftPointer += 1
+        rightPointer -= 1
+    
+    return True
+
+if __name__ =="__main__":
+    s = "race a car"
+    
+    print(palindromicSentence(s))

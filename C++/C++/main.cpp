@@ -111,6 +111,7 @@ int main(int argc, const char * argv[]) {
     //Problem 27.1 - Palindrome Check
     
 //    cout << palindrome("ba") << endl;
+    
     //Problem 27.3 Array Intersection
     
     vector<int> arr1 = {1, 2, 2, 3};
