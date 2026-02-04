@@ -123,7 +123,7 @@ int main(int argc, const char * argv[]) {
     
     //Problem 27.4 Palindromic Sentence
     
-    string s = "race a car";
+    string s = "Bob wondered, 'Now, Bob?'";
     
     cout << palindromicSentence(s) << endl;
     

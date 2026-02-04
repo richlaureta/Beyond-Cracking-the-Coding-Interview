@@ -58,10 +58,10 @@ bool palindromicSentence(const string &s)
     
     while(leftPointer < rightPointer)
     {
-        while(!isalpha(s[leftPointer])) leftPointer++;
+        while(leftPointer < rightPointer and !isalpha(s[leftPointer])) leftPointer++;
         
         
-        while(!isalpha(s[rightPointer])) rightPointer--;
+        while(leftPointer < rightPointer and !isalpha(s[rightPointer])) rightPointer--;
     
         if(tolower(s[leftPointer]) != tolower(s[rightPointer])) return false;
         

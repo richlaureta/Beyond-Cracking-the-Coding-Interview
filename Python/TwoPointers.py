@@ -51,9 +51,9 @@ def palindromicSentence(s: str) -> bool:
     rightPointer = len(s) - 1
     
     while leftPointer < rightPointer:
-        while not s[leftPointer].isalpha():
+        while leftPointer < rightPointer and not s[leftPointer].isalpha():
             leftPointer += 1
-        while not s[rightPointer].isalpha():
+        while leftPointer < rightPointer and not s[rightPointer].isalpha():
             rightPointer -= 1
         
         if s[leftPointer].lower() != s[rightPointer].lower():
@@ -64,6 +64,6 @@ def palindromicSentence(s: str) -> bool:
     return True
 
 if __name__ =="__main__":
-    s = "race a car"
+    s = ".,?!'"
     
     print(palindromicSentence(s))
