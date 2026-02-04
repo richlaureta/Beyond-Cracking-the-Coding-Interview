@@ -88,7 +88,7 @@ def reverseCaseMatch(s: str) -> bool:
     
     return True
 
-def runTests():
+def runReverseCaseMatchTests():
     tests = [
         # Example 1 from the book
         ("haDrRAHd", True),
@@ -108,6 +108,7 @@ def runTests():
         got = reverseCaseMatch(s)
         assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
 
-    print("All tests passed.")
+    print("All Reverse Case Match tests passed.")
+    
 if __name__ =="__main__":
-    runTests()
+    runReverseCaseMatchTests()
