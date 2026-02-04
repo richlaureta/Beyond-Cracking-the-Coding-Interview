@@ -67,24 +67,27 @@ def palindromicSentence(s: str) -> bool:
 def reverseCaseMatch(s: str) -> bool:
     #Problem 27.5 Reverse Case Match
     
-    uppercaseLetterList = []
-    lowercaseLetterList = []
+    leftPointer = 0
+    rightPointer = len(s) - 1
     
-    for character in s:
-        if ord(character) > 96 and ord(character) < 123:
-            lowercaseLetterList.append(character)
-        else:
-            uppercaseLetterList.append(chr(ord(character) + 32))
-    
-    rightPointer = len(uppercaseLetterList) - 1
-    for leftPointer in range(len(lowercaseLetterList)):
-        if lowercaseLetterList[leftPointer] != uppercaseLetterList[rightPointer]:
+    while True:
+        while leftPointer < len(s) and s[leftPointer].isupper():
+            leftPointer += 1
+            
+        while rightPointer > -1 and s[rightPointer].islower():
+            rightPointer -= 1
+        
+        if leftPointer >= len(s) or rightPointer < 0:
+            break
+        
+        if s[leftPointer] != s[rightPointer].lower():
             return False
-        
+
+        leftPointer += 1
         rightPointer -= 1
-        
-    return True
     
+    return True
+
 if __name__ =="__main__":
     s = "helloworldHELLOWORLD"
     
