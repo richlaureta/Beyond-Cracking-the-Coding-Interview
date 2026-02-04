@@ -71,3 +71,4 @@ bool palindromicSentence(const string &s)
     
     return true;
 }
+

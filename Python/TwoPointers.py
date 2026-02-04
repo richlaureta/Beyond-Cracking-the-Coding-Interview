@@ -88,7 +88,26 @@ def reverseCaseMatch(s: str) -> bool:
     
     return True
 
-if __name__ =="__main__":
-    s = "helloworldHELLOWORLD"
+def runTests():
+    tests = [
+        # Example 1 from the book
+        ("haDrRAHd", True),
+        # Example 2 from the book
+        ("haHrARDd", False),
+        # Additional test cases
+        ("", True),
+        ("aA", True),
+        ("Aa", True),
+        ("BbbB", True),
+        ("abAB", False),
+        ("abBA", True),
+        ("helloworldHELLOWORLD", False),
+    ]
     
-    print(reverseCaseMatch(s))
+    for s, want in tests:
+        got = reverseCaseMatch(s)
+        assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
+
+    print("All tests passed.")
+if __name__ =="__main__":
+    runTests()
