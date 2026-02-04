@@ -1,3 +1,4 @@
+from collections import defaultdict
 def palindrome(s: str) -> bool:
     #Problem 27.1 Palindrome Check
     
@@ -63,7 +64,28 @@ def palindromicSentence(s: str) -> bool:
     
     return True
 
-if __name__ =="__main__":
-    s = ".,?!'"
+def reverseCaseMatch(s: str) -> bool:
+    #Problem 27.5 Reverse Case Match
     
-    print(palindromicSentence(s))
+    uppercaseLetterList = []
+    lowercaseLetterList = []
+    
+    for character in s:
+        if ord(character) > 96 and ord(character) < 123:
+            lowercaseLetterList.append(character)
+        else:
+            uppercaseLetterList.append(chr(ord(character) + 32))
+    
+    rightPointer = len(uppercaseLetterList) - 1
+    for leftPointer in range(len(lowercaseLetterList)):
+        if lowercaseLetterList[leftPointer] != uppercaseLetterList[rightPointer]:
+            return False
+        
+        rightPointer -= 1
+        
+    return True
+    
+if __name__ =="__main__":
+    s = "helloworldHELLOWORLD"
+    
+    print(reverseCaseMatch(s))
