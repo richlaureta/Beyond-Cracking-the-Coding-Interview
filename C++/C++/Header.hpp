@@ -61,5 +61,5 @@ int strStr(string haystack, string needle);
 bool palindrome(string s);
 vector<int> commonElements(vector<int> &arr1, vector<int> &arr2);
 bool palindromicSentence(const string &s);
-
+bool reverseCaseMatch(const string &s);
 #endif // HEADER_HPP

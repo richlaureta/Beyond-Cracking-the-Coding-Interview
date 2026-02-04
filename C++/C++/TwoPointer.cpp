@@ -72,3 +72,26 @@ bool palindromicSentence(const string &s)
     return true;
 }
 
+bool reverseCaseMatch(const string &s)
+{
+    //Problem 27.5 Reverse Case Match
+    
+    int leftPointer = 0;
+    int rightPointer = (int)s.size() - 1;
+    
+    while(true)
+    {
+        while(leftPointer < (int)s.size() and isupper(s[leftPointer])) leftPointer++;
+    
+        while(rightPointer > -1 and islower(s[rightPointer])) rightPointer--;
+        
+        if(leftPointer >= (int)s.size() or rightPointer < 0) break;
+        
+        if(s[leftPointer] != tolower(s[rightPointer])) return false;
+        
+        leftPointer++;
+        rightPointer--;
+    }
+    
+    return true;
+}

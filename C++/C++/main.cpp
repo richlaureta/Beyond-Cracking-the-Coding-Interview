@@ -122,10 +122,37 @@ int main(int argc, const char * argv[]) {
 //    for(int element: intersections) cout << element << endl;
     
     //Problem 27.4 Palindromic Sentence
+//    
+//    string s = "Bob wondered, 'Now, Bob?'";
+//    
+//    cout << palindromicSentence(s) << endl;
     
-    string s = "Bob wondered, 'Now, Bob?'";
+    //Problem 27.5 Reverse Case Match
+    std::vector<std::pair<std::string, bool>> tests = {
+        // Example 1 from the book
+        {"haDrRAHd", true},
+        // Example 2 from the book
+        {"haHrARDd", false},
+        // Additional test cases
+        {"", true},
+        {"aA", true},
+        {"Aa", true},
+        {"BbbB", true},
+        {"abAB", false},
+        {"abBA", true},
+        {"helloworldHELLOWORLD", false},
+    };
     
-    cout << palindromicSentence(s) << endl;
+    for (const auto& [s, want] : tests) {
+      bool got = reverseCaseMatch(s);
+      if (got != want) {
+        throw std::runtime_error("\nreverseCaseMatch(\"" + s +
+                                 "\"): got: " + (got ? "true" : "false") +
+                                 ", want: " + (want ? "true" : "false") + "\n");
+      }
+    }
+    
+    cout << "All Reverse Case Match tests passed." << endl;
     
     return EXIT_SUCCESS;
 }
