@@ -114,12 +114,18 @@ int main(int argc, const char * argv[]) {
     
     //Problem 27.3 Array Intersection
     
-    vector<int> arr1 = {1, 2, 2, 3};
-    vector<int> arr2 = {2, 2, 3};
+//    vector<int> arr1 = {1, 2, 2, 3};
+//    vector<int> arr2 = {2, 2, 3};
+//    
+//    vector<int> intersections = commonElements(arr1, arr2);
+//    
+//    for(int element: intersections) cout << element << endl;
     
-    vector<int> intersections = commonElements(arr1, arr2);
+    //Problem 27.4 Palindromic Sentence
     
-    for(int element: intersections) cout << element << endl;
+    string s = "race a car";
+    
+    cout << palindromicSentence(s) << endl;
     
     return EXIT_SUCCESS;
 }

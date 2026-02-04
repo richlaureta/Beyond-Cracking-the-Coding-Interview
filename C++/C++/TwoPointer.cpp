@@ -48,3 +48,26 @@ vector<int> commonElements(vector<int> &arr1, vector<int> &arr2)
     
     return intersectionVector;
 }
+
+bool palindromicSentence(const string &s)
+{
+    //Problem 27.4 Palindromic Sentence
+    
+    int leftPointer = 0;
+    int rightPointer = (int)s.size() - 1;
+    
+    while(leftPointer < rightPointer)
+    {
+        while(!isalpha(s[leftPointer])) leftPointer++;
+        
+        
+        while(!isalpha(s[rightPointer])) rightPointer--;
+    
+        if(tolower(s[leftPointer]) != tolower(s[rightPointer])) return false;
+        
+        leftPointer++;
+        rightPointer--;
+    }
+    
+    return true;
+}
