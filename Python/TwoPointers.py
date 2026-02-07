@@ -143,9 +143,24 @@ def runReverseCaseMatchTests():
 
     print("All Reverse Case Match tests passed.")
 
+def runMergeTests():
+    tests = [
+      # Example 1 from the book
+      ([1, 3, 4, 5], [2, 4, 4], [1, 2, 3, 4, 4, 4, 5]),
+      # Example 2 from the book
+      ([-1], [], [-1]),
+      # Additional test cases
+      ([], [], []),
+      ([1], [], [1]),
+      ([], [1], [1]),
+      ([1, 3, 5], [2, 4, 6], [1, 2, 3, 4, 5, 6]),
+      ([1, 1, 1], [1, 1, 1], [1, 1, 1, 1, 1, 1]),
+  ]
+    for arr1, arr2, want in tests:
+        got = merge(arr1, arr2)
+        assert got == want, f"\nmerge({arr1}, {arr2}): got: {got}, want: {want}\n"
 
-if __name__ =="__main__":
-    arr1 = [1, 3, 5]
-    arr2 = [2, 4, 6]
+    print("All merge tests passed.")
     
-    print(merge(arr1, arr2))
+if __name__ =="__main__":
+    runMergeTests()
