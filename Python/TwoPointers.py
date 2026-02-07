@@ -95,18 +95,8 @@ def merge(arr1: list[int], arr2: list[int]) -> list[int]:
     arr2Pointer = 0
     
     mergedList = []
-    while True:
-        if arr1Pointer >= len(arr1):
-            while arr2Pointer < len(arr2):
-                mergedList.append(arr2[arr2Pointer])
-                arr2Pointer += 1
-            break
-        elif arr2Pointer >= len(arr2):
-            while arr1Pointer < len(arr1):
-                mergedList.append(arr1[arr1Pointer])
-                arr1Pointer += 1
-            break
-        
+    
+    while arr1Pointer < len(arr1) and arr2Pointer < len(arr2):
         if arr1[arr1Pointer] < arr2[arr2Pointer]:
             mergedList.append(arr1[arr1Pointer])
             arr1Pointer += 1
@@ -118,6 +108,14 @@ def merge(arr1: list[int], arr2: list[int]) -> list[int]:
             mergedList.append(arr2[arr2Pointer])
             arr1Pointer += 1
             arr2Pointer += 1
+    
+    while arr1Pointer < len(arr1):
+        mergedList.append(arr1[arr1Pointer])
+        arr1Pointer += 1
+    
+    while arr2Pointer < len(arr2):
+        mergedList.append(arr2[arr2Pointer])
+        arr2Pointer += 1
         
     return mergedList
 
