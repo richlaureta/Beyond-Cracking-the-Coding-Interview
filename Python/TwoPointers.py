@@ -88,6 +88,39 @@ def reverseCaseMatch(s: str) -> bool:
     
     return True
 
+def merge(arr1: list[int], arr2: list[int]) -> list[int]:
+    #Problem 27.6 Merge Two Sorted Arrays
+    
+    arr1Pointer = 0
+    arr2Pointer = 0
+    
+    mergedList = []
+    while True:
+        if arr1Pointer >= len(arr1):
+            while arr2Pointer < len(arr2):
+                mergedList.append(arr2[arr2Pointer])
+                arr2Pointer += 1
+            break
+        elif arr2Pointer >= len(arr2):
+            while arr1Pointer < len(arr1):
+                mergedList.append(arr1[arr1Pointer])
+                arr1Pointer += 1
+            break
+        
+        if arr1[arr1Pointer] < arr2[arr2Pointer]:
+            mergedList.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+        elif arr1[arr1Pointer] > arr2[arr2Pointer]:
+            mergedList.append(arr2[arr2Pointer])
+            arr2Pointer += 1
+        else:
+            mergedList.append(arr1[arr1Pointer])
+            mergedList.append(arr2[arr2Pointer])
+            arr1Pointer += 1
+            arr2Pointer += 1
+        
+    return mergedList
+
 def runReverseCaseMatchTests():
     tests = [
         # Example 1 from the book
@@ -109,6 +142,10 @@ def runReverseCaseMatchTests():
         assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
 
     print("All Reverse Case Match tests passed.")
-    
+
+
 if __name__ =="__main__":
-    runReverseCaseMatchTests()
+    arr1 = [1, 3, 5]
+    arr2 = [2, 4, 6]
+    
+    print(merge(arr1, arr2))
