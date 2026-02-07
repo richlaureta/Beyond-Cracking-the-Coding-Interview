@@ -128,31 +128,68 @@ int main(int argc, const char * argv[]) {
 //    cout << palindromicSentence(s) << endl;
     
     //Problem 27.5 Reverse Case Match
-    std::vector<std::pair<std::string, bool>> tests = {
-        // Example 1 from the book
-        {"haDrRAHd", true},
-        // Example 2 from the book
-        {"haHrARDd", false},
-        // Additional test cases
-        {"", true},
-        {"aA", true},
-        {"Aa", true},
-        {"BbbB", true},
-        {"abAB", false},
-        {"abBA", true},
-        {"helloworldHELLOWORLD", false},
-    };
+//    std::vector<std::pair<std::string, bool>> tests = {
+//        // Example 1 from the book
+//        {"haDrRAHd", true},
+//        // Example 2 from the book
+//        {"haHrARDd", false},
+//        // Additional test cases
+//        {"", true},
+//        {"aA", true},
+//        {"Aa", true},
+//        {"BbbB", true},
+//        {"abAB", false},
+//        {"abBA", true},
+//        {"helloworldHELLOWORLD", false},
+//    };
+//    
+//    for (const auto& [s, want] : tests) {
+//      bool got = reverseCaseMatch(s);
+//      if (got != want) {
+//        throw std::runtime_error("\nreverseCaseMatch(\"" + s +
+//                                 "\"): got: " + (got ? "true" : "false") +
+//                                 ", want: " + (want ? "true" : "false") + "\n");
+//      }
+//    }
+//    
+//    cout << "All Reverse Case Match tests passed." << endl;
     
-    for (const auto& [s, want] : tests) {
-      bool got = reverseCaseMatch(s);
-      if (got != want) {
-        throw std::runtime_error("\nreverseCaseMatch(\"" + s +
-                                 "\"): got: " + (got ? "true" : "false") +
-                                 ", want: " + (want ? "true" : "false") + "\n");
+    //Problem 27.6 Merge Two Sorted Arrays
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+
+      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
+          tests = {
+              // Example 1 from the book
+              {{1, 3, 4, 5}, {2, 4, 4}, {1, 2, 3, 4, 4, 4, 5}},
+              // Example 2 from the book
+              {{-1}, {}, {-1}},
+              // Additional test cases
+              {{}, {}, {}},
+              {{1}, {}, {1}},
+              {{}, {1}, {1}},
+              {{1, 3, 5}, {2, 4, 6}, {1, 2, 3, 4, 5, 6}},
+              {{1, 1, 1}, {1, 1, 1}, {1, 1, 1, 1, 1, 1}},
+          };
+
+      for (const auto& [arr1, arr2, want] : tests) {
+        auto got = merge(arr1, arr2);
+        if (got != want) {
+          throw std::runtime_error("\nmerge(" + vecToStr(arr1) + ", " + vecToStr(arr2) +
+                                   "): got: " + vecToStr(got) + ", want: " + vecToStr(want) +
+                                   "\n");
+        }
       }
-    }
     
-    cout << "All Reverse Case Match tests passed." << endl;
+    cout << "All merge tests passed." << endl;
     
     return EXIT_SUCCESS;
 }
