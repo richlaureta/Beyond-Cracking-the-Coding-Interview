@@ -136,6 +136,8 @@ def twoSum(arr: list[int]) -> bool:
     return False
 
 def runReverseCaseMatchTests():
+    #Problem 27.5 Reverse Case Match
+    
     tests = [
         # Example 1 from the book
         ("haDrRAHd", True),
@@ -158,6 +160,8 @@ def runReverseCaseMatchTests():
     print("ALL REVERSE CASE MATCH TESTS PASSED.")
 
 def runMergeTests():
+    #Problem 27.6 Merge Two Sorted Arrays
+    
     tests = [
       # Example 1 from the book
       ([1, 3, 4, 5], [2, 4, 4], [1, 2, 3, 4, 4, 4, 5]),
@@ -177,6 +181,8 @@ def runMergeTests():
     print("ALL MERGE TESTS PASSED.")
 
 def runTwoSumTests():
+    #Problem 27.7 2-Sum
+    
     tests = [
         # Example 1 from the book
         ([-5, -2, -1, 1, 1, 10], True),

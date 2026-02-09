@@ -142,6 +142,17 @@ vector<int> merge(const vector<int> &arr1, const vector<int> &arr2)
 
 bool twoSum(const vector<int> &arr)
 {
-    //Problem 27.7 
+    //Problem 27.7 2-Sum
+    
+    int leftPointer = 0;
+    int rightPointer = (int)arr.size() - 1;
+    
+    while(leftPointer < rightPointer)
+    {
+        if(arr[leftPointer] + arr[rightPointer] < 0) leftPointer++;
+        else if(arr[leftPointer] + arr[rightPointer] > 0) rightPointer--;
+        else return true;
+    }
+    
     return false;
 }
