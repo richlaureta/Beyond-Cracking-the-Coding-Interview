@@ -119,6 +119,22 @@ def merge(arr1: list[int], arr2: list[int]) -> list[int]:
         
     return mergedList
 
+def twoSum(arr: list[int]) -> bool:
+    #Problem 27.7 2-Sum
+    
+    leftPointer = 0
+    rightPointer = len(arr) - 1
+    
+    while leftPointer < rightPointer:
+        if arr[leftPointer] + arr[rightPointer] > 0:
+            rightPointer -= 1
+        elif arr[leftPointer] + arr[rightPointer] < 0:
+            leftPointer += 1
+        else:
+            return True
+    
+    return False
+
 def runReverseCaseMatchTests():
     tests = [
         # Example 1 from the book
@@ -139,7 +155,7 @@ def runReverseCaseMatchTests():
         got = reverseCaseMatch(s)
         assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
 
-    print("All Reverse Case Match tests passed.")
+    print("ALL REVERSE CASE MATCH TESTS PASSED.")
 
 def runMergeTests():
     tests = [
@@ -158,7 +174,31 @@ def runMergeTests():
         got = merge(arr1, arr2)
         assert got == want, f"\nmerge({arr1}, {arr2}): got: {got}, want: {want}\n"
 
-    print("All merge tests passed.")
+    print("ALL MERGE TESTS PASSED.")
+
+def runTwoSumTests():
+    tests = [
+        # Example 1 from the book
+        ([-5, -2, -1, 1, 1, 10], True),
+        # Example 2 from the book
+        ([-3, 0, 0, 1, 2], True),
+        # Example 3 from the book
+        ([-5, -3, -1, 0, 2, 4, 6], False),
+        # Additional test cases
+        ([], False),
+        ([0], False),
+        ([-1, 1], True),
+        ([-2, -1, 0, 1], True),
+        ([1, 2, 3, 4], False),
+    ]
+    
+    for arr, want in tests:
+        got = twoSum(arr)
+        assert got == want, f"\ntwo_sum({arr}): got: {got}, want: {want}\n"
+
+    print("ALL TWO SUM TESTS PASSED.")
     
 if __name__ =="__main__":
+    runReverseCaseMatchTests()
     runMergeTests()
+    runTwoSumTests()

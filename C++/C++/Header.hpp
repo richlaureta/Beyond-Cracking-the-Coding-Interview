@@ -63,5 +63,6 @@ vector<int> commonElements(vector<int> &arr1, vector<int> &arr2);
 bool palindromicSentence(const string &s);
 bool reverseCaseMatch(const string &s);
 vector<int> merge(const vector<int> &arr1, const vector<int> &arr2);
+bool twoSum(const vector<int> &arr);
 
 #endif // HEADER_HPP

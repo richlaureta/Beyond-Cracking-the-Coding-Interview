@@ -139,3 +139,9 @@ vector<int> merge(const vector<int> &arr1, const vector<int> &arr2)
     
     return mergedVector;
 }
+
+bool twoSum(const vector<int> &arr)
+{
+    //Problem 27.7 
+    return false;
+}

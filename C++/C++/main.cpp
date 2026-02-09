@@ -155,41 +155,78 @@ int main(int argc, const char * argv[]) {
 //    cout << "All Reverse Case Match tests passed." << endl;
     
     //Problem 27.6 Merge Two Sorted Arrays
+//    
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
+//          tests = {
+//              // Example 1 from the book
+//              {{1, 3, 4, 5}, {2, 4, 4}, {1, 2, 3, 4, 4, 4, 5}},
+//              // Example 2 from the book
+//              {{-1}, {}, {-1}},
+//              // Additional test cases
+//              {{}, {}, {}},
+//              {{1}, {}, {1}},
+//              {{}, {1}, {1}},
+//              {{1, 3, 5}, {2, 4, 6}, {1, 2, 3, 4, 5, 6}},
+//              {{1, 1, 1}, {1, 1, 1}, {1, 1, 1, 1, 1, 1}},
+//          };
+//
+//      for (const auto& [arr1, arr2, want] : tests) {
+//        auto got = merge(arr1, arr2);
+//        if (got != want) {
+//          throw std::runtime_error("\nmerge(" + vecToStr(arr1) + ", " + vecToStr(arr2) +
+//                                   "): got: " + vecToStr(got) + ", want: " + vecToStr(want) +
+//                                   "\n");
+//        }
+//      }
+//    
+//    cout << "All Merge tests passed." << endl;
     
+    //Problem 27.7 2-Sum
     auto vecToStr = [](const std::vector<int>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-
-      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
-          tests = {
-              // Example 1 from the book
-              {{1, 3, 4, 5}, {2, 4, 4}, {1, 2, 3, 4, 4, 4, 5}},
-              // Example 2 from the book
-              {{-1}, {}, {-1}},
-              // Additional test cases
-              {{}, {}, {}},
-              {{1}, {}, {1}},
-              {{}, {1}, {1}},
-              {{1, 3, 5}, {2, 4, 6}, {1, 2, 3, 4, 5, 6}},
-              {{1, 1, 1}, {1, 1, 1}, {1, 1, 1, 1, 1, 1}},
-          };
-
-      for (const auto& [arr1, arr2, want] : tests) {
-        auto got = merge(arr1, arr2);
-        if (got != want) {
-          throw std::runtime_error("\nmerge(" + vecToStr(arr1) + ", " + vecToStr(arr2) +
-                                   "): got: " + vecToStr(got) + ", want: " + vecToStr(want) +
-                                   "\n");
-        }
+      std::string result = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) result += ", ";
+        result += std::to_string(vec[i]);
       }
-    
-    cout << "All merge tests passed." << endl;
+      result += "]";
+      return result;
+    };
+
+    std::vector<std::pair<std::vector<int>, bool>> tests = {
+        // Example 1 from the book
+        {{-5, -2, -1, 1, 1, 10}, true},
+        // Example 2 from the book
+        {{-3, 0, 0, 1, 2}, true},
+        // Example 3 from the book
+        {{-5, -3, -1, 0, 2, 4, 6}, false},
+        // Additional test cases
+        {{}, false},
+        {{0}, false},
+        {{-1, 1}, true},
+        {{-2, -1, 0, 1}, true},
+        {{1, 2, 3, 4}, false},
+    };
+
+    for (const auto& [arr, want] : tests) {
+      bool got = twoSum(arr);
+
+      if (got != want) {
+        throw std::runtime_error("\ntwoSum(" + vecToStr(arr) +
+                                 "): got: " + (got ? "true" : "false") +
+                                 ", want: " + (want ? "true" : "false") + "\n");
+      }
+    }
+    cout << "ALL TWO SUM TESTS PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
