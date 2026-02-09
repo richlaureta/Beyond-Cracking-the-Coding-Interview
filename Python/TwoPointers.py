@@ -135,6 +135,98 @@ def twoSum(arr: list[int]) -> bool:
     
     return False
 
+def threeWayMerge(arr1: list[int], arr2: list[int], arr3: list[int]) -> list[int]:
+    #Problem 27.8 Three-Way Merge Without Duplicates
+    inThereSet = set()
+    uniqueArray: list[int] = []
+    for index0 in range(len(arr1)):
+        if arr1[index0] not in inThereSet:
+            inThereSet.add(arr1[index0])
+            uniqueArray.append(arr1[index0])
+    
+    for index1 in range(len(arr2)):
+        if arr2[index1] not in inThereSet:
+            inThereSet.add(arr2[index1])
+            uniqueArray.append(arr2[index1])
+    
+    for index2 in range(len(arr3)):
+        if arr3[index2] not in inThereSet:
+            inThereSet.add(arr3[index2])
+            uniqueArray.append(arr3[index2])
+    
+    uniqueArray.sort()
+    
+    return uniqueArray
+
+    # inThereSet = set()
+    # uniqueArray = []
+    
+    # arr1Pointer = 0
+    # arr2Pointer = 0
+    # arr3Pointer = 0
+    
+    # while arr1Pointer < len(arr1) and arr2Pointer < len(arr2) and arr3Pointer < len(arr3):
+    #     if arr1[arr1Pointer] < arr2[arr2Pointer] and arr1[arr1Pointer] < arr3[arr3Pointer]:
+    #         if arr1[arr1Pointer] not in inThereSet:    
+    #             inThereSet.add(arr1[arr1Pointer])
+    #             uniqueArray.append(arr1[arr1Pointer])
+    #         arr1Pointer += 1
+    #         continue
+    #     elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr2[arr2Pointer] < arr3[arr3Pointer]:
+    #         if arr2[arr2Pointer] not in inThereSet:
+    #             inThereSet.add(arr2[arr2Pointer])
+    #             uniqueArray.append(arr2[arr2Pointer])
+    #         arr2Pointer += 1
+    #         continue
+    #     elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr3[arr3Pointer] < arr2[arr2Pointer]:
+    #         if arr3[arr3Pointer] not in inThereSet:
+    #             inThereSet.add(arr3[arr3Pointer])
+    #             uniqueArray.append(arr3[arr3Pointer])
+    #         arr3Pointer += 1
+    #         continue
+        
+    #     if arr1[arr1Pointer] == arr2[arr2Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
+    #         if arr1[arr1Pointer] not in inThereSet:    
+    #             inThereSet.add(arr1[arr1Pointer])
+    #             uniqueArray.append(arr1[arr1Pointer])
+    #         arr1Pointer += 1
+    #         arr2Pointer += 1
+    #         arr3Pointer += 1
+    #     elif arr1[arr1Pointer] < arr2[arr2Pointer] and arr2[arr2Pointer] == arr3[arr3Pointer]:
+    #         if arr1[arr1Pointer] not in inThereSet:
+    #             inThereSet.add(arr1[arr1Pointer])
+    #             uniqueArray.append(arr1[arr1Pointer])
+    #         arr1Pointer += 1
+    #     elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
+    #         if arr2[arr2Pointer] not in inThereSet:
+    #             inThereSet.add(arr2[arr2Pointer])
+    #             uniqueArray.append(arr2[arr2Pointer])
+    #         arr2Pointer += 1
+    #     elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr1[arr1Pointer] == arr2[arr2Pointer]:
+    #         if arr3[arr3Pointer] not in inThereSet:
+    #             inThereSet.add(arr3[arr3Pointer])
+    #             uniqueArray.append(arr3[arr3Pointer])
+    #         arr3Pointer += 1
+    
+    # if arr1Pointer == arr2Pointer and arr1Pointer == arr3Pointer:
+    #     return uniqueArray
+    
+    # pointer1 = 0
+    # pointer2 = 0
+    
+    # if arr1Pointer < len(arr1) and arr2Pointer < len(arr2):
+    #     pointer1 = arr1Pointer
+    #     pointer2 = arr2Pointer
+    # elif arr2Pointer < len(arr2) and arr3Pointer < len(arr3):
+    #     pointer1 = arr2Pointer
+    #     pointer2 = arr3Pointer
+    # elif arr1Pointer < len(arr1) and arr3Pointer < len(arr3):
+    #     pointer1 = arr1Pointer
+    #     pointer2 = arr3Pointer
+    
+    
+    
+    # return uniqueArray
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match
     
@@ -203,8 +295,26 @@ def runTwoSumTests():
         assert got == want, f"\ntwo_sum({arr}): got: {got}, want: {want}\n"
 
     print("ALL TWO SUM TESTS PASSED.")
+
+def runThreeWayMergeTests():
+    #Problem 27.8 Three-Way Merge
     
+    tests = [
+        # Example from the book
+        ([2, 3, 3, 4, 5, 7], [3, 3, 9], [3, 3, 9], [2, 3, 4, 5, 7, 9]),
+        # Additional test cases
+        ([], [], [], []),
+        ([1], [], [], [1]),
+        ([1], [1], [1], [1]),
+        ([1, 2, 3], [2, 3, 4], [3, 4, 5], [1, 2, 3, 4, 5]),
+        ([1, 1, 1], [1, 1], [1], [1]),
+        ([1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+    ]
+    for arr1, arr2, arr3, want in tests:
+        got = threeWayMerge(arr1, arr2, arr3)
+        assert got == want, f"\nthree_way_merge({arr1}, {arr2}, {arr3}): got: {got}, want: {want}\n"
+
+    print("ALL THREE-WAY MERGE TESTS PASSED.")
+
 if __name__ =="__main__":
-    runReverseCaseMatchTests()
-    runMergeTests()
-    runTwoSumTests()
+    runThreeWayMergeTests()
