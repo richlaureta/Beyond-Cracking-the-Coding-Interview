@@ -137,96 +137,147 @@ def twoSum(arr: list[int]) -> bool:
 
 def threeWayMerge(arr1: list[int], arr2: list[int], arr3: list[int]) -> list[int]:
     #Problem 27.8 Three-Way Merge Without Duplicates
+
     inThereSet = set()
-    uniqueArray: list[int] = []
-    for index0 in range(len(arr1)):
-        if arr1[index0] not in inThereSet:
-            inThereSet.add(arr1[index0])
-            uniqueArray.append(arr1[index0])
+    uniqueArray = []
     
-    for index1 in range(len(arr2)):
-        if arr2[index1] not in inThereSet:
-            inThereSet.add(arr2[index1])
-            uniqueArray.append(arr2[index1])
+    arr1Pointer = 0
+    arr2Pointer = 0
+    arr3Pointer = 0
     
-    for index2 in range(len(arr3)):
-        if arr3[index2] not in inThereSet:
-            inThereSet.add(arr3[index2])
-            uniqueArray.append(arr3[index2])
+    while arr1Pointer < len(arr1) and arr2Pointer < len(arr2) and arr3Pointer < len(arr3):
+        if arr1[arr1Pointer] < arr2[arr2Pointer] and arr1[arr1Pointer] < arr3[arr3Pointer]:
+            if arr1[arr1Pointer] not in inThereSet:    
+                inThereSet.add(arr1[arr1Pointer])
+                uniqueArray.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+            continue
+        elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr2[arr2Pointer] < arr3[arr3Pointer]:
+            if arr2[arr2Pointer] not in inThereSet:
+                inThereSet.add(arr2[arr2Pointer])
+                uniqueArray.append(arr2[arr2Pointer])
+            arr2Pointer += 1
+            continue
+        elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr3[arr3Pointer] < arr2[arr2Pointer]:
+            if arr3[arr3Pointer] not in inThereSet:
+                inThereSet.add(arr3[arr3Pointer])
+                uniqueArray.append(arr3[arr3Pointer])
+            arr3Pointer += 1
+            continue
+        
+        if arr1[arr1Pointer] == arr2[arr2Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
+            if arr1[arr1Pointer] not in inThereSet:    
+                inThereSet.add(arr1[arr1Pointer])
+                uniqueArray.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+            arr2Pointer += 1
+            arr3Pointer += 1
+        elif arr1[arr1Pointer] < arr2[arr2Pointer] and arr2[arr2Pointer] == arr3[arr3Pointer]:
+            if arr1[arr1Pointer] not in inThereSet:
+                inThereSet.add(arr1[arr1Pointer])
+                uniqueArray.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+        elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
+            if arr2[arr2Pointer] not in inThereSet:
+                inThereSet.add(arr2[arr2Pointer])
+                uniqueArray.append(arr2[arr2Pointer])
+            arr2Pointer += 1
+        elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr1[arr1Pointer] == arr2[arr2Pointer]:
+            if arr3[arr3Pointer] not in inThereSet:
+                inThereSet.add(arr3[arr3Pointer])
+                uniqueArray.append(arr3[arr3Pointer])
+            arr3Pointer += 1
+        elif arr1[arr1Pointer] < arr3[arr3Pointer] and arr1[arr1Pointer] == arr2[arr2Pointer]:
+            if arr1[arr1Pointer] not in inThereSet:
+                inThereSet.add(arr1[arr1Pointer])
+                uniqueArray.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+            arr2Pointer += 1
+        elif arr1[arr1Pointer] < arr2[arr2Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
+            if arr1[arr1Pointer] not in inThereSet:
+                inThereSet.add(arr1[arr1Pointer])
+                uniqueArray.append(arr1[arr1Pointer])
+            arr1Pointer += 1
+            arr3Pointer += 1
+        elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr2[arr2Pointer] == arr3[arr3Pointer]:
+            if arr2[arr2Pointer] not in inThereSet:
+                inThereSet.add(arr2[arr2Pointer])
+                uniqueArray.append(arr2[arr2Pointer])
+            arr2Pointer += 1
+            arr3Pointer += 1
+        elif arr2[arr2Pointer] < arr3[arr3Pointer] and arr2[arr2Pointer] == arr1[arr1Pointer]:
+            if arr2[arr2Pointer] not in inThereSet:
+                inThereSet.add(arr2[arr2Pointer])
+                uniqueArray.append(arr2[arr2Pointer])
+            arr1Pointer += 1
+            arr2Pointer += 1
+        elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr3[arr3Pointer] == arr2[arr2Pointer]:
+            if arr3[arr3Pointer] not in inThereSet:
+                inThereSet.add(arr3[arr3Pointer])
+                uniqueArray.append(arr3[arr3Pointer])
+            arr2Pointer += 1
+            arr3Pointer += 1
+        elif arr3[arr3Pointer] < arr2[arr2Pointer] and arr3[arr3Pointer] == arr1[arr1Pointer]:
+            if arr3[arr3Pointer] not in inThereSet:
+                inThereSet.add(arr3[arr3Pointer])
+                uniqueArray.append(arr3[arr3Pointer])
+            arr1Pointer += 1
+            arr3Pointer += 1
     
-    uniqueArray.sort()
+    pointer1 = 0
+    pointer2 = 0
+    
+    array1 = 0
+    array2 = 0
+    
+    if arr1Pointer > len(arr1) - 1:
+        pointer1 = arr2Pointer
+        pointer2 = arr3Pointer
+        array1 = arr2
+        array2 = arr3
+    elif arr2Pointer > len(arr2) - 1:
+        pointer1 = arr1Pointer
+        pointer2 = arr3Pointer
+        array1 = arr1
+        array2 = arr3
+    elif arr3Pointer > len(arr3) - 1:
+        pointer1 = arr1Pointer
+        pointer2 = arr2Pointer
+        array1 = arr1
+        array2 = arr2
+        
+    while pointer1 < len(array1) and pointer2 < len(array2):
+        if array1[pointer1] < array2[pointer2]:
+            if array1[pointer1] not in inThereSet:
+                inThereSet.add(array1[pointer1])
+                uniqueArray.append(array1[pointer1])
+            pointer1 += 1
+        elif array2[pointer2] < array1[pointer2]:
+            if array2[pointer2] not in inThereSet:
+                inThereSet.add(array2[pointer2])
+                uniqueArray.append(array2[pointer2])
+            pointer2 += 1
+        else:
+            if array1[pointer1] not in inThereSet:
+                inThereSet.add(array1[pointer1])
+                uniqueArray.append(array1[pointer1])
+            pointer1 += 1
+            pointer2 += 1
+    
+    while pointer1 < len(array1):
+        if array1[pointer1] not in inThereSet:
+            inThereSet.add(array1[pointer1])
+            uniqueArray.append(array1[pointer1])
+        pointer1 += 1
+    
+    while pointer2 < len(array2):
+        if array2[pointer2] not in inThereSet:
+            inThereSet.add(array2[pointer2])
+            uniqueArray.append(array2[pointer2])
+        pointer2 += 1
     
     return uniqueArray
 
-    # inThereSet = set()
-    # uniqueArray = []
-    
-    # arr1Pointer = 0
-    # arr2Pointer = 0
-    # arr3Pointer = 0
-    
-    # while arr1Pointer < len(arr1) and arr2Pointer < len(arr2) and arr3Pointer < len(arr3):
-    #     if arr1[arr1Pointer] < arr2[arr2Pointer] and arr1[arr1Pointer] < arr3[arr3Pointer]:
-    #         if arr1[arr1Pointer] not in inThereSet:    
-    #             inThereSet.add(arr1[arr1Pointer])
-    #             uniqueArray.append(arr1[arr1Pointer])
-    #         arr1Pointer += 1
-    #         continue
-    #     elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr2[arr2Pointer] < arr3[arr3Pointer]:
-    #         if arr2[arr2Pointer] not in inThereSet:
-    #             inThereSet.add(arr2[arr2Pointer])
-    #             uniqueArray.append(arr2[arr2Pointer])
-    #         arr2Pointer += 1
-    #         continue
-    #     elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr3[arr3Pointer] < arr2[arr2Pointer]:
-    #         if arr3[arr3Pointer] not in inThereSet:
-    #             inThereSet.add(arr3[arr3Pointer])
-    #             uniqueArray.append(arr3[arr3Pointer])
-    #         arr3Pointer += 1
-    #         continue
-        
-    #     if arr1[arr1Pointer] == arr2[arr2Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
-    #         if arr1[arr1Pointer] not in inThereSet:    
-    #             inThereSet.add(arr1[arr1Pointer])
-    #             uniqueArray.append(arr1[arr1Pointer])
-    #         arr1Pointer += 1
-    #         arr2Pointer += 1
-    #         arr3Pointer += 1
-    #     elif arr1[arr1Pointer] < arr2[arr2Pointer] and arr2[arr2Pointer] == arr3[arr3Pointer]:
-    #         if arr1[arr1Pointer] not in inThereSet:
-    #             inThereSet.add(arr1[arr1Pointer])
-    #             uniqueArray.append(arr1[arr1Pointer])
-    #         arr1Pointer += 1
-    #     elif arr2[arr2Pointer] < arr1[arr1Pointer] and arr1[arr1Pointer] == arr3[arr3Pointer]:
-    #         if arr2[arr2Pointer] not in inThereSet:
-    #             inThereSet.add(arr2[arr2Pointer])
-    #             uniqueArray.append(arr2[arr2Pointer])
-    #         arr2Pointer += 1
-    #     elif arr3[arr3Pointer] < arr1[arr1Pointer] and arr1[arr1Pointer] == arr2[arr2Pointer]:
-    #         if arr3[arr3Pointer] not in inThereSet:
-    #             inThereSet.add(arr3[arr3Pointer])
-    #             uniqueArray.append(arr3[arr3Pointer])
-    #         arr3Pointer += 1
-    
-    # if arr1Pointer == arr2Pointer and arr1Pointer == arr3Pointer:
-    #     return uniqueArray
-    
-    # pointer1 = 0
-    # pointer2 = 0
-    
-    # if arr1Pointer < len(arr1) and arr2Pointer < len(arr2):
-    #     pointer1 = arr1Pointer
-    #     pointer2 = arr2Pointer
-    # elif arr2Pointer < len(arr2) and arr3Pointer < len(arr3):
-    #     pointer1 = arr2Pointer
-    #     pointer2 = arr3Pointer
-    # elif arr1Pointer < len(arr1) and arr3Pointer < len(arr3):
-    #     pointer1 = arr1Pointer
-    #     pointer2 = arr3Pointer
-    
-    
-    
-    # return uniqueArray
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match
     
