@@ -365,7 +365,7 @@ def runThreeWayMergeTests():
         got = threeWayMerge(arr1, arr2, arr3)
         assert got == want, f"\nthree_way_merge({arr1}, {arr2}, {arr3}): got: {got}, want: {want}\n"
 
-    print("ALL THREE-WAY MERGE TESTS PASSED.")
+    print("ALL THREE-WAY MERGE TESTS PASSED!.")
 
 if __name__ =="__main__":
     runThreeWayMergeTests()
