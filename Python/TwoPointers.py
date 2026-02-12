@@ -217,6 +217,7 @@ def threeWayMerge(arr1: list[int], arr2: list[int], arr3: list[int]) -> list[int
                 uniqueArray.append(arr3[arr3Pointer])
             arr2Pointer += 1
             arr3Pointer += 1
+            #
         elif arr3[arr3Pointer] < arr2[arr2Pointer] and arr3[arr3Pointer] == arr1[arr1Pointer]:
             if arr3[arr3Pointer] not in inThereSet:
                 inThereSet.add(arr3[arr3Pointer])
@@ -252,7 +253,7 @@ def threeWayMerge(arr1: list[int], arr2: list[int], arr3: list[int]) -> list[int
                 inThereSet.add(array1[pointer1])
                 uniqueArray.append(array1[pointer1])
             pointer1 += 1
-        elif array2[pointer2] < array1[pointer2]:
+        elif array2[pointer2] < array1[pointer1]:
             if array2[pointer2] not in inThereSet:
                 inThereSet.add(array2[pointer2])
                 uniqueArray.append(array2[pointer2])
@@ -365,7 +366,7 @@ def runThreeWayMergeTests():
         got = threeWayMerge(arr1, arr2, arr3)
         assert got == want, f"\nthree_way_merge({arr1}, {arr2}, {arr3}): got: {got}, want: {want}\n"
 
-    print("ALL THREE-WAY MERGE TESTS PASSED!.")
+    print("ALL THREE-WAY MERGE TESTS PASSED.")
 
 if __name__ =="__main__":
     runThreeWayMergeTests()

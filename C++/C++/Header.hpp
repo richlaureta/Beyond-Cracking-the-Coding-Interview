@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <unordered_set>
 
 using namespace std;
 
@@ -64,5 +65,6 @@ bool palindromicSentence(const string &s);
 bool reverseCaseMatch(const string &s);
 vector<int> merge(const vector<int> &arr1, const vector<int> &arr2);
 bool twoSum(const vector<int> &arr);
+vector<int> threeWayMerge(const vector<int> &arr1, const vector<int> &arr2, const vector<int> &arr3);
 
 #endif // HEADER_HPP

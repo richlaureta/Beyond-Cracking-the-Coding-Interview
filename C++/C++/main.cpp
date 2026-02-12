@@ -192,41 +192,85 @@ int main(int argc, const char * argv[]) {
 //    cout << "All Merge tests passed." << endl;
     
     //Problem 27.7 2-Sum
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//      std::string result = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) result += ", ";
+//        result += std::to_string(vec[i]);
+//      }
+//      result += "]";
+//      return result;
+//    };
+//
+//    std::vector<std::pair<std::vector<int>, bool>> tests = {
+//        // Example 1 from the book
+//        {{-5, -2, -1, 1, 1, 10}, true},
+//        // Example 2 from the book
+//        {{-3, 0, 0, 1, 2}, true},
+//        // Example 3 from the book
+//        {{-5, -3, -1, 0, 2, 4, 6}, false},
+//        // Additional test cases
+//        {{}, false},
+//        {{0}, false},
+//        {{-1, 1}, true},
+//        {{-2, -1, 0, 1}, true},
+//        {{1, 2, 3, 4}, false},
+//    };
+//
+//    for (const auto& [arr, want] : tests) {
+//      bool got = twoSum(arr);
+//
+//      if (got != want) {
+//        throw std::runtime_error("\ntwoSum(" + vecToStr(arr) +
+//                                 "): got: " + (got ? "true" : "false") +
+//                                 ", want: " + (want ? "true" : "false") + "\n");
+//      }
+//    }
+//    cout << "ALL TWO SUM TESTS PASSED." << endl;
+    
+    //Problem 27.8 Three-Way Merge Without Duplicates
+//    const vector<int> arr1 = {1};
+//    const vector<int> arr2 = {};
+//    const vector<int> arr3 = {};
+//    
+//    vector<int> mergedThreeWay = threeWayMerge(arr1, arr2, arr3);
+//    
+//    for(int index = 0; index < mergedThreeWay.size(); index++) cout << mergedThreeWay[index] << endl;
     auto vecToStr = [](const std::vector<int>& vec) {
-      std::string result = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) result += ", ";
-        result += std::to_string(vec[i]);
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+
+      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>,
+                             std::vector<int>>>
+          tests = {
+              // Example from the book
+              {{2, 3, 3, 4, 5, 7}, {3, 3, 9}, {3, 3, 9}, {2, 3, 4, 5, 7, 9}},
+              // Additional test cases
+              {{}, {}, {}, {}},
+              {{1}, {}, {}, {1}},
+              {{1}, {1}, {1}, {1}},
+              {{1, 2, 3}, {2, 3, 4}, {3, 4, 5}, {1, 2, 3, 4, 5}},
+              {{1, 1, 1}, {1, 1}, {1}, {1}},
+              {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 2, 3, 4, 5, 6, 7, 8, 9}},
+          };
+
+      for (const auto& [arr1, arr2, arr3, want] : tests) {
+        auto got = threeWayMerge(arr1, arr2, arr3);
+
+        if (got != want) {
+          throw std::runtime_error("\nthreeWayMerge(" + vecToStr(arr1) + ", " + vecToStr(arr2) +
+                                   ", " + vecToStr(arr3) + "): got: " + vecToStr(got) +
+                                   ", want: " + vecToStr(want) + "\n");
+        }
       }
-      result += "]";
-      return result;
-    };
-
-    std::vector<std::pair<std::vector<int>, bool>> tests = {
-        // Example 1 from the book
-        {{-5, -2, -1, 1, 1, 10}, true},
-        // Example 2 from the book
-        {{-3, 0, 0, 1, 2}, true},
-        // Example 3 from the book
-        {{-5, -3, -1, 0, 2, 4, 6}, false},
-        // Additional test cases
-        {{}, false},
-        {{0}, false},
-        {{-1, 1}, true},
-        {{-2, -1, 0, 1}, true},
-        {{1, 2, 3, 4}, false},
-    };
-
-    for (const auto& [arr, want] : tests) {
-      bool got = twoSum(arr);
-
-      if (got != want) {
-        throw std::runtime_error("\ntwoSum(" + vecToStr(arr) +
-                                 "): got: " + (got ? "true" : "false") +
-                                 ", want: " + (want ? "true" : "false") + "\n");
-      }
-    }
-    cout << "ALL TWO SUM TESTS PASSED." << endl;
+    
+    cout << "ALL THREE-WAY MERGE TESTS PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
