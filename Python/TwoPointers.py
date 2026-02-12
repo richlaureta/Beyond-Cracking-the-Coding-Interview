@@ -301,7 +301,7 @@ def runReverseCaseMatchTests():
         got = reverseCaseMatch(s)
         assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
 
-    print("ALL REVERSE CASE MATCH TESTS PASSED.")
+    print("ALL REVERSE CASE MATCH TEST PROVIDED PASSED.")
 
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
@@ -322,7 +322,7 @@ def runMergeTests():
         got = merge(arr1, arr2)
         assert got == want, f"\nmerge({arr1}, {arr2}): got: {got}, want: {want}\n"
 
-    print("ALL MERGE TESTS PASSED.")
+    print("ALL MERGE TEST PROVIDED PASSED.")
 
 def runTwoSumTests():
     #Problem 27.7 2-Sum
@@ -346,7 +346,7 @@ def runTwoSumTests():
         got = twoSum(arr)
         assert got == want, f"\ntwo_sum({arr}): got: {got}, want: {want}\n"
 
-    print("ALL TWO SUM TESTS PASSED.")
+    print("ALL TWO SUM TEST PROVIDED PASSED.")
 
 def runThreeWayMergeTests():
     #Problem 27.8 Three-Way Merge
@@ -366,7 +366,7 @@ def runThreeWayMergeTests():
         got = threeWayMerge(arr1, arr2, arr3)
         assert got == want, f"\nthree_way_merge({arr1}, {arr2}, {arr3}): got: {got}, want: {want}\n"
 
-    print("ALL THREE-WAY MERGE TESTS PASSED.")
+    print("ALL THREE-WAY MERGE TEST PROVIDED PASSED.")
 
 if __name__ =="__main__":
     runThreeWayMergeTests()

@@ -189,7 +189,7 @@ int main(int argc, const char * argv[]) {
 //        }
 //      }
 //    
-//    cout << "All Merge tests passed." << endl;
+//    cout << "ALL MERGE TEST PROVIDED PASSED." << endl;
     
     //Problem 27.7 2-Sum
 //    auto vecToStr = [](const std::vector<int>& vec) {
@@ -226,7 +226,7 @@ int main(int argc, const char * argv[]) {
 //                                 ", want: " + (want ? "true" : "false") + "\n");
 //      }
 //    }
-//    cout << "ALL TWO SUM TESTS PASSED." << endl;
+//    cout << "ALL TWO SUM TEST PROVIDED PASSED." << endl;
     
     //Problem 27.8 Three-Way Merge Without Duplicates
 //    const vector<int> arr1 = {1};
@@ -270,7 +270,7 @@ int main(int argc, const char * argv[]) {
         }
       }
     
-    cout << "ALL THREE-WAY MERGE TESTS PASSED." << endl;
+    cout << "ALL THREE-WAY MERGE TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
