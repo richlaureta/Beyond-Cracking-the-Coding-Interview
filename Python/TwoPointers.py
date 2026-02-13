@@ -303,6 +303,57 @@ def runReverseCaseMatchTests():
 
     print("ALL REVERSE CASE MATCH TEST PROVIDED PASSED.")
 
+def sortValleyArray(arr: list[int]) -> list[int]:
+    #Problem 27.9 Sort Valley-Shaped Array
+    
+    if len(arr) == 1 or len(arr) == 0:
+        return arr
+    
+    leftPointer = 0
+    rightPointer = len(arr) - 1
+    
+    sortedList = [0] * len(arr)
+    indexList = len(arr) - 1
+    
+    while leftPointer <= rightPointer:
+        if rightPointer - leftPointer == 1 or rightPointer - leftPointer == 0:
+            if rightPointer == leftPointer:
+                sortedList[indexList] = arr[rightPointer]
+                break
+            
+            if arr[leftPointer] >  arr[rightPointer]:
+                sortedList[indexList] = arr[leftPointer]
+                indexList -= 1
+                sortedList[indexList] = arr[rightPointer]
+            elif arr[leftPointer] <  arr[rightPointer]:
+                sortedList[indexList] = arr[rightPointer]
+                indexList -= 1
+                sortedList[indexList] = arr[leftPointer]
+            else:
+                sortedList[indexList] = arr[leftPointer]
+                indexList -= 1
+                sortedList[indexList] = arr[rightPointer]
+            
+            break
+                
+        if arr[leftPointer] > arr[rightPointer]:
+            sortedList[indexList] = arr[leftPointer]
+            leftPointer += 1
+            indexList -= 1
+        elif arr[rightPointer] > arr[leftPointer]:
+            sortedList[indexList] = arr[rightPointer]
+            rightPointer -= 1
+            indexList -= 1
+        else:
+            sortedList[indexList] = arr[leftPointer]
+            indexList -= 1
+            leftPointer += 1
+            sortedList[indexList] = arr[rightPointer]
+            indexList -= 1
+            rightPointer -= 1
+
+    return sortedList
+
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
     
@@ -368,5 +419,29 @@ def runThreeWayMergeTests():
 
     print("ALL THREE-WAY MERGE TEST PROVIDED PASSED.")
 
+def runSortValleyArrayTests():
+    #Problem 27.9 Sort Valley-Shaped Array
+    
+    tests = [
+        # Example 1 from the book
+        ([8, 4, 2, 6], [2, 4, 6, 8]),
+        # Example 2 from the book
+        ([1, 2], [1, 2]),
+        # Example 3 from the book
+        ([2, 2, 1, 1], [1, 1, 2, 2]),
+        # Additional test cases
+        ([], []),
+        ([1], [1]),
+        ([3, 2, 1, 4], [1, 2, 3, 4]),
+        ([5, 4, 3, 2, 1, 2, 3], [1, 2, 2, 3, 3, 4, 5]),
+        ([1, 1, 1, 1], [1, 1, 1, 1]),
+    ]
+    for arr, want in tests:
+        got = sortValleyArray(arr)
+        assert got == want, f"\nsort_valley_array({arr}): got: {
+            got}, want: {want}\n"
+            
+    print("ALL SORT VALLEY-SHAPED ARRAY TEST PROVIDED PASSED.")
+    
 if __name__ =="__main__":
-    runThreeWayMergeTests()
+    runSortValleyArrayTests()
