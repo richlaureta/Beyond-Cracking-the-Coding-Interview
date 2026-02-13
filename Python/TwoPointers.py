@@ -306,7 +306,7 @@ def runReverseCaseMatchTests():
 def sortValleyArray(arr: list[int]) -> list[int]:
     #Problem 27.9 Sort Valley-Shaped Array
     
-    if len(arr) == 1 or len(arr) == 0:
+    if len(arr) == 1:
         return arr
     
     leftPointer = 0
@@ -321,11 +321,7 @@ def sortValleyArray(arr: list[int]) -> list[int]:
                 sortedList[indexList] = arr[rightPointer]
                 break
             
-            if arr[leftPointer] >  arr[rightPointer]:
-                sortedList[indexList] = arr[leftPointer]
-                indexList -= 1
-                sortedList[indexList] = arr[rightPointer]
-            elif arr[leftPointer] <  arr[rightPointer]:
+            if arr[leftPointer] <  arr[rightPointer]:
                 sortedList[indexList] = arr[rightPointer]
                 indexList -= 1
                 sortedList[indexList] = arr[leftPointer]

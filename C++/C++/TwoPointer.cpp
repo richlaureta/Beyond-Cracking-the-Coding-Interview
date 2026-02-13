@@ -383,3 +383,67 @@ vector<int> threeWayMerge(const vector<int> &arr1, const vector<int> &arr2, cons
     
     return uniqueVector;
 }
+
+vector<int> sortValleyArray(const vector<int> &arr)
+{
+    //Problem 27.9 Sort Valley-Shaped Array
+    
+    if((int)arr.size() == 1) return arr;
+    
+    int leftPointer = 0;
+    int rightPointer = (int)arr.size() - 1;
+    
+    vector<int> sortedVector((int)arr.size());
+    int indexVector = (int)arr.size() - 1;
+    
+    while(leftPointer <= rightPointer)
+    {
+        if(rightPointer - leftPointer == 1 or rightPointer - leftPointer == 0)
+        {
+            if(rightPointer == leftPointer)
+            {
+                sortedVector[indexVector] = arr[rightPointer];
+                break;
+            }
+            
+            if(arr[leftPointer] < arr[rightPointer])
+            {
+                sortedVector[indexVector] = arr[rightPointer];
+                indexVector--;
+                sortedVector[indexVector] = arr[leftPointer];
+            }
+            else
+            {
+                sortedVector[indexVector] = arr[leftPointer];
+                indexVector--;
+                sortedVector[indexVector] = arr[rightPointer];
+            }
+            
+            break;
+        }
+        
+        if(arr[leftPointer] > arr[rightPointer])
+        {
+            sortedVector[indexVector] = arr[leftPointer];
+            leftPointer++;
+            indexVector--;
+        }
+        else if(arr[rightPointer] > arr[leftPointer])
+        {
+            sortedVector[indexVector] = arr[rightPointer];
+            rightPointer--;
+            indexVector--;
+        }
+        else
+        {
+            sortedVector[indexVector] = arr[leftPointer];
+            indexVector--;
+            leftPointer++;
+            sortedVector[indexVector] = arr[rightPointer];
+            indexVector--;
+            rightPointer--;
+        }
+    }
+    
+    return sortedVector;
+}

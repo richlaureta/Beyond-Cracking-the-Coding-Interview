@@ -66,5 +66,6 @@ bool reverseCaseMatch(const string &s);
 vector<int> merge(const vector<int> &arr1, const vector<int> &arr2);
 bool twoSum(const vector<int> &arr);
 vector<int> threeWayMerge(const vector<int> &arr1, const vector<int> &arr2, const vector<int> &arr3);
+vector<int> sortValleyArray(const vector<int> &arr);
 
 #endif // HEADER_HPP
