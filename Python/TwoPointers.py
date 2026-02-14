@@ -350,42 +350,25 @@ def sortValleyArray(arr: list[int]) -> list[int]:
 def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
     #Problem 27.10 Missing Numbers in Range
     
-    if low == high:
-        return [low]
-            
+    inHere = set()
+
     leftPointer = 0
-    rangeList = []
+    rightPointer = len(arr) - 1
     
-    if len(arr) == 0:
-        for index in range(low, high + 1):
-            rangeList.append(index)
-        return rangeList
+    missingNumbersList = []
     
-    while leftPointer < len(arr) and arr[leftPointer] < high:
-        while arr[leftPointer] < low:
-            leftPointer += 1
+    while leftPointer <= rightPointer:
+        inHere.add(arr[leftPointer])
+        inHere.add(arr[rightPointer])
         
-        while low < high:
-            while leftPointer < len(arr) and arr[leftPointer] == low:
-                low += 1
-                leftPointer += 1
-                                
-            if leftPointer < len(arr):
-                for index in range(arr[leftPointer] - low):
-                    rangeList.append(low)
-                    low += 1
-                        
-            while leftPointer < len(arr) and arr[leftPointer] == low:
-                low += 1
-                
-            leftPointer += 1
-            
-            if leftPointer < len(arr) and arr[leftPointer] > high:
-                while low < high:
-                    low += 1
-                    rangeList.append(low)
+        leftPointer += 1
+        rightPointer -= 1
     
-    return rangeList
+    for index in range(low, high + 1):
+        if index not in inHere:
+            missingNumbersList.append(index)
+    
+    return missingNumbersList
 
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
@@ -496,5 +479,7 @@ def runMissingNumbersTests():
         assert got == want, f"\nmissing_numbers({arr}, {low}, {high}): got: {
         got}, want: {want}\n"
 
+    print("ALL MISSING NUMBER IN RANGE TEST PASSED.")
+    
 if __name__ =="__main__":
     runMissingNumbersTests()
