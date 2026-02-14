@@ -323,5 +323,6 @@ int main(int argc, const char *argv[]) {
     }
     
     cout << "ALL SORT VALLEY-SHAPED ARRAY TEST PROVIDED PASSED." << endl;
+    
     return EXIT_SUCCESS;
 }

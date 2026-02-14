@@ -306,9 +306,6 @@ def runReverseCaseMatchTests():
 def sortValleyArray(arr: list[int]) -> list[int]:
     #Problem 27.9 Sort Valley-Shaped Array
     
-    if len(arr) == 1:
-        return arr
-    
     leftPointer = 0
     rightPointer = len(arr) - 1
     
@@ -349,6 +346,46 @@ def sortValleyArray(arr: list[int]) -> list[int]:
             rightPointer -= 1
 
     return sortedList
+
+def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
+    #Problem 27.10 Missing Numbers in Range
+    
+    if low == high:
+        return [low]
+            
+    leftPointer = 0
+    rangeList = []
+    
+    if len(arr) == 0:
+        for index in range(low, high + 1):
+            rangeList.append(index)
+        return rangeList
+    
+    while leftPointer < len(arr) and arr[leftPointer] < high:
+        while arr[leftPointer] < low:
+            leftPointer += 1
+        
+        while low < high:
+            while leftPointer < len(arr) and arr[leftPointer] == low:
+                low += 1
+                leftPointer += 1
+                                
+            if leftPointer < len(arr):
+                for index in range(arr[leftPointer] - low):
+                    rangeList.append(low)
+                    low += 1
+                        
+            while leftPointer < len(arr) and arr[leftPointer] == low:
+                low += 1
+                
+            leftPointer += 1
+            
+            if leftPointer < len(arr) and arr[leftPointer] > high:
+                while low < high:
+                    low += 1
+                    rangeList.append(low)
+    
+    return rangeList
 
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
@@ -438,6 +475,26 @@ def runSortValleyArrayTests():
             got}, want: {want}\n"
             
     print("ALL SORT VALLEY-SHAPED ARRAY TEST PROVIDED PASSED.")
-    
+
+def runMissingNumbersTests():
+    tests = [
+      # Example 1 from the book
+      ([6, 9, 12, 15, 18], 9, 13, [10, 11, 13]),
+      # Example 2 from the book
+      ([], 9, 9, [9]),
+      # Example 3 from the book
+      ([6, 7, 8, 9], 7, 8, []),
+      # Additional test cases
+      ([], 1, 5, [1, 2, 3, 4, 5]),
+      ([1, 2, 3, 4, 5], 1, 5, []),
+      ([1, 3, 5], 1, 5, [2, 4]),
+      ([1], 1, 1, []),
+      ([2], 1, 3, [1, 3]),
+    ]
+    for arr, low, high, want in tests:
+        got = missingNumbers(arr, low, high)
+        assert got == want, f"\nmissing_numbers({arr}, {low}, {high}): got: {
+        got}, want: {want}\n"
+
 if __name__ =="__main__":
-    runSortValleyArrayTests()
+    runMissingNumbersTests()
