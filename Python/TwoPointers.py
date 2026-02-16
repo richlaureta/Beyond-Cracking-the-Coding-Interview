@@ -350,26 +350,52 @@ def sortValleyArray(arr: list[int]) -> list[int]:
 def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
     #Problem 27.10 Missing Numbers in Range
     
-    inHere = set()
-
     leftPointer = 0
-    rightPointer = len(arr) - 1
     
-    missingNumbersList = []
-    
-    while leftPointer <= rightPointer:
-        inHere.add(arr[leftPointer])
-        inHere.add(arr[rightPointer])
-        
+    while leftPointer < len(arr)  and arr[leftPointer] < low:
         leftPointer += 1
-        rightPointer -= 1
     
-    for index in range(low, high + 1):
-        if index not in inHere:
-            missingNumbersList.append(index)
+    startingRange = low
     
-    return missingNumbersList
-
+    missingNumberList = []
+    
+    if len(arr) == 0:
+        for index in range(low, high + 1):
+            missingNumberList.append(index)
+    
+    while leftPointer < len(arr) and startingRange < arr[leftPointer]:
+        for index in range(startingRange, arr[leftPointer]):
+            missingNumberList.append(index)
+        startingRange = arr[leftPointer]
+    
+    while leftPointer < len(arr) and startingRange < high:
+        for index in range(arr[leftPointer] - startingRange - 1):
+            startingRange += 1
+            missingNumberList.append(startingRange)
+        
+        if startingRange < arr[leftPointer] and leftPointer == len(arr):
+            countHere = startingRange
+            for index in range(countHere, arr[leftPointer]):
+                missingNumberList.append(index)
+        
+        startingRange = arr[leftPointer]
+        leftPointer += 1
+        
+        if leftPointer < len(arr) and arr[leftPointer] > high:
+            for index in range(high - startingRange):
+                startingRange += 1
+                missingNumberList.append(startingRange)
+        elif leftPointer < len(arr) and arr[leftPointer] == high:
+            for index in range(high - startingRange - 1):
+                startingRange += 1
+                missingNumberList.append(startingRange)
+        elif leftPointer >= len(arr) and high > arr[len(arr) - 1]:
+            for index in range(arr[len(arr)- 1] + 1, high + 1):
+                startingRange += 1
+                missingNumberList.append(startingRange)
+            
+    return missingNumberList
+    
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
     
@@ -479,7 +505,8 @@ def runMissingNumbersTests():
         assert got == want, f"\nmissing_numbers({arr}, {low}, {high}): got: {
         got}, want: {want}\n"
 
-    print("ALL MISSING NUMBER IN RANGE TEST PASSED.")
+    print("ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED.")
     
 if __name__ =="__main__":
+
     runMissingNumbersTests()
