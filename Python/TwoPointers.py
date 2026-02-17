@@ -415,24 +415,21 @@ def intervalIntersection(arr1: list[list[int]], arr2: list[list[int]]) -> list[l
         if (arr1Pointer < len(arr1) and
             arr2Pointer < len(arr2) and
             arr1[arr1Pointer][1] < arr2[arr2Pointer][1] and
-            arr1[arr1Pointer][0] < arr2[arr2Pointer][0]
-            ):
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][0]):
             intervalOverlapList.append([arr2[arr2Pointer][0], arr1[arr1Pointer][1]])
             arr1Pointer += 1
         
         if (arr1Pointer < len(arr1) and
             arr2Pointer < len(arr2) and
             arr1[arr1Pointer][1] < arr2[arr2Pointer][1] and
-            arr1[arr1Pointer][0] > arr2[arr2Pointer][0]
-            ):
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][0]):
             intervalOverlapList.append([arr1[arr1Pointer][0], arr1[arr1Pointer][1]])
             arr1Pointer += 1
 
         if (arr1Pointer < len(arr1) and
             arr2Pointer < len(arr2) and
             arr1[arr1Pointer][1] > arr2[arr2Pointer][1] and
-            arr1[arr1Pointer][0] < arr2[arr2Pointer][0]
-            ):
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][0]):
             intervalOverlapList.append([arr2[arr2Pointer][0], arr2[arr2Pointer][1]])
             arr2Pointer += 1
         
@@ -451,8 +448,7 @@ def intervalIntersection(arr1: list[list[int]], arr2: list[list[int]]) -> list[l
         if (arr1Pointer < len(arr1) and
             arr2Pointer < len(arr2) and
             arr1[arr1Pointer][1] > arr2[arr2Pointer][1] and
-            arr1[arr1Pointer][0] > arr2[arr2Pointer][0]
-            ):
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][0]):
             intervalOverlapList.append([arr1[arr1Pointer][0], arr2[arr2Pointer][1]])
             arr2Pointer += 1
         
