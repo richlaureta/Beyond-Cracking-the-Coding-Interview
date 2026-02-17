@@ -286,43 +286,88 @@ int main(int argc, const char *argv[]) {
     //    cout << "ALL THREE-WAY MERGE TEST PROVIDED PASSED." << endl;
 
     // Problem 27.9 Sort Valley-Shaped Array
-    auto vecToStr = [](const std::vector<int> &vec) {
+//    auto vecToStr = [](const std::vector<int> &vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//            if (i > 0)
+//                result += ", ";
+//            result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//    };
+//
+//    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+//        // Example 1 from the book
+//        {{8, 4, 2, 6}, {2, 4, 6, 8}},
+//        // Example 2 from the book
+//        {{1, 2}, {1, 2}},
+//        // Example 3 from the book
+//        {{2, 2, 1, 1}, {1, 1, 2, 2}},
+//        // Additional test cases
+//        {{}, {}},
+//        {{1}, {1}},
+//        {{3, 2, 1, 4}, {1, 2, 3, 4}},
+//        {{5, 4, 3, 2, 1, 2, 3}, {1, 2, 2, 3, 3, 4, 5}},
+//        {{1, 1, 1, 1}, {1, 1, 1, 1}},
+//    };
+//
+//    for (const auto &[arr, want] : tests) {
+//        auto got = sortValleyArray(arr);
+//
+//        if (got != want) {
+//            throw std::runtime_error("\nsortValleyArray(" + vecToStr(arr) +
+//                                     "): got: " + vecToStr(got) +
+//                                     ", want: " + vecToStr(want) + "\n");
+//        }
+//    }
+//    
+//    cout << "ALL SORT VALLEY-SHAPED ARRAY TEST PROVIDED PASSED." << endl;
+    
+    //Problem 27.10 Missing Numbers in Range
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
-            if (i > 0)
-                result += ", ";
-            result += std::to_string(vec[i]);
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
         }
         result += "]";
         return result;
-    };
+      };
 
-    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
-        // Example 1 from the book
-        {{8, 4, 2, 6}, {2, 4, 6, 8}},
-        // Example 2 from the book
-        {{1, 2}, {1, 2}},
-        // Example 3 from the book
-        {{2, 2, 1, 1}, {1, 1, 2, 2}},
-        // Additional test cases
-        {{}, {}},
-        {{1}, {1}},
-        {{3, 2, 1, 4}, {1, 2, 3, 4}},
-        {{5, 4, 3, 2, 1, 2, 3}, {1, 2, 2, 3, 3, 4, 5}},
-        {{1, 1, 1, 1}, {1, 1, 1, 1}},
-    };
+      std::vector<std::tuple<std::vector<int>, int, int, std::vector<int>>> tests =
+          {
+              // Example 1 from the book
+              {{6, 9, 12, 15, 18}, 9, 13, {10, 11, 13}},
+              // Example 2 from the book
+              {{}, 9, 9, {9}},
+              // Example 3 from the book
+              {{6, 7, 8, 9}, 7, 8, {}},
+              // Additional test cases
+              {{}, 1, 5, {1, 2, 3, 4, 5}},
+              {{1, 2, 3, 4, 5}, 1, 5, {}},
+              {{1, 3, 5}, 1, 5, {2, 4}},
+              {{1}, 1, 1, {}},
+              {{2}, 1, 3, {1, 3}},
+          };
 
-    for (const auto &[arr, want] : tests) {
-        auto got = sortValleyArray(arr);
+      for (const auto& [arr, low, high, want] : tests) {
+        auto got = missingNumbers(arr, low, high);
 
         if (got != want) {
-            throw std::runtime_error("\nsortValleyArray(" + vecToStr(arr) +
-                                     "): got: " + vecToStr(got) +
-                                     ", want: " + vecToStr(want) + "\n");
+          throw std::runtime_error("\nmissingNumbers(" + vecToStr(arr) + ", " +
+                                   std::to_string(low) + ", " +
+                                   std::to_string(high) + "): got: " + vecToStr(got) +
+                                   ", want: " + vecToStr(want) + "\n");
         }
-    }
+      }
     
-    cout << "ALL SORT VALLEY-SHAPED ARRAY TEST PROVIDED PASSED." << endl;
+    cout << "ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED." << endl;
+    
+//    const vector<int> arr = {6, 7, 8, 9};
+//    
+//    missingNumbers(arr, 7, 8);
     
     return EXIT_SUCCESS;
 }

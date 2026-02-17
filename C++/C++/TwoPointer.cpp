@@ -447,3 +447,75 @@ vector<int> sortValleyArray(const vector<int> &arr)
     
     return sortedVector;
 }
+
+vector<int> missingNumbers(const vector<int> &arr, int low, int high)
+{
+    //Problem 27.10 Missing Numbers in Range
+    
+    int leftPointer = 0;
+    
+    while(leftPointer < (int)arr.size() and arr[leftPointer] < low) leftPointer++;
+    
+    vector<int> missingNumbersVector = {};
+    
+    int startingRange = low;
+    
+    while(leftPointer < (int)arr.size() and startingRange < arr[leftPointer])
+    {
+        for(int index = startingRange; index < arr[leftPointer]; index++)
+        {
+            missingNumbersVector.push_back(startingRange);
+        }
+        startingRange = arr[leftPointer];
+    }
+    
+    while(leftPointer < (int)arr.size() and startingRange < high)
+    {
+        int holdStartingValue = startingRange;
+        for(int index = 0; index < arr[leftPointer] - holdStartingValue - 1; index++)
+        {
+            startingRange++;
+            missingNumbersVector.push_back(startingRange);
+        }
+        
+        if(startingRange < arr[leftPointer] and leftPointer == (int)arr.size())
+        {
+            for(int index = startingRange; index < arr[leftPointer]; index++) missingNumbersVector.push_back(index);
+        }
+        
+        startingRange = arr[leftPointer];
+        leftPointer++;
+        
+        if(leftPointer < (int)arr.size() and arr[leftPointer] > high)
+        {
+            for(int index = 0; index < high - startingRange; index++)
+            {
+                startingRange++;
+                missingNumbersVector.push_back(startingRange);
+            }
+        }
+        else if(leftPointer < (int)arr.size() and arr[leftPointer] == high)
+        {
+            for(int index = 0; index < high - startingRange - 1; index++)
+            {
+                startingRange++;
+                missingNumbersVector.push_back(startingRange);
+            }
+        }
+        else if(leftPointer >= (int)arr.size() and high > arr[(int)arr.size() - 1])
+        {
+            for(int index = arr[(int)arr.size() - 1] + 1; index < high + 1; index++)
+            {
+                startingRange++;
+                missingNumbersVector.push_back(startingRange);
+            }
+        }
+    }
+    
+    if((int)arr.size() == 0)
+    {
+        for(int index = low; index < high + 1; index++) missingNumbersVector.push_back(index);
+    }
+    
+    return missingNumbersVector;
+}

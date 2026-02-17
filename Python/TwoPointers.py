@@ -359,10 +359,6 @@ def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
     
     missingNumberList = []
     
-    if len(arr) == 0:
-        for index in range(low, high + 1):
-            missingNumberList.append(index)
-    
     while leftPointer < len(arr) and startingRange < arr[leftPointer]:
         for index in range(startingRange, arr[leftPointer]):
             missingNumberList.append(index)
@@ -374,8 +370,7 @@ def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
             missingNumberList.append(startingRange)
         
         if startingRange < arr[leftPointer] and leftPointer == len(arr):
-            countHere = startingRange
-            for index in range(countHere, arr[leftPointer]):
+            for index in range(startingRange, arr[leftPointer]):
                 missingNumberList.append(index)
         
         startingRange = arr[leftPointer]
@@ -393,6 +388,10 @@ def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
             for index in range(arr[len(arr)- 1] + 1, high + 1):
                 startingRange += 1
                 missingNumberList.append(startingRange)
+    
+    if len(arr) == 0:
+        for index in range(low, high + 1):
+            missingNumberList.append(index)
             
     return missingNumberList
     

@@ -67,5 +67,6 @@ vector<int> merge(const vector<int> &arr1, const vector<int> &arr2);
 bool twoSum(const vector<int> &arr);
 vector<int> threeWayMerge(const vector<int> &arr1, const vector<int> &arr2, const vector<int> &arr3);
 vector<int> sortValleyArray(const vector<int> &arr);
+vector<int> missingNumbers(const vector<int> &arr, int low, int high);
 
 #endif // HEADER_HPP
