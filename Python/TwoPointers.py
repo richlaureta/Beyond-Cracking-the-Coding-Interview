@@ -394,7 +394,75 @@ def missingNumbers(arr: list[int], low: int, high: int) -> list[int]:
             missingNumberList.append(index)
             
     return missingNumberList
+
+def intervalIntersection(arr1: list[list[int]], arr2: list[list[int]]) -> list[list[int]]:
+    #Problem 27.11 Interval Intersection
     
+    arr1Pointer = 0
+    arr2Pointer = 0
+    
+    intervalOverlapList = []
+    
+    while arr1Pointer < len(arr1) and arr2Pointer < len(arr2):
+        if arr1[arr1Pointer][1] < arr2[arr2Pointer][0]:
+            arr1Pointer += 1
+        
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][1]):
+            arr2Pointer += 1
+        
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][1] and 
+            arr1[arr1Pointer][1] < arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][0]
+            ):
+            intervalOverlapList.append([arr2[arr2Pointer][0], arr1[arr1Pointer][1]])
+            arr1Pointer += 1
+        
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][1] and 
+            arr1[arr1Pointer][1] < arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][0]
+            ):
+            intervalOverlapList.append([arr1[arr1Pointer][0], arr1[arr1Pointer][1]])
+            arr1Pointer += 1
+
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr1[arr1Pointer][1] > arr2[arr2Pointer][0] and 
+            arr1[arr1Pointer][1] > arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][0]
+            ):
+            intervalOverlapList.append([arr2[arr2Pointer][0], arr2[arr2Pointer][1]])
+            arr2Pointer += 1
+        
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr2[arr2Pointer][0] == arr1[arr1Pointer][1]):
+            intervalOverlapList.append([arr1[arr1Pointer][1], arr2[arr2Pointer][0]])
+            arr1Pointer += 1
+        
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr2[arr2Pointer][1] == arr1[arr1Pointer][0]):
+            intervalOverlapList.append([arr2[arr2Pointer][1], arr1[arr1Pointer][0]])
+            arr2Pointer += 1
+        
+
+        if (arr1Pointer < len(arr1) and
+            arr2Pointer < len(arr2) and
+            arr1[arr1Pointer][1] > arr2[arr2Pointer][0] and 
+            arr1[arr1Pointer][1] > arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][0]
+            ):
+            intervalOverlapList.append([arr1[arr1Pointer][0], arr2[arr2Pointer][1]])
+            arr2Pointer += 1
+        
+    return intervalOverlapList
+            
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
     
@@ -505,7 +573,36 @@ def runMissingNumbersTests():
         got}, want: {want}\n"
 
     print("ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED.")
+
+def runIntervalIntersectionTests():
+    tests = [
+        # Example 1 from the book
+        ([[0, 1], [4, 6], [7, 8]], [[2, 3], [5, 9], [10, 11]], [[5, 6], [7, 8]]),
+        # Example 2 from the book
+        ([[2, 4], [5, 8]], [[3, 3], [4, 7]], [[3, 3], [4, 4], [5, 7]]),
+        # Additional test cases
+        ([], [], []),
+        ([[1, 2]], [], []),
+        ([[1, 3]], [[2, 4]], [[2, 3]]),
+        ([[1, 5]], [[2, 3]], [[2, 3]]),
+        ([[1, 2], [3, 4]], [[2, 3]], [[2, 2], [3, 3]]),
+    ]
+    for arr1, arr2, want in tests:
+        got = intervalIntersection(arr1, arr2)
+        assert got == want, f"\ninterval_intersection({arr1}, {arr2}): got: {
+        got}, want: {want}\n"
+    
+    print("ALL INTERVAL INTERSECTION TEST PROVIDED PASSED.")
     
 if __name__ =="__main__":
-
-    runMissingNumbersTests()
+    # arr1 = [[0, 1], [4, 6], [7, 8]]
+    # arr2 = [[2, 3], [5, 9], [10, 11]]
+    # arr1 = [[2, 4], [5, 8]]
+    # arr2 = [[3, 3], [4, 7]]
+    
+    # arr1 = [[1, 2], [3, 4]]
+    # arr2 = [[2, 3]]
+    
+    # print(intervalIntersection(arr1, arr2))
+    
+    runIntervalIntersectionTests()

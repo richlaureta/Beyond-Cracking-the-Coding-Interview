@@ -365,9 +365,5 @@ int main(int argc, const char *argv[]) {
     
     cout << "ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED." << endl;
     
-//    const vector<int> arr = {6, 7, 8, 9};
-//    
-//    missingNumbers(arr, 7, 8);
-    
     return EXIT_SUCCESS;
 }
