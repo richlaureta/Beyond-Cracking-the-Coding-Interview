@@ -419,37 +419,77 @@ int main(int argc, const char *argv[]) {
     
     //Problem 27.12 Array Reversal
     
-    auto charVecToStr = [](const std::vector<char>& vec) {
+//    auto charVecToStr = [](const std::vector<char>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += vec[i];
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
+//          // Test cases
+//          {{'h', 'e', 'l', 'l', 'o'}, {'o', 'l', 'l', 'e', 'h'}},
+//          {{}, {}},
+//          {{'a'}, {'a'}},
+//          {{'a', 'b'}, {'b', 'a'}},
+//          {{'a', 'b', 'c'}, {'c', 'b', 'a'}},
+//          {{'a', 'b', 'c', 'd'}, {'d', 'c', 'b', 'a'}},
+//      };
+//
+//      for (const auto& [arr_orig, want] : tests) {
+//        auto arr = arr_orig;  // Make a copy since reverse modifies in place
+//        reverse(arr);
+//
+//        if (arr != want) {
+//          throw std::runtime_error("\nreverse(" + charVecToStr(arr_orig) + "): got: " +
+//                                   charVecToStr(arr) + ", want: " + charVecToStr(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL ARRAY REVERSE TEST PROVIDED PASSED." << endl;
+    
+    //Problem 27.13 Parity Sorting
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
           if (i > 0) result += ", ";
-          result += vec[i];
+          result += std::to_string(vec[i]);
         }
         result += "]";
         return result;
       };
 
-      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
-          // Test cases
-          {{'h', 'e', 'l', 'l', 'o'}, {'o', 'l', 'l', 'e', 'h'}},
+      std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+          // Example 1 from the book
+          {{1, 2, 3, 4, 5}, {2, 4, 1, 3, 5}},
+          // Example 2 from the book
+          {{5, 1, 3, 1, 5}, {5, 1, 3, 1, 5}},
+          // Additional test cases
           {{}, {}},
-          {{'a'}, {'a'}},
-          {{'a', 'b'}, {'b', 'a'}},
-          {{'a', 'b', 'c'}, {'c', 'b', 'a'}},
-          {{'a', 'b', 'c', 'd'}, {'d', 'c', 'b', 'a'}},
+          {{1}, {1}},
+          {{2}, {2}},
+          {{1, 2}, {2, 1}},
+          {{2, 1}, {2, 1}},
+          {{1, 3, 2, 4}, {2, 4, 1, 3}},
       };
 
-      for (const auto& [arr_orig, want] : tests) {
-        auto arr = arr_orig;  // Make a copy since reverse modifies in place
-        reverse(arr);
+      for (const auto& [arr_orig, example_solution] : tests) {
+        auto arr = arr_orig;  // Make a copy since sortEven modifies in place
+        sortEven(arr);
 
-        if (arr != want) {
-          throw std::runtime_error("\nreverse(" + charVecToStr(arr_orig) + "): got: " +
-                                   charVecToStr(arr) + ", want: " + charVecToStr(want) + "\n");
+        if (!isValidSolutionSortEven(arr, arr_orig)) {
+          throw std::runtime_error("\nsortEven(" + vecToStr(arr_orig) +
+                                   "): got: " + vecToStr(arr) +
+                                   ", example solution: " + vecToStr(example_solution) + "\n");
         }
       }
     
-    cout << "ALL ARRAY REVERSE TEST PROVIDED PASSED." << endl;
+    cout << "ALL PARITY SORTING TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
+

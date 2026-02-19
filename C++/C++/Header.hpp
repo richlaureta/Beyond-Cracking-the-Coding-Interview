@@ -70,5 +70,7 @@ vector<int> sortValleyArray(const vector<int> &arr);
 vector<int> missingNumbers(const vector<int> &arr, int low, int high);
 vector<vector<int>> intervalIntersection(const vector<vector<int>> &arr1, const vector<vector<int>> &arr2);
 void reverse(vector<char> &arr);
+bool isValidSolutionSortEven(const std::vector<int>& arr, const std::vector<int>& original);
+void sortEven(vector<int> &arr);
 
 #endif // HEADER_HPP

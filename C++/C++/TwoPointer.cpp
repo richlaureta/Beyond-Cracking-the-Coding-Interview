@@ -604,3 +604,53 @@ void reverse(vector<char> &arr)
         rightPointer--;
     }
 }
+
+bool isValidSolutionSortEven(const std::vector<int>& arr, const std::vector<int>& original) {
+    // Check that we have the same elements
+    //Problem 27.13 Parity Sorting
+    auto arr_sorted = arr;
+    auto original_sorted = original;
+    std::sort(arr_sorted.begin(), arr_sorted.end());
+    std::sort(original_sorted.begin(), original_sorted.end());
+    if (arr_sorted != original_sorted) {
+        return false;
+    }
+    
+    // Find the boundary between even and odd numbers
+    int boundary = 0;
+    while (boundary < arr.size() && arr[boundary] % 2 == 0) {
+        boundary++;
+    }
+    
+    // Check that all numbers before boundary are even
+    // and all numbers after are odd
+    for (int i = 0; i < boundary; i++) {
+        if (arr[i] % 2 != 0) {
+            return false;
+        }
+    }
+    for (int i = boundary; i < arr.size(); i++) {
+        if (arr[i] % 2 != 1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void sortEven(vector<int> &arr)
+{
+    //Problem 27.13 Parity Sorting
+    
+    int index = 0, oddIndex = (int)arr.size() - 1;
+    
+    while(index < oddIndex)
+    {
+        if(arr[index] % 2 != 0)
+        {
+            while(oddIndex > 0 and arr[oddIndex] % 2 != 0) oddIndex--;
+            if(oddIndex > index) swap(arr[index], arr[oddIndex]);
+        }
+        
+        index++;
+    }
+}
