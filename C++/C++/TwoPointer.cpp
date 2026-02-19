@@ -607,7 +607,8 @@ void reverse(vector<char> &arr)
 
 bool isValidSolutionSortEven(const std::vector<int>& arr, const std::vector<int>& original) {
     // Check that we have the same elements
-    //Problem 27.13 Parity Sorting
+    
+    //Problem 27.13 Parity Sorting TESTING
     auto arr_sorted = arr;
     auto original_sorted = original;
     std::sort(arr_sorted.begin(), arr_sorted.end());
