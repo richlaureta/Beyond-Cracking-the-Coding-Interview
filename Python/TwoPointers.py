@@ -279,30 +279,6 @@ def threeWayMerge(arr1: list[int], arr2: list[int], arr3: list[int]) -> list[int
     
     return uniqueArray
 
-def runReverseCaseMatchTests():
-    #Problem 27.5 Reverse Case Match
-    
-    tests = [
-        # Example 1 from the book
-        ("haDrRAHd", True),
-        # Example 2 from the book
-        ("haHrARDd", False),
-        # Additional test cases
-        ("", True),
-        ("aA", True),
-        ("Aa", True),
-        ("BbbB", True),
-        ("abAB", False),
-        ("abBA", True),
-        ("helloworldHELLOWORLD", False),
-    ]
-    
-    for s, want in tests:
-        got = reverseCaseMatch(s)
-        assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
-
-    print("ALL REVERSE CASE MATCH TEST PROVIDED PASSED.")
-
 def sortValleyArray(arr: list[int]) -> list[int]:
     #Problem 27.9 Sort Valley-Shaped Array
     
@@ -452,7 +428,42 @@ def intervalIntersection(arr1: list[list[int]], arr2: list[list[int]]) -> list[l
             arr2Pointer += 1
         
     return intervalOverlapList
-            
+
+def reverse(arr: list[str]) -> list[str]:
+    #Problem 27.11 Array Reversal 
+    
+    leftPointer, rightPointer = 0, len(arr) - 1
+    
+    while leftPointer < rightPointer:
+        arr[leftPointer], arr[rightPointer] = arr[rightPointer], arr[leftPointer]
+        leftPointer += 1
+        rightPointer -= 1
+        
+
+def runReverseCaseMatchTests():
+    #Problem 27.5 Reverse Case Match
+    
+    tests = [
+        # Example 1 from the book
+        ("haDrRAHd", True),
+        # Example 2 from the book
+        ("haHrARDd", False),
+        # Additional test cases
+        ("", True),
+        ("aA", True),
+        ("Aa", True),
+        ("BbbB", True),
+        ("abAB", False),
+        ("abBA", True),
+        ("helloworldHELLOWORLD", False),
+    ]
+    
+    for s, want in tests:
+        got = reverseCaseMatch(s)
+        assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
+
+    print("ALL REVERSE CASE MATCH TEST PROVIDED PASSED.")
+
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays
     
@@ -583,16 +594,24 @@ def runIntervalIntersectionTests():
         got}, want: {want}\n"
     
     print("ALL INTERVAL INTERSECTION TEST PROVIDED PASSED.")
+
+def runReverseTests():
+    tests = [
+        # Test cases
+        # (list("hello"), list("olleh")),
+        (list(""), list("")),
+        (list("a"), list("a")),
+        (list("ab"), list("ba")),
+        (list("abc"), list("cba")),
+        (list("abcd"), list("dcba")),
+    ]
+    for arr, want in tests:
+        arr_copy = arr.copy()  # Make a copy since reverse modifies in place
+        reverse(arr_copy)
+        assert arr_copy == want, f"\nreverse({arr}): got: {
+        arr_copy}, want: {want}\n"
     
-if __name__ =="__main__":
-    # arr1 = [[0, 1], [4, 6], [7, 8]]
-    # arr2 = [[2, 3], [5, 9], [10, 11]]
-    # arr1 = [[2, 4], [5, 8]]
-    # arr2 = [[3, 3], [4, 7]]
+    print("ALL REVERSE TEST PROVIDED PASSED.")
     
-    # arr1 = [[1, 2], [3, 4]]
-    # arr2 = [[2, 3]]
-    
-    # print(intervalIntersection(arr1, arr2))
-    
-    runIntervalIntersectionTests()
+if __name__ =="__main__":    
+    runReverseTests()
