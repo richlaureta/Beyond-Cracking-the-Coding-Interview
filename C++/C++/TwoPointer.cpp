@@ -590,3 +590,17 @@ vector<vector<int>> intervalIntersection(const vector<vector<int>> &arr1, const 
     
     return intervalOverlapVector;
 }
+
+void reverse(vector<char> &arr)
+{
+    //Problem 27.12 Array Reversal
+    
+    int leftPointer = 0,  rightPointer = (int)arr.size() - 1;
+    
+    while(leftPointer < rightPointer)
+    {
+        swap(arr[leftPointer], arr[rightPointer]);
+        leftPointer++;
+        rightPointer--;
+    }
+}

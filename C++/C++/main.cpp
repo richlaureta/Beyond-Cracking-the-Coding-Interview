@@ -366,56 +366,90 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED." << endl;
     
     //Problem 27.11 Interval Intersection
+//    
+//    auto intVecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<
+//          std::tuple<std::vector<std::vector<int>>, std::vector<std::vector<int>>,
+//                     std::vector<std::vector<int>>>>
+//          tests = {
+//              // Example 1 from the book
+//              {{{0, 1}, {4, 6}, {7, 8}},
+//               {{2, 3}, {5, 9}, {10, 11}},
+//               {{5, 6}, {7, 8}}},
+//              // Example 2 from the book
+//              {{{2, 4}, {5, 8}}, {{3, 3}, {4, 7}}, {{3, 3}, {4, 4}, {5, 7}}},
+//              // Additional test cases
+//              {{}, {}, {}},
+//              {{{1, 2}}, {}, {}},
+//              {{{1, 3}}, {{2, 4}}, {{2, 3}}},
+//              {{{1, 5}}, {{2, 3}}, {{2, 3}}},
+//              {{{1, 2}, {3, 4}}, {{2, 3}}, {{2, 2}, {3, 3}}},
+//          };
+//
+//      for (const auto& [arr1, arr2, want] : tests) {
+//        auto got = intervalIntersection(arr1, arr2);
+//
+//        if (got != want) {
+//          throw std::runtime_error("\nintervalIntersection(" + intVecVecToStr(arr1) + ", " +
+//                                   intVecVecToStr(arr2) + "): got: " + intVecVecToStr(got) +
+//                                   ", want: " + intVecVecToStr(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL INTERVAL INTERSECTION TEST PROVIDED PASSED." << endl;
     
-    auto intVecToStr = [](const std::vector<int>& vec) {
+    //Problem 27.12 Array Reversal
+    
+    auto charVecToStr = [](const std::vector<char>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
           if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-      
-      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += intVecToStr(vec[i]);
+          result += vec[i];
         }
         result += "]";
         return result;
       };
 
-      std::vector<
-          std::tuple<std::vector<std::vector<int>>, std::vector<std::vector<int>>,
-                     std::vector<std::vector<int>>>>
-          tests = {
-              // Example 1 from the book
-              {{{0, 1}, {4, 6}, {7, 8}},
-               {{2, 3}, {5, 9}, {10, 11}},
-               {{5, 6}, {7, 8}}},
-              // Example 2 from the book
-              {{{2, 4}, {5, 8}}, {{3, 3}, {4, 7}}, {{3, 3}, {4, 4}, {5, 7}}},
-              // Additional test cases
-              {{}, {}, {}},
-              {{{1, 2}}, {}, {}},
-              {{{1, 3}}, {{2, 4}}, {{2, 3}}},
-              {{{1, 5}}, {{2, 3}}, {{2, 3}}},
-              {{{1, 2}, {3, 4}}, {{2, 3}}, {{2, 2}, {3, 3}}},
-          };
+      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
+          // Test cases
+          {{'h', 'e', 'l', 'l', 'o'}, {'o', 'l', 'l', 'e', 'h'}},
+          {{}, {}},
+          {{'a'}, {'a'}},
+          {{'a', 'b'}, {'b', 'a'}},
+          {{'a', 'b', 'c'}, {'c', 'b', 'a'}},
+          {{'a', 'b', 'c', 'd'}, {'d', 'c', 'b', 'a'}},
+      };
 
-      for (const auto& [arr1, arr2, want] : tests) {
-        auto got = intervalIntersection(arr1, arr2);
+      for (const auto& [arr_orig, want] : tests) {
+        auto arr = arr_orig;  // Make a copy since reverse modifies in place
+        reverse(arr);
 
-        if (got != want) {
-          throw std::runtime_error("\nintervalIntersection(" + intVecVecToStr(arr1) + ", " +
-                                   intVecVecToStr(arr2) + "): got: " + intVecVecToStr(got) +
-                                   ", want: " + intVecVecToStr(want) + "\n");
+        if (arr != want) {
+          throw std::runtime_error("\nreverse(" + charVecToStr(arr_orig) + "): got: " +
+                                   charVecToStr(arr) + ", want: " + charVecToStr(want) + "\n");
         }
       }
     
-    cout << "ALL INTERVAL INTERSECTION TEST PROVIDED PASSED." << endl;
+    cout << "ALL ARRAY REVERSE TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
