@@ -439,6 +439,20 @@ def reverse(arr: list[str]) -> list[str]:
         leftPointer += 1
         rightPointer -= 1
         
+def sortEven(arr: list[int]) -> list[int]:
+    #Problem 27.13 Parity Sorting
+    
+    index = 0
+    oddIndex = len(arr) - 1
+    
+    while index < oddIndex:
+        if arr[index] % 2 != 0:
+            while oddIndex > 0 and arr[oddIndex] % 2 != 0:
+                oddIndex -= 1
+            if oddIndex > index:
+                arr[index], arr[oddIndex] = arr[oddIndex], arr[index]
+        
+        index += 1
 
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match
@@ -612,6 +626,51 @@ def runReverseTests():
         arr_copy}, want: {want}\n"
     
     print("ALL REVERSE TEST PROVIDED PASSED.")
+
+def is_valid_solution(arr, original):
+    # Check that we have the same elements
+    if sorted(arr) != sorted(original):
+        return False
+
+    # Find the boundary between even and odd numbers
+    boundary = 0
+    while boundary < len(arr) and arr[boundary] % 2 == 0:
+        boundary += 1
+
+    # Check that all numbers before boundary are even
+    # and all numbers after are odd
+    for i in range(boundary):
+        if arr[i] % 2 != 0:
+            return False
+    for i in range(boundary, len(arr)):
+        if arr[i] % 2 != 1:
+            return False
+        
+    return True
+
+def runParitySortingTests():
+    tests = [
+        # Example 1 from the book
+        ([1, 2, 3, 4, 5], [2, 4, 1, 3, 5]),
+        # Example 2 from the book
+        ([5, 1, 3, 1, 5], [5, 1, 3, 1, 5]),
+        # Additional test cases
+        ([], []),
+        ([1], [1]),
+        ([2], [2]),
+        ([1, 2], [2, 1]),
+        ([2, 1], [2, 1]),
+        ([1, 3, 2, 4], [2, 4, 1, 3]),
+    ]
     
-if __name__ =="__main__":    
-    runReverseTests()
+    for arr, example_solution in tests:
+        arr_copy = arr.copy()  # Make a copy since sort_even modifies in place
+        sortEven(arr_copy)
+        assert is_valid_solution(arr_copy, arr), \
+            f"\nsort_even({arr}): got: {arr_copy}, example solution: {
+            example_solution}\n"
+    
+    print("ALL PARITY SORTING TEST PROVIDED PASSED.")
+
+if __name__ =="__main__":
+    runParitySortingTests()
