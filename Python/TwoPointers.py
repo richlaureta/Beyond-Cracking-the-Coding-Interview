@@ -430,7 +430,7 @@ def intervalIntersection(arr1: list[list[int]], arr2: list[list[int]]) -> list[l
     return intervalOverlapList
 
 def reverse(arr: list[str]) -> list[str]:
-    #Problem 27.11 Array Reversal 
+    #Problem 27.12 Array Reversal 
     
     leftPointer, rightPointer = 0, len(arr) - 1
     
