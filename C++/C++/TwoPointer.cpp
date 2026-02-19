@@ -519,3 +519,74 @@ vector<int> missingNumbers(const vector<int> &arr, int low, int high)
     
     return missingNumbersVector;
 }
+
+vector<vector<int>> intervalIntersection(const vector<vector<int>> &arr1, const vector<vector<int>> &arr2)
+{
+    //Problem 27.11 Interval Intersection
+    
+    int arr1Pointer = 0;
+    int arr2Pointer = 0;
+    
+    vector<vector<int>> intervalOverlapVector = {};
+    
+    while(arr1Pointer < (int)arr1.size() and arr2Pointer < (int)arr2.size())
+    {
+        if(arr1[arr1Pointer][1] < arr2[arr2Pointer][0]) arr1Pointer++;
+        
+        if(arr1Pointer < (int)arr1.size() and arr1[arr1Pointer][0] > arr2[arr2Pointer][1]) arr2Pointer++;
+        
+        if (arr1Pointer < (int)arr1.size() and
+            arr2Pointer < (int)arr2.size() and
+            arr1[arr1Pointer][1] < arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][0])
+        {
+            intervalOverlapVector.push_back({arr2[arr2Pointer][0], arr1[arr1Pointer][1]});
+            arr1Pointer++;
+        }
+        
+        if (arr1Pointer < (int)arr1.size() and
+            arr2Pointer < (int)arr2.size() and
+            arr1[arr1Pointer][1] < arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][0])
+        {
+            intervalOverlapVector.push_back({arr1[arr1Pointer][0], arr1[arr1Pointer][1]});
+            arr1Pointer++;
+        }
+        
+        if (arr1Pointer < (int)arr1.size() and
+            arr2Pointer < (int)arr2.size() and
+            arr1[arr1Pointer][1] > arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] < arr2[arr2Pointer][0])
+        {
+            intervalOverlapVector.push_back({arr2[arr2Pointer][0], arr2[arr2Pointer][1]});
+            arr2Pointer++;
+        }
+        
+        if (arr1Pointer < (int)arr1.size() and
+            arr2Pointer < (int)arr2.size() and
+            arr2[arr2Pointer][0] == arr1[arr1Pointer][1])
+        {
+            intervalOverlapVector.push_back({arr1[arr1Pointer][1], arr2[arr2Pointer][0]});
+            arr1Pointer++;
+        }
+        
+        if (arr1Pointer < (int)arr1.size() and
+            arr2Pointer < (int)arr2.size() and
+            arr2[arr2Pointer][1] == arr1[arr1Pointer][0])
+        {
+            intervalOverlapVector.push_back({arr2[arr2Pointer][1], arr1[arr1Pointer][0]});
+            arr2Pointer++;
+        }
+        
+        if (arr1Pointer < (int)arr1.size() and
+            arr2Pointer < (int)arr2.size() and
+            arr1[arr1Pointer][1] > arr2[arr2Pointer][1] and
+            arr1[arr1Pointer][0] > arr2[arr2Pointer][0])
+        {
+            intervalOverlapVector.push_back({arr1[arr1Pointer][0], arr2[arr2Pointer][1]});
+            arr2Pointer++;
+        }
+    }
+    
+    return intervalOverlapVector;
+}

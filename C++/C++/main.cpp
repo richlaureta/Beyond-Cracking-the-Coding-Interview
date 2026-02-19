@@ -326,7 +326,48 @@ int main(int argc, const char *argv[]) {
     
     //Problem 27.10 Missing Numbers in Range
     
-    auto vecToStr = [](const std::vector<int>& vec) {
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, int, int, std::vector<int>>> tests =
+//          {
+//              // Example 1 from the book
+//              {{6, 9, 12, 15, 18}, 9, 13, {10, 11, 13}},
+//              // Example 2 from the book
+//              {{}, 9, 9, {9}},
+//              // Example 3 from the book
+//              {{6, 7, 8, 9}, 7, 8, {}},
+//              // Additional test cases
+//              {{}, 1, 5, {1, 2, 3, 4, 5}},
+//              {{1, 2, 3, 4, 5}, 1, 5, {}},
+//              {{1, 3, 5}, 1, 5, {2, 4}},
+//              {{1}, 1, 1, {}},
+//              {{2}, 1, 3, {1, 3}},
+//          };
+//
+//      for (const auto& [arr, low, high, want] : tests) {
+//        auto got = missingNumbers(arr, low, high);
+//
+//        if (got != want) {
+//          throw std::runtime_error("\nmissingNumbers(" + vecToStr(arr) + ", " +
+//                                   std::to_string(low) + ", " +
+//                                   std::to_string(high) + "): got: " + vecToStr(got) +
+//                                   ", want: " + vecToStr(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED." << endl;
+    
+    //Problem 27.11 Interval Intersection
+    
+    auto intVecToStr = [](const std::vector<int>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
           if (i > 0) result += ", ";
@@ -335,35 +376,46 @@ int main(int argc, const char *argv[]) {
         result += "]";
         return result;
       };
+      
+      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += intVecToStr(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
 
-      std::vector<std::tuple<std::vector<int>, int, int, std::vector<int>>> tests =
-          {
+      std::vector<
+          std::tuple<std::vector<std::vector<int>>, std::vector<std::vector<int>>,
+                     std::vector<std::vector<int>>>>
+          tests = {
               // Example 1 from the book
-              {{6, 9, 12, 15, 18}, 9, 13, {10, 11, 13}},
+              {{{0, 1}, {4, 6}, {7, 8}},
+               {{2, 3}, {5, 9}, {10, 11}},
+               {{5, 6}, {7, 8}}},
               // Example 2 from the book
-              {{}, 9, 9, {9}},
-              // Example 3 from the book
-              {{6, 7, 8, 9}, 7, 8, {}},
+              {{{2, 4}, {5, 8}}, {{3, 3}, {4, 7}}, {{3, 3}, {4, 4}, {5, 7}}},
               // Additional test cases
-              {{}, 1, 5, {1, 2, 3, 4, 5}},
-              {{1, 2, 3, 4, 5}, 1, 5, {}},
-              {{1, 3, 5}, 1, 5, {2, 4}},
-              {{1}, 1, 1, {}},
-              {{2}, 1, 3, {1, 3}},
+              {{}, {}, {}},
+              {{{1, 2}}, {}, {}},
+              {{{1, 3}}, {{2, 4}}, {{2, 3}}},
+              {{{1, 5}}, {{2, 3}}, {{2, 3}}},
+              {{{1, 2}, {3, 4}}, {{2, 3}}, {{2, 2}, {3, 3}}},
           };
 
-      for (const auto& [arr, low, high, want] : tests) {
-        auto got = missingNumbers(arr, low, high);
+      for (const auto& [arr1, arr2, want] : tests) {
+        auto got = intervalIntersection(arr1, arr2);
 
         if (got != want) {
-          throw std::runtime_error("\nmissingNumbers(" + vecToStr(arr) + ", " +
-                                   std::to_string(low) + ", " +
-                                   std::to_string(high) + "): got: " + vecToStr(got) +
-                                   ", want: " + vecToStr(want) + "\n");
+          throw std::runtime_error("\nintervalIntersection(" + intVecVecToStr(arr1) + ", " +
+                                   intVecVecToStr(arr2) + "): got: " + intVecVecToStr(got) +
+                                   ", want: " + intVecVecToStr(want) + "\n");
         }
       }
     
-    cout << "ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED." << endl;
+    cout << "ALL INTERVAL INTERSECTION TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

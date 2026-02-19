@@ -68,5 +68,6 @@ bool twoSum(const vector<int> &arr);
 vector<int> threeWayMerge(const vector<int> &arr1, const vector<int> &arr2, const vector<int> &arr3);
 vector<int> sortValleyArray(const vector<int> &arr);
 vector<int> missingNumbers(const vector<int> &arr, int low, int high);
+vector<vector<int>> intervalIntersection(const vector<vector<int>> &arr1, const vector<vector<int>> &arr2);
 
 #endif // HEADER_HPP
