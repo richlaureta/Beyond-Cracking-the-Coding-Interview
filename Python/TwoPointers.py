@@ -439,11 +439,10 @@ def reverse(arr: list[str]) -> list[str]:
         leftPointer += 1
         rightPointer -= 1
         
-def sortEven(arr: list[int]) -> list[int]:
+def sortEven(arr: list[int]):
     #Problem 27.13 Parity Sorting
     
-    index = 0
-    oddIndex = len(arr) - 1
+    index, oddIndex = 0, len(arr) - 1
     
     while index < oddIndex:
         if arr[index] % 2 != 0:
