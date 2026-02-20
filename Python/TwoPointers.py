@@ -453,6 +453,21 @@ def sortEven(arr: list[int]):
         
         index += 1
 
+def removeDuplicates(arr: list[int]) -> int:
+    #Problem 27.14 In-Place Duplicate Removal
+    
+    if len(arr) == 0:
+        return 0
+    
+    uniqueCount = 1
+    
+    for index in range(1, len(arr)):
+        if arr[index] != arr[index - 1]:
+            arr[uniqueCount] = arr[index]
+            uniqueCount += 1
+            
+    return uniqueCount
+        
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match
     
@@ -671,5 +686,29 @@ def runParitySortingTests():
     
     print("ALL PARITY SORTING TEST PROVIDED PASSED.")
 
+def runRemoveDuplicatesTests():
+    tests = [
+        # Example from the book
+        ([1, 2, 2, 3, 3, 3, 5], 4, [1, 2, 3, 5]),
+        # Additional test cases
+        ([], 0, []),
+        ([1], 1, [1]),
+        ([1, 1], 1, [1]),
+        ([1, 2], 2, [1, 2]),
+        ([1, 1, 1], 1, [1]),
+        ([1, 2, 2, 2, 3], 3, [1, 2, 3]),
+    ]
+    for arr, want_len, want_prefix in tests:
+        arr_copy = arr.copy()  # Make a copy since remove_duplicates modifies in place
+        got_len = removeDuplicates(arr_copy)
+        assert got_len == want_len, \
+            f"\nremove_duplicates({arr}): got length: {
+            got_len}, want length: {want_len}\n"
+        assert arr_copy[:want_len] == want_prefix, \
+            f"\nremove_duplicates({arr}): got prefix: {
+            arr_copy[:want_len]}, want prefix: {want_prefix}\n"
+
+    print("ALL IN-PLACE DUPLICATE REMOVAL TEST PROVIDED PASSED.")
+    
 if __name__ =="__main__":
-    runParitySortingTests()
+    runRemoveDuplicatesTests()
