@@ -655,3 +655,23 @@ void sortEven(vector<int> &arr)
         index++;
     }
 }
+
+int removeDuplicates(vector<int> &arr)
+{
+    //Problem 27.14 In-Place Duplicate Removal
+    
+    if((int)arr.size() == 0) return 0;
+    
+    int uniqueCount = 1;
+    
+    for(int index = 1; index < (int)arr.size(); index++)
+    {
+        if(arr[index] != arr[index - 1])
+        {
+            arr[uniqueCount] = arr[index];
+            uniqueCount++;
+        }
+    }
+    
+    return uniqueCount;
+}

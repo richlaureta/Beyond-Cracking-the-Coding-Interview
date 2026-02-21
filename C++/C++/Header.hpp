@@ -72,5 +72,6 @@ vector<vector<int>> intervalIntersection(const vector<vector<int>> &arr1, const 
 void reverse(vector<char> &arr);
 bool isValidSolutionSortEven(const std::vector<int>& arr, const std::vector<int>& original);
 void sortEven(vector<int> &arr);
+int removeDuplicates(vector<int> &arr);
 
 #endif // HEADER_HPP
