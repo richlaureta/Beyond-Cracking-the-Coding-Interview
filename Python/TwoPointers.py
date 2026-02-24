@@ -491,8 +491,9 @@ def partition(arr: list[int], pivot: int) -> list[int]:
             arr[index1], arr[equalIndex] = arr[equalIndex], arr[index1] 
             equalIndex -= 1
         index1 += 1
+        
 def runReverseCaseMatchTests():
-    #Problem 27.5 Reverse Case Match
+    #Problem 27.5 Reverse Case Match Tests
     
     tests = [
         # Example 1 from the book
@@ -516,7 +517,7 @@ def runReverseCaseMatchTests():
     print("ALL REVERSE CASE MATCH TEST PROVIDED PASSED.")
 
 def runMergeTests():
-    #Problem 27.6 Merge Two Sorted Arrays
+    #Problem 27.6 Merge Two Sorted Arrays Tests
     
     tests = [
       # Example 1 from the book
@@ -537,7 +538,7 @@ def runMergeTests():
     print("ALL MERGE TEST PROVIDED PASSED.")
 
 def runTwoSumTests():
-    #Problem 27.7 2-Sum
+    #Problem 27.7 2-Sum Tests
     
     tests = [
         # Example 1 from the book
@@ -561,7 +562,7 @@ def runTwoSumTests():
     print("ALL TWO SUM TEST PROVIDED PASSED.")
 
 def runThreeWayMergeTests():
-    #Problem 27.8 Three-Way Merge
+    #Problem 27.8 Three-Way Merge Tests
     
     tests = [
         # Example from the book
@@ -581,7 +582,7 @@ def runThreeWayMergeTests():
     print("ALL THREE-WAY MERGE TEST PROVIDED PASSED.")
 
 def runSortValleyArrayTests():
-    #Problem 27.9 Sort Valley-Shaped Array
+    #Problem 27.9 Sort Valley-Shaped Array Tests
     
     tests = [
         # Example 1 from the book
@@ -605,6 +606,8 @@ def runSortValleyArrayTests():
     print("ALL SORT VALLEY-SHAPED ARRAY TEST PROVIDED PASSED.")
 
 def runMissingNumbersTests():
+    #Problem 27.10 Missing Numbers in Range Tests
+    
     tests = [
       # Example 1 from the book
       ([6, 9, 12, 15, 18], 9, 13, [10, 11, 13]),
@@ -627,6 +630,8 @@ def runMissingNumbersTests():
     print("ALL MISSING NUMBERS IN RANGE TEST PROVIDED PASSED.")
 
 def runIntervalIntersectionTests():
+    #Problem 27.11 Interval Intersection Tests
+    
     tests = [
         # Example 1 from the book
         ([[0, 1], [4, 6], [7, 8]], [[2, 3], [5, 9], [10, 11]], [[5, 6], [7, 8]]),
@@ -647,6 +652,8 @@ def runIntervalIntersectionTests():
     print("ALL INTERVAL INTERSECTION TEST PROVIDED PASSED.")
 
 def runReverseTests():
+    #Problem 27.12 Array Reversal Tests
+    
     tests = [
         # Test cases
         # (list("hello"), list("olleh")),
@@ -664,7 +671,9 @@ def runReverseTests():
     
     print("ALL REVERSE TEST PROVIDED PASSED.")
 
-def is_valid_solution(arr, original):
+def isValidSolutionParitySorting(arr, original):
+    #Problem 27.13 Parity Sorting Tests
+    
     # Check that we have the same elements
     if sorted(arr) != sorted(original):
         return False
@@ -686,6 +695,8 @@ def is_valid_solution(arr, original):
     return True
 
 def runParitySortingTests():
+    #Problem 27.13 Parity Sorting Tests
+    
     tests = [
         # Example 1 from the book
         ([1, 2, 3, 4, 5], [2, 4, 1, 3, 5]),
@@ -703,13 +714,15 @@ def runParitySortingTests():
     for arr, example_solution in tests:
         arr_copy = arr.copy()  # Make a copy since sort_even modifies in place
         sortEven(arr_copy)
-        assert is_valid_solution(arr_copy, arr), \
+        assert isValidSolutionParitySorting(arr_copy, arr), \
             f"\nsort_even({arr}): got: {arr_copy}, example solution: {
             example_solution}\n"
     
     print("ALL PARITY SORTING TEST PROVIDED PASSED.")
 
 def runRemoveDuplicatesTests():
+    #Problem 27.14 In-Place Duplicate Removal Tests
+    
     tests = [
         # Example from the book
         ([1, 2, 2, 3, 3, 3, 5], 4, [1, 2, 3, 5]),
