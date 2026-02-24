@@ -471,14 +471,15 @@ def removeDuplicates(arr: list[int]) -> int:
 def partition(arr: list[int], pivot: int) -> list[int]:
     #Problem 27.15 QuickSort Partition
     
-    greaterThanOrEqualPivotIndex = len(arr) - 1
+    greaterThanPivotIndex = len(arr) - 1
     index = 0
-    while index < greaterThanOrEqualPivotIndex:
+    
+    while index < greaterThanPivotIndex:
         if arr[index] > pivot:
-            while arr[greaterThanOrEqualPivotIndex] > pivot:
-                greaterThanOrEqualPivotIndex -= 1
-            arr[index], arr[greaterThanOrEqualPivotIndex] = arr[greaterThanOrEqualPivotIndex], arr[index]
-            greaterThanOrEqualPivotIndex -= 1
+            while arr[greaterThanPivotIndex] > pivot:
+                greaterThanPivotIndex -= 1
+            arr[index], arr[greaterThanPivotIndex] = arr[greaterThanPivotIndex], arr[index]
+            greaterThanPivotIndex -= 1
         index += 1
     
     index1 = 0
