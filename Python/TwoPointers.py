@@ -477,8 +477,6 @@ def partition(arr: list[int], pivot: int) -> list[int]:
         if arr[index] > pivot:
             while arr[greaterThanOrEqualPivotIndex] > pivot:
                 greaterThanOrEqualPivotIndex -= 1
-            if greaterThanOrEqualPivotIndex <= index:
-                break
             arr[index], arr[greaterThanOrEqualPivotIndex] = arr[greaterThanOrEqualPivotIndex], arr[index]
             greaterThanOrEqualPivotIndex -= 1
         index += 1
