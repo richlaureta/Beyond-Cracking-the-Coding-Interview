@@ -468,7 +468,7 @@ def removeDuplicates(arr: list[int]) -> int:
             
     return uniqueCount
 
-def partition(arr: list[int], pivot: int) -> list[int]:
+def partition(arr: list[int], pivot: int):
     #Problem 27.15 QuickSort Partition
     
     greaterThanPivotIndex = len(arr) - 1

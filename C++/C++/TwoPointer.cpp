@@ -676,3 +676,67 @@ int removeDuplicates(vector<int> &arr)
     return uniqueCount;
 }
 
+bool isValidPartition(const std::vector<int>& arr, int pivot) {
+  // Find boundaries between sections
+  int first = 0;
+  while (first < arr.size() && arr[first] < pivot) {
+    first++;
+  }
+  int second = first;
+  while (second < arr.size() && arr[second] == pivot) {
+    second++;
+  }
+
+  // Check that all elements are in their correct sections
+  for (int i = 0; i < first; i++) {
+    if (arr[i] >= pivot) {
+      return false;
+    }
+  }
+  for (int i = first; i < second; i++) {
+    if (arr[i] != pivot) {
+      return false;
+    }
+  }
+  for (int i = second; i < arr.size(); i++) {
+    if (arr[i] <= pivot) {
+      return false;
+    }
+  }
+  return true;
+}
+
+void partition(vector<int> &arr, int pivot)
+{
+    //Problem 27.15 Quicksort Partition
+    
+    int greaterThanPivotIndex = (int) arr.size() - 1;
+    int index = 0;
+    
+    while(index < greaterThanPivotIndex)
+    {
+        if(arr[index] > pivot)
+        {
+            while(arr[greaterThanPivotIndex] > pivot) greaterThanPivotIndex--;
+            swap(arr[index], arr[greaterThanPivotIndex]);
+            greaterThanPivotIndex--;
+        }
+        
+        index++;
+    }
+    
+    int index1 = 0;
+    int equalIndex = index - 1;
+    
+    while(index1 < equalIndex)
+    {
+        if(arr[index1] == pivot)
+        {
+            while(arr[equalIndex] == pivot) equalIndex--;
+            swap(arr[index1], arr[equalIndex]);
+            equalIndex--;
+        }
+        
+        index1++;
+    }
+}

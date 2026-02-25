@@ -73,5 +73,7 @@ void reverse(vector<char> &arr);
 bool isValidSolutionSortEven(const std::vector<int>& arr, const std::vector<int>& original);
 void sortEven(vector<int> &arr);
 int removeDuplicates(vector<int> &arr);
+void partition(vector<int> &arr, int pivot);
+bool isValidPartition(const vector<int> &arr, int pivot);
 
 #endif // HEADER_HPP

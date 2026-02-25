@@ -492,6 +492,54 @@ int main(int argc, const char *argv[]) {
     
     //Problem 27.14 In-Place Duplicate Removal
     
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
+//          // Example from the book
+//          std::make_tuple(std::vector<int>{1, 2, 2, 3, 3, 3, 5}, 4,
+//                          std::vector<int>{1, 2, 3, 5}),
+//          // Additional test cases
+//          std::make_tuple(std::vector<int>{}, 0, std::vector<int>{}),
+//          std::make_tuple(std::vector<int>{1}, 1, std::vector<int>{1}),
+//          std::make_tuple(std::vector<int>{1, 1}, 1, std::vector<int>{1}),
+//          std::make_tuple(std::vector<int>{1, 2}, 2, std::vector<int>{1, 2}),
+//          std::make_tuple(std::vector<int>{1, 1, 1}, 1, std::vector<int>{1}),
+//          std::make_tuple(std::vector<int>{1, 2, 2, 2, 3}, 3,
+//                          std::vector<int>{1, 2, 3}),
+//      };
+//
+//      for (const auto& [arr_orig, want_len, want_prefix] : tests) {
+//        auto arr =
+//            arr_orig;  // Make a copy since removeDuplicates modifies in place
+//        int got_len = removeDuplicates(arr);
+//
+//        if (got_len != want_len) {
+//          throw std::runtime_error("\nremoveDuplicates(" + vecToStr(arr_orig) +
+//                                   "): got length: " + std::to_string(got_len) +
+//                                   ", want length: " + std::to_string(want_len) +
+//                                   "\n");
+//        }
+//
+//        std::vector<int> got_prefix(arr.begin(), arr.begin() + got_len);
+//        if (got_prefix != want_prefix) {
+//          throw std::runtime_error("\nremoveDuplicates(" + vecToStr(arr_orig) +
+//                                   "): got prefix: " + vecToStr(got_prefix) +
+//                                   ", want prefix: " + vecToStr(want_prefix) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL IN-PLACE DUPLICATE REMOVAL TEST PROVIDED PASSED." << endl;
+    
+    //Problem 27.15 Quicksort Partition
+    
     auto vecToStr = [](const std::vector<int>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
@@ -502,41 +550,31 @@ int main(int argc, const char *argv[]) {
         return result;
       };
 
-      std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
-          // Example from the book
-          std::make_tuple(std::vector<int>{1, 2, 2, 3, 3, 3, 5}, 4,
-                          std::vector<int>{1, 2, 3, 5}),
+      std::vector<std::pair<std::vector<int>, int>> tests = {
+          // Example 1 from the book
+          {{1, 7, 2, 3, 3, 5, 3}, 4},
+          // Example 2 from the book
+          {{1, 7, 2, 3, 3, 5, 3}, 3},
           // Additional test cases
-          std::make_tuple(std::vector<int>{}, 0, std::vector<int>{}),
-          std::make_tuple(std::vector<int>{1}, 1, std::vector<int>{1}),
-          std::make_tuple(std::vector<int>{1, 1}, 1, std::vector<int>{1}),
-          std::make_tuple(std::vector<int>{1, 2}, 2, std::vector<int>{1, 2}),
-          std::make_tuple(std::vector<int>{1, 1, 1}, 1, std::vector<int>{1}),
-          std::make_tuple(std::vector<int>{1, 2, 2, 2, 3}, 3,
-                          std::vector<int>{1, 2, 3}),
+          {{}, 1},
+          {{1}, 1},
+          {{1, 2}, 1},
+          {{2, 1}, 1},
+          {{3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}, 4},
       };
 
-      for (const auto& [arr_orig, want_len, want_prefix] : tests) {
-        auto arr =
-            arr_orig;  // Make a copy since removeDuplicates modifies in place
-        int got_len = removeDuplicates(arr);
+      for (const auto& [arr_orig, pivot] : tests) {
+        auto arr = arr_orig;  // Make a copy since partition modifies in place
+        partition(arr, pivot);
 
-        if (got_len != want_len) {
-          throw std::runtime_error("\nremoveDuplicates(" + vecToStr(arr_orig) +
-                                   "): got length: " + std::to_string(got_len) +
-                                   ", want length: " + std::to_string(want_len) +
+        if (!isValidPartition(arr, pivot)) {
+          throw std::runtime_error("\npartition(" + vecToStr(arr_orig) + ", " +
+                                   std::to_string(pivot) + "): got: " + vecToStr(arr) +
                                    "\n");
-        }
-
-        std::vector<int> got_prefix(arr.begin(), arr.begin() + got_len);
-        if (got_prefix != want_prefix) {
-          throw std::runtime_error("\nremoveDuplicates(" + vecToStr(arr_orig) +
-                                   "): got prefix: " + vecToStr(got_prefix) +
-                                   ", want prefix: " + vecToStr(want_prefix) + "\n");
         }
       }
     
-    cout << "ALL IN-PLACE DUPLICATE REMOVAL TEST PROVIDED PASSED." << endl;
+    cout << "ALL QUICKSORT PARTITION TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
