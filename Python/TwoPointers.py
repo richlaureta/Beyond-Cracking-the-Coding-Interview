@@ -492,6 +492,53 @@ def partition(arr: list[int], pivot: int):
             arr[index1], arr[equalIndex] = arr[equalIndex], arr[index1] 
             equalIndex -= 1
         index1 += 1
+
+def sortColors(arr: list[int]):
+    #Problem 27.16 Dutch Flag Problem 
+    
+    bIndex = len(arr) - 1
+    index = 0
+    rIndex = 0
+    
+    while index <= bIndex:
+        if arr[index] == 'B':
+            while bIndex > -1 and arr[bIndex] == 'B':
+                bIndex -= 1
+            if bIndex > -1 and index < len(arr) - 1 and index < bIndex:    
+                arr[index], arr[bIndex] = arr[bIndex], arr[index]
+                bIndex -= 1
+            if arr[index] == 'R':
+                while rIndex < len(arr) and arr[rIndex] == 'R':
+                    rIndex += 1
+                if rIndex < index:
+                    arr[index], arr[rIndex] = arr[rIndex], arr[index]
+                    rIndex += 1
+        elif arr[index] == 'R':
+            while rIndex < len(arr) and arr[rIndex] == 'R':
+                rIndex += 1
+            if rIndex < index:
+                arr[index], arr[rIndex] = arr[rIndex], arr[index]
+                rIndex += 1
+        index += 1
+        # elif arr[index] == 'R':
+        #     while arr[rIndex] == 'R':
+        #         rIndex += 1
+            
+        #     if index > rIndex:
+        #         arr[index], arr[rIndex] = arr[rIndex], arr[index]
+        #     rIndex -= 1
+        # index += 1
+    
+    # index1 = 0
+    # wIndex = index - 1
+    
+    # while index1 < wIndex:
+    #     if arr[index1] == 'W':
+    #         while arr[wIndex] == 'W':
+    #             wIndex -= 1
+    #         arr[index1], arr[wIndex] = arr[wIndex], arr[index1] 
+    #         wIndex -= 1
+    #     index1 += 1
         
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match Tests
@@ -790,6 +837,30 @@ def runPartitionTests():
             f"\npartition({arr}, {pivot}): got: {arr_copy}\n"
     
     print("ALL PARTITION TEST PROVIDED PASSED.")
-           
+
+def runSortColorTests():
+    #Problem 27.16 Dutch Flag Problem Tests
+    
+    tests = [
+        # Example from the book
+        (list("RWBBWRW"), list("RRWWWBB")),
+        # Additional test cases
+        ([], []),
+        (list("R"), list("R")),
+        (list("W"), list("W")),
+        (list("B"), list("B")),
+        (list("RW"), list("RW")),
+        (list("WR"), list("RW")),
+        (list("RWB"), list("RWB")),
+        (list("RRRWWBBB"), list("RRRWWBBB")),
+        (list("BBBWWRRR"), list("RRRWWBBB")),
+    ]
+    for arr, want in tests:
+        arr_copy = arr.copy()  # Make a copy since function modifies in place
+        sortColors(arr_copy)
+        assert arr_copy == want, f"\nsort_colors({arr}): got: {
+            arr_copy}, want: {want}\n"
+            
+    print("ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED.")      
 if __name__ =="__main__":
-    runPartitionTests()
+    runSortColorTests()
