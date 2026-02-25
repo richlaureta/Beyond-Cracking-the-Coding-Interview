@@ -471,34 +471,35 @@ def removeDuplicates(arr: list[int]) -> int:
 def partition(arr: list[int], pivot: int):
     #Problem 27.15 QuickSort Partition
     
-    greaterThanPivotIndex = len(arr) - 1
     index = 0
+    lessThanPivotIndex = 0
+    greaterThanPivotIndex = len(arr) - 1
     
-    while index < greaterThanPivotIndex:
+    while index <= greaterThanPivotIndex:
         if arr[index] > pivot:
-            while arr[greaterThanPivotIndex] > pivot:
+            while greaterThanPivotIndex > -1 and arr[greaterThanPivotIndex] > pivot:
                 greaterThanPivotIndex -= 1
-            arr[index], arr[greaterThanPivotIndex] = arr[greaterThanPivotIndex], arr[index]
-            greaterThanPivotIndex -= 1
+            if greaterThanPivotIndex > -1 and index < greaterThanPivotIndex:
+                arr[index], arr[greaterThanPivotIndex] = arr[greaterThanPivotIndex], arr[index]
+                greaterThanPivotIndex -= 1
+            if arr[index] < pivot:
+                while lessThanPivotIndex < len(arr) and arr[lessThanPivotIndex] < pivot:
+                    lessThanPivotIndex += 1
+                if lessThanPivotIndex < index:
+                    arr[index], arr[lessThanPivotIndex] = arr[lessThanPivotIndex], arr[index]
+        elif arr[index] < pivot:
+            while lessThanPivotIndex < len(arr) and arr[lessThanPivotIndex] < pivot:
+                lessThanPivotIndex += 1
+            if lessThanPivotIndex < index:
+                arr[index], arr[lessThanPivotIndex] = arr[lessThanPivotIndex], arr[index]
         index += 1
-    
-    index1 = 0
-    equalIndex = index - 1
-    
-    while index1 < equalIndex:
-        if arr[index1] == pivot:
-            while arr[equalIndex] == pivot:
-                equalIndex -= 1
-            arr[index1], arr[equalIndex] = arr[equalIndex], arr[index1] 
-            equalIndex -= 1
-        index1 += 1
 
 def sortColors(arr: list[int]):
     #Problem 27.16 Dutch Flag Problem 
     
-    bIndex = len(arr) - 1
     index = 0
     rIndex = 0
+    bIndex = len(arr) - 1
     
     while index <= bIndex:
         if arr[index] == 'B':
@@ -846,4 +847,4 @@ def runSortColorTests():
     print("ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED.")
      
 if __name__ =="__main__":
-    runSortColorTests()
+    runPartitionTests()
