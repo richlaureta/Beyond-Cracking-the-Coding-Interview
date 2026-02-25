@@ -504,7 +504,7 @@ def sortColors(arr: list[int]):
         if arr[index] == 'B':
             while bIndex > -1 and arr[bIndex] == 'B':
                 bIndex -= 1
-            if bIndex > -1 and index < len(arr) - 1 and index < bIndex:    
+            if bIndex > -1 and index < bIndex:    
                 arr[index], arr[bIndex] = arr[bIndex], arr[index]
                 bIndex -= 1
             if arr[index] == 'R':
@@ -818,7 +818,7 @@ def runPartitionTests():
             f"\npartition({arr}, {pivot}): got: {arr_copy}\n"
     
     print("ALL PARTITION TEST PROVIDED PASSED.")
-
+    
 def runSortColorTests():
     #Problem 27.16 Dutch Flag Problem Tests
     
@@ -844,6 +844,6 @@ def runSortColorTests():
             arr_copy}, want: {want}\n"
             
     print("ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED.")
-          
+     
 if __name__ =="__main__":
     runSortColorTests()
