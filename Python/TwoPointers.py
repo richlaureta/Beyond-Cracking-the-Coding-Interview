@@ -520,25 +520,6 @@ def sortColors(arr: list[int]):
                 arr[index], arr[rIndex] = arr[rIndex], arr[index]
                 rIndex += 1
         index += 1
-        # elif arr[index] == 'R':
-        #     while arr[rIndex] == 'R':
-        #         rIndex += 1
-            
-        #     if index > rIndex:
-        #         arr[index], arr[rIndex] = arr[rIndex], arr[index]
-        #     rIndex -= 1
-        # index += 1
-    
-    # index1 = 0
-    # wIndex = index - 1
-    
-    # while index1 < wIndex:
-    #     if arr[index1] == 'W':
-    #         while arr[wIndex] == 'W':
-    #             wIndex -= 1
-    #         arr[index1], arr[wIndex] = arr[wIndex], arr[index1] 
-    #         wIndex -= 1
-    #     index1 += 1
         
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match Tests
@@ -855,12 +836,14 @@ def runSortColorTests():
         (list("RRRWWBBB"), list("RRRWWBBB")),
         (list("BBBWWRRR"), list("RRRWWBBB")),
     ]
+    
     for arr, want in tests:
         arr_copy = arr.copy()  # Make a copy since function modifies in place
         sortColors(arr_copy)
         assert arr_copy == want, f"\nsort_colors({arr}): got: {
             arr_copy}, want: {want}\n"
             
-    print("ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED.")      
+    print("ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED.")
+          
 if __name__ =="__main__":
     runSortColorTests()
