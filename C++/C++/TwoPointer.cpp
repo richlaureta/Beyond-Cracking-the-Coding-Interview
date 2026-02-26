@@ -710,33 +710,55 @@ void partition(vector<int> &arr, int pivot)
 {
     //Problem 27.15 Quicksort Partition
     
-    int greaterThanPivotIndex = (int) arr.size() - 1;
     int index = 0;
+    int lessThanPivotIndex = 0;
+    int greaterThanPivotIndex = (int) arr.size() - 1;
     
-    while(index < greaterThanPivotIndex)
+    
+    while(index <= greaterThanPivotIndex)
     {
         if(arr[index] > pivot)
         {
-            while(arr[greaterThanPivotIndex] > pivot) greaterThanPivotIndex--;
-            swap(arr[index], arr[greaterThanPivotIndex]);
-            greaterThanPivotIndex--;
+            while(greaterThanPivotIndex > -1 and arr[greaterThanPivotIndex] > pivot) greaterThanPivotIndex--;
+            
+            if(greaterThanPivotIndex > -1 and index < greaterThanPivotIndex)
+            {
+                swap(arr[index], arr[greaterThanPivotIndex]);
+                greaterThanPivotIndex--;
+            }
+            
+            if(arr[index] < pivot)
+            {
+                while(lessThanPivotIndex < (int)arr.size() and arr[lessThanPivotIndex] < pivot)
+                {
+                    lessThanPivotIndex++;
+                    index++;
+                }
+                
+                if(lessThanPivotIndex < index) swap(arr[index], arr[lessThanPivotIndex]);
+            }
+        }
+        else if(arr[index] < pivot)
+        {
+            while(lessThanPivotIndex < (int)arr.size() and arr[lessThanPivotIndex] < pivot) lessThanPivotIndex++;
+            if(lessThanPivotIndex < index) swap(arr[index], arr[lessThanPivotIndex]);
         }
         
         index++;
     }
     
-    int index1 = 0;
-    int equalIndex = index - 1;
-    
-    while(index1 < equalIndex)
-    {
-        if(arr[index1] == pivot)
-        {
-            while(arr[equalIndex] == pivot) equalIndex--;
-            swap(arr[index1], arr[equalIndex]);
-            equalIndex--;
-        }
-        
-        index1++;
-    }
+//    int index1 = 0;
+//    int equalIndex = index - 1;
+//    
+//    while(index1 < equalIndex)
+//    {
+//        if(arr[index1] == pivot)
+//        {
+//            while(arr[equalIndex] == pivot) equalIndex--;
+//            swap(arr[index1], arr[equalIndex]);
+//            equalIndex--;
+//        }
+//        
+//        index1++;
+//    }
 }
