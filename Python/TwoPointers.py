@@ -485,6 +485,7 @@ def partition(arr: list[int], pivot: int):
             if arr[index] < pivot:
                 while lessThanPivotIndex < len(arr) and arr[lessThanPivotIndex] < pivot:
                     lessThanPivotIndex += 1
+                    index += 1
                 if lessThanPivotIndex < index:
                     arr[index], arr[lessThanPivotIndex] = arr[lessThanPivotIndex], arr[index]
         elif arr[index] < pivot:
@@ -511,6 +512,7 @@ def sortColors(arr: list[int]):
             if arr[index] == 'R':
                 while rIndex < len(arr) and arr[rIndex] == 'R':
                     rIndex += 1
+                    index += 1
                 if rIndex < index:
                     arr[index], arr[rIndex] = arr[rIndex], arr[index]
                     rIndex += 1
@@ -848,3 +850,4 @@ def runSortColorTests():
      
 if __name__ =="__main__":
     runPartitionTests()
+    runSortColorTests()
