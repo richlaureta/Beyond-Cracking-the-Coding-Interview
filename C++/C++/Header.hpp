@@ -75,5 +75,6 @@ void sortEven(vector<int> &arr);
 int removeDuplicates(vector<int> &arr);
 void partition(vector<int> &arr, int pivot);
 bool isValidPartition(const vector<int> &arr, int pivot);
+void sortColors(vector<char> &arr);
 
 #endif // HEADER_HPP

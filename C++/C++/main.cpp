@@ -540,41 +540,83 @@ int main(int argc, const char *argv[]) {
     
     //Problem 27.15 Quicksort Partition
     
-    auto vecToStr = [](const std::vector<int>& vec) {
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<int>, int>> tests = {
+//          // Example 1 from the book
+//          {{1, 7, 2, 3, 3, 5, 3}, 4},
+//          // Example 2 from the book
+//          {{1, 7, 2, 3, 3, 5, 3}, 3},
+//          // Additional test cases
+//          {{}, 1},
+//          {{1}, 1},
+//          {{1, 2}, 1},
+//          {{2, 1}, 1},
+//          {{3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}, 4},
+//      };
+//
+//      for (const auto& [arr_orig, pivot] : tests) {
+//        auto arr = arr_orig;  // Make a copy since partition modifies in place
+//        partition(arr, pivot);
+//
+//        if (!isValidPartition(arr, pivot)) {
+//          throw std::runtime_error("\npartition(" + vecToStr(arr_orig) + ", " +
+//                                   std::to_string(pivot) + "): got: " + vecToStr(arr) +
+//                                   "\n");
+//        }
+//      }
+//    
+//    cout << "ALL QUICKSORT PARTITION TEST PROVIDED PASSED." << endl;
+    
+    //Problem 27.16 Dutch Flag Problem
+    auto charVecToStr = [](const std::vector<char>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
           if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
+          result += vec[i];
         }
         result += "]";
         return result;
       };
 
-      std::vector<std::pair<std::vector<int>, int>> tests = {
-          // Example 1 from the book
-          {{1, 7, 2, 3, 3, 5, 3}, 4},
-          // Example 2 from the book
-          {{1, 7, 2, 3, 3, 5, 3}, 3},
+      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
+          // Example from the book
+          {{'R', 'W', 'B', 'B', 'W', 'R', 'W'},
+           {'R', 'R', 'W', 'W', 'W', 'B', 'B'}},
           // Additional test cases
-          {{}, 1},
-          {{1}, 1},
-          {{1, 2}, 1},
-          {{2, 1}, 1},
-          {{3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5}, 4},
+          {{}, {}},
+          {{'R'}, {'R'}},
+          {{'W'}, {'W'}},
+          {{'B'}, {'B'}},
+          {{'R', 'W'}, {'R', 'W'}},
+          {{'W', 'R'}, {'R', 'W'}},
+          {{'R', 'W', 'B'}, {'R', 'W', 'B'}},
+          {{'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'},
+           {'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'}},
+          {{'B', 'B', 'B', 'W', 'W', 'R', 'R', 'R'},
+           {'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'}},
       };
 
-      for (const auto& [arr_orig, pivot] : tests) {
-        auto arr = arr_orig;  // Make a copy since partition modifies in place
-        partition(arr, pivot);
+      for (const auto& [arr_orig, want] : tests) {
+        auto arr = arr_orig;  // Make a copy since sortColors modifies in place
+        sortColors(arr);
 
-        if (!isValidPartition(arr, pivot)) {
-          throw std::runtime_error("\npartition(" + vecToStr(arr_orig) + ", " +
-                                   std::to_string(pivot) + "): got: " + vecToStr(arr) +
+        if (arr != want) {
+          throw std::runtime_error("\nsortColors(" + charVecToStr(arr_orig) +
+                                   "): got: " + charVecToStr(arr) + ", want: " + charVecToStr(want) +
                                    "\n");
         }
       }
     
-    cout << "ALL QUICKSORT PARTITION TEST PROVIDED PASSED." << endl;
+    cout << "ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

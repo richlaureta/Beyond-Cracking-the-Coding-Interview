@@ -746,19 +746,54 @@ void partition(vector<int> &arr, int pivot)
         
         index++;
     }
+}
+
+void sortColors(vector<char> &arr)
+{
+    //Problem 27.15 Quicksort Partition
     
-//    int index1 = 0;
-//    int equalIndex = index - 1;
-//    
-//    while(index1 < equalIndex)
-//    {
-//        if(arr[index1] == pivot)
-//        {
-//            while(arr[equalIndex] == pivot) equalIndex--;
-//            swap(arr[index1], arr[equalIndex]);
-//            equalIndex--;
-//        }
-//        
-//        index1++;
-//    }
+    int index = 0;
+    int rIndex = 0;
+    int bIndex = (int) arr.size() - 1;
+    
+    
+    while(index <= bIndex)
+    {
+        if(arr[index] == 'B')
+        {
+            while(bIndex > -1 and arr[bIndex] == 'B') bIndex--;
+            
+            if(bIndex > -1 and index < bIndex)
+            {
+                swap(arr[index], arr[bIndex]);
+                bIndex--;
+            }
+            
+            if(arr[index] == 'R')
+            {
+                while(rIndex < (int)arr.size() and arr[rIndex] == 'R')
+                {
+                    rIndex++;
+                    index++;
+                }
+                
+                if(rIndex < index)
+                {
+                    swap(arr[index], arr[rIndex]);
+                    rIndex++;
+                }
+            }
+        }
+        else if(arr[index] == 'R')
+        {
+            while(rIndex < (int)arr.size() and arr[rIndex] == 'R') rIndex++;
+            if(rIndex < index)
+            {
+                swap(arr[index], arr[rIndex]);
+                rIndex++;
+            }
+        }
+        
+        index++;
+    }
 }
