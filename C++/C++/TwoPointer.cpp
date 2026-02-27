@@ -797,3 +797,26 @@ void sortColors(vector<char> &arr)
         index++;
     }
 }
+
+void swapPrefixSuffix(vector<char> &arr)
+{
+    //Problem 27.17 Prefix-Suffix Swap
+    
+    int prefixLength = (int)((int)arr.size()/3);
+    
+    int initialSwapIndex = prefixLength;
+    
+    for(int index = 0; index < prefixLength; index++)
+    {
+        swap(arr[index], arr[initialSwapIndex]);
+        initialSwapIndex++;
+    }
+    
+    int endSwapIndex = (int)arr.size() - prefixLength;
+    
+    for(int index = prefixLength; index < prefixLength + prefixLength; index++)
+    {
+        swap(arr[index], arr[endSwapIndex]);
+        endSwapIndex++;
+    }
+}

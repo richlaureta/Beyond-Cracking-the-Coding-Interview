@@ -577,6 +577,48 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL QUICKSORT PARTITION TEST PROVIDED PASSED." << endl;
     
     //Problem 27.16 Dutch Flag Problem
+//    auto charVecToStr = [](const std::vector<char>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += vec[i];
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
+//          // Example from the book
+//          {{'R', 'W', 'B', 'B', 'W', 'R', 'W'},
+//           {'R', 'R', 'W', 'W', 'W', 'B', 'B'}},
+//          // Additional test cases
+//          {{}, {}},
+//          {{'R'}, {'R'}},
+//          {{'W'}, {'W'}},
+//          {{'B'}, {'B'}},
+//          {{'R', 'W'}, {'R', 'W'}},
+//          {{'W', 'R'}, {'R', 'W'}},
+//          {{'R', 'W', 'B'}, {'R', 'W', 'B'}},
+//          {{'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'},
+//           {'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'}},
+//          {{'B', 'B', 'B', 'W', 'W', 'R', 'R', 'R'},
+//           {'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'}},
+//      };
+//
+//      for (const auto& [arr_orig, want] : tests) {
+//        auto arr = arr_orig;  // Make a copy since sortColors modifies in place
+//        sortColors(arr);
+//
+//        if (arr != want) {
+//          throw std::runtime_error("\nsortColors(" + charVecToStr(arr_orig) +
+//                                   "): got: " + charVecToStr(arr) + ", want: " + charVecToStr(want) +
+//                                   "\n");
+//        }
+//      }
+//    
+//    cout << "ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED." << endl;
+    
+    //Problem 27.17 Prefix-Suffix Swap
     auto charVecToStr = [](const std::vector<char>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
@@ -589,34 +631,31 @@ int main(int argc, const char *argv[]) {
 
       std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
           // Example from the book
-          {{'R', 'W', 'B', 'B', 'W', 'R', 'W'},
-           {'R', 'R', 'W', 'W', 'W', 'B', 'B'}},
+          {{'b', 'a', 'd', 'r', 'e', 'v', 'i', 'e', 'w'},
+           {'r', 'e', 'v', 'i', 'e', 'w', 'b', 'a', 'd'}},
           // Additional test cases
           {{}, {}},
-          {{'R'}, {'R'}},
-          {{'W'}, {'W'}},
-          {{'B'}, {'B'}},
-          {{'R', 'W'}, {'R', 'W'}},
-          {{'W', 'R'}, {'R', 'W'}},
-          {{'R', 'W', 'B'}, {'R', 'W', 'B'}},
-          {{'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'},
-           {'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'}},
-          {{'B', 'B', 'B', 'W', 'W', 'R', 'R', 'R'},
-           {'R', 'R', 'R', 'W', 'W', 'B', 'B', 'B'}},
+          {{'a', 'b', 'c'}, {'b', 'c', 'a'}},
+          {{'a', 'b', 'c', 'd', 'e', 'f'}, {'c', 'd', 'e', 'f', 'a', 'b'}},
+          {{'1', '2', '3', '4', '5', '6', '7', '8', '9'},
+           {'4', '5', '6', '7', '8', '9', '1', '2', '3'}},
+          {{'a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c'},
+           {'b', 'b', 'b', 'c', 'c', 'c', 'a', 'a', 'a'}},
       };
 
       for (const auto& [arr_orig, want] : tests) {
-        auto arr = arr_orig;  // Make a copy since sortColors modifies in place
-        sortColors(arr);
+        auto arr =
+            arr_orig;  // Make a copy since swapPrefixSuffix modifies in place
+        swapPrefixSuffix(arr);
 
         if (arr != want) {
-          throw std::runtime_error("\nsortColors(" + charVecToStr(arr_orig) +
+          throw std::runtime_error("\nswapPrefixSuffix(" + charVecToStr(arr_orig) +
                                    "): got: " + charVecToStr(arr) + ", want: " + charVecToStr(want) +
                                    "\n");
         }
       }
     
-    cout << "ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED." << endl;
+    cout << "ALL PREFIX-SUFFIX SWAP TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
