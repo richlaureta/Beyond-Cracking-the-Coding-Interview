@@ -523,7 +523,24 @@ def sortColors(arr: list[int]):
                 arr[index], arr[rIndex] = arr[rIndex], arr[index]
                 rIndex += 1
         index += 1
-        
+
+def swapPrefixSuffix(arr: list[str]):
+    #Problem 27.17 Prefix-Suffix Swap
+    
+    prefixLength = int(len(arr)/3) 
+
+    initialSwapIndex = prefixLength
+    
+    for index in range(prefixLength):
+        arr[index], arr[initialSwapIndex] = arr[initialSwapIndex], arr[index]
+        initialSwapIndex += 1
+    
+    endSwapIndex = len(arr) - prefixLength
+    
+    for index in range(prefixLength, prefixLength + prefixLength):
+        arr[index], arr[endSwapIndex] = arr[endSwapIndex], arr[index]
+        endSwapIndex += 1
+    
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match Tests
     
@@ -847,8 +864,25 @@ def runSortColorTests():
             arr_copy}, want: {want}\n"
             
     print("ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED.")
-     
-if __name__ =="__main__":
-    runPartitionTests()
-    runSortColorTests()
+
+def runPrefixSuffixSwapTests():
+    tests = [
+        # Example from the book
+        (list("badreview"), list("reviewbad")),
+        # Additional test cases
+        ([], []),
+        (list("abc"), list("bca")),
+        (list("abcdef"), list("cdefab")),
+        (list("123456789"), list("456789123")),
+        (list("aaabbbccc"), list("bbbcccaaa")),
+    ]
+    for arr, want in tests:
+        arr_copy = arr.copy()  # Make a copy since swap_prefix_suffix modifies in place
+        swapPrefixSuffix(arr_copy)
+        assert arr_copy == want, f"\nswap_prefix_suffix({arr}): got: {
+            arr_copy}, want: {want}\n"
     
+    print("ALL PREFIX-SUFFIX SWAP TEST PROVIDED PASSED.")
+    
+if __name__ =="__main__":
+    runPrefixSuffixSwapTests()
