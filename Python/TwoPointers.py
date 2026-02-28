@@ -540,7 +540,54 @@ def swapPrefixSuffix(arr: list[str]):
     for index in range(prefixLength, prefixLength + prefixLength):
         arr[index], arr[endSwapIndex] = arr[endSwapIndex], arr[index]
         endSwapIndex += 1
+
+
+def moveWord(arr: list[str], word: str):
+    #Problem 27.18 Shift Word to Back
     
+    arrPointer = 0
+    wordPointer = 0
+    backIndex = len(arr) - len(word)
+    goBackDifference = 0
+    
+    wordPointerEdit = 0
+    
+    while arrPointer < len(arr):
+        letterMatchFlag = False
+        
+        while wordPointer < len(word) and arrPointer < len(arr) and arr[arrPointer] == word[wordPointer]:
+            if wordPointerEdit < len(word) and arrPointer >= backIndex:
+                arr[arrPointer] = word[wordPointerEdit]
+                wordPointerEdit += 1
+            letterMatchFlag = True
+            wordPointer += 1
+            arrPointer += 1
+            goBackDifference += 1
+        if letterMatchFlag == True:
+            while wordPointer < len(word) and arrPointer < len(arr) and arr[arrPointer] != word[wordPointer]:
+                arr[arrPointer - goBackDifference] = arr[arrPointer]
+                if wordPointerEdit < len(word) and arrPointer >= backIndex:
+                    arr[arrPointer] = word[wordPointerEdit]
+                    wordPointerEdit += 1
+                arrPointer += 1
+            
+            while (arrPointer < len(arr) and 
+                   wordPointer == len(word) and 
+                   arrPointer <= backIndex):
+                arr[arrPointer - goBackDifference] = arr[arrPointer]
+                if wordPointerEdit < len(word) and arrPointer >= backIndex:
+                    arr[arrPointer] = word[wordPointerEdit]
+                    wordPointerEdit += 1
+                arrPointer += 1
+                
+            while wordPointerEdit < len(word) and arrPointer < len(arr) and wordPointer == len(word):
+                arr[arrPointer - goBackDifference] = arr[arrPointer]
+                arr[arrPointer] = word[wordPointerEdit]
+                arrPointer += 1
+                wordPointerEdit += 1
+        if letterMatchFlag == False:
+            arrPointer += 1    
+        
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match Tests
     
@@ -884,5 +931,32 @@ def runPrefixSuffixSwapTests():
     
     print("ALL PREFIX-SUFFIX SWAP TEST PROVIDED PASSED.")
     
+def runShiftWordToBackTests():
+    tests = [
+        # Example 1 from the book
+        (list("seekerandwriter"), "edit", list("sekeranwreredit")),
+        # Example 2 from the book
+        (list("bacb"), "ab", list("bcab")),
+        # Example 3 from the book
+        (list("babc"), "b", list("abcb")),
+        # Additional test cases
+        ([], "", []),
+        (list("a"), "a", list("a")),
+        (list("abc"), "", list("abc")),
+        (list("hello"), "ho", list("ellho")),
+        (list("abcabc"), "abc", list("abcabc")),
+    ]
+    for arr, word, want in tests:
+        arr_copy = arr.copy()  # Make a copy since move_word modifies in place
+        moveWord(arr_copy, word)
+        assert arr_copy == want, f"\nmove_word({arr}, {word}): got: {
+            arr_copy}, want: {want}\n"
+    
+    print("ALL SHIFT WORD TO BACK TEST PROVIDED PASSED.")
+    
 if __name__ =="__main__":
-    runPrefixSuffixSwapTests()
+    # arr = list("babc")
+    # word = "b"
+    
+    # moveWord(arr, word)
+    runShiftWordToBackTests()
