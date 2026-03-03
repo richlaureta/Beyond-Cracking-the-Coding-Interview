@@ -586,8 +586,8 @@ def moveWord(arr: list[str], word: str):
                 arrPointer += 1
                 wordPointerEdit += 1
         if letterMatchFlag == False:
-            arrPointer += 1    
-        
+            arrPointer += 1
+   
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match Tests
     
@@ -955,8 +955,4 @@ def runShiftWordToBackTests():
     print("ALL SHIFT WORD TO BACK TEST PROVIDED PASSED.")
     
 if __name__ =="__main__":
-    # arr = list("babc")
-    # word = "b"
-    
-    # moveWord(arr, word)
     runShiftWordToBackTests()

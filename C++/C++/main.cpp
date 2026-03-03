@@ -619,43 +619,94 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL DUTCH FLAG PROBLEM TEST PROVIDED PASSED." << endl;
     
     //Problem 27.17 Prefix-Suffix Swap
-    auto charVecToStr = [](const std::vector<char>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += vec[i];
-        }
-        result += "]";
-        return result;
-      };
-
-      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
-          // Example from the book
-          {{'b', 'a', 'd', 'r', 'e', 'v', 'i', 'e', 'w'},
-           {'r', 'e', 'v', 'i', 'e', 'w', 'b', 'a', 'd'}},
-          // Additional test cases
-          {{}, {}},
-          {{'a', 'b', 'c'}, {'b', 'c', 'a'}},
-          {{'a', 'b', 'c', 'd', 'e', 'f'}, {'c', 'd', 'e', 'f', 'a', 'b'}},
-          {{'1', '2', '3', '4', '5', '6', '7', '8', '9'},
-           {'4', '5', '6', '7', '8', '9', '1', '2', '3'}},
-          {{'a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c'},
-           {'b', 'b', 'b', 'c', 'c', 'c', 'a', 'a', 'a'}},
-      };
-
-      for (const auto& [arr_orig, want] : tests) {
-        auto arr =
-            arr_orig;  // Make a copy since swapPrefixSuffix modifies in place
-        swapPrefixSuffix(arr);
-
-        if (arr != want) {
-          throw std::runtime_error("\nswapPrefixSuffix(" + charVecToStr(arr_orig) +
-                                   "): got: " + charVecToStr(arr) + ", want: " + charVecToStr(want) +
-                                   "\n");
-        }
-      }
+//    auto charVecToStr = [](const std::vector<char>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += vec[i];
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<char>, std::vector<char>>> tests = {
+//          // Example from the book
+//          {{'b', 'a', 'd', 'r', 'e', 'v', 'i', 'e', 'w'},
+//           {'r', 'e', 'v', 'i', 'e', 'w', 'b', 'a', 'd'}},
+//          // Additional test cases
+//          {{}, {}},
+//          {{'a', 'b', 'c'}, {'b', 'c', 'a'}},
+//          {{'a', 'b', 'c', 'd', 'e', 'f'}, {'c', 'd', 'e', 'f', 'a', 'b'}},
+//          {{'1', '2', '3', '4', '5', '6', '7', '8', '9'},
+//           {'4', '5', '6', '7', '8', '9', '1', '2', '3'}},
+//          {{'a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'c'},
+//           {'b', 'b', 'b', 'c', 'c', 'c', 'a', 'a', 'a'}},
+//      };
+//
+//      for (const auto& [arr_orig, want] : tests) {
+//        auto arr =
+//            arr_orig;  // Make a copy since swapPrefixSuffix modifies in place
+//        swapPrefixSuffix(arr);
+//
+//        if (arr != want) {
+//          throw std::runtime_error("\nswapPrefixSuffix(" + charVecToStr(arr_orig) +
+//                                   "): got: " + charVecToStr(arr) + ", want: " + charVecToStr(want) +
+//                                   "\n");
+//        }
+//      }
+//    
+//    cout << "ALL PREFIX-SUFFIX SWAP TEST PROVIDED PASSED." << endl;
     
-    cout << "ALL PREFIX-SUFFIX SWAP TEST PROVIDED PASSED." << endl;
+    //Problem 27.18 Shift Word to Back
+    
+    auto charVecToStr = [](const std::vector<char>& vec) {
+      std::string result = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) result += ", ";
+        result += vec[i];
+      }
+      result += "]";
+      return result;
+    };
+
+    std::vector<std::tuple<std::vector<char>, std::string, std::vector<char>>>
+        tests = {
+            // Example 1 from the book
+            {std::vector<char>({'s', 'e', 'e', 'k', 'e', 'r', 'a', 'n', 'd', 'w',
+                                'r', 'i', 't', 'e', 'r'}),
+             std::string("edit"),
+             std::vector<char>({'s', 'e', 'k', 'e', 'r', 'a', 'n', 'w', 'r', 'e',
+                                'r', 'e', 'd', 'i', 't'})},
+            // Example 2 from the book
+            {std::vector<char>({'b', 'a', 'c', 'b'}), std::string("ab"),
+             std::vector<char>({'b', 'c', 'a', 'b'})},
+            // Example 3 from the book
+            {std::vector<char>({'b', 'a', 'b', 'c'}), std::string("b"),
+             std::vector<char>({'a', 'b', 'c', 'b'})},
+            // Additional test cases
+            {std::vector<char>(), std::string(""), std::vector<char>()},
+            {std::vector<char>({'a'}), std::string("a"),
+             std::vector<char>({'a'})},
+            {std::vector<char>({'a', 'b', 'c'}), std::string(""),
+             std::vector<char>({'a', 'b', 'c'})},
+            {std::vector<char>({'h', 'e', 'l', 'l', 'o'}), std::string("ho"),
+             std::vector<char>({'e', 'l', 'l', 'h', 'o'})},
+            {std::vector<char>({'a', 'b', 'c', 'a', 'b', 'c'}),
+             std::string("abc"),
+             std::vector<char>({'a', 'b', 'c', 'a', 'b', 'c'})},
+        };
+
+    for (const auto& [arr, word, want] : tests) {
+      auto got = arr;  // Make a copy since moveWord modifies in place
+      moveWord(got, word);
+      if (got != want) {
+        throw std::runtime_error("\nmoveWord(" + charVecToStr(arr) + ", \"" + word +
+                                 "\"): got: " + charVecToStr(got) + ", want: " + charVecToStr(want) +
+                                 "\n");
+      }
+    }
+    
+    cout << "ALL SHIFT WORD TO BACK TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

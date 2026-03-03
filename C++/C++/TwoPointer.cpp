@@ -820,3 +820,72 @@ void swapPrefixSuffix(vector<char> &arr)
         endSwapIndex++;
     }
 }
+
+void moveWord(vector<char> &arr, const string &word)
+{
+    //Problem 27.18 Shift Word to Back
+    
+    int arrPointer = 0;
+    int wordPointer = 0;
+    int backIndex = (int)arr.size() - (int)word.size();
+    int goBackDifference = 0;
+    
+    int wordPointerEdit = 0;
+    
+    while(arrPointer < (int)arr.size())
+    {
+        bool letterMatchFlag = false;
+        
+        while(wordPointer < (int)word.size() and arrPointer < (int)arr.size() and arr[arrPointer] == word[wordPointer])
+        {
+            if(wordPointerEdit < (int)word.size() and arrPointer >= backIndex)
+            {
+                arr[arrPointer] = word[wordPointerEdit];
+                wordPointerEdit++;
+            }
+            letterMatchFlag = true;
+            wordPointer++;
+            arrPointer++;
+            goBackDifference++;
+        }
+        
+        if(letterMatchFlag == true)
+        {
+            while(wordPointer < (int)word.size() and arrPointer < (int)arr.size() and arr[arrPointer] != word[wordPointer])
+            {
+                arr[arrPointer - goBackDifference] = arr[arrPointer];
+                if(wordPointerEdit < (int)word.size() and arrPointer >= backIndex)
+                {
+                    arr[arrPointer] = word[wordPointerEdit];
+                    wordPointerEdit++;
+                }
+                arrPointer++;
+            }
+            
+            while(arrPointer < (int)arr.size() and
+                  wordPointer == (int)word.size() and
+                  arrPointer <= backIndex)
+            {
+                arr[arrPointer - goBackDifference] = arr[arrPointer];
+                
+                if(wordPointerEdit < (int)word.size() and arrPointer >= backIndex)
+                {
+                    arr[arrPointer] = word[wordPointerEdit];
+                    wordPointerEdit++;
+                }
+                
+                arrPointer++;
+            }
+            
+            while(wordPointerEdit < (int)word.size() and arrPointer < (int)arr.size() and wordPointer == (int)word.size())
+            {
+                arr[arrPointer - goBackDifference] = arr[arrPointer];
+                arr[arrPointer] = word[wordPointerEdit];
+                arrPointer++;
+                wordPointerEdit++;
+            }
+        }
+        
+        if(letterMatchFlag == false) arrPointer++;
+    }
+}
