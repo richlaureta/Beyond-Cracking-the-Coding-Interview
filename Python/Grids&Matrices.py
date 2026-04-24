@@ -178,6 +178,98 @@ def chessMoves(board: list[list[int]], piece: str, r: int, c: int) -> list[list[
         
     return oneMoveOccupySquare
 
+def safeCells(board: list[list[int]]):
+    #Problem 28.2 - Queen's Reach
+    
+    queenPosition = []
+    
+    for index in range(len(board)):
+        for index1 in range(len(board[0])):
+            if board[index][index1] == 1:
+                queenPosition.append([index, index1])
+    
+    for square in queenPosition:
+        row, column = square
+        
+        #Left
+        while True:
+            column -= 1
+            if column < 0:
+                break
+            board[row][column] = 1
+            
+        column = square[1]
+        
+        #LeftUpDiagonal
+        while True:
+            column -= 1
+            row -= 1
+            if column < 0 or row < 0:
+                break
+            board[row][column] = 1
+        
+        row = square[0]
+        column = square[1]
+        
+        #Up
+        while True:
+            row -= 1
+            if row < 0:
+                break
+            board[row][column] = 1
+        
+        row = square[0]
+        
+        #RightUp
+        while True:
+            row -= 1
+            column += 1
+            if row < 0 or column > len(board[0]) - 1:
+                break
+            board[row][column] = 1
+        
+        row = square[0]
+        column = square[1]
+        
+        #Right
+        while True:
+            column += 1
+            if column > len(board[0]) - 1:
+                break
+            board[row][column] = 1
+            
+        column = square[1]
+        
+        #RighDown
+        while True:
+            row += 1
+            column += 1
+            if row > len(board) - 1 or column > len(board[0]) - 1:
+                break
+            board[row][column] = 1
+        
+        row = square[0]
+        column = square[1]
+        
+        #Down
+        while True:
+            row += 1
+            if row > len(board) - 1:
+                break
+            board[row][column] = 1
+        
+        row = square[0]
+        
+        #LeftDown
+        while True:
+            row += 1
+            column -= 1
+            if row > len(board) - 1 or column < 0:
+                break
+            board[row][column] = 1
+    
+    return board
+            
 #TESTS
 def runChessMovesTests():
     tests = [
@@ -221,44 +313,30 @@ def runChessMovesTests():
                             f"got: {got}, want: {want}\n")
 
     print("ALL CHESS MOVES TEST PROVIDED PASSED.")
+
+def runSafeCellsTests():
+    tests = [
+      ([[0, 0, 0, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [1, 0, 0, 0]],
+       [[1, 1, 1, 1],
+        [1, 0, 1, 1],
+        [1, 1, 0, 1],
+        [1, 1, 1, 1]]),
+      # Edge case - 1x1 board with queen
+      ([[1]], [[1]]),
+      # Edge case - 1x1 board without queen
+      ([[0]], [[0]]),
+      # Edge case - no queens
+      ([[0, 0], [0, 0]], [[0, 0], [0, 0]]),
+    ]
+
+    for board, want in tests:
+        got = safeCells(board)
+        assert got == want, f"\nsafe_cells({board}): got: {got}, want: {want}\n"
+
+    print("ALL SAFE CELLS TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    # board = [
-    #     [0, 0, 0, 1, 0, 0],
-    #     [0, 1, 1, 1, 0, 0],
-    #     [0, 1, 0, 1, 1, 0],
-    #     [1, 1, 1, 1, 0, 0],
-    #     [0, 0, 0, 0, 0, 0],
-    #     [0, 1, 0, 0, 0, 0]]
-    
-    # piece = "king"
-    
-    # r = 5
-    # c = 5
-    # board = [
-    #     [0, 0, 0, 1, 0, 0],
-    #     [0, 1, 1, 1, 0, 0],
-    #     [0, 1, 0, 1, 1, 0],
-    #     [1, 1, 1, 1, 0, 0],
-    #     [0, 0, 0, 0, 0, 0],
-    #     [0, 1, 0, 0, 0, 0]]
-    
-    # piece = "queen"
-    
-    # r = 0
-    # c = 5
-    
-  
-    # board = [[0, 0, 0, 1, 0, 0],
-    #      [0, 1, 1, 1, 0, 0],
-    #      [0, 1, 0, 1, 1, 0],
-    #      [1, 1, 1, 1, 0, 0],
-    #      [0, 0, 0, 0, 0, 0],
-    #      [0, 1, 0, 0, 0, 0]]
-    # piece = "knight"
-    # r = 4
-    # c = 3
-    
-    # print(chessMoves(board, piece, r, c))
-    
-    runChessMovesTests()
+    runSafeCellsTests()
