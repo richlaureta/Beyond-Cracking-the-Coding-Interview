@@ -659,54 +659,150 @@ int main(int argc, const char *argv[]) {
     
     //Problem 27.18 Shift Word to Back
     
-    auto charVecToStr = [](const std::vector<char>& vec) {
-      std::string result = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) result += ", ";
-        result += vec[i];
-      }
-      result += "]";
-      return result;
-    };
-
-    std::vector<std::tuple<std::vector<char>, std::string, std::vector<char>>>
-        tests = {
-            // Example 1 from the book
-            {std::vector<char>({'s', 'e', 'e', 'k', 'e', 'r', 'a', 'n', 'd', 'w',
-                                'r', 'i', 't', 'e', 'r'}),
-             std::string("edit"),
-             std::vector<char>({'s', 'e', 'k', 'e', 'r', 'a', 'n', 'w', 'r', 'e',
-                                'r', 'e', 'd', 'i', 't'})},
-            // Example 2 from the book
-            {std::vector<char>({'b', 'a', 'c', 'b'}), std::string("ab"),
-             std::vector<char>({'b', 'c', 'a', 'b'})},
-            // Example 3 from the book
-            {std::vector<char>({'b', 'a', 'b', 'c'}), std::string("b"),
-             std::vector<char>({'a', 'b', 'c', 'b'})},
-            // Additional test cases
-            {std::vector<char>(), std::string(""), std::vector<char>()},
-            {std::vector<char>({'a'}), std::string("a"),
-             std::vector<char>({'a'})},
-            {std::vector<char>({'a', 'b', 'c'}), std::string(""),
-             std::vector<char>({'a', 'b', 'c'})},
-            {std::vector<char>({'h', 'e', 'l', 'l', 'o'}), std::string("ho"),
-             std::vector<char>({'e', 'l', 'l', 'h', 'o'})},
-            {std::vector<char>({'a', 'b', 'c', 'a', 'b', 'c'}),
-             std::string("abc"),
-             std::vector<char>({'a', 'b', 'c', 'a', 'b', 'c'})},
-        };
-
-    for (const auto& [arr, word, want] : tests) {
-      auto got = arr;  // Make a copy since moveWord modifies in place
-      moveWord(got, word);
-      if (got != want) {
-        throw std::runtime_error("\nmoveWord(" + charVecToStr(arr) + ", \"" + word +
-                                 "\"): got: " + charVecToStr(got) + ", want: " + charVecToStr(want) +
-                                 "\n");
-      }
-    }
+//    auto charVecToStr = [](const std::vector<char>& vec) {
+//      std::string result = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) result += ", ";
+//        result += vec[i];
+//      }
+//      result += "]";
+//      return result;
+//    };
+//
+//    std::vector<std::tuple<std::vector<char>, std::string, std::vector<char>>>
+//        tests = {
+//            // Example 1 from the book
+//            {std::vector<char>({'s', 'e', 'e', 'k', 'e', 'r', 'a', 'n', 'd', 'w',
+//                                'r', 'i', 't', 'e', 'r'}),
+//             std::string("edit"),
+//             std::vector<char>({'s', 'e', 'k', 'e', 'r', 'a', 'n', 'w', 'r', 'e',
+//                                'r', 'e', 'd', 'i', 't'})},
+//            // Example 2 from the book
+//            {std::vector<char>({'b', 'a', 'c', 'b'}), std::string("ab"),
+//             std::vector<char>({'b', 'c', 'a', 'b'})},
+//            // Example 3 from the book
+//            {std::vector<char>({'b', 'a', 'b', 'c'}), std::string("b"),
+//             std::vector<char>({'a', 'b', 'c', 'b'})},
+//            // Additional test cases
+//            {std::vector<char>(), std::string(""), std::vector<char>()},
+//            {std::vector<char>({'a'}), std::string("a"),
+//             std::vector<char>({'a'})},
+//            {std::vector<char>({'a', 'b', 'c'}), std::string(""),
+//             std::vector<char>({'a', 'b', 'c'})},
+//            {std::vector<char>({'h', 'e', 'l', 'l', 'o'}), std::string("ho"),
+//             std::vector<char>({'e', 'l', 'l', 'h', 'o'})},
+//            {std::vector<char>({'a', 'b', 'c', 'a', 'b', 'c'}),
+//             std::string("abc"),
+//             std::vector<char>({'a', 'b', 'c', 'a', 'b', 'c'})},
+//        };
+//
+//    for (const auto& [arr, word, want] : tests) {
+//      auto got = arr;  // Make a copy since moveWord modifies in place
+//      moveWord(got, word);
+//      if (got != want) {
+//        throw std::runtime_error("\nmoveWord(" + charVecToStr(arr) + ", \"" + word +
+//                                 "\"): got: " + charVecToStr(got) + ", want: " + charVecToStr(want) +
+//                                 "\n");
+//      }
+//    }
+//    
+//    cout << "ALL SHIFT WORD TO BACK TEST PROVIDED PASSED." << endl;
+//
+    //Problem 28.1 Chess Moves
+//      auto intVecToStr = [](const vector<int>& vec) {
+//        string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
+//        string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      struct Test {
+//        vector<vector<int>> board;
+//        string piece;
+//        int r;
+//        int c;
+//        vector<vector<int>> want;
+//      };
+//
+//      vector<Test> tests = {
+//          // Example 1 from the book - king moves
+//          {{{0, 0, 0, 1, 0, 0},
+//            {0, 1, 1, 1, 0, 0},
+//            {0, 1, 0, 1, 1, 0},
+//            {1, 1, 1, 1, 0, 0},
+//            {0, 0, 0, 0, 0, 0},
+//            {0, 1, 0, 0, 0, 0}},
+//           "king",
+//           3,
+//           5,
+//           {{2, 5}, {3, 4}, {4, 4}, {4, 5}}},
+//          // Example 2 from the book - knight moves
+//          {{{0, 0, 0, 1, 0, 0},
+//            {0, 1, 1, 1, 0, 0},
+//            {0, 1, 0, 1, 1, 0},
+//            {1, 1, 1, 1, 0, 0},
+//            {0, 0, 0, 0, 0, 0},
+//            {0, 1, 0, 0, 0, 0}},
+//           "knight",
+//           4,
+//           3,
+//           {{2, 2}, {3, 5}, {5, 5}}},
+//          // Example 3 from the book - queen moves
+//          {{{0, 0, 0, 1, 0, 0},
+//            {0, 1, 1, 1, 0, 0},
+//            {0, 1, 0, 1, 1, 0},
+//            {1, 1, 1, 1, 0, 0},
+//            {0, 0, 0, 0, 0, 0},
+//            {0, 1, 0, 0, 0, 0}},
+//           "queen",
+//           4,
+//           4,
+//           {{3, 4},
+//            {3, 5},
+//            {4, 0},
+//            {4, 1},
+//            {4, 2},
+//            {4, 3},
+//            {4, 5},
+//            {5, 3},
+//            {5, 4},
+//            {5, 5}}},
+//          // Edge case - 1x1 board
+//          {{{0}}, "queen", 0, 0, {}},
+//          // Edge case - all occupied except current position
+//          {{{1, 1}, {1, 0}}, "knight", 1, 1, {}},
+//      };
+//
+//      for (const auto& test : tests) {
+//        auto got = chessMoves(test.board, test.piece, test.r, test.c);
+//        // Sort both vectors for consistent comparison
+//        std::sort(got.begin(), got.end());
+//        auto want = test.want;
+//        std::sort(want.begin(), want.end());
+//
+//        if (got != want) {
+//          throw std::runtime_error("\nchessMoves(" + intVecVecToStr(test.board) + ", " + test.piece +
+//                                   ", " + std::to_string(test.r) + ", " +
+//                                   std::to_string(test.c) + "): got: " + intVecVecToStr(got) +
+//                                   ", want: " + intVecVecToStr(want) + "\n");
+//        }
+//      }
+//
+//    cout << "ALL CHESS MOVES TEST PROVIDED PASSED." << endl;
     
-    cout << "ALL SHIFT WORD TO BACK TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

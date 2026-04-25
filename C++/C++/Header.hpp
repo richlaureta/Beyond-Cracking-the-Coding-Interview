@@ -79,4 +79,8 @@ void sortColors(vector<char> &arr);
 void swapPrefixSuffix(vector<char> &arr);
 void moveWord(vector<char> &arr, const string &word);
 
+//Grids and Matrices
+vector<vector<int>> chessMoves(const vector<vector<int>> &board, const string &piece, int r, int c);
+vector<vector<int>> safeCells(const vector<vector<int>> &board);
+
 #endif // HEADER_HPP
