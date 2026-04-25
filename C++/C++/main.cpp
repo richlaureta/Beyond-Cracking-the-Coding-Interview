@@ -803,6 +803,47 @@ int main(int argc, const char *argv[]) {
 //
 //    cout << "ALL CHESS MOVES TEST PROVIDED PASSED." << endl;
     
+    //Problem 28.2 Queen's Reach
+    auto intVecToStr = [](const vector<int>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+      
+      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += intVecToStr(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+
+      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests = {
+          {{{0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}},
+           {{1, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 1}}},
+          // Edge case - 1x1 board with queen
+          {{{1}}, {{1}}},
+          // Edge case - 1x1 board without queen
+          {{{0}}, {{0}}},
+          // Edge case - no queens
+          {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}},
+      };
+
+      for (const auto& [board, want] : tests) {
+        auto got = safeCells(board);
+        if (got != want) {
+          throw std::runtime_error("\nsafeCells(" + intVecVecToStr(board) + "): got: " +
+                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
+        }
+      }
+    
+    cout << "ALL QUEEN'S REACH TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

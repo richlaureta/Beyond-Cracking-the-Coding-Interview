@@ -9,6 +9,8 @@
 
 vector<vector<int>> chessMoves(const vector<vector<int>> &board, const string &piece, int r, int c)
 {
+    //Problem 28.1 Queen's Reach
+    
     vector<vector<int>> oneMoveOccupySquare = {};
     
     if(piece[0] == 'k' and piece[1] == 'i')
@@ -172,4 +174,102 @@ vector<vector<int>> chessMoves(const vector<vector<int>> &board, const string &p
     }
     
     return oneMoveOccupySquare;
+}
+
+vector<vector<int>> safeCells(const vector<vector<int>> &board)
+{
+    //Problem 28.2 - Queen's Reach
+    
+    vector<vector<int>> queenPosition = {};
+    vector<vector<int>> boardCopy(board);
+    
+    for(int index = 0; index < board.size(); index++)
+    {
+        for(int index1 = 0; index1 < board[0].size(); index1++)
+        {
+            if(board[index][index1] == 1) queenPosition.push_back({index, index1});
+        }
+    }
+    
+    for(int index2 = 0; index2 < (int) queenPosition.size(); index2++)
+    {
+        int row = queenPosition[index2][0];
+        int column = queenPosition[index2][1];
+        
+        //Left
+        while (true){
+            column--;
+            if (column < 0) break;
+            boardCopy[row][column] = 1;
+        }
+        column = queenPosition[index2][1];
+
+        //LeftUpDiagonal
+        while (true){
+            column--;
+            row--;
+            if(column < 0 or row < 0) break;
+            boardCopy[row][column] = 1;
+        }
+        
+        row = queenPosition[index2][0];
+        column = queenPosition[index2][1];
+
+        //Up
+        while (true){
+            row--;
+            if(row < 0) break;
+            boardCopy[row][column] = 1;
+        }
+        row = queenPosition[index2][0];
+
+        //RightUp
+        while (true){
+            row--;
+            column++;
+            if (row < 0 or column > (int) board[0].size() - 1) break;
+            boardCopy[row][column] = 1;
+        }
+        
+        row = queenPosition[index2][0];
+        column = queenPosition[index2][1];
+
+        //Right
+        while (true){
+            column++;
+            if(column > (int)board[0].size() - 1) break;
+            boardCopy[row][column] = 1;
+        }
+        
+        column = queenPosition[index2][1];
+
+        //RighDown
+        while (true){
+            row++;
+            column++;
+            if( row > (int)board.size() - 1 or column > (int)board[0].size() - 1) break;
+            boardCopy[row][column] = 1;
+        }
+        row = queenPosition[index2][0];
+        column = queenPosition[index2][1];
+
+        //Down
+        while (true){
+            row++;
+            if (row > (int) board.size() - 1) break;
+            boardCopy[row][column] = 1;
+        }
+        
+        row = queenPosition[index2][0];
+
+        //LeftDown
+        while (true){
+            row++;
+            column--;
+            if (row > (int) board.size() - 1 or column < 0) break;
+            boardCopy[row][column] = 1;
+        }
+    }
+    
+    return boardCopy;
 }
