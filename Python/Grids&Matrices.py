@@ -269,7 +269,59 @@ def safeCells(board: list[list[int]]):
             board[row][column] = 1
     
     return board
-            
+
+def spiral(matrixDimension: int) -> list[list[int]]:
+    #Problem 28.3 Spiral
+    
+    matrix = [[0 for square in range(matrixDimension)] for row in range(matrixDimension)]
+    
+    number = matrixDimension * matrixDimension - 1
+    square = [matrixDimension - 1, matrixDimension - 1]
+    upLimit = 0
+    leftLimit = 0
+    downLimit = matrixDimension - 1
+    rightLimit = matrixDimension - 2
+     
+    while square != [matrixDimension//2, matrixDimension//2]:
+        
+        while square[0] >= upLimit:
+            matrix[square[0]][square[1]] = number
+            number -=1
+            square[0] -= 1
+        
+        upLimit += 1
+        square[1] -= 1
+        square[0] += 1
+        
+        while square[1] >= leftLimit:
+            matrix[square[0]][square[1]] = number
+            number -= 1
+            square[1] -= 1
+        
+        leftLimit += 1
+        square[1] += 1
+        square[0] += 1
+        
+        while square[0] <= downLimit:
+            matrix[square[0]][square[1]] = number
+            number -= 1
+            square[0] += 1
+        
+        downLimit -= 1
+        square[1] += 1
+        square[0] -= 1
+        
+        while square[1] <= rightLimit:
+            matrix[square[0]][square[1]] = number
+            number -= 1
+            square[1] += 1
+        
+        rightLimit -= 1
+        square[1] -= 1
+        square[0] -= 1
+    
+    return matrix
+
 #TESTS
 def runChessMovesTests():
     tests = [
@@ -337,6 +389,32 @@ def runSafeCellsTests():
         assert got == want, f"\nsafe_cells({board}): got: {got}, want: {want}\n"
 
     print("ALL SAFE CELLS TEST PROVIDED PASSED.")
+
+def runSpiralTests():
+    tests = [
+      # Example from book
+      (5, [
+          [16, 17, 18, 19, 20],
+          [15, 4, 5, 6, 21],
+          [14, 3, 0, 7, 22],
+          [13, 2, 1, 8, 23],
+          [12, 11, 10, 9, 24]
+      ]),
+      # Edge case - 1x1
+      (1, [[0]]),
+      # Edge case - 3x3
+      (3, [
+          [4, 5, 6],
+          [3, 0, 7],
+          [2, 1, 8]
+      ]),
+    ]
+
+    for n, want in tests:
+        got = spiral(n)
+        assert got == want, f"\nspiral({n}): got: {got}, want: {want}\n"
+
+    print("ALL SPIRAL TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    runSafeCellsTests()
+    runSpiralTests()
