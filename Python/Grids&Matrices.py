@@ -325,7 +325,7 @@ def spiral(matrixDimension: int) -> list[list[int]]:
     return matrix
 
 def distanceToRiver(field: list[list[int]]) -> int:
-    #Problem 28.4 - Snow Prints
+    #Problem 28.4 - Snowprints
     
     currentFootPrintLocation = None
     

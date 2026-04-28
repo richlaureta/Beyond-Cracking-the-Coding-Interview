@@ -847,50 +847,102 @@ int main(int argc, const char *argv[]) {
     
     //Problem 28.3 - Spiral Order
     
-      auto intVecToStr = [](const vector<int>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-      
-      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += intVecToStr(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-
-      vector<std::pair<int, vector<vector<int>>>> tests = {
+//      auto intVecToStr = [](const vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      vector<std::pair<int, vector<vector<int>>>> tests = {
+//          // Example from book
+//          {5,
+//           {{16, 17, 18, 19, 20},
+//            {15, 4, 5, 6, 21},
+//            {14, 3, 0, 7, 22},
+//            {13, 2, 1, 8, 23},
+//            {12, 11, 10, 9, 24}}},
+//          // Edge case - 1x1
+//          {1, {{0}}},
+//          // Edge case - 3x3
+//          {3, {{4, 5, 6}, {3, 0, 7}, {2, 1, 8}}},
+//      };
+//
+//      for (const auto& [n, want] : tests) {
+//        auto got = spiral(n);
+//        if (got != want) {
+//          throw std::runtime_error("\nspiral(" + std::to_string(n) + "): got: " +
+//                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
+//        }
+//      }
+//
+//
+//    cout << "ALL SPIRAL ORDER TEST PROVIDED PASSED." << endl;
+    
+    //Problem 28.4 - Snowprints
+    
+    vector<std::pair<vector<vector<int>>, int>> tests = {
           // Example from book
-          {5,
-           {{16, 17, 18, 19, 20},
-            {15, 4, 5, 6, 21},
-            {14, 3, 0, 7, 22},
-            {13, 2, 1, 8, 23},
-            {12, 11, 10, 9, 24}}},
-          // Edge case - 1x1
-          {1, {{0}}},
-          // Edge case - 3x3
-          {3, {{4, 5, 6}, {3, 0, 7}, {2, 1, 8}}},
+          {{{0, 0, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0, 0},
+            {1, 1, 0, 1, 0, 0},
+            {0, 0, 0, 0, 1, 1}},
+           1},
+          // Edge case - top of grid
+          {{{0, 0, 0, 1, 0, 0},
+            {0, 0, 1, 0, 1, 0},
+            {1, 1, 0, 0, 0, 1},
+            {0, 0, 0, 0, 0, 0}},
+           0},
+          // Edge case - bottom of grid
+          {{{0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {1, 1, 1, 1, 1, 1}},
+           3},
+          // Edge case - single column
+          {{{0}, {1}}, 1},
+          // Edge case - single row
+          {{{1, 1, 1}}, 0},
+          // Edge case - zigzag path
+          {{{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, 1},
       };
 
-      for (const auto& [n, want] : tests) {
-        auto got = spiral(n);
+      for (const auto& [field, want] : tests) {
+        int got = distanceToRiver(field);
         if (got != want) {
-          throw std::runtime_error("\nspiral(" + std::to_string(n) + "): got: " +
-                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
+          std::string field_str = "[";
+          for (size_t i = 0; i < field.size(); i++) {
+            field_str += "[";
+            for (size_t j = 0; j < field[i].size(); j++) {
+              field_str += std::to_string(field[i][j]);
+              if (j < field[i].size() - 1) field_str += ", ";
+            }
+            field_str += "]";
+            if (i < field.size() - 1) field_str += ", ";
+          }
+          field_str += "]";
+
+          throw std::runtime_error("\ndistanceToRiver(" + field_str +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
         }
       }
-
-
-    cout << "ALL SPIRAL ORDER TEST PROVIDED PASSED." << endl;
+    
+    cout << "ALL SNOWPRINTS TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

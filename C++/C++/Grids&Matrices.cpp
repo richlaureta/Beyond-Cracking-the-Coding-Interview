@@ -339,3 +339,38 @@ vector<vector<int>> spiral(int matrixDimension)
     
     return matrix;
 }
+
+int distanceToRiver(const vector<vector<int>> &field)
+{
+    //Problem 28.4 - Snowprints
+    
+    pair<int, int> currentFootPrintLocation = {};
+    
+    for(int index = 0; index < (int) field.size(); index++)
+    {
+        if(field[index][0] == 1)
+        {
+            currentFootPrintLocation = {index, 0};
+            break;
+        }
+    }
+    
+    int closesToTheWaterRow = currentFootPrintLocation.first;
+    
+    while(currentFootPrintLocation.second < (int) field[0].size() - 1)
+    {
+        pair<int, int> rightUp = {currentFootPrintLocation.first - 1, currentFootPrintLocation.second + 1};
+        pair<int, int> right = {currentFootPrintLocation.first, currentFootPrintLocation.second + 1};
+        pair<int, int> rightDown = {currentFootPrintLocation.first + 1, currentFootPrintLocation.second + 1};
+        
+        if(rightUp.first > -1 and field[rightUp.first][rightUp.second] == 1)
+        {
+            currentFootPrintLocation = rightUp;
+            closesToTheWaterRow = rightUp.first;
+        }
+        else if(field[right.first][right.second] == 1) currentFootPrintLocation = right;
+        else if(rightDown.first < (int) field.size()) currentFootPrintLocation = rightDown;
+    }
+    
+    return closesToTheWaterRow;
+}

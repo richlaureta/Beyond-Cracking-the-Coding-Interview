@@ -83,5 +83,6 @@ void moveWord(vector<char> &arr, const string &word);
 vector<vector<int>> chessMoves(const vector<vector<int>> &board, const string &piece, int r, int c);
 vector<vector<int>> safeCells(const vector<vector<int>> &board);
 vector<vector<int>> spiral(int n);
+int distanceToRiver(const vector<vector<int>> &field);
 
 #endif // HEADER_HPP
