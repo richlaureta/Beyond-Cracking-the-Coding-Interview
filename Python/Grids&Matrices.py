@@ -271,20 +271,21 @@ def safeCells(board: list[list[int]]):
     return board
 
 def spiral(matrixDimension: int) -> list[list[int]]:
-    #Problem 28.3 Spiral Order
+    #Problem 28.3 - Spiral Order
     
     matrix = [[0 for square in range(matrixDimension)] for row in range(matrixDimension)]
     
     number = matrixDimension * matrixDimension - 1
+    
     square = [matrixDimension - 1, matrixDimension - 1]
+    center = [matrixDimension//2, matrixDimension//2]
+    
     upLimit = 0
     leftLimit = 0
     downLimit = matrixDimension - 1
     rightLimit = matrixDimension - 2
-    center = [matrixDimension//2, matrixDimension//2]
     
     while square != center:
-        
         while square[0] >= upLimit:
             matrix[square[0]][square[1]] = number
             number -=1

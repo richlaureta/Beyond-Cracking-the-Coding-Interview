@@ -9,7 +9,7 @@
 
 vector<vector<int>> chessMoves(const vector<vector<int>> &board, const string &piece, int r, int c)
 {
-    //Problem 28.1 Queen's Reach
+    //Problem 28.1 - Queen's Reach
     
     vector<vector<int>> oneMoveOccupySquare = {};
     
@@ -272,4 +272,70 @@ vector<vector<int>> safeCells(const vector<vector<int>> &board)
     }
     
     return boardCopy;
+}
+
+vector<vector<int>> spiral(int matrixDimension)
+{
+    //Problem 28.3 - Spiral Order
+    
+    vector<vector<int>> matrix(matrixDimension, vector<int>(matrixDimension, 0));
+    
+    int number = matrixDimension * matrixDimension - 1;
+    
+    pair<int, int> square = {matrixDimension - 1, matrixDimension - 1};
+    pair<int, int> center = {matrixDimension/2, matrixDimension/2};
+    
+    int upLimit = 0;
+    int leftLimit = 0;
+    int downLimit = matrixDimension - 1;
+    int rightLimit = matrixDimension - 2;
+    
+    while(square != center)
+    {
+        while(square.first >= upLimit)
+        {
+            matrix[square.first][square.second] = number;
+            number--;
+            square.first--;
+        }
+        
+        upLimit++;
+        square.second--;
+        square.first++;
+        
+        while(square.second >= leftLimit)
+        {
+            matrix[square.first][square.second] = number;
+            number--;
+            square.second--;
+        }
+        
+        leftLimit++;
+        square.second++;
+        square.first++;
+        
+        while(square.first <= downLimit)
+        {
+            matrix[square.first][square.second] = number;
+            number--;
+            square.first++;
+        }
+        
+        downLimit--;
+        square.second++;
+        square.first--;
+        
+        while(square.second <= rightLimit)
+        {
+            matrix[square.first][square.second] = number;
+            number--;
+            square.second++;
+        }
+        
+        rightLimit--;
+        square.second--;
+        square.first--;
+    }
+    
+    return matrix;
 }

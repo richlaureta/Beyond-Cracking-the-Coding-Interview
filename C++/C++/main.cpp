@@ -804,7 +804,50 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL CHESS MOVES TEST PROVIDED PASSED." << endl;
     
     //Problem 28.2 Queen's Reach
-    auto intVecToStr = [](const vector<int>& vec) {
+//    auto intVecToStr = [](const vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests = {
+//          {{{0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}},
+//           {{1, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 1}}},
+//          // Edge case - 1x1 board with queen
+//          {{{1}}, {{1}}},
+//          // Edge case - 1x1 board without queen
+//          {{{0}}, {{0}}},
+//          // Edge case - no queens
+//          {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}},
+//      };
+//
+//      for (const auto& [board, want] : tests) {
+//        auto got = safeCells(board);
+//        if (got != want) {
+//          throw std::runtime_error("\nsafeCells(" + intVecVecToStr(board) + "): got: " +
+//                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL QUEEN'S REACH TEST PROVIDED PASSED." << endl;
+    
+    //Problem 28.3 - Spiral Order
+    
+      auto intVecToStr = [](const vector<int>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
           if (i > 0) result += ", ";
@@ -824,26 +867,30 @@ int main(int argc, const char *argv[]) {
         return result;
       };
 
-      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests = {
-          {{{0, 0, 0, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}},
-           {{1, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 1}}},
-          // Edge case - 1x1 board with queen
-          {{{1}}, {{1}}},
-          // Edge case - 1x1 board without queen
-          {{{0}}, {{0}}},
-          // Edge case - no queens
-          {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}},
+      vector<std::pair<int, vector<vector<int>>>> tests = {
+          // Example from book
+          {5,
+           {{16, 17, 18, 19, 20},
+            {15, 4, 5, 6, 21},
+            {14, 3, 0, 7, 22},
+            {13, 2, 1, 8, 23},
+            {12, 11, 10, 9, 24}}},
+          // Edge case - 1x1
+          {1, {{0}}},
+          // Edge case - 3x3
+          {3, {{4, 5, 6}, {3, 0, 7}, {2, 1, 8}}},
       };
 
-      for (const auto& [board, want] : tests) {
-        auto got = safeCells(board);
+      for (const auto& [n, want] : tests) {
+        auto got = spiral(n);
         if (got != want) {
-          throw std::runtime_error("\nsafeCells(" + intVecVecToStr(board) + "): got: " +
+          throw std::runtime_error("\nspiral(" + std::to_string(n) + "): got: " +
                                    intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
         }
       }
-    
-    cout << "ALL QUEEN'S REACH TEST PROVIDED PASSED." << endl;
+
+
+    cout << "ALL SPIRAL ORDER TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
