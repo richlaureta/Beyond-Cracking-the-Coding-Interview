@@ -271,7 +271,7 @@ def safeCells(board: list[list[int]]):
     return board
 
 def spiral(matrixDimension: int) -> list[list[int]]:
-    #Problem 28.3 Spiral
+    #Problem 28.3 Spiral Order
     
     matrix = [[0 for square in range(matrixDimension)] for row in range(matrixDimension)]
     
@@ -414,7 +414,7 @@ def runSpiralTests():
         got = spiral(n)
         assert got == want, f"\nspiral({n}): got: {got}, want: {want}\n"
 
-    print("ALL SPIRAL TEST PROVIDED PASSED.")
+    print("ALL SPIRAL ORDER TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
     runSpiralTests()
