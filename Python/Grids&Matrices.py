@@ -281,8 +281,9 @@ def spiral(matrixDimension: int) -> list[list[int]]:
     leftLimit = 0
     downLimit = matrixDimension - 1
     rightLimit = matrixDimension - 2
-     
-    while square != [matrixDimension//2, matrixDimension//2]:
+    center = [matrixDimension//2, matrixDimension//2]
+    
+    while square != center:
         
         while square[0] >= upLimit:
             matrix[square[0]][square[1]] = number
