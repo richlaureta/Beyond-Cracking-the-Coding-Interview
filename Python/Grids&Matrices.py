@@ -324,6 +324,33 @@ def spiral(matrixDimension: int) -> list[list[int]]:
     
     return matrix
 
+def distanceToRiver(field: list[list[int]]) -> int:
+    #Problem 28.4 - Snow Prints
+    
+    currentFootPrintLocation = None
+    
+    for index in range(len(field)):
+        if field[index][0] == 1:
+            currentFootPrintLocation = [index, 0]
+            break
+    
+    closestToTheWaterRow = currentFootPrintLocation[0]
+    
+    while currentFootPrintLocation[1] < len(field[0]) - 1:
+        rightUp = [currentFootPrintLocation[0] - 1, currentFootPrintLocation[1] + 1]
+        right = [currentFootPrintLocation[0], currentFootPrintLocation[1] + 1]
+        rightDown = [currentFootPrintLocation[0] + 1, currentFootPrintLocation[1] + 1]
+        
+        if rightUp[0] > -1 and field[rightUp[0]][rightUp[1]] == 1:
+            currentFootPrintLocation = rightUp
+            closestToTheWaterRow = rightUp[0]
+        elif field[right[0]][right[1]] == 1:
+            currentFootPrintLocation = right
+        elif rightDown[0] < len(field):
+            currentFootPrintLocation = rightDown
+
+    return closestToTheWaterRow
+
 #TESTS
 def runChessMovesTests():
     tests = [
@@ -392,7 +419,7 @@ def runSafeCellsTests():
 
     print("ALL SAFE CELLS TEST PROVIDED PASSED.")
 
-def runSpiralTests():
+def runSpiralOrderTests():
     tests = [
       # Example from book
       (5, [
@@ -417,6 +444,54 @@ def runSpiralTests():
         assert got == want, f"\nspiral({n}): got: {got}, want: {want}\n"
 
     print("ALL SPIRAL ORDER TEST PROVIDED PASSED.")
+
+def runSnowPrintsTests():
+    tests = [
+        # Example from book
+      ([[0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0],
+        [1, 1, 0, 1, 0, 0],
+        [0, 0, 0, 0, 1, 1]], 1),
+      # Edge case - top of grid
+      ([[1, 1, 1, 1],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]], 0),
+      # Edge case - bottom of grid
+      ([[0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [1, 1, 1, 1]], 2),
+      # Edge case - single column
+      ([[0], [1], [0]], 1),
+      # Edge case - single row
+      ([[1]], 0),
+      # Edge case - zigzag path
+      ([[0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 1]], 1),
+      # Test max up/down movement
+      ([[0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]], 1),
+      # Test staying at same level
+      ([[0, 0, 0, 0],
+        [1, 1, 1, 1],
+        [0, 0, 0, 0]], 1),
+      # Test going up then down
+      ([[0, 0, 0, 0],
+        [1, 0, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 0, 1]], 1)
+    ]
+
+    for field, want in tests:
+        got = distanceToRiver(field)
+        assert got == want, f"\ndistance_to_river({field}): got: {
+            got}, want: {want}\n"
+
+    print("ALL SNOWPRINTS TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    runSpiralTests()
+    runSnowPrintsTests()
