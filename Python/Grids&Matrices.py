@@ -351,6 +351,35 @@ def distanceToRiver(field: list[list[int]]) -> int:
 
     return closestToTheWaterRow
 
+def validSudoku(board: list[list[int]]) -> bool:
+    #Problem 28.5 - Valid Sudoku
+    
+    for index in range(9):
+        numberSeenSet = set()
+        for index1 in range(9):
+            if board[index][index1] != 0 and board[index][index1] in numberSeenSet:
+                return False
+            numberSeenSet.add(board[index][index1])
+    
+    for index2 in range(9):
+        numberSeenSet1 = set()
+        for index3 in range(9):
+            if board[index3][index2] != 0 and board[index3][index2] in numberSeenSet1:
+                return False
+            numberSeenSet1.add(board[index3][index2])
+    
+    startingPoints = [[0, 0], [0, 3], [0, 6], [3, 0], [3, 3], [3, 6], [6, 0,], [6, 3], [6, 6]]
+    
+    for startingPoint in startingPoints:
+        numberSeenSet2 = set()
+        for index4 in range(startingPoint[0], startingPoint[0] + 3):
+            for index5 in range(startingPoint[1], startingPoint[1] + 3):
+                if board[index4][index5] != 0 and board[index4][index5] in numberSeenSet2:
+                    return False
+                numberSeenSet2.add(board[index4][index5])
+    
+    return True
+        
 #TESTS
 def runChessMovesTests():
     tests = [
@@ -492,6 +521,48 @@ def runSnowPrintsTests():
             got}, want: {want}\n"
 
     print("ALL SNOWPRINTS TEST PROVIDED PASSED.")
+
+def runValidSudokuTests():
+    tests = [
+        # Example 1 from book - valid sudoku
+        ([[5, 0, 0, 0, 0, 0, 0, 0, 6],
+        [0, 0, 9, 0, 5, 0, 3, 0, 0],
+        [0, 3, 0, 0, 0, 2, 0, 0, 0],
+        [8, 0, 0, 7, 0, 0, 0, 0, 9],
+        [0, 0, 2, 0, 0, 0, 8, 0, 0],
+        [4, 0, 0, 0, 0, 6, 0, 0, 3],
+        [0, 0, 0, 3, 0, 0, 0, 4, 0],
+        [0, 0, 3, 0, 8, 0, 2, 0, 0],
+        [9, 0, 0, 0, 0, 0, 0, 0, 7]], True),
+        # Example 2 from book - invalid sudoku (duplicate 7 in bottom right subgrid)
+        ([[5, 0, 0, 0, 0, 0, 0, 0, 6],
+        [0, 0, 9, 0, 5, 0, 3, 0, 0],
+        [0, 3, 0, 0, 0, 2, 0, 0, 0],
+        [8, 0, 0, 7, 0, 0, 0, 0, 9],
+        [0, 0, 2, 0, 0, 0, 8, 0, 0],
+        [4, 0, 0, 0, 0, 6, 0, 0, 3],
+        [0, 0, 0, 3, 0, 0, 0, 4, 0],
+        [0, 0, 3, 0, 8, 0, 7, 0, 0],
+        [9, 0, 0, 0, 0, 0, 0, 0, 7]], False),
+        # Edge case - empty board
+        ([[0] * 9 for _ in range(9)], True),
+        # Edge case - full valid board
+        ([[1, 2, 3, 4, 5, 6, 7, 8, 9],
+        [4, 5, 6, 7, 8, 9, 1, 2, 3],
+        [7, 8, 9, 1, 2, 3, 4, 5, 6],
+        [2, 3, 1, 5, 6, 4, 8, 9, 7],
+        [5, 6, 4, 8, 9, 7, 2, 3, 1],
+        [8, 9, 7, 2, 3, 1, 5, 6, 4],
+        [3, 1, 2, 6, 4, 5, 9, 7, 8],
+        [6, 4, 5, 9, 7, 8, 3, 1, 2],
+        [9, 7, 8, 3, 1, 2, 6, 4, 5]], True),
+  ]
+
+    for board, want in tests:
+        got = validSudoku(board)
+        assert got == want, f"\nsolve({board}): got: {got}, want: {want}\n"
+
+    print("ALL VALID SUDOKU TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    runSnowPrintsTests()
+    runValidSudokuTests()
