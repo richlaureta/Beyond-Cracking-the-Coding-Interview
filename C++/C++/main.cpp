@@ -894,55 +894,119 @@ int main(int argc, const char *argv[]) {
     
     //Problem 28.4 - Snowprints
     
-    vector<std::pair<vector<vector<int>>, int>> tests = {
-          // Example from book
-          {{{0, 0, 0, 0, 0, 0},
-            {0, 0, 1, 0, 0, 0},
-            {1, 1, 0, 1, 0, 0},
-            {0, 0, 0, 0, 1, 1}},
-           1},
-          // Edge case - top of grid
-          {{{0, 0, 0, 1, 0, 0},
-            {0, 0, 1, 0, 1, 0},
-            {1, 1, 0, 0, 0, 1},
-            {0, 0, 0, 0, 0, 0}},
-           0},
-          // Edge case - bottom of grid
-          {{{0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1}},
-           3},
-          // Edge case - single column
-          {{{0}, {1}}, 1},
-          // Edge case - single row
-          {{{1, 1, 1}}, 0},
-          // Edge case - zigzag path
-          {{{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, 1},
+//    vector<std::pair<vector<vector<int>>, int>> tests = {
+//          // Example from book
+//          {{{0, 0, 0, 0, 0, 0},
+//            {0, 0, 1, 0, 0, 0},
+//            {1, 1, 0, 1, 0, 0},
+//            {0, 0, 0, 0, 1, 1}},
+//           1},
+//          // Edge case - top of grid
+//          {{{0, 0, 0, 1, 0, 0},
+//            {0, 0, 1, 0, 1, 0},
+//            {1, 1, 0, 0, 0, 1},
+//            {0, 0, 0, 0, 0, 0}},
+//           0},
+//          // Edge case - bottom of grid
+//          {{{0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0},
+//            {0, 0, 0, 0, 0, 0},
+//            {1, 1, 1, 1, 1, 1}},
+//           3},
+//          // Edge case - single column
+//          {{{0}, {1}}, 1},
+//          // Edge case - single row
+//          {{{1, 1, 1}}, 0},
+//          // Edge case - zigzag path
+//          {{{0, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1}}, 1},
+//      };
+//
+//      for (const auto& [field, want] : tests) {
+//        int got = distanceToRiver(field);
+//        if (got != want) {
+//          std::string field_str = "[";
+//          for (size_t i = 0; i < field.size(); i++) {
+//            field_str += "[";
+//            for (size_t j = 0; j < field[i].size(); j++) {
+//              field_str += std::to_string(field[i][j]);
+//              if (j < field[i].size() - 1) field_str += ", ";
+//            }
+//            field_str += "]";
+//            if (i < field.size() - 1) field_str += ", ";
+//          }
+//          field_str += "]";
+//
+//          throw std::runtime_error("\ndistanceToRiver(" + field_str +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL SNOWPRINTS TEST PROVIDED PASSED." << endl;
+    
+    //Problem 28.5 - Valid Sudoku
+    
+    vector<std::pair<vector<vector<int>>, bool>> tests = {
+          // Example 1 from book - valid sudoku
+          {{{5, 0, 0, 0, 0, 0, 0, 0, 6},
+            {0, 0, 9, 0, 5, 0, 3, 0, 0},
+            {0, 3, 0, 0, 0, 2, 0, 0, 0},
+            {8, 0, 0, 7, 0, 0, 0, 0, 9},
+            {0, 0, 2, 0, 0, 0, 8, 0, 0},
+            {4, 0, 0, 0, 0, 6, 0, 0, 3},
+            {0, 0, 0, 3, 0, 0, 0, 4, 0},
+            {0, 0, 3, 0, 8, 0, 2, 0, 0},
+            {9, 0, 0, 0, 0, 0, 0, 0, 7}},
+           true},
+          // Example 2 from book - invalid sudoku (duplicate 7 in bottom right subgrid)
+          {{{5, 0, 0, 0, 0, 0, 0, 0, 6},
+            {0, 0, 9, 0, 5, 0, 3, 0, 0},
+            {0, 3, 0, 0, 0, 2, 0, 0, 0},
+            {8, 0, 0, 7, 0, 0, 0, 0, 9},
+            {0, 0, 2, 0, 0, 0, 8, 0, 0},
+            {4, 0, 0, 0, 0, 6, 0, 0, 3},
+            {0, 0, 0, 3, 0, 0, 0, 4, 0},
+            {0, 0, 3, 0, 8, 0, 7, 0, 0},
+            {9, 0, 0, 0, 0, 0, 0, 0, 7}},
+           false},
+          // Edge case - empty board
+          {vector<vector<int>>(9, vector<int>(9, 0)), true},
+          // Edge case - full valid board
+          {{{1, 2, 3, 4, 5, 6, 7, 8, 9},
+            {4, 5, 6, 7, 8, 9, 1, 2, 3},
+            {7, 8, 9, 1, 2, 3, 4, 5, 6},
+            {2, 3, 1, 5, 6, 4, 8, 9, 7},
+            {5, 6, 4, 8, 9, 7, 2, 3, 1},
+            {8, 9, 7, 2, 3, 1, 5, 6, 4},
+            {3, 1, 2, 6, 4, 5, 9, 7, 8},
+            {6, 4, 5, 9, 7, 8, 3, 1, 2},
+            {9, 7, 8, 3, 1, 2, 6, 4, 5}},
+           true},
       };
 
-      for (const auto& [field, want] : tests) {
-        int got = distanceToRiver(field);
+      
+      for (const auto& [board, want] : tests) {
+          bool got = validSudoku(board);
         if (got != want) {
-          std::string field_str = "[";
-          for (size_t i = 0; i < field.size(); i++) {
-            field_str += "[";
-            for (size_t j = 0; j < field[i].size(); j++) {
-              field_str += std::to_string(field[i][j]);
-              if (j < field[i].size() - 1) field_str += ", ";
+          std::string board_str = "[";
+          for (size_t i = 0; i < board.size(); i++) {
+            board_str += "[";
+            for (size_t j = 0; j < board[i].size(); j++) {
+              board_str += std::to_string(board[i][j]);
+              if (j < board[i].size() - 1) board_str += ", ";
             }
-            field_str += "]";
-            if (i < field.size() - 1) field_str += ", ";
+            board_str += "]";
+            if (i < board.size() - 1) board_str += ", ";
           }
-          field_str += "]";
+          board_str += "]";
 
-          throw std::runtime_error("\ndistanceToRiver(" + field_str +
+          throw std::runtime_error("\nsolve(" + board_str +
                                    "): got: " + std::to_string(got) +
                                    ", want: " + std::to_string(want) + "\n");
         }
       }
     
-    cout << "ALL SNOWPRINTS TEST PROVIDED PASSED." << endl;
+    cout << "ALL VALID SUDOKU TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

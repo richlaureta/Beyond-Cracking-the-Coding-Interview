@@ -374,3 +374,45 @@ int distanceToRiver(const vector<vector<int>> &field)
     
     return closesToTheWaterRow;
 }
+
+bool validSudoku(vector<vector<int>> board)
+{
+    //Problem 28.5 - Valid Sudoku
+    
+    for(int index = 0; index < 9; index++)
+    {
+        unordered_set<int> numberSeenSet = {};
+        for(int index1 = 0; index1 < 9; index1++)
+        {
+            if(board[index][index1] != 0 and numberSeenSet.find(board[index][index1]) != numberSeenSet.end()) return false;
+            numberSeenSet.insert(board[index][index1]);
+        }
+    }
+    
+    for(int index2 = 0; index2 < 9; index2++)
+    {
+        unordered_set<int> numberSeenSet1 = {};
+        for(int index3 = 0; index3 < 9; index3++)
+        {
+            if(board[index3][index2] != 0 and numberSeenSet1.find(board[index3][index2]) != numberSeenSet1.end()) return false;
+            numberSeenSet1.insert(board[index3][index2]);
+        }
+    }
+    
+    vector<pair<int,int>> startingPoints = {{0, 0}, {0, 3}, {0, 6}, {3, 0}, {3, 3}, {3, 6}, {6, 0}, {6, 3}, {6, 6}};
+    
+    for(pair<int, int> startingPoint: startingPoints)
+    {
+        unordered_set<int> numberSeenSet2 = {};
+        for(int index4 = startingPoint.first; index4 < startingPoint.first + 3; index4++)
+        {
+            for(int index5 = startingPoint.second; index5 < startingPoint.second + 3; index5++)
+            {
+                if(board[index4][index5] != 0 and numberSeenSet2.find(board[index4][index5]) != numberSeenSet2.end()) return false;
+                numberSeenSet2.insert(board[index4][index5]);
+            }
+        }
+    }
+    
+    return true;
+}

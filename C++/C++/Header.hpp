@@ -84,5 +84,6 @@ vector<vector<int>> chessMoves(const vector<vector<int>> &board, const string &p
 vector<vector<int>> safeCells(const vector<vector<int>> &board);
 vector<vector<int>> spiral(int n);
 int distanceToRiver(const vector<vector<int>> &field);
+bool validSudoku(vector<vector<int>> board);
 
 #endif // HEADER_HPP
