@@ -379,7 +379,20 @@ def validSudoku(board: list[list[int]]) -> bool:
                 numberSeenSet2.add(board[index4][index5])
     
     return True
-        
+
+def subgridMaximums(grid: list[list[int]]) -> list[list[int]]:
+    #Problem 28.6 Subgrid Maximums
+    
+    for row in range(len(grid) - 1, -1, -1):
+        for column in range(len(grid[0]) - 1, -1, -1):
+            if row + 1 < len(grid):
+                grid[row][column] = max(grid[row][column], grid[row + 1][column])
+            
+            if column + 1 < len(grid[0]):
+                grid[row][column] = max(grid[row][column], grid[row][column + 1])
+    
+    return grid
+       
 #TESTS
 def runChessMovesTests():
     tests = [
@@ -563,6 +576,35 @@ def runValidSudokuTests():
         assert got == want, f"\nsolve({board}): got: {got}, want: {want}\n"
 
     print("ALL VALID SUDOKU TEST PROVIDED PASSED.")
+
+def runSubgridMaximumsTests():
+    tests = [
+    # Example from book
+    ([[1, 5, 3],
+        [4, -1, 0],
+        [2, 0, 2]],
+       [[5, 5, 3],
+        [4, 2, 2],
+        [2, 2, 2]]),
+      # Edge case - 1x1 grid
+      ([[5]], [[5]]),
+      # Edge case - single row
+      ([[1, 2, 3]], [[3, 3, 3]]),
+      # Edge case - single column
+      ([[1], [2], [3]], [[3], [3], [3]]),
+      # Edge case - negative numbers
+      ([[-1, -2],
+        [-3, -4]],
+       [[-1, -2],
+        [-3, -4]]),
+    ]
+
+    for grid, want in tests:
+        got = subgridMaximums(grid)
+        assert got == want, f"\nsubgrid_maximums({grid}): got: {
+            got}, want: {want}\n"
+
+    print("ALL SUBGRID MAXIMUMS TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    runValidSudokuTests()
+    runSubgridMaximumsTests()
