@@ -85,5 +85,6 @@ vector<vector<int>> safeCells(const vector<vector<int>> &board);
 vector<vector<int>> spiral(int n);
 int distanceToRiver(const vector<vector<int>> &field);
 bool validSudoku(vector<vector<int>> board);
+vector<vector<int>> subgridMaximums(const vector<vector<int>> &grid);
 
 #endif // HEADER_HPP

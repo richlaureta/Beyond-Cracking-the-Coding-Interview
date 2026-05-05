@@ -946,67 +946,121 @@ int main(int argc, const char *argv[]) {
     
     //Problem 28.5 - Valid Sudoku
     
-    vector<std::pair<vector<vector<int>>, bool>> tests = {
-          // Example 1 from book - valid sudoku
-          {{{5, 0, 0, 0, 0, 0, 0, 0, 6},
-            {0, 0, 9, 0, 5, 0, 3, 0, 0},
-            {0, 3, 0, 0, 0, 2, 0, 0, 0},
-            {8, 0, 0, 7, 0, 0, 0, 0, 9},
-            {0, 0, 2, 0, 0, 0, 8, 0, 0},
-            {4, 0, 0, 0, 0, 6, 0, 0, 3},
-            {0, 0, 0, 3, 0, 0, 0, 4, 0},
-            {0, 0, 3, 0, 8, 0, 2, 0, 0},
-            {9, 0, 0, 0, 0, 0, 0, 0, 7}},
-           true},
-          // Example 2 from book - invalid sudoku (duplicate 7 in bottom right subgrid)
-          {{{5, 0, 0, 0, 0, 0, 0, 0, 6},
-            {0, 0, 9, 0, 5, 0, 3, 0, 0},
-            {0, 3, 0, 0, 0, 2, 0, 0, 0},
-            {8, 0, 0, 7, 0, 0, 0, 0, 9},
-            {0, 0, 2, 0, 0, 0, 8, 0, 0},
-            {4, 0, 0, 0, 0, 6, 0, 0, 3},
-            {0, 0, 0, 3, 0, 0, 0, 4, 0},
-            {0, 0, 3, 0, 8, 0, 7, 0, 0},
-            {9, 0, 0, 0, 0, 0, 0, 0, 7}},
-           false},
-          // Edge case - empty board
-          {vector<vector<int>>(9, vector<int>(9, 0)), true},
-          // Edge case - full valid board
-          {{{1, 2, 3, 4, 5, 6, 7, 8, 9},
-            {4, 5, 6, 7, 8, 9, 1, 2, 3},
-            {7, 8, 9, 1, 2, 3, 4, 5, 6},
-            {2, 3, 1, 5, 6, 4, 8, 9, 7},
-            {5, 6, 4, 8, 9, 7, 2, 3, 1},
-            {8, 9, 7, 2, 3, 1, 5, 6, 4},
-            {3, 1, 2, 6, 4, 5, 9, 7, 8},
-            {6, 4, 5, 9, 7, 8, 3, 1, 2},
-            {9, 7, 8, 3, 1, 2, 6, 4, 5}},
-           true},
+//    vector<std::pair<vector<vector<int>>, bool>> tests = {
+//          // Example 1 from book - valid sudoku
+//          {{{5, 0, 0, 0, 0, 0, 0, 0, 6},
+//            {0, 0, 9, 0, 5, 0, 3, 0, 0},
+//            {0, 3, 0, 0, 0, 2, 0, 0, 0},
+//            {8, 0, 0, 7, 0, 0, 0, 0, 9},
+//            {0, 0, 2, 0, 0, 0, 8, 0, 0},
+//            {4, 0, 0, 0, 0, 6, 0, 0, 3},
+//            {0, 0, 0, 3, 0, 0, 0, 4, 0},
+//            {0, 0, 3, 0, 8, 0, 2, 0, 0},
+//            {9, 0, 0, 0, 0, 0, 0, 0, 7}},
+//           true},
+//          // Example 2 from book - invalid sudoku (duplicate 7 in bottom right subgrid)
+//          {{{5, 0, 0, 0, 0, 0, 0, 0, 6},
+//            {0, 0, 9, 0, 5, 0, 3, 0, 0},
+//            {0, 3, 0, 0, 0, 2, 0, 0, 0},
+//            {8, 0, 0, 7, 0, 0, 0, 0, 9},
+//            {0, 0, 2, 0, 0, 0, 8, 0, 0},
+//            {4, 0, 0, 0, 0, 6, 0, 0, 3},
+//            {0, 0, 0, 3, 0, 0, 0, 4, 0},
+//            {0, 0, 3, 0, 8, 0, 7, 0, 0},
+//            {9, 0, 0, 0, 0, 0, 0, 0, 7}},
+//           false},
+//          // Edge case - empty board
+//          {vector<vector<int>>(9, vector<int>(9, 0)), true},
+//          // Edge case - full valid board
+//          {{{1, 2, 3, 4, 5, 6, 7, 8, 9},
+//            {4, 5, 6, 7, 8, 9, 1, 2, 3},
+//            {7, 8, 9, 1, 2, 3, 4, 5, 6},
+//            {2, 3, 1, 5, 6, 4, 8, 9, 7},
+//            {5, 6, 4, 8, 9, 7, 2, 3, 1},
+//            {8, 9, 7, 2, 3, 1, 5, 6, 4},
+//            {3, 1, 2, 6, 4, 5, 9, 7, 8},
+//            {6, 4, 5, 9, 7, 8, 3, 1, 2},
+//            {9, 7, 8, 3, 1, 2, 6, 4, 5}},
+//           true},
+//      };
+//
+//      
+//      for (const auto& [board, want] : tests) {
+//          bool got = validSudoku(board);
+//        if (got != want) {
+//          std::string board_str = "[";
+//          for (size_t i = 0; i < board.size(); i++) {
+//            board_str += "[";
+//            for (size_t j = 0; j < board[i].size(); j++) {
+//              board_str += std::to_string(board[i][j]);
+//              if (j < board[i].size() - 1) board_str += ", ";
+//            }
+//            board_str += "]";
+//            if (i < board.size() - 1) board_str += ", ";
+//          }
+//          board_str += "]";
+//
+//          throw std::runtime_error("\nsolve(" + board_str +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL VALID SUDOKU TEST PROVIDED PASSED." << endl;
+//
+    
+    auto intVecToStr = [](const vector<int>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+      
+      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += intVecToStr(vec[i]);
+        }
+        result += "]";
+        return result;
       };
 
-      
-      for (const auto& [board, want] : tests) {
-          bool got = validSudoku(board);
-        if (got != want) {
-          std::string board_str = "[";
-          for (size_t i = 0; i < board.size(); i++) {
-            board_str += "[";
-            for (size_t j = 0; j < board[i].size(); j++) {
-              board_str += std::to_string(board[i][j]);
-              if (j < board[i].size() - 1) board_str += ", ";
-            }
-            board_str += "]";
-            if (i < board.size() - 1) board_str += ", ";
-          }
-          board_str += "]";
+      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests;
 
-          throw std::runtime_error("\nsolve(" + board_str +
-                                   "): got: " + std::to_string(got) +
-                                   ", want: " + std::to_string(want) + "\n");
+      // Example from book
+      tests.push_back(
+          std::make_pair(vector<vector<int>>{{1, 5, 3}, {4, -1, 0}, {2, 0, 2}},
+                         vector<vector<int>>{{5, 5, 3}, {4, 2, 2}, {2, 2, 2}}));
+
+      // Edge case - 1x1 grid
+      tests.push_back(
+          std::make_pair(vector<vector<int>>{{5}}, vector<vector<int>>{{5}}));
+
+      // Edge case - single row
+      tests.push_back(std::make_pair(vector<vector<int>>{{1, 2, 3}},
+                                     vector<vector<int>>{{3, 3, 3}}));
+
+      // Edge case - single column
+      tests.push_back(std::make_pair(vector<vector<int>>{{1}, {2}, {3}},
+                                     vector<vector<int>>{{3}, {3}, {3}}));
+
+      // Edge case - negative numbers
+      tests.push_back(std::make_pair(vector<vector<int>>{{-1, -2}, {-3, -4}},
+                                     vector<vector<int>>{{-1, -2}, {-3, -4}}));
+
+      for (const auto& [grid, want] : tests) {
+        auto got = subgridMaximums(grid);
+        if (got != want) {
+          throw std::runtime_error("\nsubgridMaximums(" + intVecVecToStr(grid) + "): got: " +
+                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
         }
       }
     
-    cout << "ALL VALID SUDOKU TEST PROVIDED PASSED." << endl;
+    cout << "ALL SUBGRID MAXIMUMS TEST PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

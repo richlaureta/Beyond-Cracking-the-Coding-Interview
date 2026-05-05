@@ -1,4 +1,5 @@
 
+import copy
 
 def chessMoves(board: list[list[int]], piece: str, r: int, c: int) -> list[list[int]]:
     #Problem 28.1 - Chess Moves
@@ -383,15 +384,17 @@ def validSudoku(board: list[list[int]]) -> bool:
 def subgridMaximums(grid: list[list[int]]) -> list[list[int]]:
     #Problem 28.6 Subgrid Maximums
     
+    newGrid = copy.deepcopy(grid)
+    
     for row in range(len(grid) - 1, -1, -1):
         for column in range(len(grid[0]) - 1, -1, -1):
             if row + 1 < len(grid):
-                grid[row][column] = max(grid[row][column], grid[row + 1][column])
+                newGrid[row][column] = max(newGrid[row][column], newGrid[row + 1][column])
             
             if column + 1 < len(grid[0]):
-                grid[row][column] = max(grid[row][column], grid[row][column + 1])
+                newGrid[row][column] = max(newGrid[row][column], newGrid[row][column + 1])
     
-    return grid
+    return newGrid
        
 #TESTS
 def runChessMovesTests():

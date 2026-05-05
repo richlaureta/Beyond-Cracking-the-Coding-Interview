@@ -416,3 +416,21 @@ bool validSudoku(vector<vector<int>> board)
     
     return true;
 }
+
+vector<vector<int>> subgridMaximums(const vector<vector<int>> &grid)
+{
+    //Problem 28.6 Subgrid Maximums
+    
+    vector<vector<int>> newGrid = grid;
+    
+    for(int row = (int)grid.size() - 1; row > -1; row--)
+    {
+        for(int column = (int)grid[0].size() - 1; column > -1; column--)
+        {
+            if (column + 1 < (int)grid[0].size()) newGrid[row][column] = max(newGrid[row][column], newGrid[row][column + 1]);
+            if (row + 1 < (int)grid.size()) newGrid[row][column] = max(newGrid[row][column], newGrid[row + 1][column]);
+        }
+    }
+    
+    return newGrid;
+}
