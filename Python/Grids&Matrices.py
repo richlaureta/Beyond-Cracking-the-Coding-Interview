@@ -395,7 +395,24 @@ def subgridMaximums(grid: list[list[int]]) -> list[list[int]]:
                 newGrid[row][column] = max(newGrid[row][column], newGrid[row][column + 1])
     
     return newGrid
-       
+
+def subgridSums(grid: list[list[int]]) -> list[list[int]]:
+    #Problem #28.7 Subgrid Sums
+    
+    newGrid = copy.deepcopy(grid)
+    
+    for row in range(len(grid) - 1, -1, -1):
+        for column in range(len(grid[0]) - 1, -1, -1):
+            if column < len(grid[0]) - 1 and row < len(grid) - 1:
+                newGrid[row][column] += newGrid[row][column + 1] + newGrid[row + 1][column] - newGrid[row + 1][column + 1]
+            elif row == len(grid) - 1 and column < len(grid[0]) - 1:
+                newGrid[row][column] += newGrid[row][column + 1]
+            elif column == len(grid[0]) - 1 and row < len(grid) - 1:
+                newGrid[row][column] += newGrid[row + 1][column]
+    
+    return newGrid 
+                
+
 #TESTS
 def runChessMovesTests():
     tests = [
@@ -608,6 +625,34 @@ def runSubgridMaximumsTests():
             got}, want: {want}\n"
 
     print("ALL SUBGRID MAXIMUMS TEST PROVIDED PASSED.")
+
+def runSubgridSumsTests():
+    tests = [
+        # Example from book
+        ([[-1, 2, 3],
+          [4, 0, 0],
+          [-2, 0, 9]],
+       [[15, 14, 12],
+        [11, 9, 9],
+        [7, 9, 9]]),
+      # Edge case - 1x1 grid
+      ([[5]], [[5]]),
+      # Edge case - single row
+      ([[1, 2, 3]], [[6, 5, 3]]),
+      # Edge case - single column
+      ([[1], [2], [3]], [[6], [5], [3]]),
+      # Edge case - all zeros
+      ([[0, 0],
+        [0, 0]],
+       [[0, 0],
+        [0, 0]]),
+    ]
+
+    for grid, want in tests:
+        got = subgridSums(grid)
+        assert got == want, f"\nsubgrid_sums({grid}): got: {got}, want: {want}\n"
+
+    print("ALL SUBGRID SUMS TEST PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    runSubgridMaximumsTests()
+    runSubgridSumsTests()
