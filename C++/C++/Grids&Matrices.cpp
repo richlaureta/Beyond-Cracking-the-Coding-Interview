@@ -434,3 +434,22 @@ vector<vector<int>> subgridMaximums(const vector<vector<int>> &grid)
     
     return newGrid;
 }
+
+vector<vector<int>> subgridSums(const vector<vector<int>> &grid)
+{
+    //Problem 28.7 Subgrid Sums
+    
+    vector<vector<int>> newGrid = grid;
+    
+    for(int row = (int)grid.size() - 1; row > -1; row--)
+    {
+        for(int column = (int)grid[0].size() - 1; column > -1; column--)
+        {
+            if(column < (int)grid[0].size() - 1 and row < (int)grid.size() - 1) newGrid[row][column] += newGrid[row][column + 1] + newGrid[row + 1][column] - newGrid[row + 1][column + 1];
+            else if(row == (int)grid.size() - 1 and column < (int)grid[0].size() - 1) newGrid[row][column] += newGrid[row][column + 1];
+            else if(column == (int)grid[0].size() - 1 and row < (int)grid.size() - 1) newGrid[row][column] += newGrid[row + 1][column];
+        }
+    }
+    
+    return newGrid;
+}

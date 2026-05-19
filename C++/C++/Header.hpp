@@ -86,5 +86,6 @@ vector<vector<int>> spiral(int n);
 int distanceToRiver(const vector<vector<int>> &field);
 bool validSudoku(vector<vector<int>> board);
 vector<vector<int>> subgridMaximums(const vector<vector<int>> &grid);
+vector<vector<int>> subgridSums(const vector<vector<int>> &grid);
 
 #endif // HEADER_HPP

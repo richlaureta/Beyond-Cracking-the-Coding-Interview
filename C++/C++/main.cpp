@@ -1007,7 +1007,61 @@ int main(int argc, const char *argv[]) {
 //      }
 //    
 //    cout << "ALL VALID SUDOKU TEST PROVIDED PASSED." << endl;
+
+//    auto intVecToStr = [](const vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const vector<vector<int>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
 //
+//      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests;
+//
+//      // Example from book
+//      tests.push_back(
+//          std::make_pair(vector<vector<int>>{{1, 5, 3}, {4, -1, 0}, {2, 0, 2}},
+//                         vector<vector<int>>{{5, 5, 3}, {4, 2, 2}, {2, 2, 2}}));
+//
+//      // Edge case - 1x1 grid
+//      tests.push_back(
+//          std::make_pair(vector<vector<int>>{{5}}, vector<vector<int>>{{5}}));
+//
+//      // Edge case - single row
+//      tests.push_back(std::make_pair(vector<vector<int>>{{1, 2, 3}},
+//                                     vector<vector<int>>{{3, 3, 3}}));
+//
+//      // Edge case - single column
+//      tests.push_back(std::make_pair(vector<vector<int>>{{1}, {2}, {3}},
+//                                     vector<vector<int>>{{3}, {3}, {3}}));
+//
+//      // Edge case - negative numbers
+//      tests.push_back(std::make_pair(vector<vector<int>>{{-1, -2}, {-3, -4}},
+//                                     vector<vector<int>>{{-1, -2}, {-3, -4}}));
+//
+//      for (const auto& [grid, want] : tests) {
+//        auto got = subgridMaximums(grid);
+//        if (got != want) {
+//          throw std::runtime_error("\nsubgridMaximums(" + intVecVecToStr(grid) + "): got: " +
+//                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL SUBGRID MAXIMUMS TEST PROVIDED PASSED." << endl;
+    
+    //Problem 28.7 Subgrid Sums
     
     auto intVecToStr = [](const vector<int>& vec) {
         std::string result = "[";
@@ -1029,38 +1083,29 @@ int main(int argc, const char *argv[]) {
         return result;
       };
 
-      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests;
-
-      // Example from book
-      tests.push_back(
-          std::make_pair(vector<vector<int>>{{1, 5, 3}, {4, -1, 0}, {2, 0, 2}},
-                         vector<vector<int>>{{5, 5, 3}, {4, 2, 2}, {2, 2, 2}}));
-
-      // Edge case - 1x1 grid
-      tests.push_back(
-          std::make_pair(vector<vector<int>>{{5}}, vector<vector<int>>{{5}}));
-
-      // Edge case - single row
-      tests.push_back(std::make_pair(vector<vector<int>>{{1, 2, 3}},
-                                     vector<vector<int>>{{3, 3, 3}}));
-
-      // Edge case - single column
-      tests.push_back(std::make_pair(vector<vector<int>>{{1}, {2}, {3}},
-                                     vector<vector<int>>{{3}, {3}, {3}}));
-
-      // Edge case - negative numbers
-      tests.push_back(std::make_pair(vector<vector<int>>{{-1, -2}, {-3, -4}},
-                                     vector<vector<int>>{{-1, -2}, {-3, -4}}));
+      vector<std::pair<vector<vector<int>>, vector<vector<int>>>> tests = {
+          // Example from book
+          {{{-1, 2, 3}, {4, 0, 0}, {-2, 0, 9}},
+           {{15, 14, 12}, {11, 9, 9}, {7, 9, 9}}},
+          // Edge case - 1x1 grid
+          {{{5}}, {{5}}},
+          // Edge case - single row
+          {{{1, 2, 3}}, {{6, 5, 3}}},
+          // Edge case - single column
+          {{{1}, {2}, {3}}, {{6}, {5}, {3}}},
+          // Edge case - all zeros
+          {{{0, 0}, {0, 0}}, {{0, 0}, {0, 0}}},
+      };
 
       for (const auto& [grid, want] : tests) {
-        auto got = subgridMaximums(grid);
+        auto got = subgridSums(grid);
         if (got != want) {
-          throw std::runtime_error("\nsubgridMaximums(" + intVecVecToStr(grid) + "): got: " +
+          throw std::runtime_error("\nsubgridSums(" + intVecVecToStr(grid) + "): got: " +
                                    intVecVecToStr(got) + ", want: " + intVecVecToStr(want) + "\n");
         }
       }
     
-    cout << "ALL SUBGRID MAXIMUMS TEST PROVIDED PASSED." << endl;
+    cout << "ALL SUBGRID SUMS TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
