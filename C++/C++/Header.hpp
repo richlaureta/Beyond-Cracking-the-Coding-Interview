@@ -87,5 +87,18 @@ int distanceToRiver(const vector<vector<int>> &field);
 bool validSudoku(vector<vector<int>> board);
 vector<vector<int>> subgridMaximums(const vector<vector<int>> &grid);
 vector<vector<int>> subgridSums(const vector<vector<int>> &grid);
-
+class MatrixOperations
+{
+private:
+    vector<vector<double>> matrix;
+public:
+    MatrixOperations(const vector<vector<double>> &grid);
+    
+    void transpose();
+    void reflectHorizontally();
+    void reflectVertically();
+    void rotateClockwise();
+    void rotateCounterclockwise();
+    const vector<vector<double>>& getMatrix() const;
+};
 #endif // HEADER_HPP

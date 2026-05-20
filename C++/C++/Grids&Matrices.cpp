@@ -453,3 +453,46 @@ vector<vector<int>> subgridSums(const vector<vector<int>> &grid)
     
     return newGrid;
 }
+
+MatrixOperations::MatrixOperations(const vector<vector<double>> &grid) : matrix(grid)
+{
+    
+}
+
+void MatrixOperations::transpose()
+{
+    for(int row = 0; row < (int)matrix.size(); row++)
+    {
+        for(int column = row + 1; column < (int)matrix[0].size(); column++)
+        {
+            swap(matrix[row][column], matrix[column][row]);
+        }
+    }
+}
+
+void MatrixOperations::reflectHorizontally()
+{
+    for(int index = 0; index < (int)matrix.size(); index++) reverse(matrix[index].begin(), matrix[index].end());
+}
+
+void MatrixOperations::reflectVertically()
+{
+    reverse(matrix.begin(), matrix.end());
+}
+
+void MatrixOperations::rotateClockwise()
+{
+    transpose();
+    reflectHorizontally();
+}
+
+void MatrixOperations::rotateCounterclockwise()
+{
+    transpose();
+    reflectVertically();
+}
+
+const vector<vector<double>>& MatrixOperations::getMatrix() const
+{
+    return matrix;
+}

@@ -705,19 +705,7 @@ def runMatrixOperationsTests():
     assert got == want, (f"\nMatrix({grid}).{operation}(): "
                          f"got: {got}, want: {want}\n")
   
-  print("ALL MATRIX OPERATIONS TESTS PASSED.")
+  print("ALL MATRIX OPERATIONS TEST PROVIDED PASSED.")
   
-if __name__ == "__main__":
-    # grid = [
-    #     [1, 2, 3],
-    #     [4, 5, 6],
-    #     [7, 8, 9]
-    # ]
-    
-    # transposing = MatrixOperations(grid)
-    
-    # getattr(transposing, "reflectHorizontally")()
-    
-    # print(transposing.matrix)
-    
+if __name__ == "__main__":    
     runMatrixOperationsTests()
