@@ -707,5 +707,6 @@ def runMatrixOperationsTests():
   
   print("ALL MATRIX OPERATIONS TEST PROVIDED PASSED.")
   
-if __name__ == "__main__":    
+if __name__ == "__main__":
+    #TESTING    
     runMatrixOperationsTests()
