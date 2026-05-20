@@ -412,6 +412,27 @@ def subgridSums(grid: list[list[int]]) -> list[list[int]]:
     
     return newGrid 
                 
+class MatrixOperations:
+    #Problem 28.8 Matrix Operations
+    
+    def __init__(self, grid: list[list[int]]):
+        self.matrix = grid
+        
+    def transpose(self):
+        for row in range(len(self.matrix)):
+            for column in range(row + 1, len(self.matrix[0])):
+                self.matrix[row][column], self.matrix[column][row] = self.matrix[column][row], self.matrix[row][column]
+    def reflectHorizontally(self):
+        for row in self.matrix:
+            row.reverse()
+    def reflectVertically(self):
+        self.matrix.reverse()
+    def rotateClockwise(self):
+        self.transpose()
+        self.reflectHorizontally()
+    def rotateCounterclockwise(self):
+        self.transpose()
+        self.reflectVertically()
 
 #TESTS
 def runChessMovesTests():
@@ -653,6 +674,50 @@ def runSubgridSumsTests():
         assert got == want, f"\nsubgrid_sums({grid}): got: {got}, want: {want}\n"
 
     print("ALL SUBGRID SUMS TEST PROVIDED PASSED.")
-    
+
+def runMatrixOperationsTests():
+  tests = [
+      # Test transpose
+      ([[1, 2], [3, 4]], "transpose", [[1, 3], [2, 4]]),
+      # Test horizontal reflection
+      ([[1, 2], [3, 4]], "reflectHorizontally", [[2, 1], [4, 3]]),
+      # Test vertical reflection
+      ([[1, 2], [3, 4]], "reflectVertically", [[3, 4], [1, 2]]),
+      # Test clockwise rotation
+      ([[1, 2], [3, 4]], "rotateClockwise", [[3, 1], [4, 2]]),
+      # Test counterclockwise rotation
+      ([[1, 2], [3, 4]], "rotateCounterclockwise", [[2, 4], [1, 3]]),
+      # Edge case - 1x1 matrix
+      ([[5]], "transpose", [[5]]),
+      # Edge case - 3x3 matrix
+      ([[1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]], "rotateClockwise",
+       [[7, 4, 1],
+        [8, 5, 2],
+        [9, 6, 3]]),
+  ]
+
+  for grid, operation, want in tests:
+    matrix = MatrixOperations(grid)
+    getattr(matrix, operation)()
+    got = matrix.matrix
+    assert got == want, (f"\nMatrix({grid}).{operation}(): "
+                         f"got: {got}, want: {want}\n")
+  
+  print("ALL MATRIX OPERATIONS TESTS PASSED.")
+  
 if __name__ == "__main__":
-    runSubgridSumsTests()
+    # grid = [
+    #     [1, 2, 3],
+    #     [4, 5, 6],
+    #     [7, 8, 9]
+    # ]
+    
+    # transposing = MatrixOperations(grid)
+    
+    # getattr(transposing, "reflectHorizontally")()
+    
+    # print(transposing.matrix)
+    
+    runMatrixOperationsTests()
