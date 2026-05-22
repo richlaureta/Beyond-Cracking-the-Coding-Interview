@@ -43,7 +43,7 @@ def runSearchInSortedArrayTests():
 
   for arr, target, want in tests:
     got = searchInSortedArray(arr, target)
-    assert got == want, f"\nsearch_in_sorted_array({arr}, {target}): got: {
+    assert got == want, f"\nsearchInSortedArray({arr}, {target}): got: {
         got}, want: {want}\n"
         
   print("ALL SEARCH IN SORTED ARRAY TESTS PROVIDED PASSED.")
