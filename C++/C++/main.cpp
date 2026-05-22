@@ -1108,74 +1108,114 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL SUBGRID SUMS TESTS PROVIDED PASSED." << endl;
     
     //Problem 28.8 Matrix Operations
-    auto doubleVecToStr = [](const vector<double>& vec) {
-        string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-      
-      auto doubleVecVecToStr = [&](const vector<vector<double>>& vec) {
-        string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += doubleVecToStr(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-
-      struct Test {
-        vector<vector<double>> grid;
-        string operation;
-        vector<vector<double>> want;
-      };
-
-      vector<Test> tests = {
-          // Test transpose
-          {{{1.0, 2.0}, {3.0, 4.0}}, "transpose", {{1.0, 3.0}, {2.0, 4.0}}},
-          // Test horizontal reflection
-          {{{1.0, 2.0}, {3.0, 4.0}}, "reflectHorizontally", {{2.0, 1.0}, {4.0, 3.0}}},
-          // Test vertical reflection
-          {{{1.0, 2.0}, {3.0, 4.0}}, "reflectVertically", {{3.0, 4.0}, {1.0, 2.0}}},
-          // Test clockwise rotation
-          {{{1.0, 2.0}, {3.0, 4.0}}, "rotateClockwise", {{3.0, 1.0}, {4.0, 2.0}}},
-          // Test counterclockwise rotation
-          {{{1.0, 2.0}, {3.0, 4.0}}, "rotateCounterclockwise", {{2.0, 4.0}, {1.0, 3.0}}},
-          // Edge case - 1x1 matrix
-          {{{5.0}}, "transpose", {{5.0}}},
-          // Edge case - 3x3 matrix
-          {{{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}},
-           "rotateClockwise",
-           {{7.0, 4.0, 1.0}, {8.0, 5.0, 2.0}, {9.0, 6.0, 3.0}}},
-      };
-
-      for (const auto& test : tests) {
-        MatrixOperations matrix(test.grid);
-        if (test.operation == "transpose") {
-          matrix.transpose();
-        } else if (test.operation == "reflectHorizontally") {
-          matrix.reflectHorizontally();
-        } else if (test.operation == "reflectVertically") {
-          matrix.reflectVertically();
-        } else if (test.operation == "rotateClockwise") {
-          matrix.rotateClockwise();
-        } else if (test.operation == "rotateCounterclockwise") {
-          matrix.rotateCounterclockwise();
-        }
-
-        auto got = matrix.getMatrix();
-        if (got != test.want) {
-          throw std::runtime_error("\nMatrix(" + doubleVecVecToStr(test.grid) + ")." + test.operation +
-                                   "(): got: " + doubleVecVecToStr(got) + ", want: " + doubleVecVecToStr(test.want) +
-                                   "\n");
-        }
-      }
+//    auto doubleVecToStr = [](const vector<double>& vec) {
+//        string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto doubleVecVecToStr = [&](const vector<vector<double>>& vec) {
+//        string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += doubleVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      struct Test {
+//        vector<vector<double>> grid;
+//        string operation;
+//        vector<vector<double>> want;
+//      };
+//
+//      vector<Test> tests = {
+//          // Test transpose
+//          {{{1.0, 2.0}, {3.0, 4.0}}, "transpose", {{1.0, 3.0}, {2.0, 4.0}}},
+//          // Test horizontal reflection
+//          {{{1.0, 2.0}, {3.0, 4.0}}, "reflectHorizontally", {{2.0, 1.0}, {4.0, 3.0}}},
+//          // Test vertical reflection
+//          {{{1.0, 2.0}, {3.0, 4.0}}, "reflectVertically", {{3.0, 4.0}, {1.0, 2.0}}},
+//          // Test clockwise rotation
+//          {{{1.0, 2.0}, {3.0, 4.0}}, "rotateClockwise", {{3.0, 1.0}, {4.0, 2.0}}},
+//          // Test counterclockwise rotation
+//          {{{1.0, 2.0}, {3.0, 4.0}}, "rotateCounterclockwise", {{2.0, 4.0}, {1.0, 3.0}}},
+//          // Edge case - 1x1 matrix
+//          {{{5.0}}, "transpose", {{5.0}}},
+//          // Edge case - 3x3 matrix
+//          {{{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}},
+//           "rotateClockwise",
+//           {{7.0, 4.0, 1.0}, {8.0, 5.0, 2.0}, {9.0, 6.0, 3.0}}},
+//      };
+//
+//      for (const auto& test : tests) {
+//        MatrixOperations matrix(test.grid);
+//        if (test.operation == "transpose") {
+//          matrix.transpose();
+//        } else if (test.operation == "reflectHorizontally") {
+//          matrix.reflectHorizontally();
+//        } else if (test.operation == "reflectVertically") {
+//          matrix.reflectVertically();
+//        } else if (test.operation == "rotateClockwise") {
+//          matrix.rotateClockwise();
+//        } else if (test.operation == "rotateCounterclockwise") {
+//          matrix.rotateCounterclockwise();
+//        }
+//
+//        auto got = matrix.getMatrix();
+//        if (got != test.want) {
+//          throw std::runtime_error("\nMatrix(" + doubleVecVecToStr(test.grid) + ")." + test.operation +
+//                                   "(): got: " + doubleVecVecToStr(got) + ", want: " + doubleVecVecToStr(test.want) +
+//                                   "\n");
+//        }
+//      }
+//    
+//    cout << "ALL MATRIX OPERATIONS TEST PROVIDED PASSED." << endl;
     
-    cout << "ALL MATRIX OPERATIONS TEST PROVIDED PASSED." << endl;
+    //Problem 29.1 Search in Sorted Array
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
+        std::string str = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) str += ", ";
+          str += std::to_string(vec[i]);
+        }
+        str += "]";
+        return str;
+      };
+
+      std::vector<std::tuple<std::vector<int>, int, int>> tests = {
+          // Example 1 from book
+          {{-2, 0, 3, 4, 7, 9, 11}, 3, 2},
+          // Example 2 from book
+          {{-2, 0, 3, 4, 7, 9, 11}, 2, -1},
+          // Edge case - empty array
+          {{}, 5, -1},
+          // Edge case - target at start
+          {{1, 2, 3}, 1, 0},
+          // Edge case - target at end
+          {{1, 2, 3}, 3, 2},
+          // Edge case - single element
+          {{5}, 5, 0},
+          // Edge case - not found
+          {{1, 3, 5}, 2, -1}};
+
+      for (const auto& [arr, target, want] : tests) {
+        int got = searchInSortedArray(arr, target);
+        if (got != want) {
+          throw std::runtime_error("\nsearchInSortedArray(" + vecToStr(arr) + ", " +
+                                   std::to_string(target) +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
+        }
+    }
+      
+    cout << "ALL SEARCH IN SORTED ARRAY TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

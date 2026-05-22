@@ -101,4 +101,8 @@ public:
     void rotateCounterclockwise();
     const vector<vector<double>>& getMatrix() const;
 };
+
+//Binary Search
+int searchInSortedArray(const vector<int> &arr, int target);
+
 #endif // HEADER_HPP

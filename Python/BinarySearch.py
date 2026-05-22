@@ -4,7 +4,6 @@ def searchInSortedArray(arr: list[int], target: int) -> int:
     
     leftPointer = 0
     rightPointer = len(arr) - 1
-    middlePointer = -1
     
     while leftPointer <= rightPointer:
         middlePointer = (leftPointer + rightPointer) // 2
