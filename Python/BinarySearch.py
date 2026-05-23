@@ -21,6 +21,25 @@ def searchInSortedArray(arr: list[int], target: int) -> int:
             leftPointer = middlePointer + 1
     
     return -1
+def valleyBottom(arr: list[int]) -> int:
+    #Problem 29.3 Valley Bottom
+    
+    leftPointer = 0
+    rightPointer = len(arr) - 1
+    
+    while True:
+        middlePointer = (leftPointer + rightPointer) // 2
+        
+        if arr[leftPointer] <= arr[middlePointer] <= arr[rightPointer]:
+            return arr[leftPointer]
+        elif arr[leftPointer] >= arr[middlePointer] >= arr[rightPointer]:
+            return arr[rightPointer]
+
+        if arr[middlePointer] > arr[middlePointer + 1]:
+            leftPointer = middlePointer
+        else:
+            rightPointer = middlePointer
+#TESTS
 
 def runSearchInSortedArrayTests():
     tests = [
@@ -45,6 +64,24 @@ def runSearchInSortedArrayTests():
         got}, want: {want}\n"
     
     print("ALL SEARCH IN SORTED ARRAY TESTS PROVIDED PASSED.")
-  
+
+def runValleyBottomTests():
+    tests = [
+        # Example 1 from book
+        ([6, 5, 4, 7, 9], 4),
+        # Example 2 from book
+        ([5, 6, 7], 5),
+        # Example 3 from book
+        ([7, 6, 5], 5),
+        ([2, 1], 1),
+        ([3, 2, 4], 2)
+    ]
+    
+    for arr, want in tests:
+        got = valleyBottom(arr)
+        assert got == want, f"\nvalley_bottom({arr}): got: {got}, want: {want}\n"
+
+    print("ALL VALLEY BOTTOM TESTS PROVIDED PASSED.")
+    
 if __name__ == "__main__":
-    runSearchInSortedArrayTests()
+    runValleyBottomTests()
