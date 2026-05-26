@@ -104,5 +104,6 @@ public:
 
 //Binary Search
 int searchInSortedArray(const vector<int> &arr, int target);
+int valleyBottom(const vector<int> &arr);
 
 #endif // HEADER_HPP

@@ -1179,43 +1179,75 @@ int main(int argc, const char *argv[]) {
     
     //Problem 29.1 Search in Sorted Array
     
-    auto vecToStr = [](const std::vector<int>& vec) {
-        std::string str = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) str += ", ";
-          str += std::to_string(vec[i]);
-        }
-        str += "]";
-        return str;
-      };
-
-      std::vector<std::tuple<std::vector<int>, int, int>> tests = {
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string str = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) str += ", ";
+//          str += std::to_string(vec[i]);
+//        }
+//        str += "]";
+//        return str;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, int, int>> tests = {
+//          // Example 1 from book
+//          {{-2, 0, 3, 4, 7, 9, 11}, 3, 2},
+//          // Example 2 from book
+//          {{-2, 0, 3, 4, 7, 9, 11}, 2, -1},
+//          // Edge case - empty array
+//          {{}, 5, -1},
+//          // Edge case - target at start
+//          {{1, 2, 3}, 1, 0},
+//          // Edge case - target at end
+//          {{1, 2, 3}, 3, 2},
+//          // Edge case - single element
+//          {{5}, 5, 0},
+//          // Edge case - not found
+//          {{1, 3, 5}, 2, -1}};
+//
+//      for (const auto& [arr, target, want] : tests) {
+//        int got = searchInSortedArray(arr, target);
+//        if (got != want) {
+//          throw std::runtime_error("\nsearchInSortedArray(" + vecToStr(arr) + ", " +
+//                                   std::to_string(target) +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//    }
+//      
+//    cout << "ALL SEARCH IN SORTED ARRAY TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 29.3 Valley Bottom
+    
+    std::vector<std::tuple<std::vector<int>, int>> tests = {
           // Example 1 from book
-          {{-2, 0, 3, 4, 7, 9, 11}, 3, 2},
+          {{6, 5, 4, 7, 9}, 4},
           // Example 2 from book
-          {{-2, 0, 3, 4, 7, 9, 11}, 2, -1},
-          // Edge case - empty array
-          {{}, 5, -1},
-          // Edge case - target at start
-          {{1, 2, 3}, 1, 0},
-          // Edge case - target at end
-          {{1, 2, 3}, 3, 2},
-          // Edge case - single element
-          {{5}, 5, 0},
-          // Edge case - not found
-          {{1, 3, 5}, 2, -1}};
+          {{5, 6, 7}, 5},
+          // Example 3 from book
+          {{7, 6, 5}, 5},
+          // Edge case - 2 elements
+          {{2, 1}, 1},
+          // Edge case - 3 elements
+          {{3, 2, 4}, 2}};
 
-      for (const auto& [arr, target, want] : tests) {
-        int got = searchInSortedArray(arr, target);
+      for (const auto& [arr, want] : tests) {
+        int got = valleyBottom(arr);
         if (got != want) {
-          throw std::runtime_error("\nsearchInSortedArray(" + vecToStr(arr) + ", " +
-                                   std::to_string(target) +
+          std::string arr_str = "[";
+          for (size_t i = 0; i < arr.size(); i++) {
+            if (i > 0) arr_str += ", ";
+            arr_str += std::to_string(arr[i]);
+          }
+          arr_str += "]";
+
+          throw std::runtime_error("\nvalleyBottom(" + arr_str +
                                    "): got: " + std::to_string(got) +
                                    ", want: " + std::to_string(want) + "\n");
         }
-    }
-      
-    cout << "ALL SEARCH IN SORTED ARRAY TESTS PROVIDED PASSED." << endl;
+      }
+    
+    cout << "ALL VALLEY BOTTOM TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

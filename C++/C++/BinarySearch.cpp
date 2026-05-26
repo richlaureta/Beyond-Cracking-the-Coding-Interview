@@ -28,3 +28,23 @@ int searchInSortedArray(const vector<int> &arr, int target)
     
     return -1;
 }
+
+int valleyBottom(const vector<int> &arr)
+{
+    //Problem 29.3 Valley Bottom
+    
+    int leftPointer = 0;
+    int rightPointer = (int) arr.size() - 1;
+    
+    while(true)
+    {
+        int middlePointer = (leftPointer + rightPointer) / 2;
+        
+        if(arr[leftPointer] <= arr[middlePointer] and arr[middlePointer] <= arr[rightPointer]) return arr[leftPointer];
+        else if(arr[leftPointer] >= arr[middlePointer] and arr[middlePointer] >= arr[rightPointer]) return arr[rightPointer];
+        
+        if(arr[middlePointer] > arr[middlePointer + 1]) leftPointer = middlePointer;
+        else rightPointer = middlePointer;
+    }
+    
+}
