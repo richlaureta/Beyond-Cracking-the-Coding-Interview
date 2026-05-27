@@ -452,7 +452,7 @@ def sortEven(arr: list[int]):
                 arr[index], arr[oddIndex] = arr[oddIndex], arr[index]
         
         index += 1
-
+    
 def removeDuplicates(arr: list[int]) -> int:
     #Problem 27.14 In-Place Duplicate Removal
     
@@ -587,6 +587,8 @@ def moveWord(arr: list[str], word: str):
                 wordPointerEdit += 1
         if letterMatchFlag == False:
             arrPointer += 1
+
+#TESTS
    
 def runReverseCaseMatchTests():
     #Problem 27.5 Reverse Case Match Tests
@@ -840,7 +842,7 @@ def runRemoveDuplicatesTests():
             f"\nremove_duplicates({arr}): got prefix: {
             arr_copy[:want_len]}, want prefix: {want_prefix}\n"
 
-    print("ALL IN-PLACE DUPLICATE REMOVAL TESTS PROVIDED PASSED. TESTING.")
+    print("ALL IN-PLACE DUPLICATE REMOVAL TESTS PROVIDED PASSED.")
 
 def runPartitionTests():
     #Problem 27.15 QuickSort Partition Tests
@@ -954,5 +956,23 @@ def runShiftWordToBackTests():
     
     print("ALL SHIFT WORD TO BACK TESTS PROVIDED PASSED.")
     
-if __name__ =="__main__":
+def runAllTwoPointerTests():
+    runReverseCaseMatchTests()
+    runMergeTests()
+    runTwoSumTests()
+    runThreeWayMergeTests()
+    runSortValleyArrayTests()
+    runMissingNumbersTests()
+    runIntervalIntersectionTests()
+    runReverseTests()
+    runParitySortingTests()
+    runRemoveDuplicatesTests()
+    runPartitionTests()
+    runSortColorTests()
+    runPrefixSuffixSwapTests()
     runShiftWordToBackTests()
+    
+    print("ONLY INCLUDED TWO POINTER ALGORITHM PATTERN TESTS PASSED.")
+    
+if __name__ =="__main__":
+    runAllTwoPointerTests()
