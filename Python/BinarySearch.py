@@ -44,9 +44,28 @@ def twoArrayTwoSum(sortedArray: list[int], unsortedArray: list[int]) -> list[int
     #Problem 29.4 2-Array 2 Sum
     
     for index in range(len(unsortedArray)):
-        for index1 in range(len(sortedArray)):
-            if unsortedArray[index] + sortedArray[index1] == 0:
-                return [index1, index]
+        leftPointer = 0
+        rightPointer = len(sortedArray) - 1
+        
+        targetNumber = 0 - unsortedArray[index]
+        
+        while leftPointer <= rightPointer:
+            midPointer = (leftPointer + rightPointer) // 2
+            
+            if sortedArray[midPointer] == targetNumber:
+                return [midPointer, index]
+            elif sortedArray[leftPointer] == targetNumber:
+                return [leftPointer, index]
+            elif sortedArray[rightPointer] == targetNumber:
+                return [rightPointer, index]
+
+            if sortedArray[midPointer] < targetNumber:
+                leftPointer = midPointer + 1
+            else:
+                rightPointer = midPointer - 1
+            
+            
+        
     
     return [-1, -1]  
 
