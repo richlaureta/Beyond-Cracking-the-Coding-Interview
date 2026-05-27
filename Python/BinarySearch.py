@@ -66,6 +66,17 @@ def twoArrayTwoSum(sortedArray: list[int], unsortedArray: list[int]) -> list[int
             
     return [-1, -1]  
 
+def targetCountDivisibleByK(arr: list[int], target: int, k: int):
+    #Problem 29.5 Target Count Divisible by K
+    
+    targetOccurrence = arr.count(target)
+    
+    if targetOccurrence % k == 0:
+        return True
+    
+    return False
+    
+
 #TESTS
 
 def runSearchInSortedArrayTests():
@@ -111,22 +122,55 @@ def runValleyBottomTests():
     print("ALL VALLEY BOTTOM TESTS PROVIDED PASSED.")
 
 def run2Array2SumTests():
-  tests = [
-      # Example from book
-      ([-5, -4, -1, 4, 6, 6, 7], [-3, 7, 18, 4, 6], [1, 3]),
-      # no solution
-      ([1, 2, 3], [1, 2, 3], [-1, -1]),
-      ([1], [-1], [0, 0]),
-      ([1, 2], [-2, -1], [1, 0]),
-      ([0, 1, 2, 3], [3, 2, 1, 0], [0, 3]),
-  ]
-
-  for sorted_arr, unsorted_arr, want in tests:
-    got = twoArrayTwoSum(sorted_arr, unsorted_arr)
-    assert got == want, f"\ntwo_array_two_sum({sorted_arr}, {unsorted_arr}): got: {
-        got}, want: {want}\n"
+    tests = [
+        # Example from book
+        ([-5, -4, -1, 4, 6, 6, 7], [-3, 7, 18, 4, 6], [1, 3]),
+        # no solution
+        ([1, 2, 3], [1, 2, 3], [-1, -1]),
+        ([1], [-1], [0, 0]),
+        ([1, 2], [-2, -1], [1, 0]),
+        ([0, 1, 2, 3], [3, 2, 1, 0], [0, 3]),
+    ]
+    for sorted_arr, unsorted_arr, want in tests:
+        got = twoArrayTwoSum(sorted_arr, unsorted_arr)
+        assert got == want, f"\ntwo_array_two_sum({sorted_arr}, {unsorted_arr}): got: {got}, want: {want}\n"
         
-  print("ALL 2-ARRAY 2-SUM TESTS PROVIDED PASSED.")
+    print("ALL 2-ARRAY 2-SUM TESTS PROVIDED PASSED.")
+
+def runTargetCountDivisibleByKTests():
+    tests = [
+        # Example 1
+        ([1, 2, 2, 2, 2, 2, 2, 3], 2, 3, True),
+        # Example 2
+        ([1, 2, 2, 2, 2, 2, 2, 3], 2, 4, False),
+        # Example 3: 0 occurrences, 0 is multiple of any number
+        ([1, 2, 2, 2, 2, 2, 2, 3], 4, 3, True),
+        # Example 4
+        ([1, 1, 2, 2, 2], 1, 3, False),
+        # single occurrence, at the start
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 1, 1, True),
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 1, 2, False),
+        # single occurrence, at the end
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 19, 1, True),
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 19, 2, False),
+        # single occurrence, in the middle
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 9, 1, True),
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 9, 2, False),
+        # smaller than any elements
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 0, 1, True),
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 0, 2, True),
+        # larger than any elements
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 20, 1, True),
+        ([1, 3, 5, 7, 9, 11, 13, 15, 17, 19], 20, 2, True),
+        # Edge case - every occurrence is target
+        ([5, 5, 5, 5, 5], 5, 5, True),
+        ([5, 5, 5, 5, 5], 5, 3, False),
+    ]
+    for arr, target, k, want in tests:
+        got = targetCountDivisibleByK(arr, target, k)
+        assert got == want, f"\ntarget_count_divisible_by_k({arr}, {target}, {k}): got: {got}, want: {want}\n"
     
+    print("ALL TARGET COUNT DIVISIBLE BY K TESTS PROVIDED PASSED.")
+  
 if __name__ == "__main__":
-    run2Array2SumTests()
+    runTargetCountDivisibleByKTests()
