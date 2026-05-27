@@ -50,23 +50,20 @@ def twoArrayTwoSum(sortedArray: list[int], unsortedArray: list[int]) -> list[int
         targetNumber = 0 - unsortedArray[index]
         
         while leftPointer <= rightPointer:
-            midPointer = (leftPointer + rightPointer) // 2
+            midllePointer = (leftPointer + rightPointer) // 2
             
-            if sortedArray[midPointer] == targetNumber:
-                return [midPointer, index]
+            if sortedArray[midllePointer] == targetNumber:
+                return [midllePointer, index]
             elif sortedArray[leftPointer] == targetNumber:
                 return [leftPointer, index]
             elif sortedArray[rightPointer] == targetNumber:
                 return [rightPointer, index]
 
-            if sortedArray[midPointer] < targetNumber:
-                leftPointer = midPointer + 1
+            if sortedArray[midllePointer] < targetNumber:
+                leftPointer = midllePointer + 1
             else:
-                rightPointer = midPointer - 1
+                rightPointer = midllePointer - 1
             
-            
-        
-    
     return [-1, -1]  
 
 #TESTS

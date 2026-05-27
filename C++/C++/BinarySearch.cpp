@@ -46,5 +46,31 @@ int valleyBottom(const vector<int> &arr)
         if(arr[middlePointer] > arr[middlePointer + 1]) leftPointer = middlePointer;
         else rightPointer = middlePointer;
     }
+}
+
+vector<int> twoArrayTwoSum(const vector<int> &sortedArr, const vector<int> &unsortedArr)
+{
+    //Problem 29.4 2-Array 2-Sum
     
+    for(int index = 0; index < (int) unsortedArr.size(); index++)
+    {
+        int leftPointer = 0;
+        int rightPointer = (int) sortedArr.size() - 1;
+        
+        int targetNumber = 0 - unsortedArr[index];
+        
+        while(leftPointer <= rightPointer)
+        {
+            int middlePointer = (leftPointer + rightPointer) / 2;
+            
+            if(sortedArr[middlePointer] == targetNumber) return {middlePointer, index};
+            else if(sortedArr[leftPointer] == targetNumber) return {leftPointer, index};
+            else if(sortedArr[rightPointer] == targetNumber) return {rightPointer, index};
+            
+            if(sortedArr[middlePointer] < targetNumber) leftPointer = middlePointer + 1;
+            else rightPointer = middlePointer - 1;
+        }
+    }
+    
+    return {-1, -1};
 }

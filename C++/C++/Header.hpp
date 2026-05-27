@@ -105,5 +105,6 @@ public:
 //Binary Search
 int searchInSortedArray(const vector<int> &arr, int target);
 int valleyBottom(const vector<int> &arr);
+vector<int> twoArrayTwoSum(const vector<int> &sortedArr, const vector<int> &unsortedArr);
 
 #endif // HEADER_HPP
