@@ -122,9 +122,8 @@ def targetCountDivisibleByK(arr: list[int], target: int, k: int):
             rightPointer = middlePointer
         else: leftPointer = middlePointer
         
-    if (lastOccurrenceIndex - firstOccurenceIndex + 1) % k == 0:
-        return True
-    else: return False
+    return (lastOccurrenceIndex - firstOccurenceIndex + 1) % k == 0
+
         
     
 #TESTS
