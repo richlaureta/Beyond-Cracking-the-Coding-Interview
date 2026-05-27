@@ -74,3 +74,67 @@ vector<int> twoArrayTwoSum(const vector<int> &sortedArr, const vector<int> &unso
     
     return {-1, -1};
 }
+
+
+bool targetCountDivisibleByK(const vector<int> &arr, int target, int k)
+{
+    //Problem 29.5 Target Count Divisible by K
+    
+    int leftPointer = 0;
+    int rightPointer = (int) arr.size() - 1;
+    
+    int firstOccurrenceIndex = -1;
+    
+    while(true)
+    {
+        int middlePointer = (leftPointer + rightPointer) / 2;
+        
+        if (arr[rightPointer] == target and rightPointer - leftPointer == 1)
+        {
+            if(arr[leftPointer] != arr[rightPointer]) firstOccurrenceIndex = rightPointer;
+            else firstOccurrenceIndex = leftPointer;
+            break;
+        }
+        else if(arr[leftPointer] == target and rightPointer - leftPointer == 1)
+        {
+            firstOccurrenceIndex = leftPointer;
+            break;
+        }
+                
+        if(leftPointer == middlePointer) break;
+        
+        if(arr[middlePointer] < target) leftPointer = middlePointer;
+        else rightPointer = middlePointer;
+    }
+    
+    if(firstOccurrenceIndex == -1) return true;
+    
+    int lastOccurrenceIndex = firstOccurrenceIndex;
+    
+    leftPointer = 0;
+    rightPointer = (int) arr.size() - 1;
+    
+    while(true)
+    {
+        int middlePointer = (leftPointer + rightPointer) / 2;
+        
+        if(arr[leftPointer] == target and rightPointer - leftPointer == 1)
+        {
+            if(arr[leftPointer] != arr[rightPointer]) lastOccurrenceIndex = leftPointer;
+            else lastOccurrenceIndex = rightPointer;
+            break;
+        }
+        else if (arr[rightPointer] == target and rightPointer - leftPointer == 1)
+        {
+            lastOccurrenceIndex = rightPointer;
+            break;
+        }
+        
+        if(leftPointer == middlePointer) break;
+        
+        if(arr[middlePointer] > target) rightPointer = middlePointer;
+        else leftPointer = middlePointer;
+    }
+    
+    return (lastOccurrenceIndex - firstOccurrenceIndex + 1) % k == 0;
+}

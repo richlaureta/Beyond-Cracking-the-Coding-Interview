@@ -124,8 +124,6 @@ def targetCountDivisibleByK(arr: list[int], target: int, k: int):
         
     return (lastOccurrenceIndex - firstOccurenceIndex + 1) % k == 0
 
-        
-    
 #TESTS
 
 def runSearchInSortedArrayTests():
