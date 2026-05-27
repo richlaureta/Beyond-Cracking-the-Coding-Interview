@@ -39,6 +39,17 @@ def valleyBottom(arr: list[int]) -> int:
             leftPointer = middlePointer
         else:
             rightPointer = middlePointer
+
+def twoArrayTwoSum(sortedArray: list[int], unsortedArray: list[int]) -> list[int]:
+    #Problem 29.4 2-Array 2 Sum
+    
+    for index in range(len(unsortedArray)):
+        for index1 in range(len(sortedArray)):
+            if unsortedArray[index] + sortedArray[index1] == 0:
+                return [index1, index]
+    
+    return [-1, -1]  
+
 #TESTS
 
 def runSearchInSortedArrayTests():
@@ -82,6 +93,24 @@ def runValleyBottomTests():
         assert got == want, f"\nvalley_bottom({arr}): got: {got}, want: {want}\n"
 
     print("ALL VALLEY BOTTOM TESTS PROVIDED PASSED.")
+
+def run2Array2SumTests():
+  tests = [
+      # Example from book
+      ([-5, -4, -1, 4, 6, 6, 7], [-3, 7, 18, 4, 6], [1, 3]),
+      # no solution
+      ([1, 2, 3], [1, 2, 3], [-1, -1]),
+      ([1], [-1], [0, 0]),
+      ([1, 2], [-2, -1], [1, 0]),
+      ([0, 1, 2, 3], [3, 2, 1, 0], [0, 3]),
+  ]
+
+  for sorted_arr, unsorted_arr, want in tests:
+    got = twoArrayTwoSum(sorted_arr, unsorted_arr)
+    assert got == want, f"\ntwo_array_two_sum({sorted_arr}, {unsorted_arr}): got: {
+        got}, want: {want}\n"
+        
+  print("ALL 2-ARRAY 2-SUM TESTS PROVIDED PASSED.")
     
 if __name__ == "__main__":
-    runValleyBottomTests()
+    run2Array2SumTests()
