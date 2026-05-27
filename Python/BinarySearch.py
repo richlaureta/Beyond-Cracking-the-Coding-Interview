@@ -69,14 +69,64 @@ def twoArrayTwoSum(sortedArray: list[int], unsortedArray: list[int]) -> list[int
 def targetCountDivisibleByK(arr: list[int], target: int, k: int):
     #Problem 29.5 Target Count Divisible by K
     
-    targetOccurrence = arr.count(target)
+    leftPointer = 0
+    rightPointer = len(arr) - 1
     
-    if targetOccurrence % k == 0:
+    firstOccurenceIndex = None
+    
+    while True:
+        middlePointer = (leftPointer + rightPointer) // 2
+        
+        if arr[rightPointer] == target and rightPointer - leftPointer == 1:
+            if arr[leftPointer] != arr[rightPointer]:
+                firstOccurenceIndex = rightPointer
+            else: firstOccurenceIndex = leftPointer
+            break
+        elif arr[leftPointer] == target and rightPointer - leftPointer == 1:
+            firstOccurenceIndex = leftPointer
+            break
+        
+        if leftPointer == middlePointer:
+            break
+        
+        if arr[middlePointer] < target:
+            leftPointer = middlePointer
+        else:
+            rightPointer = middlePointer
+
+        
+    if firstOccurenceIndex == None:
         return True
     
-    return False
+    lastOccurrenceIndex = firstOccurenceIndex
     
-
+    leftPointer = 0
+    rightPointer = len(arr) - 1
+    
+    while True:
+        middlePointer = (leftPointer + rightPointer) // 2
+        
+        if arr[leftPointer] == target and rightPointer - leftPointer == 1:
+            if arr[leftPointer] != arr[rightPointer]:
+                lastOccurrenceIndex = leftPointer
+            else: lastOccurrenceIndex = rightPointer
+            break
+        elif arr[rightPointer] == target and rightPointer - leftPointer == 1:
+            lastOccurrenceIndex = rightPointer
+            break
+        
+        if leftPointer == middlePointer:
+            break
+        
+        if arr[middlePointer] > target:
+            rightPointer = middlePointer
+        else: leftPointer = middlePointer
+        
+    if (lastOccurrenceIndex - firstOccurenceIndex + 1) % k == 0:
+        return True
+    else: return False
+        
+    
 #TESTS
 
 def runSearchInSortedArrayTests():
