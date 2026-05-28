@@ -128,11 +128,21 @@ def targetCountDivisibleByK(arr: list[int], target: int, k: int):
 def raceOvertaking(p1: list[int], p2: list[int]) -> int:
     #Problem 29.6 Race Overtaking
     
-    for index in range(len(p1)):
-        if p2[index] > p1[index]:
-            return index
+    leftPointer = 1
+    rightPointer = len(p1) - 1
     
-
+    while leftPointer <= rightPointer:
+        middlePointer = (leftPointer + rightPointer) // 2 
+        
+        if p2[leftPointer] > p1[leftPointer]:
+            return leftPointer
+        elif p2[rightPointer] > p1[rightPointer] and rightPointer - leftPointer == 1:
+            return rightPointer
+        
+        if p2[middlePointer] > p1[middlePointer]:
+            rightPointer = middlePointer 
+        else: leftPointer = middlePointer
+        
 #TESTS
 
 def runSearchInSortedArrayTests():
