@@ -124,6 +124,15 @@ def targetCountDivisibleByK(arr: list[int], target: int, k: int):
         
     return (lastOccurrenceIndex - firstOccurenceIndex + 1) % k == 0
 
+
+def raceOvertaking(p1: list[int], p2: list[int]) -> int:
+    #Problem 29.6 Race Overtaking
+    
+    for index in range(len(p1)):
+        if p2[index] > p1[index]:
+            return index
+    
+
 #TESTS
 
 def runSearchInSortedArrayTests():
@@ -213,11 +222,30 @@ def runTargetCountDivisibleByKTests():
         ([5, 5, 5, 5, 5], 5, 5, True),
         ([5, 5, 5, 5, 5], 5, 3, False),
     ]
+    
     for arr, target, k, want in tests:
         got = targetCountDivisibleByK(arr, target, k)
         assert got == want, f"\ntarget_count_divisible_by_k({arr}, {target}, {k}): got: {got}, want: {want}\n"
     
     print("ALL TARGET COUNT DIVISIBLE BY K TESTS PROVIDED PASSED.")
-  
+
+def runRaceOvertakingTests():
+    tests = [
+        # Example 1 from book
+        ([2, 4, 6, 8, 10], [1, 3, 5, 9, 11], 3),
+        # Example
+        ([2, 3, 4, 5, 6], [1, 2, 3, 6, 7], 3),
+        # Example
+        ([3, 4, 5], [2, 5, 6], 1),
+        # Edge case - overtake at start
+        ([2, 3], [1, 4], 1),
+    ]
+
+    for p1, p2, want in tests:
+        got = raceOvertaking(p1, p2)
+        assert got == want, f"\nrace_overtaking({p1}, {p2}): got: {got}, want: {want}\n"
+        
+    print("ALL RACE OVERTAKING TESTS PROVIDED PASSED.")
+    
 if __name__ == "__main__":
-    runTargetCountDivisibleByKTests()
+    runRaceOvertakingTests()
