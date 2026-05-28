@@ -138,3 +138,22 @@ bool targetCountDivisibleByK(const vector<int> &arr, int target, int k)
     
     return (lastOccurrenceIndex - firstOccurrenceIndex + 1) % k == 0;
 }
+
+int raceOvertaking(const vector<int> &p1, const vector<int> &p2)
+{
+    //Problem 29.6 Race Overtaking
+    
+    int leftPointer = 1;
+    int rightPointer = (int) p2.size() - 1;
+    
+    while(true)
+    {
+        int middlePointer = (leftPointer + rightPointer) / 2;
+        
+        if(p2[leftPointer] > p1[leftPointer]) return leftPointer;
+        else if(p2[rightPointer] > p1[rightPointer] and rightPointer - leftPointer == 1) return rightPointer;
+        
+        if (p2[middlePointer] > p1[middlePointer]) rightPointer = middlePointer;
+        else leftPointer = middlePointer;
+    }
+}

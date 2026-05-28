@@ -1282,55 +1282,88 @@ int main(int argc, const char *argv[]) {
     
     //Problem 29.5 Target Count Divisible by K
     
-    std::vector<std::tuple<std::vector<int>, int, int, bool>> tests = {
-          // Example 1
-          {{1, 2, 2, 2, 2, 2, 2, 3}, 2, 3, true},
-          // Example 2
-          {{1, 2, 2, 2, 2, 2, 2, 3}, 2, 4, false},
-          // Example 3: 0 occurrences, 0 is multiple of any number
-          {{1, 2, 2, 2, 2, 2, 2, 3}, 4, 3, true},
-          // Example 4
-          {{1, 1, 2, 2, 2}, 1, 3, false},
-          // single occurrence, at the start
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 1, 1, true},
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 1, 2, false},
-          // single occurrence, at the end
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 19, 1, true},
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 19, 2, false},
-          // single occurrence, in the middle
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 9, 1, true},
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 9, 2, false},
-          // smaller than any elements
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 0, 1, true},
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 0, 2, true},
-          // larger than any elements
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 20, 1, true},
-          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 20, 2, true},
-          // Edge case - every occurrence is target
-          {{5, 5, 5, 5, 5}, 5, 5, true},
-          {{5, 5, 5, 5, 5}, 5, 3, false},
-      };
-
-
-      for (const auto& [arr, target, k, want] : tests)
-      {
-          bool got = targetCountDivisibleByK(arr, target, k);
-        std::string arr_str = "[";
-        for (size_t i = 0; i < arr.size(); i++) {
-          if (i > 0) arr_str += ", ";
-          arr_str += std::to_string(arr[i]);
-        }
-        arr_str += "]";
-
-        if (got != want) {
-          throw std::runtime_error(
-              "\nsolve(" + arr_str + ", " + std::to_string(target) + ", " +
-              std::to_string(k) + "): got: " + std::to_string(got) +
-              ", want: " + std::to_string(want) + "\n");
-        }
-      }
+//    std::vector<std::tuple<std::vector<int>, int, int, bool>> tests = {
+//          // Example 1
+//          {{1, 2, 2, 2, 2, 2, 2, 3}, 2, 3, true},
+//          // Example 2
+//          {{1, 2, 2, 2, 2, 2, 2, 3}, 2, 4, false},
+//          // Example 3: 0 occurrences, 0 is multiple of any number
+//          {{1, 2, 2, 2, 2, 2, 2, 3}, 4, 3, true},
+//          // Example 4
+//          {{1, 1, 2, 2, 2}, 1, 3, false},
+//          // single occurrence, at the start
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 1, 1, true},
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 1, 2, false},
+//          // single occurrence, at the end
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 19, 1, true},
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 19, 2, false},
+//          // single occurrence, in the middle
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 9, 1, true},
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 9, 2, false},
+//          // smaller than any elements
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 0, 1, true},
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 0, 2, true},
+//          // larger than any elements
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 20, 1, true},
+//          {{1, 3, 5, 7, 9, 11, 13, 15, 17, 19}, 20, 2, true},
+//          // Edge case - every occurrence is target
+//          {{5, 5, 5, 5, 5}, 5, 5, true},
+//          {{5, 5, 5, 5, 5}, 5, 3, false},
+//      };
+//
+//
+//      for (const auto& [arr, target, k, want] : tests)
+//      {
+//          bool got = targetCountDivisibleByK(arr, target, k);
+//        std::string arr_str = "[";
+//        for (size_t i = 0; i < arr.size(); i++) {
+//          if (i > 0) arr_str += ", ";
+//          arr_str += std::to_string(arr[i]);
+//        }
+//        arr_str += "]";
+//
+//        if (got != want) {
+//          throw std::runtime_error(
+//              "\nsolve(" + arr_str + ", " + std::to_string(target) + ", " +
+//              std::to_string(k) + "): got: " + std::to_string(got) +
+//              ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL TARGET COUNT DIVISIBLE BY K TESTS PROVIDED PASSED." << endl;
     
-    cout << "ALL TARGET COUNT DIVISIBLE BY K TESTS PROVIDED PASSED." << endl;
+    //Problem 29.6 Race Overtaking
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
+      std::string str = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) str += ", ";
+        str += std::to_string(vec[i]);
+      }
+      str += "]";
+      return str;
+    };
+
+    std::vector<std::tuple<std::vector<int>, std::vector<int>, int>> tests = {
+        // Example 1 from book
+        {{2, 4, 6, 8, 10}, {1, 3, 5, 9, 11}, 3},
+        // Example
+        {{2, 3, 4, 5, 6}, {1, 2, 3, 6, 7}, 3},
+        // Example
+        {{3, 4, 5}, {2, 5, 6}, 1},
+        // Edge case - overtake at start
+        {{2, 3}, {1, 4}, 1}};
+
+    for (const auto& [p1, p2, want] : tests) {
+      int got = raceOvertaking(p1, p2);
+      if (got != want) {
+        throw std::runtime_error("\nraceOvertaking(" + vecToStr(p1) + ", " +
+                               vecToStr(p2) + "): got: " + std::to_string(got) +
+                               ", want: " + std::to_string(want) + "\n");
+      }
+    }
+    
+    cout << "ALL RACE OVERTAKING TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

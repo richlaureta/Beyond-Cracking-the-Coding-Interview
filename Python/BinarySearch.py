@@ -131,7 +131,7 @@ def raceOvertaking(p1: list[int], p2: list[int]) -> int:
     leftPointer = 1
     rightPointer = len(p1) - 1
     
-    while leftPointer <= rightPointer:
+    while True:
         middlePointer = (leftPointer + rightPointer) // 2 
         
         if p2[leftPointer] > p1[leftPointer]:
@@ -257,7 +257,7 @@ def runRaceOvertakingTests():
         
     print("ALL RACE OVERTAKING TESTS PROVIDED PASSED.")
     
-def runAllBinarySearchTestsInTheFile():
+def RunAllBinarySearchTestsInTheFile():
     runSearchInSortedArrayTests()
     runValleyBottomTests()
     run2Array2SumTests()
@@ -268,4 +268,4 @@ def runAllBinarySearchTestsInTheFile():
     print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
     
 if __name__ == "__main__":
-    runAllBinarySearchTestsInTheFile()
+    RunAllBinarySearchTestsInTheFile()
