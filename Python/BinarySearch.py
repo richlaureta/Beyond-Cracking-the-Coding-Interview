@@ -257,5 +257,15 @@ def runRaceOvertakingTests():
         
     print("ALL RACE OVERTAKING TESTS PROVIDED PASSED.")
     
-if __name__ == "__main__":
+def runAllBinarySearchTestsInTheFile():
+    runSearchInSortedArrayTests()
+    runValleyBottomTests()
+    run2Array2SumTests()
+    runTargetCountDivisibleByKTests()
     runRaceOvertakingTests()
+
+    print("-----------------------------------------------")
+    print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
+    
+if __name__ == "__main__":
+    runAllBinarySearchTestsInTheFile()
