@@ -165,8 +165,10 @@ def strStr1(haystack: str, needle: str) -> int:
     
     return -1
 
-def randomPasswordGenerator(passwordLength: int = 16) -> str:
+def randomPasswordGenerator() -> str:
     #Generate a Password of a Given Length
+    
+    passwordLength = int(input("How many characters do you want your password to be? Choose 16 (minimum) or greater than 16 characters. "))
     
     if passwordLength < 16:
         raise ValueError("The minimum password length is 16. Choose a number length greater than or equal to 16.")
@@ -229,7 +231,6 @@ def randomPasswordGenerator(passwordLength: int = 16) -> str:
     return passwordString
 
 if __name__ == "__main__":
-    password = randomPasswordGenerator(30)
+    password = randomPasswordGenerator()
     print(password)
-    print(len(password))
     
