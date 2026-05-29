@@ -706,6 +706,18 @@ def runMatrixOperationsTests():
                          f"got: {got}, want: {want}\n")
   
   print("ALL MATRIX OPERATIONS TESTS PROVIDED PASSED.")
-  
-if __name__ == "__main__":
+
+def RunAllGridsAndMatricesTestsInTheFile():
+    runChessMovesTests()
+    runSafeCellsTests()
+    runSnowPrintsTests()
+    runValidSudokuTests()
+    runSubgridMaximumsTests()
+    runSubgridSumsTests()
     runMatrixOperationsTests()
+    
+    print("-------------------------------------------------")
+    print("ALL GRIDS AND MATRICES TESTS IN THE FILE PASSED.")
+    
+if __name__ == "__main__":
+    RunAllGridsAndMatricesTestsInTheFile()

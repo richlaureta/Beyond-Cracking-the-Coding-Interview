@@ -956,7 +956,7 @@ def runShiftWordToBackTests():
     
     print("ALL SHIFT WORD TO BACK TESTS PROVIDED PASSED.")
     
-def runAllTwoPointerTests():
+def runAllTwoPointerTestsInTheFile():
     runReverseCaseMatchTests()
     runMergeTests()
     runTwoSumTests()
@@ -975,4 +975,4 @@ def runAllTwoPointerTests():
     print("ONLY INCLUDED TWO POINTER ALGORITHM PATTERN TESTS PASSED.")
     
 if __name__ =="__main__":
-    runAllTwoPointerTests()
+    runAllTwoPointerTestsInTheFile()
