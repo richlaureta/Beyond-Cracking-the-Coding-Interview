@@ -142,7 +142,61 @@ def raceOvertaking(p1: list[int], p2: list[int]) -> int:
         if p2[middlePointer] > p1[middlePointer]:
             rightPointer = middlePointer 
         else: leftPointer = middlePointer
+
+def searchInSortedGrid(grid: list[list[int]], target: int) -> list[int]:
+    #Problem 29.7 Search In Sorted Grid
+    
+    if target < grid[0][0] or target > grid[len(grid) - 1][len(grid[0]) - 1]:
+        return [-1, -1]
+    
+    leftPointer = 0
+    rightPointer = len(grid) - 1
+    
+    while True:
+        middlePointer  = (leftPointer + rightPointer) // 2
         
+        if grid[leftPointer][0] == target:
+            return [leftPointer, 0]
+        elif grid[middlePointer][0] == target:
+            return [middlePointer, 0]
+        elif grid[rightPointer][0] == target:
+            return [rightPointer, 0]
+        
+        if leftPointer == middlePointer:
+            break
+        
+        if grid[middlePointer][0] > target:
+            rightPointer = middlePointer
+        else:
+            leftPointer = middlePointer
+        
+    if grid[leftPointer][len(grid[0]) - 1] < target:
+        searchRow = leftPointer + 1
+    else:
+        searchRow = leftPointer
+        
+    leftPointer = 0
+    rightPointer = len(grid[0]) - 1
+    
+    while True:
+        middlePointer = (leftPointer + rightPointer) // 2
+        
+        if grid[searchRow][leftPointer] == target:
+            return [searchRow, leftPointer]
+        elif grid[searchRow][middlePointer] == target:
+            return [searchRow, middlePointer]
+        elif grid[searchRow][rightPointer] == target: 
+            return [searchRow, rightPointer]
+        
+        if leftPointer == middlePointer:
+            break
+        
+        if grid[searchRow][middlePointer] > target:
+            leftPointer = middlePointer
+        else:
+            rightPointer = middlePointer
+    
+    return [-1, -1] 
 #TESTS
 
 def runSearchInSortedArrayTests():
@@ -256,6 +310,25 @@ def runRaceOvertakingTests():
         assert got == want, f"\nrace_overtaking({p1}, {p2}): got: {got}, want: {want}\n"
         
     print("ALL RACE OVERTAKING TESTS PROVIDED PASSED.")
+
+def runSearchInSortedGridTests():
+    tests = [
+        ([[1, 3, 5], [7, 9, 11], [13, 15, 17]], 9, [1, 1]),  # Example 1
+        ([[1, 3, 5], [7, 9, 11]], 4, [-1, -1]),  # Example 2
+        ([[2, 3], [4, 5]], 1, [-1, -1]),  # 2x2 grid, all grid after
+        ([[1, 2], [3, 4]], 5, [-1, -1]),  # 2x2 grid, all grid before
+        ([[1, 2], [3, 4], [5, 6]], 1, [0, 0]),  # 3x2 grid, first element
+        ([[1, 2, 3], [4, 5, 6]], 6, [1, 2]),  # 2x3 grid, last element
+        ([[7]], 7, [0, 0]),  # Single element edge case
+        ([[7]], 6, [-1, -1])  # Single element edge case (not found)
+    ]
+    
+    for grid, target, want in tests:
+        got = searchInSortedGrid(grid, target)
+        assert got == want, (
+        f"\nsearch_in_sorted_grid({grid}, {target}): got: {got}, want: {want}\n")
+    
+    print("ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED.")
     
 def RunAllBinarySearchTestsInTheFile():
     runSearchInSortedArrayTests()
@@ -263,9 +336,19 @@ def RunAllBinarySearchTestsInTheFile():
     run2Array2SumTests()
     runTargetCountDivisibleByKTests()
     runRaceOvertakingTests()
-
+    runSearchInSortedGridTests()
+    
     print("-----------------------------------------------")
     print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
     
 if __name__ == "__main__":
-    RunAllBinarySearchTestsInTheFile()
+    # grid = [
+    #     [1, 2, 3],
+    #     [4, 5, 6]
+    # ]
+    
+    # target = 6
+    
+    # print(searchInSortedGrid(grid, target))
+    
+    runSearchInSortedGridTests()
