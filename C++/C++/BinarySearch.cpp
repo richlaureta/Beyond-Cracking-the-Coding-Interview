@@ -157,3 +157,31 @@ int raceOvertaking(const vector<int> &p1, const vector<int> &p2)
         else leftPointer = middlePointer;
     }
 }
+
+vector<int> searchInSortedGrid(const vector<vector<int>> &grid, int target)
+{
+    //Problem 29.7 Search in Sorted Grid
+    
+    if(target < grid[0][0] or target > grid[(int) grid.size() - 1][(int) grid[0].size() - 1]) return {-1, -1};
+    
+    int leftPointer = 0;
+    int rightPointer = ((int) grid.size() * (int) grid[0].size()) - 1;
+    
+    int columnLength = (int) grid[0].size();
+    
+    while(true)
+    {
+        int middlePointer = (leftPointer + rightPointer) / 2;
+        
+        if(grid[leftPointer / columnLength][leftPointer % columnLength] == target) return {leftPointer / columnLength, leftPointer % columnLength};
+        else if(grid[middlePointer / columnLength][middlePointer % columnLength] == target) return {middlePointer / columnLength, middlePointer % columnLength};
+        else if(grid[ rightPointer / columnLength][rightPointer % columnLength] == target) return {rightPointer / columnLength, rightPointer % columnLength};
+        
+        if(leftPointer == middlePointer) break;
+        
+        if(grid[middlePointer / columnLength][middlePointer % columnLength] < target) leftPointer = middlePointer;
+        else rightPointer = middlePointer;
+    }
+    
+    return {-1, -1};
+}

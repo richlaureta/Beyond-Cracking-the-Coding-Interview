@@ -1334,36 +1334,87 @@ int main(int argc, const char *argv[]) {
     
     //Problem 29.6 Race Overtaking
     
-    auto vecToStr = [](const std::vector<int>& vec) {
-      std::string str = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) str += ", ";
-        str += std::to_string(vec[i]);
-      }
-      str += "]";
-      return str;
-    };
-
-    std::vector<std::tuple<std::vector<int>, std::vector<int>, int>> tests = {
-        // Example 1 from book
-        {{2, 4, 6, 8, 10}, {1, 3, 5, 9, 11}, 3},
-        // Example
-        {{2, 3, 4, 5, 6}, {1, 2, 3, 6, 7}, 3},
-        // Example
-        {{3, 4, 5}, {2, 5, 6}, 1},
-        // Edge case - overtake at start
-        {{2, 3}, {1, 4}, 1}};
-
-    for (const auto& [p1, p2, want] : tests) {
-      int got = raceOvertaking(p1, p2);
-      if (got != want) {
-        throw std::runtime_error("\nraceOvertaking(" + vecToStr(p1) + ", " +
-                               vecToStr(p2) + "): got: " + std::to_string(got) +
-                               ", want: " + std::to_string(want) + "\n");
-      }
-    }
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) str += ", ";
+//        str += std::to_string(vec[i]);
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    std::vector<std::tuple<std::vector<int>, std::vector<int>, int>> tests = {
+//        // Example 1 from book
+//        {{2, 4, 6, 8, 10}, {1, 3, 5, 9, 11}, 3},
+//        // Example
+//        {{2, 3, 4, 5, 6}, {1, 2, 3, 6, 7}, 3},
+//        // Example
+//        {{3, 4, 5}, {2, 5, 6}, 1},
+//        // Edge case - overtake at start
+//        {{2, 3}, {1, 4}, 1}};
+//
+//    for (const auto& [p1, p2, want] : tests) {
+//      int got = raceOvertaking(p1, p2);
+//      if (got != want) {
+//        throw std::runtime_error("\nraceOvertaking(" + vecToStr(p1) + ", " +
+//                               vecToStr(p2) + "): got: " + std::to_string(got) +
+//                               ", want: " + std::to_string(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL RACE OVERTAKING TESTS PROVIDED PASSED." << endl;
     
-    cout << "ALL RACE OVERTAKING TESTS PROVIDED PASSED." << endl;
+    //Problem 29.7 Search in Sorted Grid
+    
+    auto gridToStr = [](const std::vector<std::vector<int>>& grid) {
+        std::string str = "[";
+        for (size_t i = 0; i < grid.size(); i++) {
+          if (i > 0) str += ", ";
+          str += "[";
+          for (size_t j = 0; j < grid[i].size(); j++) {
+            if (j > 0) str += ", ";
+            str += std::to_string(grid[i][j]);
+          }
+          str += "]";
+        }
+        str += "]";
+        return str;
+      };
+
+      std::vector<std::tuple<std::vector<std::vector<int>>, int, std::vector<int>>>
+          tests = {// Example 1
+                   {{{1, 3, 5}, {7, 9, 11}, {13, 15, 17}}, 9, {1, 1}},
+                   // Example 2
+                   {{{1, 3, 5}, {7, 9, 11}}, 4, {-1, -1}},
+                   // 2x2 grid, all grid after
+                   {{{2, 3}, {4, 5}}, 1, {-1, -1}},
+                   // 2x2 grid, all grid before
+                   {{{1, 2}, {3, 4}}, 5, {-1, -1}},
+                   // 3x2 grid, first element
+                   {{{1, 2}, {3, 4}, {5, 6}}, 1, {0, 0}},
+                   // 2x3 grid, last element
+                   {{{1, 2, 3}, {4, 5, 6}}, 6, {1, 2}},
+                   // Single element edge case
+                   {{{7}}, 7, {0, 0}},
+                   // Single element edge case (not found)
+                   {{{7}}, 6, {-1, -1}}};
+
+      for (const auto& [grid, target, want] : tests) {
+        auto got = searchInSortedGrid(grid, target);
+        if (got != want) {
+          std::string got_str =
+              "[" + std::to_string(got[0]) + ", " + std::to_string(got[1]) + "]";
+          std::string want_str =
+              "[" + std::to_string(want[0]) + ", " + std::to_string(want[1]) + "]";
+
+          throw std::runtime_error("\nsearchInSortedGrid(" + gridToStr(grid) + ", " +
+                                   std::to_string(target) + "): got: " + got_str +
+                                   ", want: " + want_str + "\n");
+        }
+      }
+    
+    cout << "ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

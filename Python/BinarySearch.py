@@ -167,12 +167,11 @@ def searchInSortedGrid(grid: list[list[int]], target: int) -> list[int]:
         if leftPointer == middlePointer:
             break
         
-        if grid[middlePointer // columnLength][middlePointer // columnLength] < target:
+        if grid[middlePointer // columnLength][middlePointer % columnLength] < target:
             leftPointer = middlePointer
         else:
             rightPointer = middlePointer
         
-    
     return [-1 , -1]
         
 

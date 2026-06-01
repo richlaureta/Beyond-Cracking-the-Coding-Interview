@@ -108,5 +108,6 @@ int valleyBottom(const vector<int> &arr);
 vector<int> twoArrayTwoSum(const vector<int> &sortedArr, const vector<int> &unsortedArr);
 bool targetCountDivisibleByK(const vector<int> &arr, int target, int k);
 int raceOvertaking(const vector<int> &p1, const vector<int> &p2);
+vector<int> searchInSortedGrid(const vector<vector<int>> &grid, int target);
 
 #endif // HEADER_HPP
