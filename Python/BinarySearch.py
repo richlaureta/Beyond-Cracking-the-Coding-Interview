@@ -150,54 +150,31 @@ def searchInSortedGrid(grid: list[list[int]], target: int) -> list[int]:
         return [-1, -1]
     
     leftPointer = 0
-    rightPointer = len(grid) - 1
+    rightPointer = (len(grid) * len(grid[0])) - 1
     
-    while True:
-        middlePointer  = (leftPointer + rightPointer) // 2
-        
-        if grid[leftPointer][0] == target:
-            return [leftPointer, 0]
-        elif grid[middlePointer][0] == target:
-            return [middlePointer, 0]
-        elif grid[rightPointer][0] == target:
-            return [rightPointer, 0]
-        
-        if leftPointer == middlePointer:
-            break
-        
-        if grid[middlePointer][0] > target:
-            rightPointer = middlePointer
-        else:
-            leftPointer = middlePointer
-        
-    if grid[leftPointer][len(grid[0]) - 1] < target:
-        searchRow = leftPointer + 1
-    else:
-        searchRow = leftPointer
-        
-    leftPointer = 0
-    rightPointer = len(grid[0]) - 1
+    columnLength = len(grid[0])
     
     while True:
         middlePointer = (leftPointer + rightPointer) // 2
         
-        if grid[searchRow][leftPointer] == target:
-            return [searchRow, leftPointer]
-        elif grid[searchRow][middlePointer] == target:
-            return [searchRow, middlePointer]
-        elif grid[searchRow][rightPointer] == target: 
-            return [searchRow, rightPointer]
+        if grid[leftPointer // columnLength][leftPointer % columnLength] == target:
+            return [leftPointer // columnLength, leftPointer % columnLength]
+        elif grid[middlePointer // columnLength][middlePointer % columnLength] == target:
+            return [middlePointer // columnLength, middlePointer % columnLength]
+        elif grid[rightPointer // columnLength][rightPointer % columnLength] == target:
+            return [rightPointer // columnLength, rightPointer % columnLength]
         
         if leftPointer == middlePointer:
             break
         
-        if grid[searchRow][middlePointer] > target:
+        if grid[middlePointer // columnLength][middlePointer // columnLength] < target:
             leftPointer = middlePointer
         else:
             rightPointer = middlePointer
+        
     
-    return [-1, -1] 
-#TESTS
+    return [-1 , -1]
+        
 
 def runSearchInSortedArrayTests():
     tests = [
