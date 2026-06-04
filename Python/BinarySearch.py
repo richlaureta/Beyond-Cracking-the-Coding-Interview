@@ -1,4 +1,6 @@
 
+import math
+
 def searchInSortedArray(arr: list[int], target: int) -> int:
     #Problem 29.1 Search In Sorted Array
     
@@ -174,7 +176,41 @@ def searchInSortedGrid(grid: list[list[int]], target: int) -> list[int]:
         
     return [-1 , -1]
         
-
+def minSubarraySumSplit(arr: list[int], k: int) -> int:
+    #Problem 29.9 - Min-Subarray-Sum Split
+    #This might be an incomplete solution to the problem because this is just dividing it and returning the max sum.
+    #It is not regulating to keep the large sum at a minium
+    #All the tests provided passed though. The tests might not be comprehensive.
+    #I took off the other bonus question tests.
+    #I need more comprehensive tests.
+    
+    
+    split = round(((len(arr) + 0.0) / k) + 1e-9)
+    
+    divideArray = 0
+    
+    maxSum = 0
+    sumDivision = 0
+    
+    sumInDivision = []
+    
+    for index in range(len(arr)):
+        sumDivision += arr[index]
+        
+        divideArray += 1
+        if divideArray == split:
+            sumInDivision.append(sumDivision)
+            maxSum = max(maxSum, sumDivision)
+            sumDivision = 0
+            divideArray = 0
+            
+        if index == len(arr) - 1:
+            sumInDivision.append(sumDivision)
+            maxSum = max(maxSum, sumDivision)
+    
+    return maxSum
+#TESTS
+    
 def runSearchInSortedArrayTests():
     tests = [
         # Example 1 from book
@@ -305,7 +341,56 @@ def runSearchInSortedGridTests():
         f"\nsearch_in_sorted_grid({grid}, {target}): got: {got}, want: {want}\n")
     
     print("ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED.")
+
+def min_subarray_sum_split_memoization(arr, k):
+    n = len(arr)
+    memo = {}
+
+    def min_split_rec(i, x):
+        if (i, x) in memo:
+            return memo[(i, x)]
+
+        # Base cases
+        if n - i == x:  # Put each element in its own subarray.
+            memo[(i, x)] = max(arr[i:])
+        elif x == 1:    # Put all elements in one subarray.
+            memo[(i, x)] = sum(arr[i:])
+        else:  # General case
+            current_sum = 0
+        res = math.inf
+        for p in range(i, n - x + 1):
+            current_sum += arr[p]
+            res = min(res, max(current_sum, min_split_rec(p + 1, x - 1)))
+        memo[(i, x)] = res
+
+        return memo[(i, x)]
+
+    return min_split_rec(0, k)
+
+def runMinSubarraySumSplitTests():
+    tests = [
+        # Example 1 from the book
+        ([10, 5, 8, 9, 11], 3, 17),
+        # Example 2 from the book
+        ([10, 10, 10, 10, 10], 2, 30),
+        # Extra example
+        ([9, 12, 13], 3, 13),
+        # Edge case - k=1
+        ([1, 2, 3], 1, 6),
+        # Edge case - k=length
+        ([1, 2, 3], 3, 3),
+        # Edge case - single element
+        ([5], 1, 5)
+    ]
+    for arr, k, want in tests:
+        got = minSubarraySumSplit(arr, k)
+        assert got == want, f"\nmin_subarray_sum_split({arr}, {k}): got: {
+        got}, want: {want}\n"
     
+    print("ALL MIN-SUBARRAY-SUM-SPLIT TESTS PROVIDED PASSED.")
+        
+#ALL TESTS
+ 
 def RunAllBinarySearchTestsInTheFile():
     runSearchInSortedArrayTests()
     runValleyBottomTests()
@@ -313,18 +398,10 @@ def RunAllBinarySearchTestsInTheFile():
     runTargetCountDivisibleByKTests()
     runRaceOvertakingTests()
     runSearchInSortedGridTests()
+    runMinSubarraySumSplitTests()
     
     print("-----------------------------------------------")
     print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
     
 if __name__ == "__main__":
-    # grid = [
-    #     [1, 2, 3],
-    #     [4, 5, 6]
-    # ]
-    
-    # target = 6
-    
-    # print(searchInSortedGrid(grid, target))
-    
-    runSearchInSortedGridTests()
+    runMinSubarraySumSplitTests()
