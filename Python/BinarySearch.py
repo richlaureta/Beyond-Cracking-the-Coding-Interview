@@ -179,7 +179,7 @@ def searchInSortedGrid(grid: list[list[int]], target: int) -> list[int]:
 def minSubarraySumSplit(arr: list[int], k: int) -> int:
     #Problem 29.9 - Min-Subarray-Sum Split
     #This might be an incomplete solution to the problem because this is just dividing it and returning the max sum.
-    #It is not regulating to keep the large sum at a minium
+    #It is not regulating to keep the large sum at a minimum
     #All the tests provided passed though. The tests might not be comprehensive.
     #I took off the other bonus question tests.
     #I need more comprehensive tests.
@@ -209,8 +209,47 @@ def minSubarraySumSplit(arr: list[int], k: int) -> int:
             maxSum = max(maxSum, sumDivision)
     
     return maxSum
-#TESTS
+
+def tideAerialView(picture: list[list[list[int]]]) -> int:
+    #Problem 29.12 Tide Aerial View
     
+    sqaureCount = len(picture[0]) * len(picture[0][0])
+    
+    oneIndexMemory = [0] * len(picture[0])
+    
+    oneCount = 0
+    
+    mostBalancedRatioValue = 1
+    pictureIndexBalancedRatio = 0
+    pictureIndex = 0
+    
+    for image in picture:
+        for index in  range(len(image)):
+            startIndex = oneIndexMemory[index]
+            for index1 in range(startIndex, len(picture[0][0])):
+                if image[index][index1] == 1:
+                    oneCount += 1
+                    oneIndexMemory[index] += 1
+                else:
+                    break
+        
+        zeroCount = sqaureCount - oneCount
+        
+        ratioCalculation = 1
+        
+        if zeroCount > 0:
+            ratioCalculation = abs(((oneCount + 0.0) / (zeroCount + 0.0)) - 1.0) 
+        
+        if ratioCalculation < mostBalancedRatioValue and oneCount > 0:
+            mostBalancedRatioValue = ratioCalculation
+            pictureIndexBalancedRatio = pictureIndex
+        
+        pictureIndex += 1
+                        
+    return pictureIndexBalancedRatio
+
+#TESTS
+
 def runSearchInSortedArrayTests():
     tests = [
         # Example 1 from book
@@ -388,7 +427,96 @@ def runMinSubarraySumSplitTests():
         got}, want: {want}\n"
     
     print("ALL MIN-SUBARRAY-SUM-SPLIT TESTS PROVIDED PASSED.")
+
+def runTideAerialViewTests():
+    tests = [
+        # Example from the book
+        ([
+        [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]],
+        [
+            [1, 0, 0],
+            [0, 0, 0],
+            [1, 0, 0]],
+        [
+            [1, 1, 0],
+            [0, 0, 0],
+            [1, 0, 0]],
+        [
+            [1, 1, 0],
+            [1, 1, 1],
+            [1, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 0]]
+        ], 2),
         
+        # 3 pictures with increasing water
+      ([
+        [
+            [1, 0, 0],
+            [1, 0, 0],
+            [1, 0, 0]],
+        [
+            [1, 1, 0],
+         [1, 1, 0],
+         [1, 0, 0]],
+        [[1, 1, 1],
+         [1, 1, 1],
+         [1, 0, 0]]], 1),
+      # 2 pictures
+      ([[[1, 0],
+         [0, 0]],
+        [[1, 1],
+         [1, 0]]], 0),
+      # Incremental progression
+      ([[[0, 0, 0],
+         [0, 0, 0],
+         [0, 0, 0]],
+        [[1, 0, 0],
+         [0, 0, 0],
+         [0, 0, 0]],
+        [[1, 0, 0],
+         [1, 0, 0],
+         [0, 0, 0]],
+        [[1, 1, 0],
+         [1, 0, 0],
+         [0, 0, 0]],
+        [[1, 1, 1],
+         [1, 0, 0],
+         [0, 0, 0]],
+        [[1, 1, 1],
+         [1, 1, 0],
+         [0, 0, 0]],
+        [[1, 1, 1],
+         [1, 1, 1],
+         [0, 0, 0]],
+        [[1, 1, 1],
+         [1, 1, 1],
+         [1, 0, 0]],
+        [[1, 1, 1],
+         [1, 1, 1],
+         [1, 1, 0]],
+        [[1, 1, 1],
+         [1, 1, 1],
+         [1, 1, 1]],
+        ], 4),
+      # Edge case - single picture
+      ([[[1, 1], [0, 0]]], 0),
+      # Edge case - all water
+      ([[[1, 1], [1, 1]]], 0),
+      # Edge case - all land
+      ([[[0, 0], [0, 0]]], 0)
+  ]
+    for pictures, want in tests:
+        got = tideAerialView(pictures)
+        assert got == want, f"\ntide_aerial_view({pictures}): got: {got}, want: {want}\n"
+    
+    print("ALL TIDE AERIAL VIEW TESTS PROVIDED PASSED.")
+  
 #ALL TESTS
  
 def RunAllBinarySearchTestsInTheFile():
@@ -404,4 +532,4 @@ def RunAllBinarySearchTestsInTheFile():
     print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
     
 if __name__ == "__main__":
-    runMinSubarraySumSplitTests()
+    runTideAerialViewTests()
