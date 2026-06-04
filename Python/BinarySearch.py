@@ -240,7 +240,7 @@ def tideAerialView(picture: list[list[list[int]]]) -> int:
         if zeroCount > 0:
             ratioCalculation = abs(((oneCount + 0.0) / (zeroCount + 0.0)) - 1.0) 
         
-        if ratioCalculation < mostBalancedRatioValue and oneCount > 0:
+        if ratioCalculation < mostBalancedRatioValue:
             mostBalancedRatioValue = ratioCalculation
             pictureIndexBalancedRatio = pictureIndex
         
@@ -455,54 +455,72 @@ def runTideAerialViewTests():
         ], 2),
         
         # 3 pictures with increasing water
-      ([
+        ([
         [
             [1, 0, 0],
             [1, 0, 0],
             [1, 0, 0]],
         [
             [1, 1, 0],
-         [1, 1, 0],
-         [1, 0, 0]],
-        [[1, 1, 1],
-         [1, 1, 1],
-         [1, 0, 0]]], 1),
-      # 2 pictures
-      ([[[1, 0],
-         [0, 0]],
-        [[1, 1],
-         [1, 0]]], 0),
-      # Incremental progression
-      ([[[0, 0, 0],
-         [0, 0, 0],
-         [0, 0, 0]],
-        [[1, 0, 0],
-         [0, 0, 0],
-         [0, 0, 0]],
-        [[1, 0, 0],
-         [1, 0, 0],
-         [0, 0, 0]],
-        [[1, 1, 0],
-         [1, 0, 0],
-         [0, 0, 0]],
-        [[1, 1, 1],
-         [1, 0, 0],
-         [0, 0, 0]],
-        [[1, 1, 1],
-         [1, 1, 0],
-         [0, 0, 0]],
-        [[1, 1, 1],
-         [1, 1, 1],
-         [0, 0, 0]],
-        [[1, 1, 1],
-         [1, 1, 1],
-         [1, 0, 0]],
-        [[1, 1, 1],
-         [1, 1, 1],
-         [1, 1, 0]],
-        [[1, 1, 1],
-         [1, 1, 1],
-         [1, 1, 1]],
+            [1, 1, 0],
+            [1, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 0, 0]]
+        ], 1),
+        # 2 pictures
+        ([
+        [
+            [1, 0],
+            [0, 0]],
+        [
+            [1, 1],
+            [1, 0]]
+        ], 0),
+      
+        # Incremental progression
+      ([
+        [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]],
+        [
+            [1, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]],
+        [
+            [1, 0, 0],
+            [1, 0, 0],
+            [0, 0, 0]],
+        [
+            [1, 1, 0],
+            [1, 0, 0],
+            [0, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 0, 0],
+            [0, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 0],
+            [0, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 1],
+            [0, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 0, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 0]],
+        [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1]],
         ], 4),
       # Edge case - single picture
       ([[[1, 1], [0, 0]]], 0),
@@ -510,7 +528,8 @@ def runTideAerialViewTests():
       ([[[1, 1], [1, 1]]], 0),
       # Edge case - all land
       ([[[0, 0], [0, 0]]], 0)
-  ]
+    ]
+    
     for pictures, want in tests:
         got = tideAerialView(pictures)
         assert got == want, f"\ntide_aerial_view({pictures}): got: {got}, want: {want}\n"
@@ -527,9 +546,10 @@ def RunAllBinarySearchTestsInTheFile():
     runRaceOvertakingTests()
     runSearchInSortedGridTests()
     runMinSubarraySumSplitTests()
+    runTideAerialViewTests()
     
     print("-----------------------------------------------")
     print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
     
 if __name__ == "__main__":
-    runTideAerialViewTests()
+    RunAllBinarySearchTestsInTheFile()
