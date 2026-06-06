@@ -109,5 +109,6 @@ vector<int> twoArrayTwoSum(const vector<int> &sortedArr, const vector<int> &unso
 bool targetCountDivisibleByK(const vector<int> &arr, int target, int k);
 int raceOvertaking(const vector<int> &p1, const vector<int> &p2);
 vector<int> searchInSortedGrid(const vector<vector<int>> &grid, int target);
+int tideAerialView(const vector<vector<vector<int>>> &picture);
 
 #endif // HEADER_HPP

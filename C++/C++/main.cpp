@@ -1367,54 +1367,118 @@ int main(int argc, const char *argv[]) {
     
     //Problem 29.7 Search in Sorted Grid
     
-    auto gridToStr = [](const std::vector<std::vector<int>>& grid) {
-        std::string str = "[";
-        for (size_t i = 0; i < grid.size(); i++) {
-          if (i > 0) str += ", ";
-          str += "[";
-          for (size_t j = 0; j < grid[i].size(); j++) {
-            if (j > 0) str += ", ";
-            str += std::to_string(grid[i][j]);
-          }
-          str += "]";
-        }
-        str += "]";
-        return str;
-      };
+//    auto gridToStr = [](const std::vector<std::vector<int>>& grid) {
+//        std::string str = "[";
+//        for (size_t i = 0; i < grid.size(); i++) {
+//          if (i > 0) str += ", ";
+//          str += "[";
+//          for (size_t j = 0; j < grid[i].size(); j++) {
+//            if (j > 0) str += ", ";
+//            str += std::to_string(grid[i][j]);
+//          }
+//          str += "]";
+//        }
+//        str += "]";
+//        return str;
+//      };
+//
+//      std::vector<std::tuple<std::vector<std::vector<int>>, int, std::vector<int>>>
+//          tests = {// Example 1
+//                   {{{1, 3, 5}, {7, 9, 11}, {13, 15, 17}}, 9, {1, 1}},
+//                   // Example 2
+//                   {{{1, 3, 5}, {7, 9, 11}}, 4, {-1, -1}},
+//                   // 2x2 grid, all grid after
+//                   {{{2, 3}, {4, 5}}, 1, {-1, -1}},
+//                   // 2x2 grid, all grid before
+//                   {{{1, 2}, {3, 4}}, 5, {-1, -1}},
+//                   // 3x2 grid, first element
+//                   {{{1, 2}, {3, 4}, {5, 6}}, 1, {0, 0}},
+//                   // 2x3 grid, last element
+//                   {{{1, 2, 3}, {4, 5, 6}}, 6, {1, 2}},
+//                   // Single element edge case
+//                   {{{7}}, 7, {0, 0}},
+//                   // Single element edge case (not found)
+//                   {{{7}}, 6, {-1, -1}}};
+//
+//      for (const auto& [grid, target, want] : tests) {
+//        auto got = searchInSortedGrid(grid, target);
+//        if (got != want) {
+//          std::string got_str =
+//              "[" + std::to_string(got[0]) + ", " + std::to_string(got[1]) + "]";
+//          std::string want_str =
+//              "[" + std::to_string(want[0]) + ", " + std::to_string(want[1]) + "]";
+//
+//          throw std::runtime_error("\nsearchInSortedGrid(" + gridToStr(grid) + ", " +
+//                                   std::to_string(target) + "): got: " + got_str +
+//                                   ", want: " + want_str + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 29.12 Tide Aerial View
+    
+    std::vector<std::tuple<std::vector<std::vector<std::vector<int>>>, int>>
+          tests = {// Example from the book
+                   {{{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+                     {{1, 0, 0}, {0, 0, 0}, {1, 0, 0}},
+                     {{1, 1, 0}, {0, 0, 0}, {1, 0, 0}},
+                     {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}},
+                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 0}}},
+                    2},
+                   // 3 pictures with increasing water
+                   {{{{1, 0, 0}, {1, 0, 0}, {1, 0, 0}},
+                     {{1, 1, 0}, {1, 1, 0}, {1, 0, 0}},
+                     {{1, 1, 1}, {1, 1, 1}, {1, 0, 0}}},
+                    1},
+                   // 2 pictures
+                   {{{{1, 0}, {0, 0}}, {{1, 1}, {1, 0}}}, 0},
+                   // Incremental progression
+                   {{{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+                     {{1, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+                     {{1, 0, 0}, {1, 0, 0}, {0, 0, 0}},
+                     {{1, 1, 0}, {1, 0, 0}, {0, 0, 0}},
+                     {{1, 1, 1}, {1, 0, 0}, {0, 0, 0}},
+                     {{1, 1, 1}, {1, 1, 0}, {0, 0, 0}},
+                     {{1, 1, 1}, {1, 1, 1}, {0, 0, 0}},
+                     {{1, 1, 1}, {1, 1, 1}, {1, 0, 0}},
+                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 0}},
+                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}},
+                    4},
+                   // Edge case - single picture
+                   {{{{1, 1}, {0, 0}}}, 0},
+                   // Edge case - all water
+                   {{{{1, 1}, {1, 1}}}, 0},
+                   // Edge case - all land
+                   {{{{0, 0}, {0, 0}}}, 0}};
 
-      std::vector<std::tuple<std::vector<std::vector<int>>, int, std::vector<int>>>
-          tests = {// Example 1
-                   {{{1, 3, 5}, {7, 9, 11}, {13, 15, 17}}, 9, {1, 1}},
-                   // Example 2
-                   {{{1, 3, 5}, {7, 9, 11}}, 4, {-1, -1}},
-                   // 2x2 grid, all grid after
-                   {{{2, 3}, {4, 5}}, 1, {-1, -1}},
-                   // 2x2 grid, all grid before
-                   {{{1, 2}, {3, 4}}, 5, {-1, -1}},
-                   // 3x2 grid, first element
-                   {{{1, 2}, {3, 4}, {5, 6}}, 1, {0, 0}},
-                   // 2x3 grid, last element
-                   {{{1, 2, 3}, {4, 5, 6}}, 6, {1, 2}},
-                   // Single element edge case
-                   {{{7}}, 7, {0, 0}},
-                   // Single element edge case (not found)
-                   {{{7}}, 6, {-1, -1}}};
-
-      for (const auto& [grid, target, want] : tests) {
-        auto got = searchInSortedGrid(grid, target);
+      for (const auto& [pictures, want] : tests) {
+        int got = tideAerialView(pictures);
         if (got != want) {
-          std::string got_str =
-              "[" + std::to_string(got[0]) + ", " + std::to_string(got[1]) + "]";
-          std::string want_str =
-              "[" + std::to_string(want[0]) + ", " + std::to_string(want[1]) + "]";
+          std::string pictures_str = "[";
+          for (size_t i = 0; i < pictures.size(); i++) {
+            if (i > 0) pictures_str += ", ";
+            pictures_str += "[";
+            for (size_t j = 0; j < pictures[i].size(); j++) {
+              if (j > 0) pictures_str += ", ";
+              pictures_str += "[";
+              for (size_t k = 0; k < pictures[i][j].size(); k++) {
+                if (k > 0) pictures_str += ", ";
+                pictures_str += std::to_string(pictures[i][j][k]);
+              }
+              pictures_str += "]";
+            }
+            pictures_str += "]";
+          }
+          pictures_str += "]";
 
-          throw std::runtime_error("\nsearchInSortedGrid(" + gridToStr(grid) + ", " +
-                                   std::to_string(target) + "): got: " + got_str +
-                                   ", want: " + want_str + "\n");
+          throw std::runtime_error("\ntideAerialView(" + pictures_str +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
         }
       }
     
-    cout << "ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED." << endl;
+    cout << "ALL TIDE AERIAL VIEW TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

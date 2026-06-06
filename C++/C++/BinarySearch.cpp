@@ -185,3 +185,51 @@ vector<int> searchInSortedGrid(const vector<vector<int>> &grid, int target)
     
     return {-1, -1};
 }
+
+int tideAerialView(const vector<vector<vector<int>>> &picture)
+{
+    //Problem 29.12 Aerial View
+    
+    int squareCount = (int) picture[0].size() * (int) picture[0][0].size();
+    
+    vector<int> oneIndexMemory((int) picture[0].size(), 0);
+    
+    int oneCount = 0;
+    
+    double mostBalancedRatioValue = 1;
+    int pictureIndexBalancedRatio = 0;
+    int pictureIndex = 0;
+    
+    for(vector<vector<int>> image: picture)
+    {
+        for(int index = 0; index < (int) image.size(); index++)
+        {
+            int startIndex = oneIndexMemory[index];
+            for(int index1 = startIndex; index1 < (int) picture[0][0].size(); index1++)
+            {
+                if(image[index][index1] == 1)
+                {
+                    oneCount++;
+                    oneIndexMemory[index]++;
+                }
+                else break;
+            }
+        }
+        
+        int zeroCount = squareCount - oneCount;
+        
+        double ratioCalculation = 1;
+        
+        if(zeroCount > 0) ratioCalculation = abs(((oneCount + 0.0) / (zeroCount + 0.0)) - 1.0);
+        
+        if(ratioCalculation < mostBalancedRatioValue)
+        {
+            mostBalancedRatioValue = ratioCalculation;
+            pictureIndexBalancedRatio = pictureIndex;
+        }
+        
+        pictureIndex++;
+    }
+    
+    return pictureIndexBalancedRatio;
+}
