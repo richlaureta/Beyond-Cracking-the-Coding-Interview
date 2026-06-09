@@ -27,6 +27,24 @@ def mostSharedAccount(connections: list[tuple[str]]) -> str:
             maxNameCountUsed = nameUsedCount[connection[1]]
     return mostSharedUser
 
+def mostFrequentOctet(ips: list[str]) -> str:
+    #Problem 30.3 - Most Frequent Octet
+    
+    if len(ips) == 1:
+        octet0 = ips[0].partition('.')[0]
+        return octet0
+    
+    ipSet = set()
+    
+    for ip in ips:
+        octet = ip.partition('.')[0]
+        if octet in ipSet:
+            return octet
+        ipSet.add(octet)
+        
+    
+    return None
+        
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -80,13 +98,31 @@ def runMostSharedAccountTests():
             f"\nmost_shared_account({connections}): got: {got}, want: {want}\n"
     
     print("ALL MOST SHARED ACCOUNT TESTS PROVIDED PASSED.")
+
+def runMostFrequentOctetTests():
+    tests = [
+        # Example 
+        (["203.0.113.10", "208.51.100.5", "202.0.2.5", "203.0.113.5"], "203"),
+        # Additional test cases
+        ([], None),
+        (["192.168.1.1"], "192"),
+        (["10.0.0.1", "10.0.0.2", "192.168.1.1"], "10"),
+        (["172.16.0.1", "172.16.0.2", "172.17.0.1", "172.16.0.3"], "172"),
+    ]
+    
+    for ips, want in tests:
+        got = mostFrequentOctet(ips)
+        assert got == want, f"\nmost_frequent_octet({ips}): got: {got}, want: {want}\n"
+        
+    print("ALL MOST FREQUENT OCTET TESTS PROVIDED PASSED.")
     
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
     runAccountSharingDetectionTests()
     runMostSharedAccountTests()
-    
+    runMostFrequentOctetTests()
+
     print("------------------------------------------------------")
     print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE PASSED. |")
     print("------------------------------------------------------")
