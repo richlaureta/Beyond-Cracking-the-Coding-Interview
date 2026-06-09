@@ -113,6 +113,6 @@ int tideAerialView(const vector<vector<vector<int>>> &picture);
 
 //Sets & Maps
 string accountSharing(const vector<pair<string, string>> &connections);
-
+string mostSharedAccount(const vector<pair<string, string>> &connections);
 
 #endif // HEADER_HPP

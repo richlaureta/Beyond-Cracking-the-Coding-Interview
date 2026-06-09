@@ -1416,7 +1416,7 @@ int main(int argc, const char *argv[]) {
 //    
 //    cout << "ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED." << endl;
     
-    //Problem 29.12 Tide Aerial View
+    //Problem 29.12 - Tide Aerial View
     
 //    std::vector<std::tuple<std::vector<std::vector<std::vector<int>>>, int>>
 //          tests = {// Example from the book
@@ -1480,52 +1480,115 @@ int main(int argc, const char *argv[]) {
 //    
 //    cout << "ALL TIDE AERIAL VIEW TESTS PROVIDED PASSED." << endl;
     
-    //Problem 30.1 Account Sharing Detection
+    //Problem 30.1 - Account Sharing Detection
     
-    std::vector<
+//    std::vector<
+//          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+//          tests = {// Example 1
+//                   {{{"203.0.113.10", "mike"},
+//                     {"298.51.100.25", "bob"},
+//                     {"292.0.2.5", "mike"},
+//                     {"203.0.113.15", "bob2"}},
+//                    "292.0.2.5"},
+//                   // Example 2
+//                   {{{"111.0.0.0", "mike"},
+//                     {"111.0.0.1", "mike"},
+//                     {"111.0.0.2", "bob"},
+//                     {"111.0.0.3", "bob"}},
+//                    "111.0.0.1"},
+//                   // Example 3
+//                   {{{"111.0.0.0", "mike"},
+//                     {"111.0.0.1", "mike2"},
+//                     {"111.0.0.2", "mike3"},
+//                     {"111.0.0.3", "mike4"}},
+//                    ""},
+//                   // Edge case - empty list
+//                   {{}, ""},
+//                   // Edge case - single connection
+//                   {{{"1.1.1.1", "alice"}}, ""}};
+//
+//      for (const auto& [connections, want] : tests) {
+//        auto got = accountSharing(connections);
+//        if (got != want) {
+//          std::string connections_str = "[";
+//          for (size_t i = 0; i < connections.size(); i++) {
+//            if (i > 0) connections_str += ", ";
+//            connections_str += "(\"" + connections[i].first + "\", \"" +
+//                               connections[i].second + "\")";
+//          }
+//          connections_str += "]";
+//
+//          throw std::runtime_error("\naccountSharing(" + connections_str +
+//                                   "): got: \"" + got + "\", want: \"" + want +
+//                                   "\"\n");
+//        }
+//      }
+//    
+//    cout << "ALL ACCOUNT SHARING DETECTION TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.2 - Most Shared Account
+    
+    auto connectionVecToStr = [](const std::vector<std::pair<std::string, std::string>>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += "(\"" + vec[i].first + "\", \"" + vec[i].second + "\")";
+        }
+        result += "]";
+        return result;
+      };
+
+      std::vector<
           std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
-          tests = {// Example 1
+          tests = {// Example
                    {{{"203.0.113.10", "mike"},
-                     {"298.51.100.25", "bob"},
-                     {"292.0.2.5", "mike"},
+                     {"208.51.100.25", "bob"},
+                     {"202.0.2.5", "mike"},
                      {"203.0.113.15", "bob2"}},
-                    "292.0.2.5"},
-                   // Example 2
-                   {{{"111.0.0.0", "mike"},
-                     {"111.0.0.1", "mike"},
-                     {"111.0.0.2", "bob"},
-                     {"111.0.0.3", "bob"}},
-                    "111.0.0.1"},
-                   // Example 3
-                   {{{"111.0.0.0", "mike"},
-                     {"111.0.0.1", "mike2"},
-                     {"111.0.0.2", "mike3"},
-                     {"111.0.0.3", "mike4"}},
-                    ""},
-                   // Edge case - empty list
+                    "mike"},
+                   // Additional test cases
                    {{}, ""},
-                   // Edge case - single connection
-                   {{{"1.1.1.1", "alice"}}, ""}};
+                   {{{"1.1.1.1", "alice"}}, "alice"},
+                   {{{"1.1.1.1", "alice"},
+                     {"1.1.1.2", "bob"},
+                     {"1.1.1.3", "alice"},
+                     {"1.1.1.4", "bob"}},
+                    "alice"}};
 
       for (const auto& [connections, want] : tests) {
-        auto got = accountSharing(connections);
-        if (got != want) {
-          std::string connections_str = "[";
-          for (size_t i = 0; i < connections.size(); i++) {
-            if (i > 0) connections_str += ", ";
-            connections_str += "(\"" + connections[i].first + "\", \"" +
-                               connections[i].second + "\")";
-          }
-          connections_str += "]";
+        auto got = mostSharedAccount(connections);
 
-          throw std::runtime_error("\naccountSharing(" + connections_str +
+        // Check if got matches want directly
+        if (got == want) {
+          continue;
+        }
+
+        // If want is empty, got must also be empty
+        if (want.empty()) {
+          if (!got.empty()) {
+            throw std::runtime_error("\nmostSharedAccount(" + connectionVecToStr(connections) +
+                                     "): got: \"" + got + "\", want: \"" + want +
+                                     "\"\n");
+          }
+          continue;
+        }
+
+        // Count occurrences of got and want in connections
+        int gotCount = 0, wantCount = 0;
+        for (const auto& [_, user] : connections) {
+          if (user == got) gotCount++;
+          if (user == want) wantCount++;
+        }
+
+        if (gotCount != wantCount) {
+          throw std::runtime_error("\nmostSharedAccount(" + connectionVecToStr(connections) +
                                    "): got: \"" + got + "\", want: \"" + want +
                                    "\"\n");
         }
       }
     
-    cout << "ALL ACCOUNT SHARING DETECTION TESTS PROVIDED PASSED." << endl;
-    
+    cout << "ALL MOST SHARED ACCOUNT TESTS PROVIDED PASSED." << endl;
+        
     return EXIT_SUCCESS;
 }
 
