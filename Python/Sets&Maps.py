@@ -86,9 +86,9 @@ def RunAllSetsAndMapsTests():
     runAccountSharingDetectionTests()
     runMostSharedAccountTests()
     
-    print("------------------------------------------")
-    print("ALL INCLUDED SETS AND MAPS TESTS PASSED. |")
-    print("------------------------------------------")
+    print("------------------------------------------------------")
+    print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE PASSED. |")
+    print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    runMostSharedAccountTests()
+    RunAllSetsAndMapsTests()

@@ -111,4 +111,8 @@ int raceOvertaking(const vector<int> &p1, const vector<int> &p2);
 vector<int> searchInSortedGrid(const vector<vector<int>> &grid, int target);
 int tideAerialView(const vector<vector<vector<int>>> &picture);
 
+//Sets & Maps
+string accountSharing(const vector<pair<string, string>> &connections);
+
+
 #endif // HEADER_HPP

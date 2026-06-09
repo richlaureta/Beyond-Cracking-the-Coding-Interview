@@ -1418,67 +1418,113 @@ int main(int argc, const char *argv[]) {
     
     //Problem 29.12 Tide Aerial View
     
-    std::vector<std::tuple<std::vector<std::vector<std::vector<int>>>, int>>
-          tests = {// Example from the book
-                   {{{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-                     {{1, 0, 0}, {0, 0, 0}, {1, 0, 0}},
-                     {{1, 1, 0}, {0, 0, 0}, {1, 0, 0}},
-                     {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}},
-                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 0}}},
-                    2},
-                   // 3 pictures with increasing water
-                   {{{{1, 0, 0}, {1, 0, 0}, {1, 0, 0}},
-                     {{1, 1, 0}, {1, 1, 0}, {1, 0, 0}},
-                     {{1, 1, 1}, {1, 1, 1}, {1, 0, 0}}},
-                    1},
-                   // 2 pictures
-                   {{{{1, 0}, {0, 0}}, {{1, 1}, {1, 0}}}, 0},
-                   // Incremental progression
-                   {{{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-                     {{1, 0, 0}, {0, 0, 0}, {0, 0, 0}},
-                     {{1, 0, 0}, {1, 0, 0}, {0, 0, 0}},
-                     {{1, 1, 0}, {1, 0, 0}, {0, 0, 0}},
-                     {{1, 1, 1}, {1, 0, 0}, {0, 0, 0}},
-                     {{1, 1, 1}, {1, 1, 0}, {0, 0, 0}},
-                     {{1, 1, 1}, {1, 1, 1}, {0, 0, 0}},
-                     {{1, 1, 1}, {1, 1, 1}, {1, 0, 0}},
-                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 0}},
-                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}},
-                    4},
-                   // Edge case - single picture
-                   {{{{1, 1}, {0, 0}}}, 0},
-                   // Edge case - all water
-                   {{{{1, 1}, {1, 1}}}, 0},
-                   // Edge case - all land
-                   {{{{0, 0}, {0, 0}}}, 0}};
+//    std::vector<std::tuple<std::vector<std::vector<std::vector<int>>>, int>>
+//          tests = {// Example from the book
+//                   {{{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+//                     {{1, 0, 0}, {0, 0, 0}, {1, 0, 0}},
+//                     {{1, 1, 0}, {0, 0, 0}, {1, 0, 0}},
+//                     {{1, 1, 0}, {1, 1, 1}, {1, 0, 0}},
+//                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 0}}},
+//                    2},
+//                   // 3 pictures with increasing water
+//                   {{{{1, 0, 0}, {1, 0, 0}, {1, 0, 0}},
+//                     {{1, 1, 0}, {1, 1, 0}, {1, 0, 0}},
+//                     {{1, 1, 1}, {1, 1, 1}, {1, 0, 0}}},
+//                    1},
+//                   // 2 pictures
+//                   {{{{1, 0}, {0, 0}}, {{1, 1}, {1, 0}}}, 0},
+//                   // Incremental progression
+//                   {{{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+//                     {{1, 0, 0}, {0, 0, 0}, {0, 0, 0}},
+//                     {{1, 0, 0}, {1, 0, 0}, {0, 0, 0}},
+//                     {{1, 1, 0}, {1, 0, 0}, {0, 0, 0}},
+//                     {{1, 1, 1}, {1, 0, 0}, {0, 0, 0}},
+//                     {{1, 1, 1}, {1, 1, 0}, {0, 0, 0}},
+//                     {{1, 1, 1}, {1, 1, 1}, {0, 0, 0}},
+//                     {{1, 1, 1}, {1, 1, 1}, {1, 0, 0}},
+//                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 0}},
+//                     {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}}},
+//                    4},
+//                   // Edge case - single picture
+//                   {{{{1, 1}, {0, 0}}}, 0},
+//                   // Edge case - all water
+//                   {{{{1, 1}, {1, 1}}}, 0},
+//                   // Edge case - all land
+//                   {{{{0, 0}, {0, 0}}}, 0}};
+//
+//      for (const auto& [pictures, want] : tests) {
+//        int got = tideAerialView(pictures);
+//        if (got != want) {
+//          std::string pictures_str = "[";
+//          for (size_t i = 0; i < pictures.size(); i++) {
+//            if (i > 0) pictures_str += ", ";
+//            pictures_str += "[";
+//            for (size_t j = 0; j < pictures[i].size(); j++) {
+//              if (j > 0) pictures_str += ", ";
+//              pictures_str += "[";
+//              for (size_t k = 0; k < pictures[i][j].size(); k++) {
+//                if (k > 0) pictures_str += ", ";
+//                pictures_str += std::to_string(pictures[i][j][k]);
+//              }
+//              pictures_str += "]";
+//            }
+//            pictures_str += "]";
+//          }
+//          pictures_str += "]";
+//
+//          throw std::runtime_error("\ntideAerialView(" + pictures_str +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL TIDE AERIAL VIEW TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.1 Account Sharing Detection
+    
+    std::vector<
+          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+          tests = {// Example 1
+                   {{{"203.0.113.10", "mike"},
+                     {"298.51.100.25", "bob"},
+                     {"292.0.2.5", "mike"},
+                     {"203.0.113.15", "bob2"}},
+                    "292.0.2.5"},
+                   // Example 2
+                   {{{"111.0.0.0", "mike"},
+                     {"111.0.0.1", "mike"},
+                     {"111.0.0.2", "bob"},
+                     {"111.0.0.3", "bob"}},
+                    "111.0.0.1"},
+                   // Example 3
+                   {{{"111.0.0.0", "mike"},
+                     {"111.0.0.1", "mike2"},
+                     {"111.0.0.2", "mike3"},
+                     {"111.0.0.3", "mike4"}},
+                    ""},
+                   // Edge case - empty list
+                   {{}, ""},
+                   // Edge case - single connection
+                   {{{"1.1.1.1", "alice"}}, ""}};
 
-      for (const auto& [pictures, want] : tests) {
-        int got = tideAerialView(pictures);
+      for (const auto& [connections, want] : tests) {
+        auto got = accountSharing(connections);
         if (got != want) {
-          std::string pictures_str = "[";
-          for (size_t i = 0; i < pictures.size(); i++) {
-            if (i > 0) pictures_str += ", ";
-            pictures_str += "[";
-            for (size_t j = 0; j < pictures[i].size(); j++) {
-              if (j > 0) pictures_str += ", ";
-              pictures_str += "[";
-              for (size_t k = 0; k < pictures[i][j].size(); k++) {
-                if (k > 0) pictures_str += ", ";
-                pictures_str += std::to_string(pictures[i][j][k]);
-              }
-              pictures_str += "]";
-            }
-            pictures_str += "]";
+          std::string connections_str = "[";
+          for (size_t i = 0; i < connections.size(); i++) {
+            if (i > 0) connections_str += ", ";
+            connections_str += "(\"" + connections[i].first + "\", \"" +
+                               connections[i].second + "\")";
           }
-          pictures_str += "]";
+          connections_str += "]";
 
-          throw std::runtime_error("\ntideAerialView(" + pictures_str +
-                                   "): got: " + std::to_string(got) +
-                                   ", want: " + std::to_string(want) + "\n");
+          throw std::runtime_error("\naccountSharing(" + connections_str +
+                                   "): got: \"" + got + "\", want: \"" + want +
+                                   "\"\n");
         }
       }
     
-    cout << "ALL TIDE AERIAL VIEW TESTS PROVIDED PASSED." << endl;
+    cout << "ALL ACCOUNT SHARING DETECTION TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
