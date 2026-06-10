@@ -30,20 +30,18 @@ def mostSharedAccount(connections: list[tuple[str]]) -> str:
 def mostFrequentOctet(ips: list[str]) -> str:
     #Problem 30.3 - Most Frequent Octet
     
-    if len(ips) == 1:
-        octet0 = ips[0].partition('.')[0]
-        return octet0
+    # octetFrequencyDictionary = defaultdict(int)
+    # mostCommonCountOctet = 0
+    # firstMostCommonOctet = None
     
-    ipSet = set()
-    
-    for ip in ips:
-        octet = ip.partition('.')[0]
-        if octet in ipSet:
-            return octet
-        ipSet.add(octet)
+    # for ip in ips:
+    #     octet = ip.partition('.')[0]
+    #     octetFrequencyDictionary[octet] += 1
+    #     if octetFrequencyDictionary[octet] > mostCommonCountOctet:
+    #         mostCommonCountOctet = octetFrequencyDictionary[octet]
+    #         firstMostCommonOctet = octet
         
-    
-    return None
+    # return firstMostCommonOctet
         
 #TESTS
 
@@ -128,4 +126,4 @@ def RunAllSetsAndMapsTests():
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    RunAllSetsAndMapsTests()
+    runMostFrequentOctetTests()

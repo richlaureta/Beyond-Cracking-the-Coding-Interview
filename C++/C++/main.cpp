@@ -1528,66 +1528,66 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.2 - Most Shared Account
     
-    auto connectionVecToStr = [](const std::vector<std::pair<std::string, std::string>>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += "(\"" + vec[i].first + "\", \"" + vec[i].second + "\")";
-        }
-        result += "]";
-        return result;
-      };
-
-      std::vector<
-          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
-          tests = {// Example
-                   {{{"203.0.113.10", "mike"},
-                     {"208.51.100.25", "bob"},
-                     {"202.0.2.5", "mike"},
-                     {"203.0.113.15", "bob2"}},
-                    "mike"},
-                   // Additional test cases
-                   {{}, ""},
-                   {{{"1.1.1.1", "alice"}}, "alice"},
-                   {{{"1.1.1.1", "alice"},
-                     {"1.1.1.2", "bob"},
-                     {"1.1.1.3", "alice"},
-                     {"1.1.1.4", "bob"}},
-                    "alice"}};
-
-      for (const auto& [connections, want] : tests) {
-        auto got = mostSharedAccount(connections);
-
-        // Check if got matches want directly
-        if (got == want) {
-          continue;
-        }
-
-        // If want is empty, got must also be empty
-        if (want.empty()) {
-          if (!got.empty()) {
-            throw std::runtime_error("\nmostSharedAccount(" + connectionVecToStr(connections) +
-                                     "): got: \"" + got + "\", want: \"" + want +
-                                     "\"\n");
-          }
-          continue;
-        }
-
-        // Count occurrences of got and want in connections
-        int gotCount = 0, wantCount = 0;
-        for (const auto& [_, user] : connections) {
-          if (user == got) gotCount++;
-          if (user == want) wantCount++;
-        }
-
-        if (gotCount != wantCount) {
-          throw std::runtime_error("\nmostSharedAccount(" + connectionVecToStr(connections) +
-                                   "): got: \"" + got + "\", want: \"" + want +
-                                   "\"\n");
-        }
-      }
-    
-    cout << "ALL MOST SHARED ACCOUNT TESTS PROVIDED PASSED." << endl;
+//    auto connectionVecToStr = [](const std::vector<std::pair<std::string, std::string>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += "(\"" + vec[i].first + "\", \"" + vec[i].second + "\")";
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<
+//          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+//          tests = {// Example
+//                   {{{"203.0.113.10", "mike"},
+//                     {"208.51.100.25", "bob"},
+//                     {"202.0.2.5", "mike"},
+//                     {"203.0.113.15", "bob2"}},
+//                    "mike"},
+//                   // Additional test cases
+//                   {{}, ""},
+//                   {{{"1.1.1.1", "alice"}}, "alice"},
+//                   {{{"1.1.1.1", "alice"},
+//                     {"1.1.1.2", "bob"},
+//                     {"1.1.1.3", "alice"},
+//                     {"1.1.1.4", "bob"}},
+//                    "alice"}};
+//
+//      for (const auto& [connections, want] : tests) {
+//        auto got = mostSharedAccount(connections);
+//
+//        // Check if got matches want directly
+//        if (got == want) {
+//          continue;
+//        }
+//
+//        // If want is empty, got must also be empty
+//        if (want.empty()) {
+//          if (!got.empty()) {
+//            throw std::runtime_error("\nmostSharedAccount(" + connectionVecToStr(connections) +
+//                                     "): got: \"" + got + "\", want: \"" + want +
+//                                     "\"\n");
+//          }
+//          continue;
+//        }
+//
+//        // Count occurrences of got and want in connections
+//        int gotCount = 0, wantCount = 0;
+//        for (const auto& [_, user] : connections) {
+//          if (user == got) gotCount++;
+//          if (user == want) wantCount++;
+//        }
+//
+//        if (gotCount != wantCount) {
+//          throw std::runtime_error("\nmostSharedAccount(" + connectionVecToStr(connections) +
+//                                   "): got: \"" + got + "\", want: \"" + want +
+//                                   "\"\n");
+//        }
+//      }
+//    
+//    cout << "ALL MOST SHARED ACCOUNT TESTS PROVIDED PASSED." << endl;
         
     return EXIT_SUCCESS;
 }

@@ -26,7 +26,7 @@ string accountSharing(const vector<pair<string, string>> &connections)
 
 string mostSharedAccount(const vector<pair<string, string>> &connections)
 {
-    //Problem 30.2 Most Shared Account
+    //Problem 30.2 - Most Shared Account
     
     unordered_map<string, int> nameUsedCount;
     string mostSharedUser = "";
@@ -43,4 +43,28 @@ string mostSharedAccount(const vector<pair<string, string>> &connections)
     }
     
     return mostSharedUser;
+}
+
+string mostCommontOctet(const vector<string> &ips)
+{
+    //Problem 30.3 - Most Frequent Octet
+    
+    if((int)ips.size() == 1)
+    {
+        size_t dotIndex0 = ips[0].find('.');
+        string octet0 = ips[0].substr(0, dotIndex0);
+        return octet0;
+    }
+    
+    unordered_set<string> octetSet = {};
+    
+    for(string ip: ips)
+    {
+        size_t dotIndex = ip.find('.');
+        string octet = ip.substr(0, dotIndex);
+        if(octetSet.find(octet) != octetSet.end()) return octet;
+        octetSet.insert(octet);
+    }
+    
+    return "";
 }
