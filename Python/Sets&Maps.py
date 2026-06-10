@@ -32,16 +32,16 @@ def mostFrequentOctet(ips: list[str]) -> str:
     
     octetFrequencyDictionary = defaultdict(int)
     mostCommonCountOctet = 0
-    firstMostCommonOctet = None
+    mostCommonOctet = None
     
     for ip in ips:
         octet = ip.partition('.')[0]
         octetFrequencyDictionary[octet] += 1
         if octetFrequencyDictionary[octet] > mostCommonCountOctet:
             mostCommonCountOctet = octetFrequencyDictionary[octet]
-            firstMostCommonOctet = octet
+            mostCommonOctet = octet
         
-    return firstMostCommonOctet
+    return mostCommonOctet
         
 #TESTS
 

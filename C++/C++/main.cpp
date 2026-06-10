@@ -1588,7 +1588,35 @@ int main(int argc, const char *argv[]) {
 //      }
 //    
 //    cout << "ALL MOST SHARED ACCOUNT TESTS PROVIDED PASSED." << endl;
-        
+    
+    //Problem 30.3 - Most Frequent Octet
+    
+    std::vector<std::pair<std::vector<std::string>, std::string>> tests = {
+          // Example
+          {{"203.0.113.10", "208.51.100.5", "202.0.2.5", "203.0.113.5"}, "203"},
+          // Additional test cases
+          {{}, ""},
+          {{"192.168.1.1"}, "192"},
+          {{"10.0.0.1", "10.0.0.2", "192.168.1.1"}, "10"},
+          {{"172.16.0.1", "172.16.0.2", "172.17.0.1", "172.16.0.3"}, "172"}};
+
+      for (const auto& [ips, want] : tests) {
+        auto got = mostFrequentOctet(ips);
+        if (got != want) {
+          std::string ips_str = "[";
+          for (size_t i = 0; i < ips.size(); i++) {
+            if (i > 0) ips_str += ", ";
+            ips_str += "\"" + ips[i] + "\"";
+          }
+          ips_str += "]";
+
+          throw std::runtime_error("\nmostFrequentOctet(" + ips_str + "): got: \"" +
+                                   got + "\", want: \"" + want + "\"\n");
+        }
+      }
+    
+    cout << "ALL MOST FREQUENT OCTET TESTS PASSED." << endl;
+    
     return EXIT_SUCCESS;
 }
 

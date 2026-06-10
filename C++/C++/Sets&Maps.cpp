@@ -45,26 +45,25 @@ string mostSharedAccount(const vector<pair<string, string>> &connections)
     return mostSharedUser;
 }
 
-string mostCommontOctet(const vector<string> &ips)
+string mostFrequentOctet(const vector<string> &ips)
 {
     //Problem 30.3 - Most Frequent Octet
     
-    if((int)ips.size() == 1)
-    {
-        size_t dotIndex0 = ips[0].find('.');
-        string octet0 = ips[0].substr(0, dotIndex0);
-        return octet0;
-    }
-    
-    unordered_set<string> octetSet = {};
+    unordered_map<string, int> octetFrequencyMap;
+    int mostCommonCountOctet = 0;
+    string mostCommonOctet = "";
     
     for(string ip: ips)
     {
         size_t dotIndex = ip.find('.');
         string octet = ip.substr(0, dotIndex);
-        if(octetSet.find(octet) != octetSet.end()) return octet;
-        octetSet.insert(octet);
+        octetFrequencyMap[octet]++;
+        if(octetFrequencyMap[octet] > mostCommonCountOctet)
+        {
+            mostCommonCountOctet = octetFrequencyMap[octet];
+            mostCommonOctet = octet;
+        }
     }
     
-    return "";
+    return mostCommonOctet;
 }
