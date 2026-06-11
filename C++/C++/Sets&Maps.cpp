@@ -67,3 +67,25 @@ string mostFrequentOctet(const vector<string> &ips)
     
     return mostCommonOctet;
 }
+
+bool multiAccountCheating(const vector<pair<string, vector<string>>> &users)
+{
+    //Problem 30.4 - Multi-Account Cheating
+    
+    unordered_set<string> ipSet = {};
+    
+    for(pair<string, vector<string>> user: users)
+    {
+        for(string ip: user.second)
+        {
+            if(ipSet.find(ip) != ipSet.end()) return true;
+        }
+        
+        for(string ip: user.second)
+        {
+            ipSet.insert(ip);
+        }
+    }
+    
+    return false;
+}

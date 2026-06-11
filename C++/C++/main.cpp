@@ -1591,31 +1591,71 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.3 - Most Frequent Octet
     
-    std::vector<std::pair<std::vector<std::string>, std::string>> tests = {
-          // Example
-          {{"203.0.113.10", "208.51.100.5", "202.0.2.5", "203.0.113.5"}, "203"},
-          // Additional test cases
-          {{}, ""},
-          {{"192.168.1.1"}, "192"},
-          {{"10.0.0.1", "10.0.0.2", "192.168.1.1"}, "10"},
-          {{"172.16.0.1", "172.16.0.2", "172.17.0.1", "172.16.0.3"}, "172"}};
+//    std::vector<std::pair<std::vector<std::string>, std::string>> tests = {
+//          // Example
+//          {{"203.0.113.10", "208.51.100.5", "202.0.2.5", "203.0.113.5"}, "203"},
+//          // Additional test cases
+//          {{}, ""},
+//          {{"192.168.1.1"}, "192"},
+//          {{"10.0.0.1", "10.0.0.2", "192.168.1.1"}, "10"},
+//          {{"172.16.0.1", "172.16.0.2", "172.17.0.1", "172.16.0.3"}, "172"}};
+//
+//      for (const auto& [ips, want] : tests) {
+//        auto got = mostFrequentOctet(ips);
+//        if (got != want) {
+//          std::string ips_str = "[";
+//          for (size_t i = 0; i < ips.size(); i++) {
+//            if (i > 0) ips_str += ", ";
+//            ips_str += "\"" + ips[i] + "\"";
+//          }
+//          ips_str += "]";
+//
+//          throw std::runtime_error("\nmostFrequentOctet(" + ips_str + "): got: \"" +
+//                                   got + "\", want: \"" + want + "\"\n");
+//        }
+//      }
+//    
+//    cout << "ALL MOST FREQUENT OCTET TESTS PASSED." << endl;
+    
+    //Problem 30.4 - Multi-Account Cheating
+    
+    std::vector<std::pair<
+          std::vector<std::pair<std::string, std::vector<std::string>>>, bool>>
+          tests = {
+              // Example
+              {{{"mike", {"203.0.3.10", "208.51.0.5", "52.0.2.5"}},
+                {"bob", {"111.0.0.10", "222.0.0.5", "222.0.0.8"}},
+                {"bob2", {"222.0.0.5", "222.0.0.8", "111.0.0.10"}}},
+               true},
+              // Additional test cases
+              {{}, false},
+              {{{"alice", {"1.1.1.1"}}}, false},
+              {{{"alice", {"1.1.1.1", "2.2.2.2"}}, {"bob", {"2.2.2.2", "1.1.1.1"}}},
+               true},
+              {{{"alice", {"1.1.1.1"}}, {"bob", {"2.2.2.2"}}}, false}};
 
-      for (const auto& [ips, want] : tests) {
-        auto got = mostFrequentOctet(ips);
+      for (const auto& [users, want] : tests) {
+        auto got = multiAccountCheating(users);
         if (got != want) {
-          std::string ips_str = "[";
-          for (size_t i = 0; i < ips.size(); i++) {
-            if (i > 0) ips_str += ", ";
-            ips_str += "\"" + ips[i] + "\"";
+          std::string users_str = "[";
+          for (size_t i = 0; i < users.size(); i++) {
+            if (i > 0) users_str += ", ";
+            users_str += "(\"" + users[i].first + "\", [";
+            for (size_t j = 0; j < users[i].second.size(); j++) {
+              if (j > 0) users_str += ", ";
+              users_str += "\"" + users[i].second[j] + "\"";
+            }
+            users_str += "])";
           }
-          ips_str += "]";
+          users_str += "]";
 
-          throw std::runtime_error("\nmostFrequentOctet(" + ips_str + "): got: \"" +
-                                   got + "\", want: \"" + want + "\"\n");
+          throw std::runtime_error("\nmultiAccountCheating(" + users_str +
+                                   "): got: " + (got ? "true" : "false") +
+                                   ", want: " + (want ? "true" : "false") + "\n");
         }
       }
     
-    cout << "ALL MOST FREQUENT OCTET TESTS PASSED." << endl;
+    cout << "ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

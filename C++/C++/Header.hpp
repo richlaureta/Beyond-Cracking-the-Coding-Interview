@@ -115,5 +115,6 @@ int tideAerialView(const vector<vector<vector<int>>> &picture);
 string accountSharing(const vector<pair<string, string>> &connections);
 string mostSharedAccount(const vector<pair<string, string>> &connections);
 string mostFrequentOctet(const vector<string> &ips);
+bool multiAccountCheating(const vector<pair<string, vector<string>>> &users);
 
 #endif // HEADER_HPP
