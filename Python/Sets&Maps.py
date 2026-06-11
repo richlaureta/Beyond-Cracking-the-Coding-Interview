@@ -42,7 +42,21 @@ def mostFrequentOctet(ips: list[str]) -> str:
             mostCommonOctet = octet
         
     return mostCommonOctet
-        
+
+def multiAccountCheating(users: list[tuple]) -> bool:
+    #Problem 30.4 - Multi-Account Cheating
+    
+    ipSet = set()
+    
+    for user in users:
+        for ip in user[1]:
+            if ip in ipSet:
+                return True
+        for ip in user[1]:
+            ipSet.add(ip)
+    
+    return False
+
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -113,6 +127,26 @@ def runMostFrequentOctetTests():
         assert got == want, f"\nmost_frequent_octet({ips}): got: {got}, want: {want}\n"
         
     print("ALL MOST FREQUENT OCTET TESTS PROVIDED PASSED.")
+
+def runMultiAccountCheatingTests():
+    tests = [
+        # Example 
+        ([("mike", ["203.0.3.10", "208.51.0.5", "52.0.2.5"]),
+        ("bob", ["111.0.0.10", "222.0.0.5", "222.0.0.8"]),
+          ("bob2", ["222.0.0.5", "222.0.0.8", "111.0.0.10"])], True),
+        # Additional test cases
+        ([], False),
+        ([("alice", ["1.1.1.1"])], False),
+        ([("alice", ["1.1.1.1", "2.2.2.2"]),
+        ("bob", ["2.2.2.2", "1.1.1.1"])], True),
+        ([("alice", ["1.1.1.1"]), ("bob", ["2.2.2.2"])], False),
+    ]
+    
+    for users, want in tests:
+        got = multiAccountCheating(users)
+        assert got == want, f"\nmulti_account_cheating({users}): got: {got}, want: {want}\n"
+    
+    print("ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED.")
     
 #ALL TESTS
     
@@ -120,10 +154,11 @@ def RunAllSetsAndMapsTests():
     runAccountSharingDetectionTests()
     runMostSharedAccountTests()
     runMostFrequentOctetTests()
-
+    runMultiAccountCheatingTests()
+    
     print("------------------------------------------------------")
     print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE PASSED. |")
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    runMostFrequentOctetTests()
+    runMultiAccountCheatingTests()
