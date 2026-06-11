@@ -1655,7 +1655,7 @@ int main(int argc, const char *argv[]) {
         }
       }
     
-    cout << "ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED." << endl;
+    cout << "ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED..." << endl;
     
     return EXIT_SUCCESS;
 }
