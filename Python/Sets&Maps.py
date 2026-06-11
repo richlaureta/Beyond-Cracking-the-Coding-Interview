@@ -57,6 +57,25 @@ def multiAccountCheating(users: list[tuple]) -> bool:
     
     return False
 
+class DomainResolver:
+    #Problem 30.5 - Domain Resolver
+    
+    def __init__(self):
+        self.ipToDomainSetDictionary = defaultdict(set)
+        self.domainToSubDomainDictionary = defaultdict(set)
+    
+    def registerDomain(self, ip: str, domain: str):
+        self.ipToDomainSetDictionary[ip].add(domain)
+    def registerSubdomain(self, domain: str, subdomain: str):
+        self.domainToSubDomainDictionary[domain].add(subdomain)
+    def hasSubdomain(self, ip: str, domain: str, subdomain: str) -> bool:
+        if domain not in self.ipToDomainSetDictionary[ip]:
+            return False
+        if subdomain not in self.domainToSubDomainDictionary[domain]:
+            return False
+        
+        return True
+    
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -147,7 +166,64 @@ def runMultiAccountCheatingTests():
         assert got == want, f"\nmulti_account_cheating({users}): got: {got}, want: {want}\n"
     
     print("ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED.")
+
+def runDomainResolverTests():
+    tests = [
+        # Example 
+        (
+            [
+                ("register_domain", "192.168.1.1", "example.com"),
+                ("register_domain", "192.168.1.1", "example.org"),
+                ("register_domain", "192.168.1.2", "domain.com"),
+                ("register_subdomain", "example.com", "a"),
+                ("register_subdomain", "example.com", "b"),
+                ("has_subdomain", "192.168.1.1", "example.com", "a"),
+                ("has_subdomain", "192.168.1.1", "example.com", "c"),
+                ("has_subdomain", "127.0.0.1", "example.com", "a"),
+                ("has_subdomain", "192.168.1.1", "example.org", "a"),
+                ("has_subdomain", "192.168.1.2", "example.com", "a"),
+            ],
+            [None, None, None, None, None, True, False, False, False, False]
+        ),
+        # Additional test cases
+        (
+            [
+                ("register_domain", "1.1.1.1", "test.com"),
+                ("register_subdomain", "test.com", "www"),
+                ("has_subdomain", "1.1.1.1", "test.com", "www"),
+            ],
+            [None, None, True]
+        ),
+        (
+            [
+                ("register_domain", "1.1.1.1", "site1.com"),
+                ("register_domain", "2.2.2.2", "site2.com"),
+                ("register_subdomain", "site1.com", "www"),
+                ("register_subdomain", "site2.com", "www"),
+                ("has_subdomain", "1.1.1.1", "site1.com", "www"),  # Should be True
+                ("has_subdomain", "2.2.2.2", "site2.com", "www"),  # Should be True
+                ("has_subdomain", "1.1.1.1", "site2.com", "www"),  # Should be False (wrong IP)
+                ("has_subdomain", "2.2.2.2", "site1.com", "www"),  # Should be False (wrong IP)
+            ],
+            [None, None, None, None, True, True, False, False]
+        ),
+    ]
     
+    for operations, wants in tests:
+        resolver = DomainResolver()
+        for i, op in enumerate(operations):
+            if op[0] == "register_domain":
+                got = resolver.registerDomain(op[1], op[2])
+            elif op[0] == "register_subdomain":
+                got = resolver.registerSubdomain(op[1], op[2])
+            else:  # has_subdomain
+                got = resolver.hasSubdomain(op[1], op[2], op[3])
+            want = wants[i]
+            assert got == want, \
+                f"\n{op[0]}({', '.join(repr(x) for x in op[1:])}): got: {got}, want: {want}\n"
+    
+    print("ALL DOMAIN RESOLVER TESTS PROVIDED PASSED.")
+
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
@@ -161,4 +237,4 @@ def RunAllSetsAndMapsTests():
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    runMultiAccountCheatingTests()
+    runDomainResolverTests()
