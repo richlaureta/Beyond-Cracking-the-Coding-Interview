@@ -126,4 +126,6 @@ public:
     void registerSubdomain(string domain, string subdomain);
     bool hasSubdomain(string ip, string domain, string subdomain);
 };
+vector<vector<int>> findSquared(const vector<int> &arr);
+
 #endif // HEADER_HPP

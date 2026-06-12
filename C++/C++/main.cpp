@@ -1659,73 +1659,118 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.5 - Domain Resolver
     
-    struct Operation {
-        std::string op;
-        std::string arg1;
-        std::string arg2;
-        std::string arg3;
-        bool is_has_subdomain;
+//    struct Operation {
+//        std::string op;
+//        std::string arg1;
+//        std::string arg2;
+//        std::string arg3;
+//        bool is_has_subdomain;
+//      };
+//
+//      struct TestCase {
+//        std::vector<Operation> operations;
+//        std::vector<bool> wants;  // expected bool result for each operation
+//      };
+//
+//      std::vector<TestCase> tests = {
+//          // Example
+//          {{{"register_domain", "192.168.1.1", "example.com", "", false},
+//            {"register_domain", "192.168.1.1", "example.org", "", false},
+//            {"register_domain", "192.168.1.2", "domain.com", "", false},
+//            {"register_subdomain", "example.com", "a", "", false},
+//            {"register_subdomain", "example.com", "b", "", false},
+//            {"has_subdomain", "192.168.1.1", "example.com", "a", true},
+//            {"has_subdomain", "192.168.1.1", "example.com", "c", true},
+//            {"has_subdomain", "127.0.0.1", "example.com", "a", true},
+//            {"has_subdomain", "192.168.1.1", "example.org", "a", true},
+//            {"has_subdomain", "192.168.1.2", "example.com", "a", false}},
+//           {true, true, true, true, true, true, false, false, false, false}},
+//          // Additional test cases
+//          {{{"register_domain", "1.1.1.1", "test.com", "", false},
+//            {"register_subdomain", "test.com", "www", "", false},
+//            {"has_subdomain", "1.1.1.1", "test.com", "www", true}},
+//           {true, true, true}},
+//          {{{"register_domain", "1.1.1.1", "site1.com", "", false},
+//            {"register_domain", "2.2.2.2", "site2.com", "", false},
+//            {"register_subdomain", "site1.com", "www", "", false},
+//            {"register_subdomain", "site2.com", "www", "", false},
+//            {"has_subdomain", "1.1.1.1", "site1.com", "www", true},  // Should be true
+//            {"has_subdomain", "2.2.2.2", "site2.com", "www", true},  // Should be true
+//            {"has_subdomain", "1.1.1.1", "site2.com", "www", true},  // Should be false (wrong IP)
+//            {"has_subdomain", "2.2.2.2", "site1.com", "www", true}}, // Should be false (wrong IP)
+//           {true, true, true, true, true, true, false, false}}};
+//
+//      for (const auto& test : tests) {
+//        DomainResolver resolver;
+//        for (size_t i = 0; i < test.operations.size(); i++) {
+//          const auto& op = test.operations[i];
+//          bool want = test.wants[i];
+//
+//          if (!op.is_has_subdomain) {
+//            if (op.op == "register_domain") {
+//              resolver.registerDomain(op.arg1, op.arg2);
+//            } else {  // register_subdomain
+//              resolver.registerSubdomain(op.arg1, op.arg2);
+//            }
+//          } else {
+//            bool got = resolver.hasSubdomain(op.arg1, op.arg2, op.arg3);
+//            if (got != want) {
+//              throw std::runtime_error(
+//                  "\n" + op.op + "(\"" + op.arg1 + "\", \"" + op.arg2 + "\", \"" +
+//                  op.arg3 + "\"): got: " + (got ? "true" : "false") +
+//                  ", want: " + (want ? "true" : "false") + "\n");
+//            }
+//          }
+//        }
+//      }
+//    
+//    cout << "ALL DOMAIN RESOLVER TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.6 Find All Squares
+    
+    auto intVecToStr = [](const std::vector<int>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+      
+      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += intVecToStr(vec[i]);
+        }
+        result += "]";
+        return result;
       };
 
-      struct TestCase {
-        std::vector<Operation> operations;
-        std::vector<bool> wants;  // expected bool result for each operation
-      };
+      std::vector<std::pair<std::vector<int>, std::vector<std::vector<int>>>>
+          tests = {// Example
+                   {{4, 10, 3, 100, 5, 2, 10000}, {{5, 0}, {1, 3}, {3, 6}}},
+                   // Additional test cases
+                   {{}, {}},
+                   {{1}, {{0, 0}}},
+                   {{2, 4}, {{0, 1}}}};
 
-      std::vector<TestCase> tests = {
-          // Example
-          {{{"register_domain", "192.168.1.1", "example.com", "", false},
-            {"register_domain", "192.168.1.1", "example.org", "", false},
-            {"register_domain", "192.168.1.2", "domain.com", "", false},
-            {"register_subdomain", "example.com", "a", "", false},
-            {"register_subdomain", "example.com", "b", "", false},
-            {"has_subdomain", "192.168.1.1", "example.com", "a", true},
-            {"has_subdomain", "192.168.1.1", "example.com", "c", true},
-            {"has_subdomain", "127.0.0.1", "example.com", "a", true},
-            {"has_subdomain", "192.168.1.1", "example.org", "a", true},
-            {"has_subdomain", "192.168.1.2", "example.com", "a", false}},
-           {true, true, true, true, true, true, false, false, false, false}},
-          // Additional test cases
-          {{{"register_domain", "1.1.1.1", "test.com", "", false},
-            {"register_subdomain", "test.com", "www", "", false},
-            {"has_subdomain", "1.1.1.1", "test.com", "www", true}},
-           {true, true, true}},
-          {{{"register_domain", "1.1.1.1", "site1.com", "", false},
-            {"register_domain", "2.2.2.2", "site2.com", "", false},
-            {"register_subdomain", "site1.com", "www", "", false},
-            {"register_subdomain", "site2.com", "www", "", false},
-            {"has_subdomain", "1.1.1.1", "site1.com", "www", true},  // Should be true
-            {"has_subdomain", "2.2.2.2", "site2.com", "www", true},  // Should be true
-            {"has_subdomain", "1.1.1.1", "site2.com", "www", true},  // Should be false (wrong IP)
-            {"has_subdomain", "2.2.2.2", "site1.com", "www", true}}, // Should be false (wrong IP)
-           {true, true, true, true, true, true, false, false}}};
+      for (const auto& [arr, want] : tests) {
+        auto got = findSquared(arr);
+        // Sort both vectors to compare them regardless of order
+        std::sort(got.begin(), got.end());
+        auto want_sorted = want;
+        std::sort(want_sorted.begin(), want_sorted.end());
 
-      for (const auto& test : tests) {
-        DomainResolver resolver;
-        for (size_t i = 0; i < test.operations.size(); i++) {
-          const auto& op = test.operations[i];
-          bool want = test.wants[i];
-
-          if (!op.is_has_subdomain) {
-            if (op.op == "register_domain") {
-              resolver.registerDomain(op.arg1, op.arg2);
-            } else {  // register_subdomain
-              resolver.registerSubdomain(op.arg1, op.arg2);
-            }
-          } else {
-            bool got = resolver.hasSubdomain(op.arg1, op.arg2, op.arg3);
-            if (got != want) {
-              throw std::runtime_error(
-                  "\n" + op.op + "(\"" + op.arg1 + "\", \"" + op.arg2 + "\", \"" +
-                  op.arg3 + "\"): got: " + (got ? "true" : "false") +
-                  ", want: " + (want ? "true" : "false") + "\n");
-            }
-          }
+        if (got != want_sorted) {
+          throw std::runtime_error("\nfindSquared(" + intVecToStr(arr) + "): got: " +
+                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want_sorted) + "\n");
         }
       }
     
-    cout << "ALL DOMAIN RESOLVER TESTS PROVIDED PASSED." << endl;
-        
+    cout << "ALL FIND ALL SQUARES TESTS PROVIDED PASSED." << endl;
+    
     return EXIT_SUCCESS;
 }
 

@@ -114,3 +114,29 @@ bool DomainResolver::hasSubdomain(string ip, string domain, string subdomain)
         
     return true;
 }
+
+vector<vector<int>> findSquared(const vector<int> &arr)
+{
+    //Problem 30.6 Find All Sqaures
+    
+    unordered_map<int, int> numberIndex;
+    
+    for(int index0 = 0; index0 < (int) arr.size(); index0++)
+    {
+        numberIndex[arr[index0]] = index0;
+    }
+    
+    vector<vector<int>> squaredIndex;
+    
+    for(int index = 0; index < (int) arr.size(); index++)
+    {
+        int squaredNumber = arr[index] * arr[index];
+        
+        if(numberIndex.contains(squaredNumber))
+        {
+            squaredIndex.push_back({index, numberIndex[squaredNumber]});
+        }
+    }
+
+    return squaredIndex;
+}
