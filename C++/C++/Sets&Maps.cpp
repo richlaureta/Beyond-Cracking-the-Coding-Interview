@@ -119,24 +119,22 @@ vector<vector<int>> findSquared(const vector<int> &arr)
 {
     //Problem 30.6 Find All Sqaures
     
-    unordered_map<int, int> numberIndex;
-    
-    for(int index0 = 0; index0 < (int) arr.size(); index0++)
-    {
-        numberIndex[arr[index0]] = index0;
-    }
-    
+    unordered_map<double, int> numberIndexMap;
     vector<vector<int>> squaredIndex;
     
     for(int index = 0; index < (int) arr.size(); index++)
     {
-        int squaredNumber = arr[index] * arr[index];
+        numberIndexMap[arr[index] + 0.0] = index;
+
+        double number = (arr[index] * arr[index]) + 0.0;
+        double squareRoot = sqrt(arr[index]);
         
-        if(numberIndex.contains(squaredNumber))
-        {
-            squaredIndex.push_back({index, numberIndex[squaredNumber]});
-        }
+        if(numberIndexMap.contains(number)) squaredIndex.push_back({index, numberIndexMap[number]});
+        else if(numberIndexMap.contains(squareRoot)) squaredIndex.push_back({numberIndexMap[squareRoot], index});
+        
     }
+    
+
 
     return squaredIndex;
 }
