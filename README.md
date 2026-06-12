@@ -1,2 +1,2 @@
-The solutions in this repository are only tested against the test cases provided on the website. 
-They may or may not work for all cases.
+These solutions were tested only against the test cases provided on the website. 
+While I aimed for maximum efficiency and coverage, these solutions might not cover all edge cases.
