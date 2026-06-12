@@ -89,3 +89,28 @@ bool multiAccountCheating(const vector<pair<string, vector<string>>> &users)
     
     return false;
 }
+
+void DomainResolver::registerDomain(string ip, string domain)
+{
+    //Problem 30.5 - Domain Resolver
+    
+    ipToDomainSetMap[ip].insert(domain);
+}
+
+void DomainResolver::registerSubdomain(string domain, string subdomain)
+{
+    //Problem 30.5 - Domain Resolver
+    
+    domainToSubdomainSetMap[domain].insert(subdomain);
+}
+
+bool DomainResolver::hasSubdomain(string ip, string domain, string subdomain)
+{
+    //Problem 30.5 - Domain Resolver
+    
+    if(ipToDomainSetMap[ip].find(domain) == ipToDomainSetMap[ip].end()) return false;
+    
+    if(domainToSubdomainSetMap[domain].find(subdomain) == domainToSubdomainSetMap[domain].end()) return false;
+        
+    return true;
+}

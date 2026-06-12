@@ -116,5 +116,14 @@ string accountSharing(const vector<pair<string, string>> &connections);
 string mostSharedAccount(const vector<pair<string, string>> &connections);
 string mostFrequentOctet(const vector<string> &ips);
 bool multiAccountCheating(const vector<pair<string, vector<string>>> &users);
-
+class DomainResolver
+{
+private:
+    unordered_map<string, unordered_set<string>> ipToDomainSetMap;
+    unordered_map<string, unordered_set<string>> domainToSubdomainSetMap;
+public:
+    void registerDomain(string ip, string domain);
+    void registerSubdomain(string domain, string subdomain);
+    bool hasSubdomain(string ip, string domain, string subdomain);
+};
 #endif // HEADER_HPP

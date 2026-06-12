@@ -1619,44 +1619,113 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.4 - Multi-Account Cheating
     
-    std::vector<std::pair<
-          std::vector<std::pair<std::string, std::vector<std::string>>>, bool>>
-          tests = {
-              // Example
-              {{{"mike", {"203.0.3.10", "208.51.0.5", "52.0.2.5"}},
-                {"bob", {"111.0.0.10", "222.0.0.5", "222.0.0.8"}},
-                {"bob2", {"222.0.0.5", "222.0.0.8", "111.0.0.10"}}},
-               true},
-              // Additional test cases
-              {{}, false},
-              {{{"alice", {"1.1.1.1"}}}, false},
-              {{{"alice", {"1.1.1.1", "2.2.2.2"}}, {"bob", {"2.2.2.2", "1.1.1.1"}}},
-               true},
-              {{{"alice", {"1.1.1.1"}}, {"bob", {"2.2.2.2"}}}, false}};
+//    std::vector<std::pair<
+//          std::vector<std::pair<std::string, std::vector<std::string>>>, bool>>
+//          tests = {
+//              // Example
+//              {{{"mike", {"203.0.3.10", "208.51.0.5", "52.0.2.5"}},
+//                {"bob", {"111.0.0.10", "222.0.0.5", "222.0.0.8"}},
+//                {"bob2", {"222.0.0.5", "222.0.0.8", "111.0.0.10"}}},
+//               true},
+//              // Additional test cases
+//              {{}, false},
+//              {{{"alice", {"1.1.1.1"}}}, false},
+//              {{{"alice", {"1.1.1.1", "2.2.2.2"}}, {"bob", {"2.2.2.2", "1.1.1.1"}}},
+//               true},
+//              {{{"alice", {"1.1.1.1"}}, {"bob", {"2.2.2.2"}}}, false}};
+//
+//      for (const auto& [users, want] : tests) {
+//        auto got = multiAccountCheating(users);
+//        if (got != want) {
+//          std::string users_str = "[";
+//          for (size_t i = 0; i < users.size(); i++) {
+//            if (i > 0) users_str += ", ";
+//            users_str += "(\"" + users[i].first + "\", [";
+//            for (size_t j = 0; j < users[i].second.size(); j++) {
+//              if (j > 0) users_str += ", ";
+//              users_str += "\"" + users[i].second[j] + "\"";
+//            }
+//            users_str += "])";
+//          }
+//          users_str += "]";
+//
+//          throw std::runtime_error("\nmultiAccountCheating(" + users_str +
+//                                   "): got: " + (got ? "true" : "false") +
+//                                   ", want: " + (want ? "true" : "false") + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.5 - Domain Resolver
+    
+    struct Operation {
+        std::string op;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        bool is_has_subdomain;
+      };
 
-      for (const auto& [users, want] : tests) {
-        auto got = multiAccountCheating(users);
-        if (got != want) {
-          std::string users_str = "[";
-          for (size_t i = 0; i < users.size(); i++) {
-            if (i > 0) users_str += ", ";
-            users_str += "(\"" + users[i].first + "\", [";
-            for (size_t j = 0; j < users[i].second.size(); j++) {
-              if (j > 0) users_str += ", ";
-              users_str += "\"" + users[i].second[j] + "\"";
+      struct TestCase {
+        std::vector<Operation> operations;
+        std::vector<bool> wants;  // expected bool result for each operation
+      };
+
+      std::vector<TestCase> tests = {
+          // Example
+          {{{"register_domain", "192.168.1.1", "example.com", "", false},
+            {"register_domain", "192.168.1.1", "example.org", "", false},
+            {"register_domain", "192.168.1.2", "domain.com", "", false},
+            {"register_subdomain", "example.com", "a", "", false},
+            {"register_subdomain", "example.com", "b", "", false},
+            {"has_subdomain", "192.168.1.1", "example.com", "a", true},
+            {"has_subdomain", "192.168.1.1", "example.com", "c", true},
+            {"has_subdomain", "127.0.0.1", "example.com", "a", true},
+            {"has_subdomain", "192.168.1.1", "example.org", "a", true},
+            {"has_subdomain", "192.168.1.2", "example.com", "a", false}},
+           {true, true, true, true, true, true, false, false, false, false}},
+          // Additional test cases
+          {{{"register_domain", "1.1.1.1", "test.com", "", false},
+            {"register_subdomain", "test.com", "www", "", false},
+            {"has_subdomain", "1.1.1.1", "test.com", "www", true}},
+           {true, true, true}},
+          {{{"register_domain", "1.1.1.1", "site1.com", "", false},
+            {"register_domain", "2.2.2.2", "site2.com", "", false},
+            {"register_subdomain", "site1.com", "www", "", false},
+            {"register_subdomain", "site2.com", "www", "", false},
+            {"has_subdomain", "1.1.1.1", "site1.com", "www", true},  // Should be true
+            {"has_subdomain", "2.2.2.2", "site2.com", "www", true},  // Should be true
+            {"has_subdomain", "1.1.1.1", "site2.com", "www", true},  // Should be false (wrong IP)
+            {"has_subdomain", "2.2.2.2", "site1.com", "www", true}}, // Should be false (wrong IP)
+           {true, true, true, true, true, true, false, false}}};
+
+      for (const auto& test : tests) {
+        DomainResolver resolver;
+        for (size_t i = 0; i < test.operations.size(); i++) {
+          const auto& op = test.operations[i];
+          bool want = test.wants[i];
+
+          if (!op.is_has_subdomain) {
+            if (op.op == "register_domain") {
+              resolver.registerDomain(op.arg1, op.arg2);
+            } else {  // register_subdomain
+              resolver.registerSubdomain(op.arg1, op.arg2);
             }
-            users_str += "])";
+          } else {
+            bool got = resolver.hasSubdomain(op.arg1, op.arg2, op.arg3);
+            if (got != want) {
+              throw std::runtime_error(
+                  "\n" + op.op + "(\"" + op.arg1 + "\", \"" + op.arg2 + "\", \"" +
+                  op.arg3 + "\"): got: " + (got ? "true" : "false") +
+                  ", want: " + (want ? "true" : "false") + "\n");
+            }
           }
-          users_str += "]";
-
-          throw std::runtime_error("\nmultiAccountCheating(" + users_str +
-                                   "): got: " + (got ? "true" : "false") +
-                                   ", want: " + (want ? "true" : "false") + "\n");
         }
       }
     
-    cout << "ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED." << endl;
-    
+    cout << "ALL DOMAIN RESOLVER TESTS PROVIDED PASSED." << endl;
+        
     return EXIT_SUCCESS;
 }
 
