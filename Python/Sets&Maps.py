@@ -1,4 +1,5 @@
 from collections import defaultdict
+import math
 
 def accountSharing(connections) -> str:
     #Problem 30.1 - Account Sharing Detection
@@ -75,7 +76,25 @@ class DomainResolver:
             return False
         
         return True
+
+def findSquared(arr: list[int]) -> list[list[int]]:
+    #Problem 30.6 - Find All Squares
     
+    numberIndexDictionary = defaultdict(int)
+    squaredIndex = []
+    
+    for index in range(len(arr)):
+        numberIndexDictionary[arr[index] + 0.0] = index
+        number = (arr[index] * arr[index]) + 0.0
+        squareRoot = math.sqrt(arr[index])
+        
+        if number in numberIndexDictionary:
+            squaredIndex.append([index, numberIndexDictionary[number]])
+        elif squareRoot in numberIndexDictionary:
+            squaredIndex.append([numberIndexDictionary[squareRoot], index])
+    
+    return squaredIndex
+  
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -224,6 +243,25 @@ def runDomainResolverTests():
     
     print("ALL DOMAIN RESOLVER TESTS PROVIDED PASSED.")
 
+def runFindAllSquaresTests():
+    tests = [
+        # Example 
+        ([4, 10, 3, 100, 5, 2, 10000], [[5, 0], [1, 3], [3, 6]]),
+        # Additional test cases
+        ([], []),
+        ([1], [[0, 0]]),
+        ([2, 4], [[0, 1]]),
+    ]
+    
+    for arr, want in tests:
+        got = findSquared(arr)
+        # Sort both lists to compare them regardless of order
+        got.sort()
+        want.sort()
+        assert got == want, f"\nfind_squared({arr}): got: {got}, want: {want}\n"
+
+    print("ALL FIND ALL SQUARES TESTS PROVIDED PASSED.")
+    
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
@@ -231,10 +269,12 @@ def RunAllSetsAndMapsTests():
     runMostSharedAccountTests()
     runMostFrequentOctetTests()
     runMultiAccountCheatingTests()
+    runFindAllSquaresTests()
     
+    print()
     print("------------------------------------------------------")
     print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE PASSED. |")
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    runDomainResolverTests()
+    RunAllSetsAndMapsTests()

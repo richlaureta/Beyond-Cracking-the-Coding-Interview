@@ -117,7 +117,7 @@ bool DomainResolver::hasSubdomain(string ip, string domain, string subdomain)
 
 vector<vector<int>> findSquared(const vector<int> &arr)
 {
-    //Problem 30.6 Find All Sqaures
+    //Problem 30.6 - Find All Squares
     
     unordered_map<double, int> numberIndexMap;
     vector<vector<int>> squaredIndex;
@@ -134,7 +134,5 @@ vector<vector<int>> findSquared(const vector<int> &arr)
         
     }
     
-
-
     return squaredIndex;
 }
