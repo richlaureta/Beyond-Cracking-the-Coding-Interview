@@ -108,7 +108,7 @@ class Checker:
         if len(word2) <= len(self.word) or len(word2) > len(self.word) + 1:
             return False
         
-        wordDictionaryFrequency1 = copy.deepcopy(self.wordDictionaryFrequency)
+        wordDictionaryFrequency1 = self.wordDictionaryFrequency.copy()
         
         wordLength = len(self.word)
         exactlyOneCount = 0
