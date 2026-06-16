@@ -1,5 +1,7 @@
 from collections import defaultdict
 import math
+import copy
+from collections import Counter
 
 def accountSharing(connections) -> str:
     #Problem 30.1 - Account Sharing Detection
@@ -94,7 +96,45 @@ def findSquared(arr: list[int]) -> list[list[int]]:
             squaredIndex.append([numberIndexDictionary[squareRoot], index])
     
     return squaredIndex
-  
+
+class Checker:
+    #Problem 30.7 - Word Expansion Class
+    
+    def __init__(self, word1:str):
+        self.word = word1        
+        self.wordDictionaryFrequency = Counter(self.word)
+        
+    def expandsInto(self, word2: str) -> bool:
+        if len(word2) <= len(self.word) or len(word2) > len(self.word) + 1:
+            return False
+        
+        wordDictionaryFrequency1 = copy.deepcopy(self.wordDictionaryFrequency)
+        
+        wordLength = len(self.word)
+        exactlyOneCount = 0
+        
+        for letter1 in word2:
+            if letter1 not in wordDictionaryFrequency1:
+                exactlyOneCount += 1
+                if exactlyOneCount > 1:
+                    return False
+                continue
+            
+            wordDictionaryFrequency1[letter1] -= 1
+            
+            if wordDictionaryFrequency1[letter1] == -1:
+                exactlyOneCount += 1
+                if exactlyOneCount > 1:
+                    return False
+                continue
+            
+            wordLength -= 1
+        
+        if exactlyOneCount == 1 and wordLength == 0:
+            return True
+        
+        return False
+ 
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -261,7 +301,58 @@ def runFindAllSquaresTests():
         assert got == want, f"\nfind_squared({arr}): got: {got}, want: {want}\n"
 
     print("ALL FIND ALL SQUARES TESTS PROVIDED PASSED.")
+
+def runWordExpansionClassTests():
+    tests = [
+        # Example 1 
+        (
+            ("tea", [
+                ("tea", False),
+                ("team", True),
+                ("seam", False),
+                ]
+             )
+        ),        
+        # Example 2 
+        (
+            ("on", [
+                ("nooo", False),
+                ("not", True),
+                ("now", True),
+                ]
+            )
+        ),
+        # Additional test cases
+        (
+            ("", [
+                ("a", True),
+                ("", False),
+                ("ab", False),
+                ]
+            )
+        ),
+        
+        (
+            ("xyz", [
+                ("wxyz", True),
+                ("xyzw", True),
+                ("xyza", True),
+                ("xyz", False),
+                ]
+             )
+        ),
+    ]
     
+    for s, checks in tests:
+        checker = Checker(s)
+        for s2, want in checks:
+            got = checker.expandsInto(s2)
+            assert got == want, \
+                f"\nChecker({repr(s)}).expandsInto({repr(s2)}): got: {got}, want: {want}\n"
+    
+    print("ALL WORD EXPANSION CLASS TESTS PROVIDED PASSED.")
+    
+
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
@@ -270,6 +361,7 @@ def RunAllSetsAndMapsTests():
     runMostFrequentOctetTests()
     runMultiAccountCheatingTests()
     runFindAllSquaresTests()
+    runWordExpansionClassTests()
     
     print()
     print("------------------------------------------------------")
@@ -277,4 +369,4 @@ def RunAllSetsAndMapsTests():
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    RunAllSetsAndMapsTests()
+    runWordExpansionClassTests()
