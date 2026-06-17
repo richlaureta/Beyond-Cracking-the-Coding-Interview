@@ -128,5 +128,16 @@ public:
     bool hasSubdomain(string ip, string domain, string subdomain);
 };
 vector<vector<int>> findSquared(const vector<int> &arr);
+class Checker
+{
+private:
+    string word;
+    unordered_map<char, int> wordMapFrequency;
+    
+public:
+    Checker(const string &word1);
+    bool expandsInto(const string &word2);
+    
+};
 
 #endif // HEADER_HPP

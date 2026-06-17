@@ -136,3 +136,54 @@ vector<vector<int>> findSquared(const vector<int> &arr)
     
     return squaredIndex;
 }
+
+Checker::Checker(const string &word1)
+{
+    //Problem 30.7 - Word Expansion Class
+    
+    this->word = word1;
+    
+    for(char letter: word1)
+    {
+        wordMapFrequency[letter]++;
+    }
+}
+
+bool Checker::expandsInto(const string &word2)
+{
+    //Problem 30.7 - Word Expansion Class
+    
+    if((int) word2.length() <= (int) this->word.length() or (int) word2.length() > ((int) word.length()) + 1) return false;
+    
+    unordered_map<char, int> wordFrequencyMap1;
+    wordFrequencyMap1.reserve(this->wordMapFrequency.size());
+    wordFrequencyMap1 = this->wordMapFrequency;
+    
+    int wordLength = (int) word.length();
+    int exactlyOneCount = 0;
+    
+    for(char letter1: word2)
+    {
+        if(wordFrequencyMap1.find(letter1) == wordFrequencyMap1.end())
+        {
+            exactlyOneCount++;
+            if(exactlyOneCount > 1) return false;
+            continue;
+        }
+        
+        wordFrequencyMap1[letter1]--;
+        
+        if(wordFrequencyMap1[letter1] == -1)
+        {
+            exactlyOneCount++;
+            if(exactlyOneCount > 1) return false;
+            continue;
+        }
+        
+        wordLength--;
+    }
+    
+    if(exactlyOneCount == 1 and wordLength == 0) return true;
+    
+    return false;
+}

@@ -1728,48 +1728,75 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.6 Find All Squares
     
-    auto intVecToStr = [](const std::vector<int>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-      
-      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += intVecToStr(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
+//    auto intVecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<int>, std::vector<std::vector<int>>>>
+//          tests = {// Example
+//                   {{4, 10, 3, 100, 5, 2, 10000}, {{5, 0}, {1, 3}, {3, 6}}},
+//                   // Additional test cases
+//                   {{}, {}},
+//                   {{1}, {{0, 0}}},
+//                   {{2, 4}, {{0, 1}}}};
+//
+//      for (const auto& [arr, want] : tests) {
+//        auto got = findSquared(arr);
+//        // Sort both vectors to compare them regardless of order
+//        std::sort(got.begin(), got.end());
+//        auto want_sorted = want;
+//        std::sort(want_sorted.begin(), want_sorted.end());
+//
+//        if (got != want_sorted) {
+//          throw std::runtime_error("\nfindSquared(" + intVecToStr(arr) + "): got: " +
+//                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want_sorted) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL FIND ALL SQUARES TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.7 - Word Expansion Class
+    
+    std::vector<std::pair<std::string, std::vector<std::pair<std::string, bool>>>>
+          tests = {
+              // Example 1
+              {"tea", {{"tea", false}, {"team", true}, {"seam", false}}},
+              // Example 2
+              {"on", {{"nooo", false}, {"not", true}, {"now", true}}},
+              // Additional test cases
+              {"", {{"a", true}, {"", false}, {"ab", false}}},
+              {"xyz",
+               {{"wxyz", true}, {"xyzw", true}, {"xyza", true}, {"xyz", false}}}};
 
-      std::vector<std::pair<std::vector<int>, std::vector<std::vector<int>>>>
-          tests = {// Example
-                   {{4, 10, 3, 100, 5, 2, 10000}, {{5, 0}, {1, 3}, {3, 6}}},
-                   // Additional test cases
-                   {{}, {}},
-                   {{1}, {{0, 0}}},
-                   {{2, 4}, {{0, 1}}}};
-
-      for (const auto& [arr, want] : tests) {
-        auto got = findSquared(arr);
-        // Sort both vectors to compare them regardless of order
-        std::sort(got.begin(), got.end());
-        auto want_sorted = want;
-        std::sort(want_sorted.begin(), want_sorted.end());
-
-        if (got != want_sorted) {
-          throw std::runtime_error("\nfindSquared(" + intVecToStr(arr) + "): got: " +
-                                   intVecVecToStr(got) + ", want: " + intVecVecToStr(want_sorted) + "\n");
+      for (const auto& [s, checks] : tests) {
+        Checker checker(s);
+        for (const auto& [s2, want] : checks) {
+          bool got = checker.expandsInto(s2);
+          if (got != want) {
+            throw std::runtime_error("\nChecker(\"" + s + "\").expandsInto(\"" +
+                                     s2 + "\"): got: " + (got ? "true" : "false") +
+                                     ", want: " + (want ? "true" : "false") + "\n");
+          }
         }
       }
     
-    cout << "ALL FIND ALL SQUARES TESTS PROVIDED PASSED." << endl;
+    cout << "ALL WORD EXPANSION CLASS TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
