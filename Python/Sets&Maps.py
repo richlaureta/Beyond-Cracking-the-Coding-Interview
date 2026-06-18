@@ -121,7 +121,7 @@ class Checker:
                 continue
             
             wordDictionaryFrequency1[letter1] -= 1
-            
+    
             if wordDictionaryFrequency1[letter1] == -1:
                 exactlyOneCount += 1
                 if exactlyOneCount > 1:
@@ -134,7 +134,47 @@ class Checker:
             return True
         
         return False
- 
+
+def suspectStudents(answers: list[str], m: int, students: list[tuple]) -> list[list[int]]:
+    #Problem 30.8 - Cheater Detection
+    
+    if len(students) == 0 or m == 1 or len(answers) == 0:
+        return []
+    
+    deskToTupleDictionary = defaultdict(tuple)
+    deskToTupleDictionary[students[0][1]] = (students[0][0], students[0][2])
+    
+    suspectedStudentList = []
+    
+    for student in students[1:]:
+        if student[1] - 1 in deskToTupleDictionary and (student[1] - 1) % m != 0:
+            wrongAnswerIndexList = []
+            for index in range(len(answers)):
+                if answers[index] != student[2][index]:
+                    wrongAnswerIndexList.append(index)
+            
+            for index1 in range(len(wrongAnswerIndexList)):
+                if (student[2][wrongAnswerIndexList[index1]] == 
+                    deskToTupleDictionary[student[1] - 1][1][wrongAnswerIndexList[index1]]):
+                    suspectedStudentList.append([deskToTupleDictionary[student[1] - 1][0],student[0]])
+                    break
+                        
+        if student[1] + 1 in deskToTupleDictionary and (student[1]  + 1) % m != 1:
+            wrongAnswerIndexList = []
+            for index in range(len(answers)):
+                if answers[index] != student[2][index]:
+                    wrongAnswerIndexList.append(index)
+            
+            for index1 in range(len(wrongAnswerIndexList)):
+                if (student[2][wrongAnswerIndexList[index1]] == 
+                    deskToTupleDictionary[student[1] + 1][1][wrongAnswerIndexList[index1]]):
+                    suspectedStudentList.append([deskToTupleDictionary[student[1] + 1][0], student[0]])
+                    break
+            
+        deskToTupleDictionary[student[1]] = (student[0], student[2])
+    
+    return suspectedStudentList
+                
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -352,7 +392,60 @@ def runWordExpansionClassTests():
     
     print("ALL WORD EXPANSION CLASS TESTS PROVIDED PASSED.")
     
+def runCheaterDetectionTests():
+    tests = [
+        # Example 
+        (
+            ['a', 'b', 'c', 'c'],
+            5,
+            [
+                (4, 10, ['a', 'b', 'c', 'd']),
+                (1, 6, ['a', 'b', 'c', 'd']),
+                (3, 8, ['a', 'b', 'd', 'd']),
+                (5, 11, ['a', 'b', 'c', 'd']),
+                (9, 7, ['a', 'b', 'c', 'd']),
+                (6, 16, ['a', 'b', 'd', 'd']),
+            ],
+            [[1, 9], [3, 9]]
+        ),
+        # Additional test cases
+        (
+            ['a', 'b'],
+            2,
+            [
+                (1, 1, ['a', 'b']),
+                (2, 2, ['a', 'b']),
+            ],
+            []  # Perfect scores are not suspicious
+        ),
+        (
+            ['a', 'b'],
+            2,
+            [
+                (1, 1, ['b', 'b']),
+                (2, 2, ['b', 'b']),
+            ],
+            [[1, 2]]
+        ),
+        (
+            ['a', 'b'],
+            2,
+            [
+                (1, 1, ['b', 'b']),
+                (2, 3, ['b', 'b']),
+            ],
+            []  # Different rows
+        ),
+    ]
 
+    for answers, m, students, want in tests:
+        got = suspectStudents(answers, m, students)
+        # Sort both lists to compare them regardless of order
+        assert got == want, \
+            f"\nsuspect_students({answers}, {m}, {students}): got: {got}, want: {want}\n"
+            
+    print("ALL CHEATER DETECTION TESTS PROVIDED PASSED.")
+    
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
@@ -362,6 +455,7 @@ def RunAllSetsAndMapsTests():
     runMultiAccountCheatingTests()
     runFindAllSquaresTests()
     runWordExpansionClassTests()
+    runCheaterDetectionTests()
     
     print()
     print("------------------------------------------------------")
@@ -369,4 +463,4 @@ def RunAllSetsAndMapsTests():
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    RunAllSetsAndMapsTests()
+    runCheaterDetectionTests()
