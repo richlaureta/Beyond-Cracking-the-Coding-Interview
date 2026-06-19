@@ -139,5 +139,5 @@ public:
     bool expandsInto(const string &word2);
     
 };
-
+vector<vector<int>> suspectStudents();
 #endif // HEADER_HPP
