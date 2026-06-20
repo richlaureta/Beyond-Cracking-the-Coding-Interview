@@ -12,6 +12,8 @@
 #include <stdexcept>
 #include <unordered_set>
 #include <cmath>
+#include <tuple>
+#include <vector>
 
 using namespace std;
 
@@ -139,5 +141,12 @@ public:
     bool expandsInto(const string &word2);
     
 };
-vector<vector<int>> suspectStudents();
+struct Student
+{
+    int ID;
+    int desk;
+    vector<char> answers;
+};
+vector<vector<int>> suspectStudents(const vector<char> &answers, int m, const vector<Student> &students);
+
 #endif // HEADER_HPP

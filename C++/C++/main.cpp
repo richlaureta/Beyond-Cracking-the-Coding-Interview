@@ -1773,30 +1773,86 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.7 - Word Expansion Class
     
-    std::vector<std::pair<std::string, std::vector<std::pair<std::string, bool>>>>
+//    std::vector<std::pair<std::string, std::vector<std::pair<std::string, bool>>>>
+//          tests = {
+//              // Example 1
+//              {"tea", {{"tea", false}, {"team", true}, {"seam", false}}},
+//              // Example 2
+//              {"on", {{"nooo", false}, {"not", true}, {"now", true}}},
+//              // Additional test cases
+//              {"", {{"a", true}, {"", false}, {"ab", false}}},
+//              {"xyz",
+//               {{"wxyz", true}, {"xyzw", true}, {"xyza", true}, {"xyz", false}}}};
+//
+//      for (const auto& [s, checks] : tests) {
+//        Checker checker(s);
+//        for (const auto& [s2, want] : checks) {
+//          bool got = checker.expandsInto(s2);
+//          if (got != want) {
+//            throw std::runtime_error("\nChecker(\"" + s + "\").expandsInto(\"" +
+//                                     s2 + "\"): got: " + (got ? "true" : "false") +
+//                                     ", want: " + (want ? "true" : "false") + "\n");
+//          }
+//        }
+//      }
+//    
+//    cout << "ALL WORD EXPANSION CLASS TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.8 - Cheater Detection
+    
+    std::vector<std::tuple<std::vector<char>, int, std::vector<Student>,
+                             std::vector<std::vector<int>>>>
           tests = {
-              // Example 1
-              {"tea", {{"tea", false}, {"team", true}, {"seam", false}}},
-              // Example 2
-              {"on", {{"nooo", false}, {"not", true}, {"now", true}}},
+              // Example
+              {{'a', 'b', 'c', 'c'},
+               5,
+               {Student{4, 10, {'a', 'b', 'c', 'd'}},
+                Student{1, 6, {'a', 'b', 'c', 'd'}},
+                Student{3, 8, {'a', 'b', 'd', 'd'}},
+                Student{5, 11, {'a', 'b', 'c', 'd'}},
+                Student{9, 7, {'a', 'b', 'c', 'd'}},
+                Student{6, 16, {'a', 'b', 'd', 'd'}}},
+                  {{1, 9}, {3, 9}}},
               // Additional test cases
-              {"", {{"a", true}, {"", false}, {"ab", false}}},
-              {"xyz",
-               {{"wxyz", true}, {"xyzw", true}, {"xyza", true}, {"xyz", false}}}};
+              {{'a', 'b'},
+               2,
+               {Student{1, 1, {'a', 'b'}}, Student{2, 2, {'a', 'b'}}},
+               {}},  // Perfect scores are not suspicious
+              {{'a', 'b'},
+               2,
+               {Student{1, 1, {'b', 'b'}}, Student{2, 2, {'b', 'b'}}},
+               {{1, 2}}},
+              {{'a', 'b'},
+               2,
+               {Student{1, 1, {'b', 'b'}}, Student{2, 3, {'b', 'b'}}},
+               {}}  // Different rows
+          };
 
-      for (const auto& [s, checks] : tests) {
-        Checker checker(s);
-        for (const auto& [s2, want] : checks) {
-          bool got = checker.expandsInto(s2);
-          if (got != want) {
-            throw std::runtime_error("\nChecker(\"" + s + "\").expandsInto(\"" +
-                                     s2 + "\"): got: " + (got ? "true" : "false") +
-                                     ", want: " + (want ? "true" : "false") + "\n");
+      for (const auto& [answers, m, students, want] : tests) {
+        auto got = suspectStudents(answers, m, students);
+        if (got != want) {
+          std::string students_str = "[";
+          for (size_t i = 0; i < students.size(); i++) {
+            if (i > 0) students_str += ", ";
+            students_str += "[" + std::to_string(students[i].ID) + ", " +
+                            std::to_string(students[i].desk) + ", [";
+            const auto& student_answers = students[i].answers;
+            for (size_t j = 0; j < student_answers.size(); j++) {
+              if (j > 0) students_str += ", ";
+              students_str += "'" + std::string(1, student_answers[j]) + "'";
+            }
+            students_str += "]]";
           }
+          students_str += "]";
+
+          throw std::runtime_error("\nsuspect_students(" + students_str + ", " +
+                                   std::to_string(m) +
+                                   "): got: " + std::to_string(got.size()) +
+                                   ", want: " + std::to_string(want.size()) + "\n");
         }
       }
     
-    cout << "ALL WORD EXPANSION CLASS TESTS PROVIDED PASSED." << endl;
+    cout << "ALL CHEATER DETECTION TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

@@ -187,3 +187,61 @@ bool Checker::expandsInto(const string &word2)
     
     return false;
 }
+
+vector<vector<int>> suspectStudents(const vector<char> &answers, int m, const vector<Student> &students)
+{
+    //Problem 30.8 - Cheater Detection
+    
+    if((int) students.size() == 0 or m == 1 or (int) answers.size() == 0) return {};
+
+    unordered_map<int, tuple<int, vector<char>>> deskToTupleMap;
+    
+    vector<vector<int>> suspectedPairsVector;
+    
+    for(Student student: students)
+    {
+        if(deskToTupleMap.find(student.desk - 1) != deskToTupleMap.end() and (student.desk - 1) % m != 0)
+        {
+            vector<int> wrongAnswerIndexVector = {};
+            
+            for(int index = 0; index < (int) answers.size(); index++)
+            {
+                if(answers[index] != student.answers[index]) wrongAnswerIndexVector.push_back(index);
+            }
+            
+            for(int index1 = 0; index1 < (int) wrongAnswerIndexVector.size(); index1++)
+            {
+                if(student.answers[wrongAnswerIndexVector[index1]] ==
+                   get<1>(deskToTupleMap[student.desk - 1])[wrongAnswerIndexVector[index1]])
+                {
+                    suspectedPairsVector.push_back({get<0>(deskToTupleMap[student.desk - 1]), student.ID});
+                    break;
+                }
+            }
+        }
+        
+        if(deskToTupleMap.find(student.desk + 1) != deskToTupleMap.end() and (student.desk + 1) % m != 1)
+        {
+            vector<int> wrongAnswerIndexVector = {};
+            
+            for(int index = 0; index < (int) answers.size(); index++)
+            {
+                if(answers[index] != student.answers[index]) wrongAnswerIndexVector.push_back(index);
+            }
+            
+            for(int index1 = 0; index1 < (int) wrongAnswerIndexVector.size(); index1++)
+            {
+                if(student.answers[wrongAnswerIndexVector[index1]] ==
+                   get<1>(deskToTupleMap[student.desk + 1])[wrongAnswerIndexVector[index1]])
+                {
+                    suspectedPairsVector.push_back({get<0>(deskToTupleMap[student.desk + 1]), student.ID});
+                    break;
+                }
+            }
+        }
+        
+        deskToTupleMap[student.desk] = {student.ID, student.answers};
+    }
+    
+    return suspectedPairsVector;
+}
