@@ -174,7 +174,29 @@ def suspectStudents(answers: list[str], m: int, students: list[tuple]) -> list[l
         deskToTupleDictionary[student[1]] = (student[0], student[2])
     
     return suspectedStudentList
-                
+
+def alphabeticSumProduct(words: list[str], target: int) -> bool:
+    #Problem 30.9 - Product of Alphabetical Sums
+    
+    if len(words) == 0:
+        return False
+    
+    targetMultiplesSet = set()
+    
+    for word in words:
+        total = 0
+        for letter in word:
+            total += ord(letter) - 96
+            
+        if target % total == 0:
+            targetMultiplesSet.add(total)
+    
+    for number0 in targetMultiplesSet:
+        for number1 in targetMultiplesSet:
+            if (target / (number0 * number1)) in targetMultiplesSet:
+                return True
+    
+    return False
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -445,7 +467,27 @@ def runCheaterDetectionTests():
             f"\nsuspect_students({answers}, {m}, {students}): got: {got}, want: {want}\n"
             
     print("ALL CHEATER DETECTION TESTS PROVIDED PASSED.")
+
+def runProductOfAlphabeticalSumsTests():
+    tests = [
+        # Example 1 
+        (["abc", "fg", "hij", "klm", "nop", "qrs", "vwx"], 1620, True),
+        # Example 2 
+        (["a", "b"], 2, True),
+        # Additional test cases
+        ([], 1, False),
+        (["a"], 1, True),
+        (["a", "b", "c"], 6, True),
+        (["a", "b", "c"], 7, False),
+    ]
     
+    for words, target, want in tests:
+        got = alphabeticSumProduct(words, target)
+        assert got == want, \
+            f"\nalphabetic_sum_product({words}, {target}): got: {got}, want: {want}\n"
+    
+    print("ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED PASSED.")
+   
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
@@ -456,6 +498,7 @@ def RunAllSetsAndMapsTests():
     runFindAllSquaresTests()
     runWordExpansionClassTests()
     runCheaterDetectionTests()
+    runProductOfAlphabeticalSumsTests()
     
     print()
     print("------------------------------------------------------")
