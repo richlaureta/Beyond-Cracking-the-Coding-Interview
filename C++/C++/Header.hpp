@@ -148,5 +148,6 @@ struct Student
     vector<char> answers;
 };
 vector<vector<int>> suspectStudents(const vector<char> &answers, int m, const vector<Student> &students);
+bool alphabeticSumProduct(const vector<string> &words, int target);
 
 #endif // HEADER_HPP

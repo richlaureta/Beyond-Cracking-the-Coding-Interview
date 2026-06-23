@@ -1800,59 +1800,91 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.8 - Cheater Detection
     
-    std::vector<std::tuple<std::vector<char>, int, std::vector<Student>,
-                             std::vector<std::vector<int>>>>
-          tests = {
-              // Example
-              {{'a', 'b', 'c', 'c'},
-               5,
-               {Student{4, 10, {'a', 'b', 'c', 'd'}},
-                Student{1, 6, {'a', 'b', 'c', 'd'}},
-                Student{3, 8, {'a', 'b', 'd', 'd'}},
-                Student{5, 11, {'a', 'b', 'c', 'd'}},
-                Student{9, 7, {'a', 'b', 'c', 'd'}},
-                Student{6, 16, {'a', 'b', 'd', 'd'}}},
-                  {{1, 9}, {3, 9}}},
-              // Additional test cases
-              {{'a', 'b'},
-               2,
-               {Student{1, 1, {'a', 'b'}}, Student{2, 2, {'a', 'b'}}},
-               {}},  // Perfect scores are not suspicious
-              {{'a', 'b'},
-               2,
-               {Student{1, 1, {'b', 'b'}}, Student{2, 2, {'b', 'b'}}},
-               {{1, 2}}},
-              {{'a', 'b'},
-               2,
-               {Student{1, 1, {'b', 'b'}}, Student{2, 3, {'b', 'b'}}},
-               {}}  // Different rows
-          };
+//    std::vector<std::tuple<std::vector<char>, int, std::vector<Student>,
+//                             std::vector<std::vector<int>>>>
+//          tests = {
+//              // Example
+//              {{'a', 'b', 'c', 'c'},
+//               5,
+//               {Student{4, 10, {'a', 'b', 'c', 'd'}},
+//                Student{1, 6, {'a', 'b', 'c', 'd'}},
+//                Student{3, 8, {'a', 'b', 'd', 'd'}},
+//                Student{5, 11, {'a', 'b', 'c', 'd'}},
+//                Student{9, 7, {'a', 'b', 'c', 'd'}},
+//                Student{6, 16, {'a', 'b', 'd', 'd'}}},
+//                  {{1, 9}, {3, 9}}},
+//              // Additional test cases
+//              {{'a', 'b'},
+//               2,
+//               {Student{1, 1, {'a', 'b'}}, Student{2, 2, {'a', 'b'}}},
+//               {}},  // Perfect scores are not suspicious
+//              {{'a', 'b'},
+//               2,
+//               {Student{1, 1, {'b', 'b'}}, Student{2, 2, {'b', 'b'}}},
+//               {{1, 2}}},
+//              {{'a', 'b'},
+//               2,
+//               {Student{1, 1, {'b', 'b'}}, Student{2, 3, {'b', 'b'}}},
+//               {}}  // Different rows
+//          };
+//
+//      for (const auto& [answers, m, students, want] : tests) {
+//        auto got = suspectStudents(answers, m, students);
+//        if (got != want) {
+//          std::string students_str = "[";
+//          for (size_t i = 0; i < students.size(); i++) {
+//            if (i > 0) students_str += ", ";
+//            students_str += "[" + std::to_string(students[i].ID) + ", " +
+//                            std::to_string(students[i].desk) + ", [";
+//            const auto& student_answers = students[i].answers;
+//            for (size_t j = 0; j < student_answers.size(); j++) {
+//              if (j > 0) students_str += ", ";
+//              students_str += "'" + std::string(1, student_answers[j]) + "'";
+//            }
+//            students_str += "]]";
+//          }
+//          students_str += "]";
+//
+//          throw std::runtime_error("\nsuspect_students(" + students_str + ", " +
+//                                   std::to_string(m) +
+//                                   "): got: " + std::to_string(got.size()) +
+//                                   ", want: " + std::to_string(want.size()) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL CHEATER DETECTION TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.9 - Product of Alphabetical Sums
+    
+    std::vector<std::tuple<std::vector<std::string>, int, bool>> tests = {
+          // Example 1
+          {{"abc", "fg", "hij", "klm", "nop", "qrs", "vwx"}, 1620, true},
+          // Example 2
+          {{"a", "b"}, 2, true},
+          // Additional test cases
+          {{}, 1, false},
+          {{"a"}, 1, true},
+          {{"a", "b", "c"}, 6, true},
+          {{"a", "b", "c"}, 7, false}};
 
-      for (const auto& [answers, m, students, want] : tests) {
-        auto got = suspectStudents(answers, m, students);
+      for (const auto& [words, target, want] : tests) {
+        auto got = alphabeticSumProduct(words, target);
         if (got != want) {
-          std::string students_str = "[";
-          for (size_t i = 0; i < students.size(); i++) {
-            if (i > 0) students_str += ", ";
-            students_str += "[" + std::to_string(students[i].ID) + ", " +
-                            std::to_string(students[i].desk) + ", [";
-            const auto& student_answers = students[i].answers;
-            for (size_t j = 0; j < student_answers.size(); j++) {
-              if (j > 0) students_str += ", ";
-              students_str += "'" + std::string(1, student_answers[j]) + "'";
-            }
-            students_str += "]]";
+          std::string words_str = "[";
+          for (size_t i = 0; i < words.size(); i++) {
+            if (i > 0) words_str += ", ";
+            words_str += "\"" + words[i] + "\"";
           }
-          students_str += "]";
+          words_str += "]";
 
-          throw std::runtime_error("\nsuspect_students(" + students_str + ", " +
-                                   std::to_string(m) +
-                                   "): got: " + std::to_string(got.size()) +
-                                   ", want: " + std::to_string(want.size()) + "\n");
+          throw std::runtime_error("\nalphabeticSumProduct(" + words_str + ", " +
+                                   std::to_string(target) +
+                                   "): got: " + (got ? "true" : "false") +
+                                   ", want: " + (want ? "true" : "false") + "\n");
         }
       }
     
-    cout << "ALL CHEATER DETECTION TESTS PROVIDED PASSED." << endl;
+    cout << "ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

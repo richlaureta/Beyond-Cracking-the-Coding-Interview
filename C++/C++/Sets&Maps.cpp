@@ -245,3 +245,30 @@ vector<vector<int>> suspectStudents(const vector<char> &answers, int m, const ve
     
     return suspectedPairsVector;
 }
+
+bool alphabeticSumProduct(const vector<string> &words, int target)
+{
+    //Problem 30.9 - Product of Alphabetical Sums
+    
+    if((int) words.size() == 0) return false;
+    
+    unordered_set<double> targetMultiplesSet = {};
+    
+    for(string word: words)
+    {
+        int total = 0;
+        for(char letter: word) total += static_cast<int>(letter) - 96 + 0.0;
+        
+        if(target % total == 0) targetMultiplesSet.insert(total);
+    }
+    
+    for(int number0: targetMultiplesSet)
+    {
+        for(int number1: targetMultiplesSet)
+        {
+            if(targetMultiplesSet.find(target / (number0 * number1)) != targetMultiplesSet.end()) return true;
+        }
+    }
+    
+    return false;
+}

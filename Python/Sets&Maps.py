@@ -193,10 +193,11 @@ def alphabeticSumProduct(words: list[str], target: int) -> bool:
     
     for number0 in targetMultiplesSet:
         for number1 in targetMultiplesSet:
-            if (target / (number0 * number1)) in targetMultiplesSet:
+            if target / (number0 * number1) in targetMultiplesSet:
                 return True
     
     return False
+
 #TESTS
 
 def runAccountSharingDetectionTests():
