@@ -198,6 +198,78 @@ def alphabeticSumProduct(words: list[str], target: int) -> bool:
     
     return False
 
+def findAnomalies(log: list[tuple]) -> list[int]:
+    #Problem 30.10 - Action Log Anomalies
+    
+    anomalyTicketSet = set()
+    ticketToAgentDictionary = defaultdict(str)
+    anomalyTicketsList = []
+    stillOpenTicketSet = set()
+    openedAndClosedTicketSet = set()
+    agentToTicketDictionary = defaultdict(int)
+    agentsNeedToCloseSet = set()
+    
+    for entry in log:
+        if entry[2] in anomalyTicketSet:
+            if (entry[0] in agentsNeedToCloseSet and 
+                entry[2] != agentToTicketDictionary[entry[0]] and 
+                agentToTicketDictionary[entry[0]] not in anomalyTicketSet):
+                anomalyTicketSet.add(agentToTicketDictionary[entry[0]])
+                anomalyTicketsList.append(agentToTicketDictionary[entry[0]])
+                
+            if entry[1] == "open" and entry[0] not in agentsNeedToCloseSet:
+                agentsNeedToCloseSet.add(entry[0])
+                stillOpenTicketSet.add(entry[2])
+                agentToTicketDictionary[entry[0]] = entry[2]
+                ticketToAgentDictionary[entry[2]] = entry[0]
+            
+                
+            continue
+        
+        if entry[2] in openedAndClosedTicketSet and entry[2] not in anomalyTicketSet:
+            anomalyTicketSet.add(entry[2])
+            anomalyTicketsList.append(entry[2])
+            continue
+        
+        if ticketToAgentDictionary[entry[2]] == "" and entry[1] == "close":
+            if entry[0] in agentsNeedToCloseSet:
+                anomalyTicketSet.add(agentToTicketDictionary[entry[0]])
+                anomalyTicketsList.append(agentToTicketDictionary[entry[0]])
+                stillOpenTicketSet.remove(agentToTicketDictionary[entry[0]])
+                
+            anomalyTicketsList.append(entry[2])
+            anomalyTicketSet.add(entry[2])
+            continue
+        elif ticketToAgentDictionary[entry[2]] == "" and entry[1] == "open":
+            if entry[0] in agentsNeedToCloseSet:
+                anomalyTicketSet.add(agentToTicketDictionary[entry[0]])
+                anomalyTicketsList.append(agentToTicketDictionary[entry[0]])
+                stillOpenTicketSet.remove(agentToTicketDictionary[entry[0]])
+                
+            ticketToAgentDictionary[entry[2]] = entry[0]
+            stillOpenTicketSet.add(entry[2])
+            agentToTicketDictionary[entry[0]] = entry[2]
+            agentsNeedToCloseSet.add(entry[0])
+            continue
+        
+        if ticketToAgentDictionary[entry[2]] != "" and entry[1] == "close":
+            if entry[0] != ticketToAgentDictionary[entry[2]]:
+                anomalyTicketSet.add(entry[2])
+                anomalyTicketsList.append(entry[2])
+                agentsNeedToCloseSet.remove(ticketToAgentDictionary[entry[2]])
+                stillOpenTicketSet.remove(entry[2])
+                continue
+                
+            stillOpenTicketSet.remove(entry[2])
+            openedAndClosedTicketSet.add(entry[2])
+            agentsNeedToCloseSet.remove(entry[0])
+            
+    for ticket in stillOpenTicketSet:
+        if ticket not in anomalyTicketSet:
+            anomalyTicketsList.append(ticket)
+        
+    return anomalyTicketsList
+
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -488,7 +560,57 @@ def runProductOfAlphabeticalSumsTests():
             f"\nalphabetic_sum_product({words}, {target}): got: {got}, want: {want}\n"
     
     print("ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED PASSED.")
-   
+
+def runActionLogAnomaliesTests():
+    tests = [
+        # Example 
+        ([
+            ["Dwight", "close", 2],
+            ["Dwight", "open", 2],
+            ["Drew", "open", 32],
+            ["Drew", "close", 32],
+            ["Drew", "open", 32],
+            ["Drew", "close", 32],
+            ["Susa", "open", 7],
+            ["Jo", "close", 7],
+            ["Susa", "open", 33],
+            ["Jo", "open", 8],
+            ["Jo", "open", 36],
+            ["Jo", "close", 8],
+            ["Susa", "close", 33],
+        ], [2, 32, 7, 8, 36]),
+        # Additional test cases
+        ([], []),  # no tickets
+        ([["Alice", "open", 1], ["Alice", "close", 1]], []),  # Nothing anomalous
+        ([["Alice", "open", 1], ["Alice", "open", 1]], [1]),  # Opened multiple times
+        ([["Alice", "open", 1], ["Alice", "close", 1], [
+        "Alice", "open", 1]], [1]),  # Opened after close
+        ([["Alice", "open", 1]], [1]),  # Not closed
+        ([["Alice", "open", 1], ["Susa", "open", 1]], [1]),  # Different agent
+        ([["Alice", "close", 1]], [1]),  # Closed before opened
+        ([
+            ["Drew", "open", 32],
+            ["Drew", "close", 2],
+            ["Drew", "close", 32],
+        ], [2, 32]),
+        ([
+            ["Dwight", "close", 2],
+            ["Dwight", "open", 2],
+            ["Drew", "open", 32],
+            ["Drew", "open", 2],
+            ["Drew", "close", 32],
+        ], [2, 32]),  # Multiple agents working on same ticket
+    ]
+    
+    for log, want in tests:
+        got = findAnomalies(log)
+        # Sort both lists to compare them regardless of order
+        got.sort()
+        want.sort()
+        assert got == want, f"\nfind_anomalies({log}): got: {got}, want: {want}\n"
+
+    print("ALL ACTION LOG ANOMALIES TESTS PROVIDED PASSED.")
+    
 #ALL TESTS
     
 def RunAllSetsAndMapsTests():
@@ -500,6 +622,7 @@ def RunAllSetsAndMapsTests():
     runWordExpansionClassTests()
     runCheaterDetectionTests()
     runProductOfAlphabeticalSumsTests()
+    runActionLogAnomaliesTests()
     
     print()
     print("------------------------------------------------------")
@@ -507,4 +630,4 @@ def RunAllSetsAndMapsTests():
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    RunAllSetsAndMapsTests()
+    runActionLogAnomaliesTests()
