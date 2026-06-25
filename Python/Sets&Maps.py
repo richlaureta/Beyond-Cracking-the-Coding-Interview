@@ -217,13 +217,12 @@ def findAnomalies(log: list[tuple]) -> list[int]:
                 anomalyTicketSet.add(agentToTicketDictionary[entry[0]])
                 anomalyTicketsList.append(agentToTicketDictionary[entry[0]])
                 
-            if entry[1] == "open" and entry[0] not in agentsNeedToCloseSet:
+            if entry[1] == "open" and entry[0]:
                 agentsNeedToCloseSet.add(entry[0])
                 stillOpenTicketSet.add(entry[2])
                 agentToTicketDictionary[entry[0]] = entry[2]
                 ticketToAgentDictionary[entry[2]] = entry[0]
-            
-                
+        
             continue
         
         if entry[2] in openedAndClosedTicketSet and entry[2] not in anomalyTicketSet:
@@ -270,6 +269,32 @@ def findAnomalies(log: list[tuple]) -> list[int]:
         
     return anomalyTicketsList
 
+def largestSetIntersectionFrequencyMap(sets: list[set]) -> int:
+    #Problem 30.11 - Largest Set Intersection
+    
+    if len(sets) == 1:
+        return 0
+    
+    numberOfIntersectionIndex = [0] * len(sets)
+    minimumIntersectionCountIndex = [float('inf'), 0]
+    
+    for index in range(len(sets)):
+        for number in sets[index]:
+            for index1 in range(len(sets)):
+                if index == index1:
+                    continue
+                if number in sets[index1]:
+                    numberOfIntersectionIndex[index] += 1
+        
+        if (numberOfIntersectionIndex[index] == minimumIntersectionCountIndex[0] 
+            and len(sets[minimumIntersectionCountIndex[1]]) > len(sets[index])):
+            minimumIntersectionCountIndex[1] = index
+        elif numberOfIntersectionIndex[index] < minimumIntersectionCountIndex[0]:
+            minimumIntersectionCountIndex[0] = numberOfIntersectionIndex[index]
+            minimumIntersectionCountIndex[1] = index
+    
+    return minimumIntersectionCountIndex[1]
+            
 #TESTS
 
 def runAccountSharingDetectionTests():
@@ -610,6 +635,69 @@ def runActionLogAnomaliesTests():
         assert got == want, f"\nfind_anomalies({log}): got: {got}, want: {want}\n"
 
     print("ALL ACTION LOG ANOMALIES TESTS PROVIDED PASSED.")
+
+def largestSetIntersectionPrefixSum(sets):
+    #Part of the 30.11 - Largest Set Intersection Tests
+    
+    n = len(sets)
+    if n == 1:
+        return 0
+
+    hash_sets = [set(s) for s in sets]
+
+    # Compute prefix intersections
+    prefix_intersections = [None] * n
+    prefix_intersections[0] = hash_sets[0]
+    for i in range(1, n):
+        prefix_intersections[i] = prefix_intersections[i - 1] & hash_sets[i]
+
+    # Compute suffix intersections
+    suffix_intersections = [None] * n
+    suffix_intersections[n - 1] = hash_sets[n - 1]
+    for i in range(n - 2, -1, -1):
+        suffix_intersections[i] = suffix_intersections[i + 1] & hash_sets[i]
+
+    # Find the best index to exclude
+    best_index = 0
+    max_size = 0
+
+    for i in range(n):
+        # Compute intersection excluding sets[i]
+        if i == 0:
+            intersection = suffix_intersections[1]
+        elif i == n - 1:
+            intersection = prefix_intersections[n - 2]
+        else:
+            intersection = prefix_intersections[i - 1] & suffix_intersections[i + 1]
+
+        if len(intersection) > max_size:
+            max_size = len(intersection)
+            best_index = i
+
+    return best_index
+
+def runLargestSetIntersectionTests():
+    tests = [
+        # Example 1 
+        ([[1, 2, 3], [3, 2, 1], [1, 4, 5], [1, 2]], 2),
+        # Example 2 
+        ([[1, 2], [3, 4], [5, 6]], 0),
+        # Example 3 
+        ([[1, 2, 3], [4, 5]], 1),
+        # Example 4 
+        ([[1, 2, 3]], 0),
+        # Additional test cases
+        ([[1], [1]], 0),
+        ([[1, 2], [2, 3], [1, 3]], 0),
+    ]
+    
+    for sets, want in tests:
+        got_freq = largestSetIntersectionFrequencyMap(sets)
+        got_prefix = largestSetIntersectionPrefixSum(sets)
+        assert got_freq == want, f"\nlargest_set_intersection_frequency_map({sets}): got: {got_freq}, want: {want}\n"
+        assert got_prefix == want, f"\nlargest_set_intersection_prefix_sum({sets}): got: {got_prefix}, want: {want}\n"
+
+    print("ALL LARGEST SET INTERSECTION TESTS PROVIDED PASSED.")
     
 #ALL TESTS
     
@@ -623,11 +711,12 @@ def RunAllSetsAndMapsTests():
     runCheaterDetectionTests()
     runProductOfAlphabeticalSumsTests()
     runActionLogAnomaliesTests()
+    runLargestSetIntersectionTests()
     
     print()
     print("------------------------------------------------------")
     print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE PASSED. |")
     print("------------------------------------------------------")
-
+    
 if __name__ == "__main__":
-    runActionLogAnomaliesTests()
+    RunAllSetsAndMapsTests()
