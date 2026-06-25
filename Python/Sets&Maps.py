@@ -274,27 +274,33 @@ def largestSetIntersectionFrequencyMap(sets: list[set]) -> int:
     
     if len(sets) == 1:
         return 0
+
+    numberToFrequencyDictionary = defaultdict(int)
     
-    numberOfIntersectionIndex = [0] * len(sets)
-    minimumIntersectionCountIndex = [float('inf'), 0]
+    for set in sets:
+        for number in set:
+            numberToFrequencyDictionary[number] += 1
+
+    index = 0
+    minimumIntersectionIndex = 0
+    minimumIntersectionCount = float('inf')
     
-    for index in range(len(sets)):
-        for number in sets[index]:
-            for index1 in range(len(sets)):
-                if index == index1:
-                    continue
-                if number in sets[index1]:
-                    numberOfIntersectionIndex[index] += 1
-        
-        if (numberOfIntersectionIndex[index] == minimumIntersectionCountIndex[0] 
-            and len(sets[minimumIntersectionCountIndex[1]]) > len(sets[index])):
-            minimumIntersectionCountIndex[1] = index
-        elif numberOfIntersectionIndex[index] < minimumIntersectionCountIndex[0]:
-            minimumIntersectionCountIndex[0] = numberOfIntersectionIndex[index]
-            minimumIntersectionCountIndex[1] = index
-    
-    return minimumIntersectionCountIndex[1]
+    for set in sets:
+        totalIntersection = 0
+        for number in set:
+            totalIntersection += numberToFrequencyDictionary[number] - 1
+               
+        if (totalIntersection == minimumIntersectionCount and 
+            len(sets[index]) < len(sets[minimumIntersectionIndex])):
+            minimumIntersectionIndex = index
+        elif totalIntersection < minimumIntersectionCount:
+            minimumIntersectionIndex = index
+            minimumIntersectionCount = totalIntersection
             
+        index += 1
+    
+    return minimumIntersectionIndex
+
 #TESTS
 
 def runAccountSharingDetectionTests():
