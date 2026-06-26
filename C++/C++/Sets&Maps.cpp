@@ -378,74 +378,80 @@ vector<int> findAnomalies(const vector<Action> &log)
     return anomalyTicketVector;
 }
 
-std::unordered_set<int> setIntersection(
-    const std::unordered_set<int>& set1,
-    const std::unordered_set<int>& set2) {
-  std::unordered_set<int> result;
-  // Iterate through the smaller set for efficiency
-  if (set1.size() <= set2.size()) {
-    for (int x : set1) {
-      if (set2.find(x) != set2.end()) {
-        result.insert(x);
-      }
+std::unordered_set<int> setIntersection(const std::unordered_set<int>& set1, const std::unordered_set<int>& set2)
+{
+    //Part of Problem 30.11 - Largest Set Intersection
+    
+    std::unordered_set<int> result;
+    // Iterate through the smaller set for efficiency
+    if (set1.size() <= set2.size()) {
+        for (int x : set1) {
+            if (set2.find(x) != set2.end()) {
+                result.insert(x);
+            }
+        }
     }
-  } else {
-    for (int x : set2) {
-      if (set1.find(x) != set1.end()) {
-        result.insert(x);
-      }
+    else {
+        for (int x : set2) {
+            if (set1.find(x) != set1.end()) {
+                result.insert(x);
+            }
+        }
     }
-  }
-  return result;
+    
+    return result;
 }
 
-int largestSetIntersectionPrefixSum(const std::vector<std::vector<int>>& sets) {
-  int n = (int) sets.size();
-  if (n == 1) {
-    return 0;
-  }
+int largestSetIntersectionPrefixSum(const std::vector<std::vector<int>>& sets)
+{
+    //Part of Problem 30.11 - Largest Set Intersection
+    
+      int n = (int) sets.size();
+      if (n == 1) {
+        return 0;
+      }
 
-  std::vector<std::unordered_set<int>> hashSets(n);
-  for (int i = 0; i < n; i++) {
-    hashSets[i] = std::unordered_set<int>(sets[i].begin(), sets[i].end());
-  }
+      std::vector<std::unordered_set<int>> hashSets(n);
+      for (int i = 0; i < n; i++) {
+        hashSets[i] = std::unordered_set<int>(sets[i].begin(), sets[i].end());
+      }
 
-  // Compute prefix intersections
-  std::vector<std::unordered_set<int>> prefixIntersections(n);
-  prefixIntersections[0] = hashSets[0];
-  for (int i = 1; i < n; i++) {
-    prefixIntersections[i] = setIntersection(prefixIntersections[i - 1], hashSets[i]);
-  }
+      // Compute prefix intersections
+      std::vector<std::unordered_set<int>> prefixIntersections(n);
+      prefixIntersections[0] = hashSets[0];
+      for (int i = 1; i < n; i++) {
+        prefixIntersections[i] = setIntersection(prefixIntersections[i - 1], hashSets[i]);
+      }
 
-  // Compute suffix intersections
-  std::vector<std::unordered_set<int>> suffixIntersections(n);
-  suffixIntersections[n - 1] = hashSets[n - 1];
-  for (int i = n - 2; i >= 0; i--) {
-    suffixIntersections[i] = setIntersection(suffixIntersections[i + 1], hashSets[i]);
-  }
+      // Compute suffix intersections
+      std::vector<std::unordered_set<int>> suffixIntersections(n);
+      suffixIntersections[n - 1] = hashSets[n - 1];
+      for (int i = n - 2; i >= 0; i--) {
+        suffixIntersections[i] = setIntersection(suffixIntersections[i + 1], hashSets[i]);
+      }
 
-  // Find the best index to exclude
-  int bestIndex = 0;
-  int maxSize = 0;
+      // Find the best index to exclude
+      int bestIndex = 0;
+      int maxSize = 0;
 
-  for (int i = 0; i < n; i++) {
-    // Compute intersection excluding sets[i]
-    std::unordered_set<int> intersection;
-    if (i == 0) {
-      intersection = suffixIntersections[1];
-    } else if (i == n - 1) {
-      intersection = prefixIntersections[n - 2];
-    } else {
-      intersection = setIntersection(prefixIntersections[i - 1], suffixIntersections[i + 1]);
-    }
+      for (int i = 0; i < n; i++) {
+        // Compute intersection excluding sets[i]
+        std::unordered_set<int> intersection;
+        if (i == 0) {
+          intersection = suffixIntersections[1];
+        } else if (i == n - 1) {
+          intersection = prefixIntersections[n - 2];
+        } else {
+          intersection = setIntersection(prefixIntersections[i - 1], suffixIntersections[i + 1]);
+        }
 
-    if (intersection.size() > maxSize) {
-      maxSize = (int) intersection.size();
-      bestIndex = i;
-    }
-  }
+        if (intersection.size() > maxSize) {
+          maxSize = (int) intersection.size();
+          bestIndex = i;
+        }
+      }
 
-  return bestIndex;
+      return bestIndex;
 }
 
 int largestSetIntersectionFrequencyMap(const vector<vector<int>> &sets)
