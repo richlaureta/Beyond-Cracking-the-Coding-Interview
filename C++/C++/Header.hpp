@@ -14,6 +14,7 @@
 #include <cmath>
 #include <tuple>
 #include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -149,5 +150,20 @@ struct Student
 };
 vector<vector<int>> suspectStudents(const vector<char> &answers, int m, const vector<Student> &students);
 bool alphabeticSumProduct(const vector<string> &words, int target);
+struct Action
+{
+    string agent;
+    string action;
+    int ticket;
+    Action(string a, string act, int t);
+};
+vector<int> findAnomalies(const vector<Action> &log);
+std::unordered_set<int> setIntersection(
+    const std::unordered_set<int>& set1,
+                                        const std::unordered_set<int>& set2);
+int largestSetIntersectionPrefixSum(const std::vector<std::vector<int>>& sets);
+int largestSetIntersectionFrequencyMap(const vector<vector<int>> &sets);
+
+
 
 #endif // HEADER_HPP

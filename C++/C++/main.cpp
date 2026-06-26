@@ -1856,35 +1856,160 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.9 - Product of Alphabetical Sums
     
-    std::vector<std::tuple<std::vector<std::string>, int, bool>> tests = {
+//    std::vector<std::tuple<std::vector<std::string>, int, bool>> tests = {
+//          // Example 1
+//          {{"abc", "fg", "hij", "klm", "nop", "qrs", "vwx"}, 1620, true},
+//          // Example 2
+//          {{"a", "b"}, 2, true},
+//          // Additional test cases
+//          {{}, 1, false},
+//          {{"a"}, 1, true},
+//          {{"a", "b", "c"}, 6, true},
+//          {{"a", "b", "c"}, 7, false}};
+//
+//      for (const auto& [words, target, want] : tests) {
+//        auto got = alphabeticSumProduct(words, target);
+//        if (got != want) {
+//          std::string words_str = "[";
+//          for (size_t i = 0; i < words.size(); i++) {
+//            if (i > 0) words_str += ", ";
+//            words_str += "\"" + words[i] + "\"";
+//          }
+//          words_str += "]";
+//
+//          throw std::runtime_error("\nalphabeticSumProduct(" + words_str + ", " +
+//                                   std::to_string(target) +
+//                                   "): got: " + (got ? "true" : "false") +
+//                                   ", want: " + (want ? "true" : "false") + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED PASSED." << endl;
+//
+    
+    //Problem 30.10 - Action Log Anomalies
+    
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) str += ", ";
+//        str += std::to_string(vec[i]);
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    std::vector<std::pair<std::vector<Action>, std::vector<int>>> tests = {
+//        // Example
+//        {{Action("Dwight", "close", 2), Action("Dwight", "open", 2),
+//          Action("Drew", "open", 32), Action("Drew", "close", 32),
+//          Action("Drew", "open", 32), Action("Drew", "close", 32),
+//          Action("Susa", "open", 7), Action("Jo", "close", 7),
+//          Action("Susa", "open", 33), Action("Jo", "open", 8),
+//          Action("Jo", "open", 36), Action("Jo", "close", 8),
+//          Action("Susa", "close", 33)},
+//         {2, 32, 7, 8, 36}},
+//        // Additional test cases
+//        {{}, {}},  // no tickets
+//        {{Action("Alice", "open", 1), Action("Alice", "close", 1)},
+//         {}},  // Nothing anomalous
+//        {{Action("Alice", "open", 1), Action("Alice", "open", 1)},
+//         {1}},  // Opened multiple times
+//        {{Action("Alice", "open", 1), Action("Alice", "close", 1),
+//          Action("Alice", "open", 1)},
+//         {1}},                                // Opened after close
+//        {{Action("Alice", "open", 1)}, {1}},  // Not closed
+//        {{Action("Alice", "open", 1), Action("Susa", "open", 1)},
+//         {1}},                                 // Different agent
+//        {{Action("Alice", "close", 1)}, {1}},  // Closed before opened
+//        {{Action("Drew", "open", 32), Action("Drew", "close", 2),
+//          Action("Drew", "close", 32)},
+//         {2, 32}},
+//        {{Action("Dwight", "close", 2), Action("Dwight", "open", 2),
+//          Action("Drew", "open", 32), Action("Drew", "open", 2),
+//          Action("Drew", "close", 32)},
+//         {2, 32}},  // Multiple agents working on same ticket
+//    };
+//
+//    for (const auto& [log, want] : tests) {
+//      auto got = findAnomalies(log);
+//      // Sort both vectors to compare them regardless of order
+//      std::sort(got.begin(), got.end());
+//      auto want_sorted = want;
+//      std::sort(want_sorted.begin(), want_sorted.end());
+//
+//      if (got != want_sorted) {
+//        std::string log_str = "[";
+//        for (size_t i = 0; i < log.size(); i++) {
+//          if (i > 0) log_str += ", ";
+//          log_str += "[" + log[i].agent + ", " + log[i].action + ", " +
+//                     std::to_string(log[i].ticket) + "]";
+//        }
+//        log_str += "]";
+//
+//        throw std::runtime_error("\nfindAnomalies(" + log_str +
+//                                 "): got: " + vecToStr(got) +
+//                                 ", want: " + vecToStr(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL ACTION LOG ANOMALIES TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 30.11 - Largest Set Intersection
+    
+    auto intVecToStr = [](const std::vector<int>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+      
+      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += intVecToStr(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+
+      std::vector<std::pair<std::vector<std::vector<int>>, int>> tests = {
           // Example 1
-          {{"abc", "fg", "hij", "klm", "nop", "qrs", "vwx"}, 1620, true},
+          {{{1, 2, 3}, {3, 2, 1}, {1, 4, 5}, {1, 2}}, 2},
           // Example 2
-          {{"a", "b"}, 2, true},
+          {{{1, 2}, {3, 4}, {5, 6}}, 0},
+          // Example 3
+          {{{1, 2, 3}, {4, 5}}, 1},
+          // Example 4
+          {{{1, 2, 3}}, 0},
           // Additional test cases
-          {{}, 1, false},
-          {{"a"}, 1, true},
-          {{"a", "b", "c"}, 6, true},
-          {{"a", "b", "c"}, 7, false}};
+          {{{1}, {1}}, 0},
+          {{{1, 2}, {2, 3}, {1, 3}}, 0}};
 
-      for (const auto& [words, target, want] : tests) {
-        auto got = alphabeticSumProduct(words, target);
-        if (got != want) {
-          std::string words_str = "[";
-          for (size_t i = 0; i < words.size(); i++) {
-            if (i > 0) words_str += ", ";
-            words_str += "\"" + words[i] + "\"";
+      for (const auto& [sets, want] : tests) {
+        int gotFreq = largestSetIntersectionFrequencyMap(sets);
+        int gotPrefix = largestSetIntersectionPrefixSum(sets);
+        if (gotFreq != want || gotPrefix != want) {
+          if (gotFreq != want) {
+            throw std::runtime_error("\nlargestSetIntersectionFrequencyMap(" +
+                                     intVecVecToStr(sets) +
+                                     "): got: " + std::to_string(gotFreq) +
+                                     ", want: " + std::to_string(want) + "\n");
           }
-          words_str += "]";
-
-          throw std::runtime_error("\nalphabeticSumProduct(" + words_str + ", " +
-                                   std::to_string(target) +
-                                   "): got: " + (got ? "true" : "false") +
-                                   ", want: " + (want ? "true" : "false") + "\n");
+          if (gotPrefix != want) {
+            throw std::runtime_error("\nlargestSetIntersectionPrefixSum(" +
+                                     intVecVecToStr(sets) +
+                                     "): got: " + std::to_string(gotPrefix) +
+                                     ", want: " + std::to_string(want) + "\n");
+          }
         }
       }
     
-    cout << "ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED PASSED." << endl;
+    cout << "ALL LARGEST SET INTERSECTION TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

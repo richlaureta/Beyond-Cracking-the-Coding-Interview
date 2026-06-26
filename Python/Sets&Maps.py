@@ -217,7 +217,7 @@ def findAnomalies(log: list[tuple]) -> list[int]:
                 anomalyTicketSet.add(agentToTicketDictionary[entry[0]])
                 anomalyTicketsList.append(agentToTicketDictionary[entry[0]])
                 
-            if entry[1] == "open" and entry[0]:
+            if entry[1] == "open":
                 agentsNeedToCloseSet.add(entry[0])
                 stillOpenTicketSet.add(entry[2])
                 agentToTicketDictionary[entry[0]] = entry[2]

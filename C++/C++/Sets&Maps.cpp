@@ -272,3 +272,219 @@ bool alphabeticSumProduct(const vector<string> &words, int target)
     
     return false;
 }
+
+Action::Action(string a, string act, int t) : agent(a), action(act), ticket(t)
+{
+    //Problem 30.10 - Action Log Anomalies
+    
+};
+
+vector<int> findAnomalies(const vector<Action> &log)
+{
+    //Problem 30.10 - Action Log Anomalies
+    
+    unordered_set<int> anomalyTicketSet = {};
+    unordered_set<int> stillOpentTicketSet = {};
+    unordered_set<int> openedAndClosedTicketSet = {};
+    unordered_set<string> agentsNeedToCloseSet = {};
+    
+    unordered_map<int, string> ticketToAgentMap;
+    unordered_map<string, int> agentToTicketMap;
+    
+    vector<int> anomalyTicketVector = {};
+    
+    for(Action entry: log)
+    {
+        if(anomalyTicketSet.find(entry.ticket) != anomalyTicketSet.end())
+        {
+            if(agentsNeedToCloseSet.find(entry.agent) != agentsNeedToCloseSet.end() and
+               entry.ticket != agentToTicketMap[entry.agent] and
+               anomalyTicketSet.find(agentToTicketMap[entry.agent]) == anomalyTicketSet.end())
+            {
+                anomalyTicketSet.insert(agentToTicketMap[entry.agent]);
+                anomalyTicketVector.push_back(agentToTicketMap[entry.agent]);
+            }
+            
+            if(entry.action == "open")
+            {
+                agentsNeedToCloseSet.insert(entry.agent);
+                stillOpentTicketSet.insert(entry.ticket);
+                agentToTicketMap[entry.agent] = entry.ticket;
+                ticketToAgentMap[entry.ticket] = entry.agent;
+            }
+            
+            continue;
+        }
+        
+        if(openedAndClosedTicketSet.find(entry.ticket) != openedAndClosedTicketSet.end() and
+           anomalyTicketSet.find(entry.ticket) == anomalyTicketSet.end())
+        {
+            anomalyTicketSet.insert(entry.ticket);
+            anomalyTicketVector.push_back(entry.ticket);
+            continue;
+        }
+        
+        if(ticketToAgentMap[entry.ticket] == "" and entry.action == "close")
+        {
+            if(agentsNeedToCloseSet.find(entry.agent) != agentsNeedToCloseSet.end())
+            {
+                anomalyTicketSet.insert(agentToTicketMap[entry.agent]);
+                anomalyTicketVector.push_back(agentToTicketMap[entry.agent]);
+                stillOpentTicketSet.erase(agentToTicketMap[entry.agent]);
+            }
+            
+            anomalyTicketVector.push_back(entry.ticket);
+            anomalyTicketSet.insert(entry.ticket);
+            continue;
+        }
+        else if(ticketToAgentMap[entry.ticket] == "" and entry.action == "open")
+        {
+            if(agentsNeedToCloseSet.find(entry.agent) != agentsNeedToCloseSet.end())
+            {
+                anomalyTicketSet.insert(agentToTicketMap[entry.agent]);
+                anomalyTicketVector.push_back(agentToTicketMap[entry.agent]);
+                stillOpentTicketSet.erase(agentToTicketMap[entry.agent]);
+            }
+            
+            ticketToAgentMap[entry.ticket] = entry.action;
+            stillOpentTicketSet.insert(entry.ticket);
+            agentToTicketMap[entry.agent] = entry.ticket;
+            agentsNeedToCloseSet.insert(entry.agent);
+            continue;
+        }
+        
+        if(ticketToAgentMap[entry.ticket] != "" and entry.action == "close")
+        {
+            if(entry.agent != ticketToAgentMap[entry.ticket])
+            {
+                anomalyTicketSet.insert(entry.ticket);
+                anomalyTicketVector.push_back(entry.ticket);
+                agentsNeedToCloseSet.erase(ticketToAgentMap[entry.ticket]);
+                stillOpentTicketSet.erase(entry.ticket);
+                continue;
+            }
+            
+            stillOpentTicketSet.erase(entry.ticket);
+            openedAndClosedTicketSet.insert(entry.ticket);
+            agentsNeedToCloseSet.erase(entry.agent);
+        }
+    }
+    
+    for(int ticket: stillOpentTicketSet)
+    {
+        if(anomalyTicketSet.find(ticket) == anomalyTicketSet.end()) anomalyTicketVector.push_back(ticket);
+    }
+    
+    return anomalyTicketVector;
+}
+
+std::unordered_set<int> setIntersection(
+    const std::unordered_set<int>& set1,
+    const std::unordered_set<int>& set2) {
+  std::unordered_set<int> result;
+  // Iterate through the smaller set for efficiency
+  if (set1.size() <= set2.size()) {
+    for (int x : set1) {
+      if (set2.find(x) != set2.end()) {
+        result.insert(x);
+      }
+    }
+  } else {
+    for (int x : set2) {
+      if (set1.find(x) != set1.end()) {
+        result.insert(x);
+      }
+    }
+  }
+  return result;
+}
+
+int largestSetIntersectionPrefixSum(const std::vector<std::vector<int>>& sets) {
+  int n = (int) sets.size();
+  if (n == 1) {
+    return 0;
+  }
+
+  std::vector<std::unordered_set<int>> hashSets(n);
+  for (int i = 0; i < n; i++) {
+    hashSets[i] = std::unordered_set<int>(sets[i].begin(), sets[i].end());
+  }
+
+  // Compute prefix intersections
+  std::vector<std::unordered_set<int>> prefixIntersections(n);
+  prefixIntersections[0] = hashSets[0];
+  for (int i = 1; i < n; i++) {
+    prefixIntersections[i] = setIntersection(prefixIntersections[i - 1], hashSets[i]);
+  }
+
+  // Compute suffix intersections
+  std::vector<std::unordered_set<int>> suffixIntersections(n);
+  suffixIntersections[n - 1] = hashSets[n - 1];
+  for (int i = n - 2; i >= 0; i--) {
+    suffixIntersections[i] = setIntersection(suffixIntersections[i + 1], hashSets[i]);
+  }
+
+  // Find the best index to exclude
+  int bestIndex = 0;
+  int maxSize = 0;
+
+  for (int i = 0; i < n; i++) {
+    // Compute intersection excluding sets[i]
+    std::unordered_set<int> intersection;
+    if (i == 0) {
+      intersection = suffixIntersections[1];
+    } else if (i == n - 1) {
+      intersection = prefixIntersections[n - 2];
+    } else {
+      intersection = setIntersection(prefixIntersections[i - 1], suffixIntersections[i + 1]);
+    }
+
+    if (intersection.size() > maxSize) {
+      maxSize = (int) intersection.size();
+      bestIndex = i;
+    }
+  }
+
+  return bestIndex;
+}
+
+int largestSetIntersectionFrequencyMap(const vector<vector<int>> &sets)
+{
+    //Problem 30.11 - Largest Set Intersection
+    
+    if((int) sets.size() == 1) return 0;
+    
+    unordered_map<int, int> numberToFrequencyMap;
+    
+    for(vector<int> set: sets)
+    {
+        for(int number: set)
+        {
+            numberToFrequencyMap[number]++;
+        }
+    }
+    
+    int index = 0;
+    int minimumIntersectionIndex = 0;
+    int minimumIntersectionCount = INT_MAX;
+    
+    for(vector<int> set: sets)
+    {
+        int totalIntersection = 0;
+        for(int number: set)
+        {
+            totalIntersection += numberToFrequencyMap[number] - 1;
+        }
+        
+        if(totalIntersection == minimumIntersectionCount and ((int) sets[index].size()) < ((int) sets[minimumIntersectionIndex].size())) minimumIntersectionIndex = index;
+        else if(totalIntersection < minimumIntersectionCount)
+        {
+            minimumIntersectionIndex = index;
+            minimumIntersectionCount = totalIntersection;
+        }
+        
+        index++;
+    }
+    
+    return minimumIntersectionIndex;
+}
