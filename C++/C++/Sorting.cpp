@@ -51,7 +51,7 @@ vector<char> letterOccurrences(const string &word)
     
     for(int index = 0; index < vectorSize; index++)
     {
-        sortedLetterByFrequencyVector.push_back(willSortVector[index].first);
+        sortedLetterByFrequencyVector.push_back(willSortVector[index].second);
     }
     
     return sortedLetterByFrequencyVector;
