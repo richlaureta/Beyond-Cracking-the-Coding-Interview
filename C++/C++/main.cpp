@@ -1957,59 +1957,116 @@ int main(int argc, const char *argv[]) {
     
     //Problem 30.11 - Largest Set Intersection
     
-    auto intVecToStr = [](const std::vector<int>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-      
-      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += intVecToStr(vec[i]);
-        }
-        result += "]";
-        return result;
+//    auto intVecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//      
+//      auto intVecVecToStr = [&](const std::vector<std::vector<int>>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += intVecToStr(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<std::vector<int>>, int>> tests = {
+//          // Example 1
+//          {{{1, 2, 3}, {3, 2, 1}, {1, 4, 5}, {1, 2}}, 2},
+//          // Example 2
+//          {{{1, 2}, {3, 4}, {5, 6}}, 0},
+//          // Example 3
+//          {{{1, 2, 3}, {4, 5}}, 1},
+//          // Example 4
+//          {{{1, 2, 3}}, 0},
+//          // Additional test cases
+//          {{{1}, {1}}, 0},
+//          {{{1, 2}, {2, 3}, {1, 3}}, 0}};
+//
+//      for (const auto& [sets, want] : tests) {
+//        int gotFreq = largestSetIntersectionFrequencyMap(sets);
+//        int gotPrefix = largestSetIntersectionPrefixSum(sets);
+//        if (gotFreq != want || gotPrefix != want) {
+//          if (gotFreq != want) {
+//            throw std::runtime_error("\nlargestSetIntersectionFrequencyMap(" +
+//                                     intVecVecToStr(sets) +
+//                                     "): got: " + std::to_string(gotFreq) +
+//                                     ", want: " + std::to_string(want) + "\n");
+//          }
+//          if (gotPrefix != want) {
+//            throw std::runtime_error("\nlargestSetIntersectionPrefixSum(" +
+//                                     intVecVecToStr(sets) +
+//                                     "): got: " + std::to_string(gotPrefix) +
+//                                     ", want: " + std::to_string(want) + "\n");
+//          }
+//        }
+//      }
+//    
+//    cout << "ALL LARGEST SET INTERSECTION TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 31.1 - Sorting by Frequency
+    
+    std::vector<std::pair<std::string, std::vector<char>>> tests = {
+          // Example from the book
+          {"supercalifragilisticexpialidocious",
+           {'i', 'a', 'c', 'l', 's', 'e', 'o', 'p', 'r', 'u', 'd', 'f', 'g', 't',
+            'x'}},
+          // Edge case - empty string
+          {"", {}},
+          // Edge case - single character
+          {"a", {'a'}},
+          // Edge case - all same frequency
+          {"abc", {'a', 'b', 'c'}},
+          // Multiple frequencies with ties
+          {"aabbbcccc", {'c', 'b', 'a'}},
+          // All same character
+          {"zzzzz", {'z'}},
+          // Alternating characters
+          {"ababab", {'a', 'b'}},
+          // Reverse alphabetical order but same frequency
+          {"zyxwv", {'v', 'w', 'x', 'y', 'z'}},
+          // Long string with many frequencies
+          {"aaaaabbbbbbbcccccccccdddddddddddeeeeeeeeeeee",
+           {'e', 'd', 'c', 'b', 'a'}},
       };
 
-      std::vector<std::pair<std::vector<std::vector<int>>, int>> tests = {
-          // Example 1
-          {{{1, 2, 3}, {3, 2, 1}, {1, 4, 5}, {1, 2}}, 2},
-          // Example 2
-          {{{1, 2}, {3, 4}, {5, 6}}, 0},
-          // Example 3
-          {{{1, 2, 3}, {4, 5}}, 1},
-          // Example 4
-          {{{1, 2, 3}}, 0},
-          // Additional test cases
-          {{{1}, {1}}, 0},
-          {{{1, 2}, {2, 3}, {1, 3}}, 0}};
+      for (const auto& [word, want] : tests) {
+        auto vecToString = [](const std::vector<char>& v) {
+          std::string out = "[";
+          for (size_t i = 0; i < v.size(); i++) {
+            if (i > 0) out += ", ";
+            out += v[i];
+          }
+          out += "]";
+          return out;
+        };
 
-      for (const auto& [sets, want] : tests) {
-        int gotFreq = largestSetIntersectionFrequencyMap(sets);
-        int gotPrefix = largestSetIntersectionPrefixSum(sets);
-        if (gotFreq != want || gotPrefix != want) {
-          if (gotFreq != want) {
-            throw std::runtime_error("\nlargestSetIntersectionFrequencyMap(" +
-                                     intVecVecToStr(sets) +
-                                     "): got: " + std::to_string(gotFreq) +
-                                     ", want: " + std::to_string(want) + "\n");
-          }
-          if (gotPrefix != want) {
-            throw std::runtime_error("\nlargestSetIntersectionPrefixSum(" +
-                                     intVecVecToStr(sets) +
-                                     "): got: " + std::to_string(gotPrefix) +
-                                     ", want: " + std::to_string(want) + "\n");
-          }
+        const auto got1 = letterOccurrences(word);
+        if (got1 != want) {
+          std::string error = "\nletterOccurrences(" + word + "): got: " +
+                              vecToString(got1) + ", want: " +
+                              vecToString(want) + "\n";
+          throw std::runtime_error(error);
         }
+
+        const auto got2 = letterOccurrencesLambda(word);
+        if (got2 != want) {
+          std::string error = "\nletterOccurrencesLambda(" + word + "): got: " +
+                              vecToString(got2) + ", want: " +
+                              vecToString(want) + "\n";
+          throw std::runtime_error(error);
+        }
+
       }
     
-    cout << "ALL LARGEST SET INTERSECTION TESTS PROVIDED PASSED." << endl;
+    cout << "ALL SORTING BY FREQUENCY TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

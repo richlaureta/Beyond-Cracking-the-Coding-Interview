@@ -6,11 +6,11 @@ def letterOccurrences(word: str) -> list[str]:
     
     letterFrequencyDictionary = defaultdict(int)
     
-    maxHeap = []
-    
     for letter in word:
         letterFrequencyDictionary[letter] += 1
-        
+    
+    maxHeap = []
+ 
     for key in letterFrequencyDictionary:
         heapq.heappush(maxHeap, (-letterFrequencyDictionary[key], key))
     

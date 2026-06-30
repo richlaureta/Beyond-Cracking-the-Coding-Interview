@@ -15,6 +15,7 @@
 #include <tuple>
 #include <vector>
 #include <climits>
+#include <queue>
 
 using namespace std;
 
@@ -164,6 +165,8 @@ std::unordered_set<int> setIntersection(
 int largestSetIntersectionPrefixSum(const std::vector<std::vector<int>>& sets);
 int largestSetIntersectionFrequencyMap(const vector<vector<int>> &sets);
 
-
+//Sorting
+vector<char> letterOccurrencesLambda(const string &word);
+vector<char> letterOccurrences(const string &word);
 
 #endif // HEADER_HPP
