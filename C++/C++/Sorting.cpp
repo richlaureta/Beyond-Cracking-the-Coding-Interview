@@ -39,19 +39,19 @@ vector<char> letterOccurrences(const string &word)
     
     for(char letter: word) letterFrequencyMap[letter]++;
     
-    priority_queue<pair<int,char>,  vector<pair<int, char>>, greater<pair<int, char>>> maxHeap;
+    vector<pair<int, char>> willSortVector;
     
-    for(auto key: letterFrequencyMap) maxHeap.push({-letterFrequencyMap[key.first], key.first});
+    for(auto key: letterFrequencyMap) willSortVector.push_back({-letterFrequencyMap[key.first], key.first});
+    
+    sort(willSortVector.begin(), willSortVector.end());
     
     vector<char> sortedLetterByFrequencyVector;
     
-    int maxHeapSize = (int) maxHeap.size();
+    int vectorSize = (int) willSortVector.size();
     
-    for(int index = 0; index < maxHeapSize; index++)
+    for(int index = 0; index < vectorSize; index++)
     {
-        char letter = maxHeap.top().second;
-        maxHeap.pop();
-        sortedLetterByFrequencyVector.push_back(letter);
+        sortedLetterByFrequencyVector.push_back(willSortVector[index].first);
     }
     
     return sortedLetterByFrequencyVector;

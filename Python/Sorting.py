@@ -1,4 +1,3 @@
-import heapq
 from collections import defaultdict
  
 def letterOccurrences(word: str) -> list[str]:
@@ -9,15 +8,17 @@ def letterOccurrences(word: str) -> list[str]:
     for letter in word:
         letterFrequencyDictionary[letter] += 1
     
-    maxHeap = []
+    willSortList = []
  
     for key in letterFrequencyDictionary:
-        heapq.heappush(maxHeap, (-letterFrequencyDictionary[key], key))
+        willSortList.append((-letterFrequencyDictionary[key], key))
+    
+    willSortList.sort()
     
     sortedLetterByFrequencyList = []
     
-    for index in range(len(maxHeap)):
-        sortedLetterByFrequencyList.append(heapq.heappop(maxHeap)[1])
+    for index in range(len(willSortList)):
+        sortedLetterByFrequencyList.append(willSortList[index][1])
     
     return sortedLetterByFrequencyList
 
