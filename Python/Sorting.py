@@ -36,23 +36,15 @@ def areCirclesNested(circles: list[tuple]) -> bool:
     previousRadius = abs(circles[0][1])
     
     for index in range(1, len(circles)):
-        addPreviousX = previousX + previousRadius
-        addCurrentX = circles[index][0][0] + abs(circles[index][1])
         if previousX + previousRadius >= circles[index][0][0] + abs(circles[index][1]):
             return False
         
-        subtractPreviousX = previousX - previousRadius
-        subtractCurrentX = circles[index][0][0] - abs(circles[index][1])
         if previousX - previousRadius <= circles[index][0][0] - abs(circles[index][1]):
             return False
-        
-        addPreviousY = previousY + previousRadius
-        addCurrentY = circles[index][0][1] + abs(circles[index][1])
+
         if previousY + previousRadius >= circles[index][0][1] + abs(circles[index][1]):
             return False
         
-        subtractPreviousY = previousY - previousRadius
-        subtractcurrentY = circles[index][0][1] - abs(circles[index][1])
         if previousY - previousRadius <= circles[index][0][1] - abs(circles[index][1]):
             return False
         
@@ -158,4 +150,4 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    runNestedCirclesTests()
+    RunAllSortingTests()
