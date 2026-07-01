@@ -1,5 +1,6 @@
 from collections import defaultdict
- 
+from operator import itemgetter
+
 def letterOccurrences(word: str) -> list[str]:
     #Problem 31.1 - Sorting by Frequency
     
@@ -25,46 +26,42 @@ def letterOccurrences(word: str) -> list[str]:
 def areCirclesNested(circles: list[tuple]) -> bool:
     #Problem 31.2 - Nested Circles
     
-    currentMaxX = float('-inf')
-    currentMaxXIndex = None
-    currentMinimumX = float('inf')
-    currentMinimumXIndex = None
+    if len(circles) == 1 or len(circles) == 0:
+        return True
     
-    currentMaxY = float('-inf')
-    currentMaxYIndex = None
-    currentMinimumY = float('inf')
-    currentMinimumYIndex = None
+    circles.sort(key = itemgetter(1))
     
-    currentMaxRadiusHigherX = None
-    currentMaxRadiusHigherY = None
-    currentMaxRadiusLowerX = None
-    currentMaxRadiusLowerY = None
-    currentMaxRadiusIndex = None
+    previousX = circles[0][0][0]
+    previousY = circles[0][0][1]
+    previousRadius = abs(circles[0][1])
     
-    currentMaxRadius = float('-inf')
-    
-    
-    for index in range(len(circles)):
-        if currentMaxRadius < abs(circles[index][1]):
-            currentMaxRadius = abs(circles[index][1])
-            currentMaxRadiusIndex = index
-            currentMaxRadiusHigherX = circles[index][0][0] + abs(circles[index][1])
-            currentMaxRadiusHigherY = circles[index][0][1] + abs(circles[index][1])
-            currentMaxRadiusLowerX = circles[index][0][0] - abs(circles[index][1])
-            currentMaxRadiusLowerY = circles[index][0][1] - abs(circles[index][1])
+    for index in range(1, len(circles)):
+        addPreviousX = previousX + previousRadius
+        addCurrentX = circles[index][0][0] + abs(circles[index][1])
+        if previousX + previousRadius >= circles[index][0][0] + abs(circles[index][1]):
+            return False
         
-        if circles[index][0][0] + abs(circles[index][1]):
-            currentMaxX = circles[index][0][0] + abs(circles[index][1])
-            currentMaxXIndex = index
-            
-        if currentMinimumX >= circles[index][0][0] - abs(circles[index][1]):
-            currentMinimumX = circles[index][0][0] - abs(circles[index][1])
-            currentMinimumXIndex = index
+        subtractPreviousX = previousX - previousRadius
+        subtractCurrentX = circles[index][0][0] - abs(circles[index][1])
+        if previousX - previousRadius <= circles[index][0][0] - abs(circles[index][1]):
+            return False
         
-        if currentMaxY <= circles[index][0][1] + abs(circles[index][1]):
-            currentMaxY = circles[index][0][1] + abs(circles[index][1])
-            currentMaxYIndex = index
+        addPreviousY = previousY + previousRadius
+        addCurrentY = circles[index][0][1] + abs(circles[index][1])
+        if previousY + previousRadius >= circles[index][0][1] + abs(circles[index][1]):
+            return False
         
+        subtractPreviousY = previousY - previousRadius
+        subtractcurrentY = circles[index][0][1] - abs(circles[index][1])
+        if previousY - previousRadius <= circles[index][0][1] - abs(circles[index][1]):
+            return False
+        
+        previousX = circles[index][0][0]
+        previousY = circles[index][0][1]
+        previousRadius = abs(circles[index][1])
+    
+    return True
+
 #TESTS
 
 def letter_occurrences_lambda(word):
@@ -115,10 +112,45 @@ def runSortByFrequencyTests():
     
     print("ALL SORT BY FREQUENCY TESTS PROVIDED PASSED.")
 
+def runNestedCirclesTests():
+    tests = [
+        # Example 1 from the book
+        ([((4, 4), 5), ((8, 4), 2)], False),
+        # Example 2 from the book
+        ([((5, 3), 3), ((5, 3), 2), ((4, 4), 5)], True),
+        # Example 3 from the book
+        ([((5, 3), 3)], True),
+        # Edge case - two identical circles
+        ([((1, 1), 2), ((1, 1), 2)], False),
+        # Edge case - touching circles
+        ([((0, 0), 4), ((0, 0), 2)], True),
+        # Edge case - empty list
+        ([], True),
+        # Edge case - negative coordinates
+        ([((-5, -3), 4), ((-5, -3), 2)], True),
+        # Edge case - negative radius
+        ([((0, 0), -2)], True),
+        # Edge case - max coordinate values
+        ([((10000, 10000), 10000), ((0, 0), 100)], False),
+        # Edge case - min coordinate values
+        ([((-10000, -10000), 10000), ((0, 0), 100)], False),
+        # Edge case - multiple circles with same center
+        ([((1, 1), 5), ((1, 1), 4), ((1, 1), 3), ((1, 1), 2)], True),
+        # Edge case - circles not sorted by radius
+        ([((0, 0), 2), ((0, 0), 4), ((0, 0), 3)], True),
+    ]
+    
+    for circles, want in tests:
+        got = areCirclesNested(circles)
+        assert got == want, f"\nare_circles_nested({circles}): got: {got}, want: {want}\n"
+    
+    print("ALL NESTED CIRCLES TESTS PROVIDED PASSED.")
+
 #ALL TESTS
 
 def RunAllSortingTests():
     runSortByFrequencyTests()
+    runNestedCirclesTests()
     
     print()
     print("------------------------------------------------")
@@ -126,9 +158,4 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    circles = [
-        ((4, 4), 5),
-        ((8, 4), 2)
-    ]
-    
-    print(areCirclesNested(circles))
+    runNestedCirclesTests()
