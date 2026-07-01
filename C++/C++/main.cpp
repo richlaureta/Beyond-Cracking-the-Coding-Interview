@@ -2013,60 +2013,109 @@ int main(int argc, const char *argv[]) {
     
     //Problem 31.1 - Sorting by Frequency
     
-    std::vector<std::pair<std::string, std::vector<char>>> tests = {
-          // Example from the book
-          {"supercalifragilisticexpialidocious",
-           {'i', 'a', 'c', 'l', 's', 'e', 'o', 'p', 'r', 'u', 'd', 'f', 'g', 't',
-            'x'}},
-          // Edge case - empty string
-          {"", {}},
-          // Edge case - single character
-          {"a", {'a'}},
-          // Edge case - all same frequency
-          {"abc", {'a', 'b', 'c'}},
-          // Multiple frequencies with ties
-          {"aabbbcccc", {'c', 'b', 'a'}},
-          // All same character
-          {"zzzzz", {'z'}},
-          // Alternating characters
-          {"ababab", {'a', 'b'}},
-          // Reverse alphabetical order but same frequency
-          {"zyxwv", {'v', 'w', 'x', 'y', 'z'}},
-          // Long string with many frequencies
-          {"aaaaabbbbbbbcccccccccdddddddddddeeeeeeeeeeee",
-           {'e', 'd', 'c', 'b', 'a'}},
+//    std::vector<std::pair<std::string, std::vector<char>>> tests = {
+//          // Example from the book
+//          {"supercalifragilisticexpialidocious",
+//           {'i', 'a', 'c', 'l', 's', 'e', 'o', 'p', 'r', 'u', 'd', 'f', 'g', 't',
+//            'x'}},
+//          // Edge case - empty string
+//          {"", {}},
+//          // Edge case - single character
+//          {"a", {'a'}},
+//          // Edge case - all same frequency
+//          {"abc", {'a', 'b', 'c'}},
+//          // Multiple frequencies with ties
+//          {"aabbbcccc", {'c', 'b', 'a'}},
+//          // All same character
+//          {"zzzzz", {'z'}},
+//          // Alternating characters
+//          {"ababab", {'a', 'b'}},
+//          // Reverse alphabetical order but same frequency
+//          {"zyxwv", {'v', 'w', 'x', 'y', 'z'}},
+//          // Long string with many frequencies
+//          {"aaaaabbbbbbbcccccccccdddddddddddeeeeeeeeeeee",
+//           {'e', 'd', 'c', 'b', 'a'}},
+//      };
+//
+//      for (const auto& [word, want] : tests) {
+//        auto vecToString = [](const std::vector<char>& v) {
+//          std::string out = "[";
+//          for (size_t i = 0; i < v.size(); i++) {
+//            if (i > 0) out += ", ";
+//            out += v[i];
+//          }
+//          out += "]";
+//          return out;
+//        };
+//
+//        const auto got1 = letterOccurrences(word);
+//        if (got1 != want) {
+//          std::string error = "\nletterOccurrences(" + word + "): got: " +
+//                              vecToString(got1) + ", want: " +
+//                              vecToString(want) + "\n";
+//          throw std::runtime_error(error);
+//        }
+//
+//        const auto got2 = letterOccurrencesLambda(word);
+//        if (got2 != want) {
+//          std::string error = "\nletterOccurrencesLambda(" + word + "): got: " +
+//                              vecToString(got2) + ", want: " +
+//                              vecToString(want) + "\n";
+//          throw std::runtime_error(error);
+//        }
+//
+//      }
+//    
+//    cout << "ALL SORTING BY FREQUENCY TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 31.2 - Nested Circles
+    
+    std::vector<std::pair<std::vector<Circle>, bool>> tests = {
+          // Example 1 from the book
+          {{{{{4, 4}, 5}, {{8, 4}, 2}}}, false},
+          // Example 2 from the book
+          {{{{{5, 3}, 3}, {{5, 3}, 2}, {{4, 4}, 5}}}, true},
+          // Example 3 from the book
+          {{{{{5, 3}, 3}}}, true},
+          // Edge case - two identical circles
+          {{{{{1, 1}, 2}, {{1, 1}, 2}}}, false},
+          // Edge case - touching circles
+          {{{{{0, 0}, 4}, {{0, 0}, 2}}}, true},
+          // Edge case - empty list
+          {{}, true},
+          // Edge case - negative coordinates
+          {{{{{-5, -3}, 4}, {{-5, -3}, 2}}}, true},
+          // Edge case - negative radius
+          {{{{{0, 0}, -2}}}, true},
+          // Edge case - max coordinate values
+          {{{{{10000, 10000}, 10000}, {{0, 0}, 100}}}, false},
+          // Edge case - min coordinate values
+          {{{{{-10000, -10000}, 10000}, {{0, 0}, 100}}}, false},
+          // Edge case - multiple circles with same center
+          {{{{{1, 1}, 5}, {{1, 1}, 4}, {{1, 1}, 3}, {{1, 1}, 2}}}, true},
+          // Edge case - circles not sorted by radius
+          {{{{{0, 0}, 2}, {{0, 0}, 4}, {{0, 0}, 3}}}, true},
       };
 
-      for (const auto& [word, want] : tests) {
-        auto vecToString = [](const std::vector<char>& v) {
-          std::string out = "[";
-          for (size_t i = 0; i < v.size(); i++) {
-            if (i > 0) out += ", ";
-            out += v[i];
+      for (const auto& [circles, want] : tests) {
+        auto circlesCopy =
+            circles;  // Create a copy since areCirclesNested modifies input
+        bool got = areCirclesNested(circlesCopy);
+        if (got != want) {
+          std::string error = "\nareCirclesNested([";
+          for (size_t i = 0; i < circles.size(); i++) {
+            if (i > 0) error += ", ";
+            error += "((" + std::to_string(circles[i].first.first) + ", " +
+                     std::to_string(circles[i].first.second) + "), " +
+                     std::to_string(circles[i].second) + ")";
           }
-          out += "]";
-          return out;
-        };
-
-        const auto got1 = letterOccurrences(word);
-        if (got1 != want) {
-          std::string error = "\nletterOccurrences(" + word + "): got: " +
-                              vecToString(got1) + ", want: " +
-                              vecToString(want) + "\n";
+          error += "]): got: " + std::to_string(got) +
+                   ", want: " + std::to_string(want) + "\n";
           throw std::runtime_error(error);
         }
-
-        const auto got2 = letterOccurrencesLambda(word);
-        if (got2 != want) {
-          std::string error = "\nletterOccurrencesLambda(" + word + "): got: " +
-                              vecToString(got2) + ", want: " +
-                              vecToString(want) + "\n";
-          throw std::runtime_error(error);
-        }
-
       }
     
-    cout << "ALL SORTING BY FREQUENCY TESTS PROVIDED PASSED." << endl;
+    cout << "ALL NESTED CIRCLES TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

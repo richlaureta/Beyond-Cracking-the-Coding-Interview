@@ -168,5 +168,7 @@ int largestSetIntersectionFrequencyMap(const vector<vector<int>> &sets);
 //Sorting
 vector<char> letterOccurrencesLambda(const string &word);
 vector<char> letterOccurrences(const string &word);
+using Circle = pair<pair<double, double>, double>;
+bool areCirclesNested(vector<Circle> &circles);
 
 #endif // HEADER_HPP

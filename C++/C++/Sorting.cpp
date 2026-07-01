@@ -56,3 +56,33 @@ vector<char> letterOccurrences(const string &word)
     
     return sortedLetterByFrequencyVector;
 }
+
+bool areCirclesNested(vector<Circle> &circles)
+{
+    if((int) circles.size() == 1 or (int) circles.size() == 0) return true;
+    
+    sort(circles.begin(), circles.end(), [](const auto& a, const auto& b) {
+        return a.second < b.second;
+    });
+    
+    double previousX = circles[0].first.first;
+    double previousY = circles[0].first.second;
+    double previousRadius = abs(circles[0].second);
+    
+    for(int index = 1; index < (int) circles.size(); index++)
+    {
+        if(previousX + previousRadius >= circles[index].first.first + abs(circles[index].second)) return false;
+        
+        if(previousX - previousRadius <= circles[index].first.first - abs(circles[index].second)) return false;
+        
+        if(previousY + previousRadius >= circles[index].first.second + abs(circles[index].second)) return false;
+        
+        if(previousY - previousRadius <= circles[index].first.second - abs(circles[index].second)) return false;
+        
+        previousX = circles[index].first.first;
+        previousY = circles[index].first.second;
+        previousRadius = circles[index].second;
+    }
+    
+    return true;
+}
