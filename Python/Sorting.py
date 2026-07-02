@@ -54,6 +54,35 @@ def areCirclesNested(circles: list[tuple]) -> bool:
     
     return True
 
+def processOperations(nums: list[int], operations: list[int]) -> list[int]:
+    #Problem 31.3 Delete Operations
+
+    if len(operations) == 0:
+        return nums
+    
+    sortedCopy = nums.copy()
+    outputCopy = nums.copy()
+    sortedCopy.sort()
+    
+    minimumIndex = 0
+    
+    for operation in operations:
+        if operation == -1:
+            try:
+                outputCopy.remove(sortedCopy[minimumIndex])
+                minimumIndex += 1
+            except ValueError:
+                pass
+        else:
+            try:
+                outputCopy.remove(nums[operation])
+                if nums[operation] == nums[minimumIndex]:
+                    minimumIndex += 1
+            except ValueError:
+                pass
+    
+    return outputCopy
+
 #TESTS
 
 def letter_occurrences_lambda(word):
@@ -138,11 +167,44 @@ def runNestedCirclesTests():
     
     print("ALL NESTED CIRCLES TESTS PROVIDED PASSED.")
 
+def runDeleteOperationsTests():
+    tests = [
+        # Example 1 from the book
+        ([50, 30, 70, 20, 80], [2, -1, 4, -1], [50]),
+        # Example 2 from the book
+        ([1, 2, 3], [], [1, 2, 3]),
+        # Example 3 from the book
+        ([1, 2, 3], [-1, -1, -1], []),
+        # Edge case - delete all indices
+        ([1, 2, 3], [0, 1, 2], []),
+        # Edge case - single element
+        ([1], [-1], []),
+        # Edge case - duplicates
+        ([5, 5, 5], [-1, -1], [5]),
+        # Edge case - negative numbers
+        ([-3, -2, -1], [-1, -1], [-1]),
+        # Mixed operations with duplicates
+        ([10, 10, 20, 20], [1, -1, -1], [20]),
+        # Operations targeting same index
+        ([1, 2, 3], [0, 0, 0], [2, 3]),
+        # Alternating index and min operations
+        ([5, 4, 3, 2, 1], [2, -1, 0, -1], [4]),
+        # Large numbers within constraints
+        ([10**9, -(10**9), 0], [-1, -1], [10**9])
+    ]
+    
+    for nums, operations, want in tests:
+        got = processOperations(nums, operations)
+        assert got == want, f"\nprocessOperations({nums}, {operations}): got: {got}, want: {want}\n"
+
+    print("ALL DELETE OPERATIONS TESTS PROVIDED PASSED.")
+    
 #ALL TESTS
 
 def RunAllSortingTests():
     runSortByFrequencyTests()
     runNestedCirclesTests()
+    runDeleteOperationsTests()
     
     print()
     print("------------------------------------------------")
@@ -150,4 +212,4 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    RunAllSortingTests()
+    runDeleteOperationsTests()
