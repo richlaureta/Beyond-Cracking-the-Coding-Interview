@@ -60,28 +60,30 @@ def processOperations(nums: list[int], operations: list[int]) -> list[int]:
     if len(operations) == 0:
         return nums
     
-    sortedCopy = nums.copy()
-    outputCopy = nums.copy()
-    sortedCopy.sort()
+    numberIndexList = []
+    for index in range(len(nums)):
+        numberIndexList.append((nums[index], index))
     
+    numberIndexList.sort()
     minimumIndex = 0
+    removeIndexSet = set()
     
-    for operation in operations:
-        if operation == -1:
-            try:
-                outputCopy.remove(sortedCopy[minimumIndex])
+    for index in range(len(operations)):
+        if operations[index] == -1:
+            while numberIndexList[minimumIndex][1] in removeIndexSet:
                 minimumIndex += 1
-            except ValueError:
-                pass
+            removeIndexSet.add(numberIndexList[minimumIndex][1])
+            minimumIndex += 1
         else:
-            try:
-                outputCopy.remove(nums[operation])
-                if nums[operation] == nums[minimumIndex]:
-                    minimumIndex += 1
-            except ValueError:
-                pass
+            removeIndexSet.add(operations[index])
     
-    return outputCopy
+    outputNumberList = []
+    
+    for index in range(len(nums)):
+        if index not in removeIndexSet:
+            outputNumberList.append(nums[index])
+            
+    return outputNumberList
 
 #TESTS
 
