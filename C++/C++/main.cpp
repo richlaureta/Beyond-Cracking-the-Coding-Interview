@@ -2070,52 +2070,108 @@ int main(int argc, const char *argv[]) {
     
     //Problem 31.2 - Nested Circles
     
-    std::vector<std::pair<std::vector<Circle>, bool>> tests = {
-          // Example 1 from the book
-          {{{{{4, 4}, 5}, {{8, 4}, 2}}}, false},
-          // Example 2 from the book
-          {{{{{5, 3}, 3}, {{5, 3}, 2}, {{4, 4}, 5}}}, true},
-          // Example 3 from the book
-          {{{{{5, 3}, 3}}}, true},
-          // Edge case - two identical circles
-          {{{{{1, 1}, 2}, {{1, 1}, 2}}}, false},
-          // Edge case - touching circles
-          {{{{{0, 0}, 4}, {{0, 0}, 2}}}, true},
-          // Edge case - empty list
-          {{}, true},
-          // Edge case - negative coordinates
-          {{{{{-5, -3}, 4}, {{-5, -3}, 2}}}, true},
-          // Edge case - negative radius
-          {{{{{0, 0}, -2}}}, true},
-          // Edge case - max coordinate values
-          {{{{{10000, 10000}, 10000}, {{0, 0}, 100}}}, false},
-          // Edge case - min coordinate values
-          {{{{{-10000, -10000}, 10000}, {{0, 0}, 100}}}, false},
-          // Edge case - multiple circles with same center
-          {{{{{1, 1}, 5}, {{1, 1}, 4}, {{1, 1}, 3}, {{1, 1}, 2}}}, true},
-          // Edge case - circles not sorted by radius
-          {{{{{0, 0}, 2}, {{0, 0}, 4}, {{0, 0}, 3}}}, true},
-      };
-
-      for (const auto& [circles, want] : tests) {
-        auto circlesCopy =
-            circles;  // Create a copy since areCirclesNested modifies input
-        bool got = areCirclesNested(circlesCopy);
-        if (got != want) {
-          std::string error = "\nareCirclesNested([";
-          for (size_t i = 0; i < circles.size(); i++) {
-            if (i > 0) error += ", ";
-            error += "((" + std::to_string(circles[i].first.first) + ", " +
-                     std::to_string(circles[i].first.second) + "), " +
-                     std::to_string(circles[i].second) + ")";
-          }
-          error += "]): got: " + std::to_string(got) +
-                   ", want: " + std::to_string(want) + "\n";
-          throw std::runtime_error(error);
-        }
-      }
+//    std::vector<std::pair<std::vector<Circle>, bool>> tests = {
+//          // Example 1 from the book
+//          {{{{{4, 4}, 5}, {{8, 4}, 2}}}, false},
+//          // Example 2 from the book
+//          {{{{{5, 3}, 3}, {{5, 3}, 2}, {{4, 4}, 5}}}, true},
+//          // Example 3 from the book
+//          {{{{{5, 3}, 3}}}, true},
+//          // Edge case - two identical circles
+//          {{{{{1, 1}, 2}, {{1, 1}, 2}}}, false},
+//          // Edge case - touching circles
+//          {{{{{0, 0}, 4}, {{0, 0}, 2}}}, true},
+//          // Edge case - empty list
+//          {{}, true},
+//          // Edge case - negative coordinates
+//          {{{{{-5, -3}, 4}, {{-5, -3}, 2}}}, true},
+//          // Edge case - negative radius
+//          {{{{{0, 0}, -2}}}, true},
+//          // Edge case - max coordinate values
+//          {{{{{10000, 10000}, 10000}, {{0, 0}, 100}}}, false},
+//          // Edge case - min coordinate values
+//          {{{{{-10000, -10000}, 10000}, {{0, 0}, 100}}}, false},
+//          // Edge case - multiple circles with same center
+//          {{{{{1, 1}, 5}, {{1, 1}, 4}, {{1, 1}, 3}, {{1, 1}, 2}}}, true},
+//          // Edge case - circles not sorted by radius
+//          {{{{{0, 0}, 2}, {{0, 0}, 4}, {{0, 0}, 3}}}, true},
+//      };
+//
+//      for (const auto& [circles, want] : tests) {
+//        auto circlesCopy =
+//            circles;  // Create a copy since areCirclesNested modifies input
+//        bool got = areCirclesNested(circlesCopy);
+//        if (got != want) {
+//          std::string error = "\nareCirclesNested([";
+//          for (size_t i = 0; i < circles.size(); i++) {
+//            if (i > 0) error += ", ";
+//            error += "((" + std::to_string(circles[i].first.first) + ", " +
+//                     std::to_string(circles[i].first.second) + "), " +
+//                     std::to_string(circles[i].second) + ")";
+//          }
+//          error += "]): got: " + std::to_string(got) +
+//                   ", want: " + std::to_string(want) + "\n";
+//          throw std::runtime_error(error);
+//        }
+//      }
+//    
+//    cout << "ALL NESTED CIRCLES TESTS PROVIDED PASSED." << endl;
     
-    cout << "ALL NESTED CIRCLES TESTS PROVIDED PASSED." << endl;
+    //Problem 31.3 Delete Operations
+    
+    std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
+        tests = {// Example 1 from the book
+                 {{50, 30, 70, 20, 80}, {2, -1, 4, -1}, {50}},
+                 // Example 2 from the book
+                 {{1, 2, 3}, {}, {1, 2, 3}},
+                 // Example 3 from the book
+                 {{1, 2, 3}, {-1, -1, -1}, {}},
+                 // Edge case - delete all indices
+                 {{1, 2, 3}, {0, 1, 2}, {}},
+                 // Edge case - single element
+                 {{1}, {-1}, {}},
+                 // Edge case - duplicates
+                 {{5, 5, 5}, {-1, -1}, {5}},
+                 // Edge case - negative numbers
+                 {{-3, -2, -1}, {-1, -1}, {-1}},
+                 // Mixed operations with duplicates
+                 {{10, 10, 20, 20}, {1, -1, -1}, {20}},
+                 // Operations targeting same index
+                 {{1, 2, 3}, {0, 0, 0}, {2, 3}},
+                 // Alternating index and min operations
+                 {{5, 4, 3, 2, 1}, {2, -1, 0, -1}, {4}},
+                 // Large numbers within constraints
+                 {{1000000000, -1000000000, 0}, {-1, -1}, {1000000000}}};
+
+    for (const auto& [nums, operations, want] : tests) {
+      auto got = processOperations(nums, operations);
+      if (got != want) {
+        std::string error = "\nprocessOperations([";
+        for (size_t i = 0; i < nums.size(); i++) {
+          if (i > 0) error += ", ";
+          error += std::to_string(nums[i]);
+        }
+        error += "], [";
+        for (size_t i = 0; i < operations.size(); i++) {
+          if (i > 0) error += ", ";
+          error += std::to_string(operations[i]);
+        }
+        error += "]): got: [";
+        for (size_t i = 0; i < got.size(); i++) {
+          if (i > 0) error += ", ";
+          error += std::to_string(got[i]);
+        }
+        error += "], want: [";
+        for (size_t i = 0; i < want.size(); i++) {
+          if (i > 0) error += ", ";
+          error += std::to_string(want[i]);
+        }
+        error += "]\n";
+        throw std::runtime_error(error);
+      }
+    }
+    
+    cout << "ALL DELETE OPERATIONS TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

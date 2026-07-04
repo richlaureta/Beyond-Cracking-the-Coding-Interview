@@ -170,5 +170,6 @@ vector<char> letterOccurrencesLambda(const string &word);
 vector<char> letterOccurrences(const string &word);
 using Circle = pair<pair<double, double>, double>;
 bool areCirclesNested(vector<Circle> &circles);
+vector<int> processOperations(const vector<int> &nums, const vector<int> &operations);
 
 #endif // HEADER_HPP

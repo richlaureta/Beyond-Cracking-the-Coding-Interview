@@ -86,3 +86,37 @@ bool areCirclesNested(vector<Circle> &circles)
     
     return true;
 }
+
+vector<int> processOperations(const vector<int> &nums, const vector<int> &operations)
+{
+    //Problem 31.3 - Delete Operations
+    
+    if((int) operations.size() == 0) return nums;
+    
+    vector<pair<int, int>> numberIndexVector = {};
+    for(int index = 0; index < (int) nums.size(); index++) numberIndexVector.push_back({nums[index], index});
+    
+    sort(numberIndexVector.begin(), numberIndexVector.end());
+    int minimumIndex = 0;
+    unordered_set<int> removeIndexSet = {};
+    
+    for(int index = 0; index < (int) operations.size(); index++)
+    {
+        if(operations[index] == -1)
+        {
+            while(removeIndexSet.find(numberIndexVector[minimumIndex].second) != removeIndexSet.end()) minimumIndex++;
+            removeIndexSet.insert(numberIndexVector[minimumIndex].second);
+            minimumIndex++;
+        }
+        else removeIndexSet.insert(operations[index]);
+    }
+    
+    vector<int> outputNumberVector = {};
+    
+    for(int index = 0; index < (int) nums.size(); index++)
+    {
+        if(removeIndexSet.find(index) == removeIndexSet.end()) outputNumberVector.push_back(nums[index]);
+    }
+    
+    return outputNumberVector;
+}
