@@ -85,6 +85,49 @@ def processOperations(nums: list[int], operations: list[int]) -> list[int]:
             
     return outputNumberList
 
+class Spreadsheet:
+    #Problem 31.4 - Spreadsheet
+    
+    def __init__(self):
+        self.spreadsheetTemplate = None
+    
+    def new(self, rows: int, cols: int):
+        if rows < 1 or rows > 100 or cols < 1 or cols > 100:
+            raise ValueError("Rows and columns have to be more than 0 and less than 101.")
+        
+        self.spreadsheetTemplate = [[0 for square in range(cols)] for row in range(rows)]
+    
+    def set(self, row: int, col: int, value: int):
+        if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
+            raise ValueError("row value or col value are out of range.")
+        
+        self.spreadsheetTemplate[row][col] = value
+    
+    def get(self, row: int, col: int) -> int:
+        if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
+            raise ValueError("row value or col value are out of range.")
+        
+        return self.spreadsheetTemplate[row][col]
+
+    def sortColumnsByRow(self, row: int):
+        if row < 0 or row > len(self.spreadsheetTemplate) - 1:
+            raise ValueError("row value out of range.")
+        
+        self.spreadsheetTemplate[row].sort()
+    
+    def sortRowsByColumn(self, col: int):
+        if col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
+            raise ValueError("col value out of range.")
+        
+        temporaryColumnList = []
+        for index in range(len(self.spreadsheetTemplate)):
+            temporaryColumnList.append(self.spreadsheetTemplate[index][col])
+        
+        temporaryColumnList.sort()
+        
+        for index in range(len(temporaryColumnList)):
+            self.spreadsheetTemplate[index][col] = temporaryColumnList[index]
+    
 #TESTS
 
 def letter_occurrences_lambda(word):
@@ -214,4 +257,13 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    RunAllSortingTests()
+    spreadsheet = Spreadsheet()
+    spreadsheet.new(3, 3)
+    spreadsheet.set(0, 0, 5)
+    spreadsheet.set(0, 1, 3)
+    spreadsheet.set(0, 2, 8)
+    spreadsheet.set(1, 0, 6)
+    spreadsheet.set(2, 1, 1)
+    spreadsheet.sortColumnsByRow(0)
+    spreadsheet.sortRowsByColumn(1)
+    print(spreadsheet.get(1, 1))  # Returns 5
