@@ -1,5 +1,6 @@
 from collections import defaultdict
 from operator import itemgetter
+import copy
 
 def letterOccurrences(word: str) -> list[str]:
     #Problem 31.1 - Sorting by Frequency
@@ -88,8 +89,8 @@ def processOperations(nums: list[int], operations: list[int]) -> list[int]:
 class Spreadsheet:
     #Problem 31.4 - Spreadsheet
     
-    def __init__(self):
-        self.spreadsheetTemplate = None
+    def __init__(self, rows: int, cols: int):
+        self.spreadsheetTemplate = [[0 for square in range(cols)] for row in range(rows)]
     
     def new(self, rows: int, cols: int):
         if rows < 1 or rows > 100 or cols < 1 or cols > 100:
@@ -98,35 +99,68 @@ class Spreadsheet:
         self.spreadsheetTemplate = [[0 for square in range(cols)] for row in range(rows)]
     
     def set(self, row: int, col: int, value: int):
+        if self.spreadsheetTemplate == None:
+            raise ValueError("You have to set a new matrix template using the new() funtion.")
+        
         if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
             raise ValueError("row value or col value are out of range.")
         
         self.spreadsheetTemplate[row][col] = value
     
     def get(self, row: int, col: int) -> int:
+        if self.spreadsheetTemplate == None:
+            raise ValueError("You have to set a new matrix template using the new() funtion.")
+        
         if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
             raise ValueError("row value or col value are out of range.")
         
         return self.spreadsheetTemplate[row][col]
 
     def sortColumnsByRow(self, row: int):
+        if self.spreadsheetTemplate == None:
+            raise ValueError("You have to set a new matrix template using the new() funtion.")
+        
         if row < 0 or row > len(self.spreadsheetTemplate) - 1:
             raise ValueError("row value out of range.")
         
-        self.spreadsheetTemplate[row].sort()
-    
+        columnSortList = []
+        for index in range(len(self.spreadsheetTemplate[row])):
+            columnSortList.append((self.spreadsheetTemplate[row][index], index))
+        
+        columnSortList.sort()
+        
+        temporaryCopySpreadsheet = copy.deepcopy(self.spreadsheetTemplate)
+        
+        columnIndex = 0
+        for value, index in columnSortList:
+            for index1 in range(len(self.spreadsheetTemplate)):
+                self.spreadsheetTemplate[index1][columnIndex] = temporaryCopySpreadsheet[index1][index]
+            columnIndex += 1
+
+        del temporaryCopySpreadsheet
+
     def sortRowsByColumn(self, col: int):
+        if self.spreadsheetTemplate == None:
+            raise ValueError("You have to set a new matrix template using the new() funtion.")
+        
         if col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
             raise ValueError("col value out of range.")
         
-        temporaryColumnList = []
+        rowSortList = []
         for index in range(len(self.spreadsheetTemplate)):
-            temporaryColumnList.append(self.spreadsheetTemplate[index][col])
+            rowSortList.append((self.spreadsheetTemplate[index][col], index))
         
-        temporaryColumnList.sort()
+        rowSortList.sort()
         
-        for index in range(len(temporaryColumnList)):
-            self.spreadsheetTemplate[index][col] = temporaryColumnList[index]
+        temporayCopySpreadsheet = copy.deepcopy(self.spreadsheetTemplate)
+        
+        rowIndex = 0
+        for value, index in rowSortList:
+            for index1 in range(len(self.spreadsheetTemplate[index])):
+                self.spreadsheetTemplate[rowIndex][index1] = temporayCopySpreadsheet[index][index1]
+            rowIndex += 1
+        
+        del temporayCopySpreadsheet
     
 #TESTS
 
@@ -243,13 +277,60 @@ def runDeleteOperationsTests():
         assert got == want, f"\nprocessOperations({nums}, {operations}): got: {got}, want: {want}\n"
 
     print("ALL DELETE OPERATIONS TESTS PROVIDED PASSED.")
+
+def runSpreadsheetTests():
+    tests = [
+        # Example from the book
+        (lambda s: [
+            s.new(3, 3),
+            s.set(0, 0, 5),
+            s.set(0, 1, 3),
+            s.set(0, 2, 8),
+            s.set(1, 0, 6),
+            s.set(2, 1, 1),
+            s.sortColumnsByRow(0),
+            s.sortRowsByColumn(1)
+        ], [
+            [1, 0, 0],
+            [3, 5, 8],
+            [0, 6, 0],
+        ]),
+        # Edge case - 1x1 spreadsheet
+        (lambda s: [
+            s.new(1, 1),
+            s.set(0, 0, 42)
+        ], [
+            [42],
+        ]),
+        # Edge case - sort empty rows
+        (lambda s: [
+            s.new(3, 2),
+            s.sortRowsByColumn(0)
+        ], [
+            [0, 0],
+            [0, 0],
+            [0, 0],
+        ]),
+    ]
     
+    for operations, want in tests:
+        s = Spreadsheet(0, 0)
+        operations(s)
+        for r in range(len(want)):
+            for c in range(len(want[0])):
+                got = s.get(r, c)
+                expect = want[r][c]
+                assert got == expect, f"\nget({r}, {c}): got: {got}, want: {expect}\n"
+    
+    print("ALL SPREADSHEET TESTS PROVIDED PASSED.")
+
 #ALL TESTS
 
 def RunAllSortingTests():
     runSortByFrequencyTests()
     runNestedCirclesTests()
     runDeleteOperationsTests()
+    runSpreadsheetTests()
     
     print()
     print("------------------------------------------------")
@@ -257,13 +338,4 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    spreadsheet = Spreadsheet()
-    spreadsheet.new(3, 3)
-    spreadsheet.set(0, 0, 5)
-    spreadsheet.set(0, 1, 3)
-    spreadsheet.set(0, 2, 8)
-    spreadsheet.set(1, 0, 6)
-    spreadsheet.set(2, 1, 1)
-    spreadsheet.sortColumnsByRow(0)
-    spreadsheet.sortRowsByColumn(1)
-    print(spreadsheet.get(1, 1))  # Returns 5
+    runSpreadsheetTests()
