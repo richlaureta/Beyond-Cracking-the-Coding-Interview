@@ -89,7 +89,7 @@ def processOperations(nums: list[int], operations: list[int]) -> list[int]:
 class Spreadsheet:
     #Problem 31.4 - Spreadsheet
     
-    def __init__(self, rows: int, cols: int):
+    def __init__(self, rows: int = 0, cols: int = 0):
         self.spreadsheetTemplate = [[0 for square in range(cols)] for row in range(rows)]
     
     def new(self, rows: int, cols: int):
@@ -99,7 +99,7 @@ class Spreadsheet:
         self.spreadsheetTemplate = [[0 for square in range(cols)] for row in range(rows)]
     
     def set(self, row: int, col: int, value: int):
-        if self.spreadsheetTemplate == None:
+        if self.spreadsheetTemplate == []:
             raise ValueError("You have to set a new matrix template using the new() funtion.")
         
         if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
@@ -108,7 +108,7 @@ class Spreadsheet:
         self.spreadsheetTemplate[row][col] = value
     
     def get(self, row: int, col: int) -> int:
-        if self.spreadsheetTemplate == None:
+        if self.spreadsheetTemplate == []:
             raise ValueError("You have to set a new matrix template using the new() funtion.")
         
         if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
@@ -117,7 +117,7 @@ class Spreadsheet:
         return self.spreadsheetTemplate[row][col]
 
     def sortColumnsByRow(self, row: int):
-        if self.spreadsheetTemplate == None:
+        if self.spreadsheetTemplate == []:
             raise ValueError("You have to set a new matrix template using the new() funtion.")
         
         if row < 0 or row > len(self.spreadsheetTemplate) - 1:
@@ -140,7 +140,7 @@ class Spreadsheet:
         del temporaryCopySpreadsheet
 
     def sortRowsByColumn(self, col: int):
-        if self.spreadsheetTemplate == None:
+        if self.spreadsheetTemplate == []:
             raise ValueError("You have to set a new matrix template using the new() funtion.")
         
         if col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
@@ -338,4 +338,4 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    runSpreadsheetTests()
+    RunAllSortingTests()
