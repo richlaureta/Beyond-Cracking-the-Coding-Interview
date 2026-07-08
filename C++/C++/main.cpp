@@ -2119,59 +2119,138 @@ int main(int argc, const char *argv[]) {
     
     //Problem 31.3 Delete Operations
     
-    std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
-        tests = {// Example 1 from the book
-                 {{50, 30, 70, 20, 80}, {2, -1, 4, -1}, {50}},
-                 // Example 2 from the book
-                 {{1, 2, 3}, {}, {1, 2, 3}},
-                 // Example 3 from the book
-                 {{1, 2, 3}, {-1, -1, -1}, {}},
-                 // Edge case - delete all indices
-                 {{1, 2, 3}, {0, 1, 2}, {}},
-                 // Edge case - single element
-                 {{1}, {-1}, {}},
-                 // Edge case - duplicates
-                 {{5, 5, 5}, {-1, -1}, {5}},
-                 // Edge case - negative numbers
-                 {{-3, -2, -1}, {-1, -1}, {-1}},
-                 // Mixed operations with duplicates
-                 {{10, 10, 20, 20}, {1, -1, -1}, {20}},
-                 // Operations targeting same index
-                 {{1, 2, 3}, {0, 0, 0}, {2, 3}},
-                 // Alternating index and min operations
-                 {{5, 4, 3, 2, 1}, {2, -1, 0, -1}, {4}},
-                 // Large numbers within constraints
-                 {{1000000000, -1000000000, 0}, {-1, -1}, {1000000000}}};
+//    std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
+//        tests = {// Example 1 from the book
+//                 {{50, 30, 70, 20, 80}, {2, -1, 4, -1}, {50}},
+//                 // Example 2 from the book
+//                 {{1, 2, 3}, {}, {1, 2, 3}},
+//                 // Example 3 from the book
+//                 {{1, 2, 3}, {-1, -1, -1}, {}},
+//                 // Edge case - delete all indices
+//                 {{1, 2, 3}, {0, 1, 2}, {}},
+//                 // Edge case - single element
+//                 {{1}, {-1}, {}},
+//                 // Edge case - duplicates
+//                 {{5, 5, 5}, {-1, -1}, {5}},
+//                 // Edge case - negative numbers
+//                 {{-3, -2, -1}, {-1, -1}, {-1}},
+//                 // Mixed operations with duplicates
+//                 {{10, 10, 20, 20}, {1, -1, -1}, {20}},
+//                 // Operations targeting same index
+//                 {{1, 2, 3}, {0, 0, 0}, {2, 3}},
+//                 // Alternating index and min operations
+//                 {{5, 4, 3, 2, 1}, {2, -1, 0, -1}, {4}},
+//                 // Large numbers within constraints
+//                 {{1000000000, -1000000000, 0}, {-1, -1}, {1000000000}}};
+//
+//    for (const auto& [nums, operations, want] : tests) {
+//      auto got = processOperations(nums, operations);
+//      if (got != want) {
+//        std::string error = "\nprocessOperations([";
+//        for (size_t i = 0; i < nums.size(); i++) {
+//          if (i > 0) error += ", ";
+//          error += std::to_string(nums[i]);
+//        }
+//        error += "], [";
+//        for (size_t i = 0; i < operations.size(); i++) {
+//          if (i > 0) error += ", ";
+//          error += std::to_string(operations[i]);
+//        }
+//        error += "]): got: [";
+//        for (size_t i = 0; i < got.size(); i++) {
+//          if (i > 0) error += ", ";
+//          error += std::to_string(got[i]);
+//        }
+//        error += "], want: [";
+//        for (size_t i = 0; i < want.size(); i++) {
+//          if (i > 0) error += ", ";
+//          error += std::to_string(want[i]);
+//        }
+//        error += "]\n";
+//        throw std::runtime_error(error);
+//      }
+//    }
+//    
+//    cout << "ALL DELETE OPERATIONS TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 31.4 - Spreadsheet
+    
+    {
+      Spreadsheet s(0, 0);
+      s.newSheet(3, 3);
+      s.set(0, 0, 5);
+      s.set(0, 1, 3);
+      s.set(0, 2, 8);
+      s.set(1, 0, 6);
+      s.set(2, 1, 1);
+      s.sortColumnsByRow(0);
+      s.sortRowsByColumn(1);
+      std::vector<std::vector<int>> want = {
+          {1, 0, 0},
+          {3, 5, 8},
+          {0, 6, 0},
+      };
+      for (int r = 0; r < want.size(); r++) {
+        for (int c = 0; c < want[0].size(); c++) {
+          int got = s.get(r, c);
+          int expect = want[r][c];
+          if (got != expect) {
+            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
+                                     std::to_string(c) + "): got: " +
+                                     std::to_string(got) + ", want: " +
+                                     std::to_string(expect) + "\n");
+          }
+        }
+      }
+    }
 
-    for (const auto& [nums, operations, want] : tests) {
-      auto got = processOperations(nums, operations);
-      if (got != want) {
-        std::string error = "\nprocessOperations([";
-        for (size_t i = 0; i < nums.size(); i++) {
-          if (i > 0) error += ", ";
-          error += std::to_string(nums[i]);
+    // Edge case - 1x1 spreadsheet
+    {
+      Spreadsheet s(0, 0);
+      s.newSheet(1, 1);
+      s.set(0, 0, 42);
+      std::vector<std::vector<int>> want = {
+          {42},
+      };
+      for (int r = 0; r < want.size(); r++) {
+        for (int c = 0; c < want[0].size(); c++) {
+          int got = s.get(r, c);
+          int expect = want[r][c];
+          if (got != expect) {
+            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
+                                     std::to_string(c) + "): got: " +
+                                     std::to_string(got) + ", want: " +
+                                     std::to_string(expect) + "\n");
+          }
         }
-        error += "], [";
-        for (size_t i = 0; i < operations.size(); i++) {
-          if (i > 0) error += ", ";
-          error += std::to_string(operations[i]);
+      }
+    }
+
+    // Edge case - sort empty rows
+    {
+      Spreadsheet s(0, 0);
+      s.newSheet(3, 2);
+      s.sortRowsByColumn(0);
+      std::vector<std::vector<int>> want = {
+          {0, 0},
+          {0, 0},
+          {0, 0},
+      };
+      for (int r = 0; r < want.size(); r++) {
+        for (int c = 0; c < want[0].size(); c++) {
+          int got = s.get(r, c);
+          int expect = want[r][c];
+          if (got != expect) {
+            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
+                                     std::to_string(c) + "): got: " +
+                                     std::to_string(got) + ", want: " +
+                                     std::to_string(expect) + "\n");
+          }
         }
-        error += "]): got: [";
-        for (size_t i = 0; i < got.size(); i++) {
-          if (i > 0) error += ", ";
-          error += std::to_string(got[i]);
-        }
-        error += "], want: [";
-        for (size_t i = 0; i < want.size(); i++) {
-          if (i > 0) error += ", ";
-          error += std::to_string(want[i]);
-        }
-        error += "]\n";
-        throw std::runtime_error(error);
       }
     }
     
-    cout << "ALL DELETE OPERATIONS TESTS PROVIDED PASSED." << endl;
+    cout << "ALL SPREADSHEET TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

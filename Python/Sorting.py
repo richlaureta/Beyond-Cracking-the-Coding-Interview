@@ -100,7 +100,7 @@ class Spreadsheet:
     
     def set(self, row: int, col: int, value: int):
         if self.spreadsheetTemplate == []:
-            raise ValueError("You have to set a new matrix template using the new() funtion.")
+            raise ValueError("You have to set a new matrix template using the new() function.")
         
         if row < 0 or row > len(self.spreadsheetTemplate) - 1 or col < 0 or col > len(self.spreadsheetTemplate[0]) - 1:
             raise ValueError("row value or col value are out of range.")

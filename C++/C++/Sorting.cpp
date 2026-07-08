@@ -120,3 +120,105 @@ vector<int> processOperations(const vector<int> &nums, const vector<int> &operat
     
     return outputNumberVector;
 }
+
+Spreadsheet::Spreadsheet(int rows, int cols)
+{
+    //Problem 31.4 - Spreadsheet
+    
+    spreadsheetTemplate = vector<vector<int>>(rows, vector<int>(cols, 0));
+}
+
+void Spreadsheet::newSheet(int rows , int cols)
+{
+    //Problem 31.4 - Spreadsheet
+    
+    if(rows < 1 or rows > 100 or cols < 1 or cols > 100) throw invalid_argument("Rows and columns have to be more than 0 and less than 101.");
+    
+    spreadsheetTemplate = vector<vector<int>>(rows, vector<int>(cols, 0));
+}
+
+void Spreadsheet::set(int row, int col, int value)
+{
+    //Problem 31.4 - Spreadsheet
+    
+    if(spreadsheetTemplate.empty()) throw invalid_argument("You have to set a new matrix template using the newSheet() function.");
+    
+    if(row < 0 or row > (int) spreadsheetTemplate.size() - 1 or col < 0 or col > (int) spreadsheetTemplate[0].size() - 1)
+    {
+        throw invalid_argument("row value or col value are out of range.");
+    }
+    
+    spreadsheetTemplate[row][col] = value;
+}
+
+int Spreadsheet::get(int row, int col)
+{
+    //Problem 31.4 Spreadsheet
+    
+    if(spreadsheetTemplate.empty()) throw invalid_argument("You have to set a new matrix template using the newSheet() function.");
+    
+    if(row < 0 or row > (int) spreadsheetTemplate.size() - 1 or col < 0 or col > (int) spreadsheetTemplate[0].size() - 1)
+    {
+        throw invalid_argument("row value or col value are out of range.");
+    }
+    
+    return spreadsheetTemplate[row][col];
+}
+
+void Spreadsheet::sortColumnsByRow(int row)
+{
+    //Problem 31.4 - Spreadsheet
+    
+    if(spreadsheetTemplate.empty()) throw invalid_argument("You have to set a new matrix template using the newSheet() function.");
+    
+    if(row < 0 or row > (int) spreadsheetTemplate.size() - 1)
+    {
+        throw invalid_argument("row value out of range.");
+    }
+    
+    vector<pair<int, int>> columnSortList = {};
+    for(int index = 0; index < (int) spreadsheetTemplate[row].size(); index++) columnSortList.push_back({spreadsheetTemplate[row][index], index});
+    
+    sort(columnSortList.begin(), columnSortList.end());
+    
+    vector<vector<int>> temporaryCopySpreadsheet = spreadsheetTemplate;
+    
+    int columnIndex = 0;
+    for(pair<int, int> valueIndex: columnSortList)
+    {
+        for(int index1 = 0; index1 < (int) spreadsheetTemplate.size(); index1++)
+        {
+            spreadsheetTemplate[index1][columnIndex] = temporaryCopySpreadsheet[index1][valueIndex.second];
+        }
+        columnIndex++;
+    }
+}
+
+void Spreadsheet::sortRowsByColumn(int col)
+{
+    //Problem 31.4  - Spreadsheet
+    
+    if(spreadsheetTemplate.empty()) throw invalid_argument("You have to set a new matrix template using the newSheet() function.");
+    
+    if(col < 0 or col > (int) spreadsheetTemplate[0].size() - 1)
+    {
+        throw invalid_argument("col value out of range.");
+    }
+    
+    vector<pair<int, int>> rowSortList = {};
+    for(int index = 0; index < (int) spreadsheetTemplate.size(); index++) rowSortList.push_back({spreadsheetTemplate[index][col], index});
+    
+    sort(rowSortList.begin(), rowSortList.end());
+    
+    vector<vector<int>> temporaryCopySpreadsheet = spreadsheetTemplate;
+    
+    int rowIndex = 0;
+    for(pair<int, int> valueIndex: rowSortList)
+    {
+        for(int index1 = 0; index1 < (int) spreadsheetTemplate[valueIndex.second].size(); index1++)
+        {
+            spreadsheetTemplate[rowIndex][index1] = temporaryCopySpreadsheet[valueIndex.second][index1];
+        }
+        rowIndex++;
+    }
+}
