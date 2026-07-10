@@ -1,6 +1,7 @@
 from collections import defaultdict
 from operator import itemgetter
 import copy
+from operator import attrgetter
 
 def letterOccurrences(word: str) -> list[str]:
     #Problem 31.1 - Sorting by Frequency
@@ -175,18 +176,10 @@ class Book:
 def bucketSort(books: list[Book]) -> list[Book]:
     #Problem 31.5 - Sort by Publication Year
     
-    publicationYearSortList = []
-    index = 0
-    for book in books:
-        publicationYearSortList.append([book.year_published, index])
-        index += 1
-    publicationYearSortList.sort()
+    sortedByYearBooks = sorted(books, key=attrgetter('year_published'))
     
-    sortedByPublicationYearList = []
-    for yearPublished, index in publicationYearSortList:
-        sortedByPublicationYearList.append(books[index])
-    
-    return sortedByPublicationYearList
+    return sortedByYearBooks
+
 #TESTS
 
 def letter_occurrences_lambda(word):
@@ -409,4 +402,4 @@ def RunAllSortingTests():
     print("------------------------------------------------")
   
 if __name__ == "__main__":
-    RunAllSortingTests()
+    runSortByPublicationYearTests()
