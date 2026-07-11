@@ -2174,83 +2174,177 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL DELETE OPERATIONS TESTS PROVIDED PASSED." << endl;
     
     //Problem 31.4 - Spreadsheet
+//    
+//    {
+//      Spreadsheet s(0, 0);
+//      s.newSheet(3, 3);
+//      s.set(0, 0, 5);
+//      s.set(0, 1, 3);
+//      s.set(0, 2, 8);
+//      s.set(1, 0, 6);
+//      s.set(2, 1, 1);
+//      s.sortColumnsByRow(0);
+//      s.sortRowsByColumn(1);
+//      std::vector<std::vector<int>> want = {
+//          {1, 0, 0},
+//          {3, 5, 8},
+//          {0, 6, 0},
+//      };
+//      for (int r = 0; r < want.size(); r++) {
+//        for (int c = 0; c < want[0].size(); c++) {
+//          int got = s.get(r, c);
+//          int expect = want[r][c];
+//          if (got != expect) {
+//            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
+//                                     std::to_string(c) + "): got: " +
+//                                     std::to_string(got) + ", want: " +
+//                                     std::to_string(expect) + "\n");
+//          }
+//        }
+//      }
+//    }
+//
+//    // Edge case - 1x1 spreadsheet
+//    {
+//      Spreadsheet s(0, 0);
+//      s.newSheet(1, 1);
+//      s.set(0, 0, 42);
+//      std::vector<std::vector<int>> want = {
+//          {42},
+//      };
+//      for (int r = 0; r < want.size(); r++) {
+//        for (int c = 0; c < want[0].size(); c++) {
+//          int got = s.get(r, c);
+//          int expect = want[r][c];
+//          if (got != expect) {
+//            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
+//                                     std::to_string(c) + "): got: " +
+//                                     std::to_string(got) + ", want: " +
+//                                     std::to_string(expect) + "\n");
+//          }
+//        }
+//      }
+//    }
+//
+//    // Edge case - sort empty rows
+//    {
+//      Spreadsheet s(0, 0);
+//      s.newSheet(3, 2);
+//      s.sortRowsByColumn(0);
+//      std::vector<std::vector<int>> want = {
+//          {0, 0},
+//          {0, 0},
+//          {0, 0},
+//      };
+//      for (int r = 0; r < want.size(); r++) {
+//        for (int c = 0; c < want[0].size(); c++) {
+//          int got = s.get(r, c);
+//          int expect = want[r][c];
+//          if (got != expect) {
+//            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
+//                                     std::to_string(c) + "): got: " +
+//                                     std::to_string(got) + ", want: " +
+//                                     std::to_string(expect) + "\n");
+//          }
+//        }
+//      }
+//    }
+//    
+//    cout << "ALL SPREADSHEET TESTS PROVIDED PASSED." << endl;
     
-    {
-      Spreadsheet s(0, 0);
-      s.newSheet(3, 3);
-      s.set(0, 0, 5);
-      s.set(0, 1, 3);
-      s.set(0, 2, 8);
-      s.set(1, 0, 6);
-      s.set(2, 1, 1);
-      s.sortColumnsByRow(0);
-      s.sortRowsByColumn(1);
-      std::vector<std::vector<int>> want = {
-          {1, 0, 0},
-          {3, 5, 8},
-          {0, 6, 0},
-      };
-      for (int r = 0; r < want.size(); r++) {
-        for (int c = 0; c < want[0].size(); c++) {
-          int got = s.get(r, c);
-          int expect = want[r][c];
-          if (got != expect) {
-            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
-                                     std::to_string(c) + "): got: " +
-                                     std::to_string(got) + ", want: " +
-                                     std::to_string(expect) + "\n");
-          }
-        }
-      }
-    }
-
-    // Edge case - 1x1 spreadsheet
-    {
-      Spreadsheet s(0, 0);
-      s.newSheet(1, 1);
-      s.set(0, 0, 42);
-      std::vector<std::vector<int>> want = {
-          {42},
-      };
-      for (int r = 0; r < want.size(); r++) {
-        for (int c = 0; c < want[0].size(); c++) {
-          int got = s.get(r, c);
-          int expect = want[r][c];
-          if (got != expect) {
-            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
-                                     std::to_string(c) + "): got: " +
-                                     std::to_string(got) + ", want: " +
-                                     std::to_string(expect) + "\n");
-          }
-        }
-      }
-    }
-
-    // Edge case - sort empty rows
-    {
-      Spreadsheet s(0, 0);
-      s.newSheet(3, 2);
-      s.sortRowsByColumn(0);
-      std::vector<std::vector<int>> want = {
-          {0, 0},
-          {0, 0},
-          {0, 0},
-      };
-      for (int r = 0; r < want.size(); r++) {
-        for (int c = 0; c < want[0].size(); c++) {
-          int got = s.get(r, c);
-          int expect = want[r][c];
-          if (got != expect) {
-            throw std::runtime_error("\nget(" + std::to_string(r) + ", " +
-                                     std::to_string(c) + "): got: " +
-                                     std::to_string(got) + ", want: " +
-                                     std::to_string(expect) + "\n");
-          }
-        }
-      }
-    }
+    //Problem 31.5 - Sort by Publication Year
     
-    cout << "ALL SPREADSHEET TESTS PROVIDED PASSED." << endl;
+    std::vector<std::pair<std::vector<Book>, std::vector<int>>> tests = {
+        // Example from the book
+        {
+          {
+            Book("Shadow of Tomorrow", "Elliot Greyson", 350, "Science Fiction", 2020),
+            Book("Whispers in the Wind", "Lila Hart", 280, "Romance", 2018),
+            Book("Echoes of Eternity", "Mara Vance", 420, "Fantasy", 2018),
+            Book("Fragments of Dawn", "Cora Blake", 310, "Mystery", 2019),
+            Book("Beneath the Starlit Sky", "Aria Monroe", 270, "Drama", 2020)
+          },
+          {2018, 2018, 2019, 2020, 2020}
+        },
+        // Edge case - empty list
+        {{}, {}},
+        // Edge case - single book
+        {{Book("Solo", "Author", 100, "Genre", 2000)}, {2000}},
+        // Multiple books with the same year
+        {
+          {
+            Book("A", "Author1", 100, "Genre", 2000),
+            Book("B", "Author2", 200, "Genre", 2000)
+          },
+          {2000, 2000}
+        },
+        // Reverse sorted years
+        {
+          {
+            Book("A", "Author1", 100, "Genre", 2020),
+            Book("B", "Author2", 200, "Genre", 2019),
+            Book("C", "Author3", 300, "Genre", 2018)
+          },
+          {2018, 2019, 2020}
+        },
+        // Large gap between years
+        {
+          {
+            Book("A", "Author1", 100, "Genre", 1000),
+            Book("B", "Author2", 200, "Genre", 2025)
+          },
+          {1000, 2025}
+        },
+        // Many books same year
+        {
+          std::vector<Book>{10, Book("Book0", "Author0", 100, "Genre", 2000)},
+          std::vector<int>(10, 2000)
+        }
+      };
+
+      for (const auto& [books, wantYears] : tests) {
+        auto got = bucketSort(books);
+        std::vector<int> gotYears;
+        for (const auto& book : got) {
+          gotYears.push_back(book.yearPublished);
+        }
+        if (gotYears != wantYears) {
+          std::string error = "\nbucketSort([";
+          for (size_t i = 0; i < books.size(); i++) {
+            if (i > 0) error += ", ";
+            error += books[i].title;
+          }
+          error += "]): got years: [";
+          for (size_t i = 0; i < gotYears.size(); i++) {
+            if (i > 0) error += ", ";
+            error += std::to_string(gotYears[i]);
+          }
+          error += "], want years: [";
+          for (size_t i = 0; i < wantYears.size(); i++) {
+            if (i > 0) error += ", ";
+            error += std::to_string(wantYears[i]);
+          }
+          error += "]\n";
+          throw std::runtime_error(error);
+        }
+
+        // Verify that all books are preserved
+        if (got.size() != books.size()) {
+          throw std::runtime_error("\nbucketSort: got length " +
+                                 std::to_string(got.size()) +
+                                 ", want length " +
+                                 std::to_string(books.size()) + "\n");
+        }
+
+        std::unordered_set<std::string> gotTitles, wantTitles;
+        for (const auto& book : got) gotTitles.insert(book.title);
+        for (const auto& book : books) wantTitles.insert(book.title);
+        if (gotTitles != wantTitles) {
+          throw std::runtime_error("\nbucketSort: some books were lost or duplicated\n");
+        }
+      }
+    
+    cout << "ALL SORT BY PUBLICATION YEAR TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

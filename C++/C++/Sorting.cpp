@@ -222,3 +222,24 @@ void Spreadsheet::sortRowsByColumn(int col)
         rowIndex++;
     }
 }
+
+Book::Book(string title, string author, int pageCount, string genre, int yearPublished) :
+title(title), author(author), pageCount(pageCount), genre(genre), yearPublished(yearPublished){}
+
+vector<Book> bucketSort(const vector<Book> &books)
+{
+    //Problem 31.5 - Sort by Publication Year
+    
+    vector<pair<int, int>> yearIndexSort;
+    for(int index = 0; index < (int) books.size(); index++)
+    {
+        yearIndexSort.push_back({books[index].yearPublished, index});
+    }
+    
+    sort(yearIndexSort.begin(), yearIndexSort.end());
+    
+    vector<Book> sortedByPublicationYear;
+    for(pair<int, int> yearIndex: yearIndexSort) sortedByPublicationYear.push_back(books[yearIndex.second]);
+    
+    return sortedByPublicationYear;
+}

@@ -183,5 +183,17 @@ public:
     void sortColumnsByRow(int row);
     void sortRowsByColumn(int col);
 };
+class Book
+{
+public:
+    string title;
+    string author;
+    int pageCount;
+    string genre;
+    int yearPublished;
+    
+    Book(string title, string author, int pageCount, string genre, int yearPublished);
+};
+vector<Book> bucketSort(const vector<Book> &books);
 
 #endif // HEADER_HPP
