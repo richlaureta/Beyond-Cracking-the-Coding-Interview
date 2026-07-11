@@ -2302,7 +2302,7 @@ int main(int argc, const char *argv[]) {
         }
       };
 
-      for (const auto& [books, wantYears] : tests) {
+      for ( auto& [books, wantYears] : tests) {
         auto got = bucketSort(books);
         std::vector<int> gotYears;
         for (const auto& book : got) {

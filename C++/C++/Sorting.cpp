@@ -230,16 +230,12 @@ vector<Book> bucketSort(const vector<Book> &books)
 {
     //Problem 31.5 - Sort by Publication Year
     
-    vector<pair<int, int>> yearIndexSort;
-    for(int index = 0; index < (int) books.size(); index++)
+    vector<Book> sortedByPublicationYear = books;
+    
+    sort(sortedByPublicationYear.begin(), sortedByPublicationYear.end(), [](const Book &a, const Book &b)
     {
-        yearIndexSort.push_back({books[index].yearPublished, index});
-    }
-    
-    sort(yearIndexSort.begin(), yearIndexSort.end());
-    
-    vector<Book> sortedByPublicationYear;
-    for(pair<int, int> yearIndex: yearIndexSort) sortedByPublicationYear.push_back(books[yearIndex.second]);
+        return a.yearPublished < b.yearPublished;
+    });
     
     return sortedByPublicationYear;
 }
