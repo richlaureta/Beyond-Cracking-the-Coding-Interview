@@ -16,6 +16,7 @@
 #include <vector>
 #include <climits>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -195,5 +196,12 @@ public:
     Book(string title, string author, int pageCount, string genre, int yearPublished);
 };
 vector<Book> bucketSort(const vector<Book> &books);
+std::vector<int> firstKMinHeap(std::vector<int> arr, int k);
+std::vector<int> firstKMaxHeap(const std::vector<int>& arr, int k);
+std::tuple<std::vector<int>, std::vector<int>, std::vector<int>> partition(
+                                                                           const std::vector<int>& arr);
+std::vector<int> firstKQuickselect(const std::vector<int>& arr, int k);
+int quickselect(const std::vector<int>& arr, int k);
+vector<int> firstKSorting(vector<int> arr, int k);
 
 #endif // HEADER_HPP

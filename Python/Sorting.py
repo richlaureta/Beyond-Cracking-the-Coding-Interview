@@ -1,7 +1,7 @@
 from collections import defaultdict
 from operator import itemgetter
-import copy
 from operator import attrgetter
+import copy
 import heapq
 import random
 

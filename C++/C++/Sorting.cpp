@@ -239,3 +239,102 @@ vector<Book> bucketSort(const vector<Book> &books)
     
     return sortedByPublicationYear;
 }
+
+std::vector<int> firstKMinHeap(std::vector<int> arr, int k) {
+    //Part of the 31.6 - First K Problem.
+    
+  std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap(
+      arr.begin(), arr.end());
+
+  std::vector<int> result;
+  for (int i = 0; i < k; i++) {
+    result.push_back(minHeap.top());
+    minHeap.pop();
+  }
+  return result;
+}
+
+std::vector<int> firstKMaxHeap(const std::vector<int>& arr, int k) {
+    //Part of the 31.6 - First K Problem.
+    
+  std::priority_queue<int> maxHeap;
+  for (int num : arr) {
+    maxHeap.push(num);
+    if (maxHeap.size() > static_cast<size_t>(k)) {
+      maxHeap.pop();
+    }
+  }
+
+  std::vector<int> result;
+  while (!maxHeap.empty()) {
+    result.push_back(maxHeap.top());
+    maxHeap.pop();
+  }
+  return result;
+}
+
+std::tuple<std::vector<int>, std::vector<int>, std::vector<int>> partition(
+    const std::vector<int>& arr) {
+    //Part of the 31.6 - First K Problem.
+    
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  std::uniform_int_distribution<size_t> dis(0, arr.size() - 1);
+  int pivot = arr[dis(gen)];
+
+  std::vector<int> smaller, equal, larger;
+  for (int x : arr) {
+    if (x < pivot) {
+      smaller.push_back(x);
+    } else if (x == pivot) {
+      equal.push_back(x);
+    } else {
+      larger.push_back(x);
+    }
+  }
+  return std::make_tuple(smaller, equal, larger);
+}
+
+int quickselect(const std::vector<int>& arr, int k) {
+    //Part of the 31.6 - First K Problem.
+    
+  auto [smaller, equal, larger] = partition(arr);
+  int S = (int) smaller.size();
+  int E = (int) equal.size();
+
+  if (k <= S) {
+    return quickselect(smaller, k);
+  } else if (k <= S + E) {
+    return equal[0];
+  } else {
+    return quickselect(larger, k - S - E);
+  }
+}
+
+std::vector<int> firstKQuickselect(const std::vector<int>& arr, int k) {
+    //Part of the 31.6 - First K Problem.
+    
+  if (arr.empty()) {
+    return {};
+  }
+
+  int kthVal = quickselect(arr, k);
+  std::vector<int> result;
+  for (int x : arr) {
+    if (x <= kthVal) {
+      result.push_back(x);
+    }
+  }
+  return result;
+}
+
+
+vector<int> firstKSorting(vector<int> arr, int k)
+{
+    //Problem 31.6 - First K
+    
+    sort(arr.begin(), arr.end());
+    
+    return vector<int>(arr.begin(), arr.begin() + k);
+}
+
