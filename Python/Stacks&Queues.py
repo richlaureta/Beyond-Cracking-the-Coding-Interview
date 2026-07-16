@@ -70,4 +70,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_compress_array_tests()
+    Run_All_Stacks_And_Queues_Tests()

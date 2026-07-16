@@ -2348,71 +2348,100 @@ int main(int argc, const char *argv[]) {
     
     //Problem 31.6 - First K
     
-    std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
-          // Example from the book
-          std::make_tuple(
-              std::vector<int>{15, 4, 13, 8, 10, 5, 2, 20, 3, 9, 11, 27}, 5,
-              std::vector<int>{2, 3, 4, 5, 8}),
-          // Edge case - k = 1
-          std::make_tuple(std::vector<int>{5, 2, 1, 3, 4}, 1, std::vector<int>{1}),
-          // Edge case - k = length of array
-          std::make_tuple(std::vector<int>{3, 1, 2}, 3, std::vector<int>{1, 2, 3}),
-          // Edge case - array of length 1
-          std::make_tuple(std::vector<int>{42}, 1, std::vector<int>{42}),
-          // Reverse sorted array
-          std::make_tuple(std::vector<int>{5, 4, 3, 2, 1}, 4,
-                          std::vector<int>{1, 2, 3, 4}),
-          // Already sorted array
-          std::make_tuple(std::vector<int>{1, 2, 3, 4, 5}, 3,
-                          std::vector<int>{1, 2, 3}),
-          // Edge case - empty array
-          std::make_tuple(std::vector<int>{}, 0, std::vector<int>{}),
-          // Array with negative numbers
-          std::make_tuple(std::vector<int>{-3, -1, -4, -2}, 3,
-                          std::vector<int>{-4, -3, -2}),
-          // Mix of positive and negative
-          std::make_tuple(std::vector<int>{-5, 3, -2, 8, -1}, 4,
-                          std::vector<int>{-5, -2, -1, 3}),
-          // Large numbers
-          std::make_tuple(std::vector<int>{1000000000, -1000000000, 0}, 2,
-                          std::vector<int>{-1000000000, 0})};
-
-      std::vector<std::pair<std::string,
-                            std::function<std::vector<int>(std::vector<int>, int)>>>
-          solutions = {{"firstKSorting", firstKSorting},
-                       {"firstKMaxHeap", firstKMaxHeap},
-                       {"firstKMinHeap", firstKMinHeap},
-                       {"firstKQuickselect", firstKQuickselect}};
-
-      auto vecToStr = [](const std::vector<int>& vec) {
-        std::string str = "[";
+//    std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
+//          // Example from the book
+//          std::make_tuple(
+//              std::vector<int>{15, 4, 13, 8, 10, 5, 2, 20, 3, 9, 11, 27}, 5,
+//              std::vector<int>{2, 3, 4, 5, 8}),
+//          // Edge case - k = 1
+//          std::make_tuple(std::vector<int>{5, 2, 1, 3, 4}, 1, std::vector<int>{1}),
+//          // Edge case - k = length of array
+//          std::make_tuple(std::vector<int>{3, 1, 2}, 3, std::vector<int>{1, 2, 3}),
+//          // Edge case - array of length 1
+//          std::make_tuple(std::vector<int>{42}, 1, std::vector<int>{42}),
+//          // Reverse sorted array
+//          std::make_tuple(std::vector<int>{5, 4, 3, 2, 1}, 4,
+//                          std::vector<int>{1, 2, 3, 4}),
+//          // Already sorted array
+//          std::make_tuple(std::vector<int>{1, 2, 3, 4, 5}, 3,
+//                          std::vector<int>{1, 2, 3}),
+//          // Edge case - empty array
+//          std::make_tuple(std::vector<int>{}, 0, std::vector<int>{}),
+//          // Array with negative numbers
+//          std::make_tuple(std::vector<int>{-3, -1, -4, -2}, 3,
+//                          std::vector<int>{-4, -3, -2}),
+//          // Mix of positive and negative
+//          std::make_tuple(std::vector<int>{-5, 3, -2, 8, -1}, 4,
+//                          std::vector<int>{-5, -2, -1, 3}),
+//          // Large numbers
+//          std::make_tuple(std::vector<int>{1000000000, -1000000000, 0}, 2,
+//                          std::vector<int>{-1000000000, 0})};
+//
+//      std::vector<std::pair<std::string,
+//                            std::function<std::vector<int>(std::vector<int>, int)>>>
+//          solutions = {{"firstKSorting", firstKSorting},
+//                       {"firstKMaxHeap", firstKMaxHeap},
+//                       {"firstKMinHeap", firstKMinHeap},
+//                       {"firstKQuickselect", firstKQuickselect}};
+//
+//      auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string str = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) str += ", ";
+//          str += std::to_string(vec[i]);
+//        }
+//        str += "]";
+//        return str;
+//      };
+//
+//      for (const auto& [name, solution] : solutions) {
+//        for (const auto& [arr, k, want] : tests) {
+//          auto got = solution(arr, k);
+//          std::sort(got.begin(), got.end());
+//          std::vector<int> wantSorted = want;
+//          std::sort(wantSorted.begin(), wantSorted.end());
+//
+//          if (got != wantSorted) {
+//            std::string arr_str = vecToStr(arr);
+//            std::string got_str = vecToStr(got);
+//            std::string want_str = vecToStr(want);
+//            throw std::runtime_error("\n" + name + "(" + arr_str + ", " +
+//                                     std::to_string(k) + "): got: " + got_str +
+//                                     ", want: " + want_str + " (in any order)\n");
+//          }
+//        }
+//      }
+//    
+//    cout << "ALL FIRST K TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 32.1 - Compress Array
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
+        std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) str += ", ";
-          str += std::to_string(vec[i]);
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
         }
-        str += "]";
-        return str;
+        result += "]";
+        return result;
       };
 
-      for (const auto& [name, solution] : solutions) {
-        for (const auto& [arr, k, want] : tests) {
-          auto got = solution(arr, k);
-          std::sort(got.begin(), got.end());
-          std::vector<int> wantSorted = want;
-          std::sort(wantSorted.begin(), wantSorted.end());
+      std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+          {{8, 4, 2, 2, 2, 4}, {16, 2, 4}},
+          {{4, 4, 4, 4}, {16}},
+          {{1, 2, 3, 4}, {1, 2, 3, 4}},
+          {{}, {}},
+          {{0, 0, 0, 0}, {0}}};
 
-          if (got != wantSorted) {
-            std::string arr_str = vecToStr(arr);
-            std::string got_str = vecToStr(got);
-            std::string want_str = vecToStr(want);
-            throw std::runtime_error("\n" + name + "(" + arr_str + ", " +
-                                     std::to_string(k) + "): got: " + got_str +
-                                     ", want: " + want_str + " (in any order)\n");
-          }
+      for (const auto& [arr, want] : tests) {
+        std::vector<int> got = compressArray(arr);
+        if (got != want) {
+          throw std::runtime_error("\ncompressArray(" + vecToStr(arr) + "): got: " +
+                                   vecToStr(got) + ", want: " + vecToStr(want) + "\n");
         }
       }
     
-    cout << "ALL FIRST K TESTS PROVIDED PASSED." << endl;
+    cout << "ALL COMPRESS ARRAY TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

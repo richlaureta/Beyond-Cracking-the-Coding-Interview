@@ -17,6 +17,8 @@
 #include <climits>
 #include <algorithm>
 #include <random>
+#include <stack>
+#include <span>
 
 using namespace std;
 
@@ -203,5 +205,8 @@ std::tuple<std::vector<int>, std::vector<int>, std::vector<int>> partition(
 std::vector<int> firstKQuickselect(const std::vector<int>& arr, int k);
 int quickselect(const std::vector<int>& arr, int k);
 vector<int> firstKSorting(vector<int> arr, int k);
+
+//Stacks & Queues
+vector<int> compressArray(const vector<int> &arr);
 
 #endif // HEADER_HPP
