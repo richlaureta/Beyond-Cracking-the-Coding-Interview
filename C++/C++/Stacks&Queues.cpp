@@ -35,5 +35,6 @@ vector<int> compressArray(const vector<int> &arr)
         
         numberStack.push_back(number);
     }
+    
     return numberStack;
 }
