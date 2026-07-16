@@ -106,7 +106,7 @@ def run_compress_array_by_k_tests():
         got = compress_array_k(arr, k)
         assert got == want, f"\ncompress_array_k({arr}, {k}): got: {got}, want: {want}\n"
 
-    print("ALL COMPRESS BY K TESTS PROVIDED PASSED.")
+    print("ALL COMPRESS ARRAY BY K TESTS PROVIDED PASSED.")
     
 #ALL TESTS
 
@@ -120,4 +120,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_compress_array_by_k_tests()
+    Run_All_Stacks_And_Queues_Tests()
