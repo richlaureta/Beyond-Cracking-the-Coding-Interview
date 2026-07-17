@@ -208,5 +208,10 @@ vector<int> firstKSorting(vector<int> arr, int k);
 
 //Stacks & Queues
 vector<int> compressArray(const vector<int> &arr);
+class CompressArrayK
+{
+public:
+    vector<int> solve(const vector<int> &arr, int k);
+};
 
 #endif // HEADER_HPP

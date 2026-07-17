@@ -38,3 +38,51 @@ vector<int> compressArray(const vector<int> &arr)
     
     return numberStack;
 }
+
+vector<int> CompressArrayK::solve(const vector<int> &arr, int k)
+{
+    //Problem 31.2 - Compress Array by K
+    
+    vector<int> numberStack;
+    int kCount = 1;
+    
+    for(int number: arr)
+    {
+        if(!numberStack.empty() and numberStack.back() == number)
+        {
+            kCount++;
+            if(kCount == k)
+            {
+                for(int index = 0; index < k - 1; index++) numberStack.pop_back();
+                int kProduct = number * k;
+                int lastIndex = (int) numberStack.size() - 1;
+                int kBacktrackCount = 1;
+                
+                while(lastIndex > -1 and kProduct == numberStack[lastIndex])
+                {
+                    kBacktrackCount++;
+                    if(kBacktrackCount == k)
+                    {
+                        for(int index = 0; index < k - 1; index++) numberStack.pop_back();
+                        kProduct *= k;
+                        kBacktrackCount = 1;
+                    }
+                    
+                    lastIndex--;
+                }
+                
+                numberStack.push_back(kProduct);
+                kCount = 1;
+                continue;
+            }
+            
+            numberStack.push_back(number);
+            continue;
+        }
+        
+        numberStack.push_back(number);
+        kCount = 1;
+    }
+    
+    return numberStack;
+}

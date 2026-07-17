@@ -2416,6 +2416,35 @@ int main(int argc, const char *argv[]) {
     
     //Problem 32.1 - Compress Array
     
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+//          {{8, 4, 2, 2, 2, 4}, {16, 2, 4}},
+//          {{4, 4, 4, 4}, {16}},
+//          {{1, 2, 3, 4}, {1, 2, 3, 4}},
+//          {{}, {}},
+//          {{0, 0, 0, 0}, {0}}};
+//
+//      for (const auto& [arr, want] : tests) {
+//        std::vector<int> got = compressArray(arr);
+//        if (got != want) {
+//          throw std::runtime_error("\ncompressArray(" + vecToStr(arr) + "): got: " +
+//                                   vecToStr(got) + ", want: " + vecToStr(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL COMPRESS ARRAY TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 32.2 - Compress Array by K
+    
     auto vecToStr = [](const std::vector<int>& vec) {
         std::string result = "[";
         for (size_t i = 0; i < vec.size(); i++) {
@@ -2426,22 +2455,26 @@ int main(int argc, const char *argv[]) {
         return result;
       };
 
-      std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
-          {{8, 4, 2, 2, 2, 4}, {16, 2, 4}},
-          {{4, 4, 4, 4}, {16}},
-          {{1, 2, 3, 4}, {1, 2, 3, 4}},
-          {{}, {}},
-          {{0, 0, 0, 0}, {0}}};
+      std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
+          std::make_tuple(std::vector<int>{1, 9, 9, 3, 3, 3, 4}, 3,
+                          std::vector<int>{1, 27, 4}),
+          std::make_tuple(std::vector<int>{8, 4, 2, 2}, 2, std::vector<int>{16}),
+          std::make_tuple(std::vector<int>{4, 4, 4, 4}, 5,
+                          std::vector<int>{4, 4, 4, 4}),
+          std::make_tuple(std::vector<int>{}, 2, std::vector<int>{}),
+          std::make_tuple(std::vector<int>{0, 0, 0, 0}, 2, std::vector<int>{0})};
 
-      for (const auto& [arr, want] : tests) {
-        std::vector<int> got = compressArray(arr);
+      CompressArrayK solution;
+      for (const auto& [arr, k, want] : tests) {
+        std::vector<int> got = solution.solve(arr, k);
         if (got != want) {
-          throw std::runtime_error("\ncompressArray(" + vecToStr(arr) + "): got: " +
-                                   vecToStr(got) + ", want: " + vecToStr(want) + "\n");
+          throw std::runtime_error("\nsolve(" + vecToStr(arr) + ", " + std::to_string(k) +
+                                   "): got: " + vecToStr(got) + ", want: " + vecToStr(want) +
+                                   "\n");
         }
       }
     
-    cout << "ALL COMPRESS ARRAY TESTS PROVIDED PASSED." << endl;
+    cout << "ALL COMPRESS ARRAY BY K TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
