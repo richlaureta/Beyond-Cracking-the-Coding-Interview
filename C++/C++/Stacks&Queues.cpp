@@ -86,3 +86,31 @@ vector<int> CompressArrayK::solve(const vector<int> &arr, int k)
     
     return numberStack;
 }
+
+string currentUrl(const vector<pair<string, string>> &actions)
+{
+    //Problem 32.4 - Current URL
+    
+    stack<string> URLStack;
+    for(auto action: actions)
+    {
+        if(action.first != "go")
+        {
+            int popCount = 0;
+            int conversionToInteger;
+            from_chars(action.second.data(), action.second.data() + action.second.size(), conversionToInteger);
+            while(popCount != conversionToInteger and (int) URLStack.size() != 1)
+            {
+                URLStack.pop();
+                popCount++;
+            }
+            continue;
+        }
+        
+        URLStack.push(action.second);
+    }
+    
+    if((int) URLStack.size() == 0) return "";
+    
+    return URLStack.top();
+}

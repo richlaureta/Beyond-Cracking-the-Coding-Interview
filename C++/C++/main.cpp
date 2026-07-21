@@ -2445,36 +2445,73 @@ int main(int argc, const char *argv[]) {
     
     //Problem 32.2 - Compress Array by K
     
-    auto vecToStr = [](const std::vector<int>& vec) {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
+//          std::make_tuple(std::vector<int>{1, 9, 9, 3, 3, 3, 4}, 3,
+//                          std::vector<int>{1, 27, 4}),
+//          std::make_tuple(std::vector<int>{8, 4, 2, 2}, 2, std::vector<int>{16}),
+//          std::make_tuple(std::vector<int>{4, 4, 4, 4}, 5,
+//                          std::vector<int>{4, 4, 4, 4}),
+//          std::make_tuple(std::vector<int>{}, 2, std::vector<int>{}),
+//          std::make_tuple(std::vector<int>{0, 0, 0, 0}, 2, std::vector<int>{0})};
+//
+//      CompressArrayK solution;
+//      for (const auto& [arr, k, want] : tests) {
+//        std::vector<int> got = solution.solve(arr, k);
+//        if (got != want) {
+//          throw std::runtime_error("\nsolve(" + vecToStr(arr) + ", " + std::to_string(k) +
+//                                   "): got: " + vecToStr(got) + ", want: " + vecToStr(want) +
+//                                   "\n");
+//        }
+//      }
+//    
+//    cout << "ALL COMPRESS ARRAY BY K TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 32.4 - Current URL
+    
+    std::vector<
+          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+          tests = {{{{"go", "google.com"},
+                     {"go", "wikipedia.com"},
+                     {"go", "amazon.com"},
+                     {"back", "4"},
+                     {"go", "youtube.com"},
+                     {"go", "netflix.com"},
+                     {"back", "1"}},
+                    "youtube.com"},
+                   {{{"go", "example.com"}, {"back", "1"}}, "example.com"},
+                   {{{"go", "site1.com"},
+                     {"go", "site2.com"},
+                     {"back", "1"},
+                     {"back", "1"}},
+                    "site1.com"}};
 
-      std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
-          std::make_tuple(std::vector<int>{1, 9, 9, 3, 3, 3, 4}, 3,
-                          std::vector<int>{1, 27, 4}),
-          std::make_tuple(std::vector<int>{8, 4, 2, 2}, 2, std::vector<int>{16}),
-          std::make_tuple(std::vector<int>{4, 4, 4, 4}, 5,
-                          std::vector<int>{4, 4, 4, 4}),
-          std::make_tuple(std::vector<int>{}, 2, std::vector<int>{}),
-          std::make_tuple(std::vector<int>{0, 0, 0, 0}, 2, std::vector<int>{0})};
-
-      CompressArrayK solution;
-      for (const auto& [arr, k, want] : tests) {
-        std::vector<int> got = solution.solve(arr, k);
+      for (const auto& [actions, want] : tests) {
+        std::string got = currentUrl(actions);
         if (got != want) {
-          throw std::runtime_error("\nsolve(" + vecToStr(arr) + ", " + std::to_string(k) +
-                                   "): got: " + vecToStr(got) + ", want: " + vecToStr(want) +
-                                   "\n");
+          std::string actions_str = "[";
+          for (size_t i = 0; i < actions.size(); i++) {
+            if (i > 0) actions_str += ", ";
+            actions_str +=
+                "[\"" + actions[i].first + "\", \"" + actions[i].second + "\"]";
+          }
+          actions_str += "]";
+
+          throw std::runtime_error("\ncurrentUrl(" + actions_str +
+                                   "): got: " + got + ", want: " + want + "\n");
         }
       }
     
-    cout << "ALL COMPRESS ARRAY BY K TESTS PROVIDED PASSED." << endl;
+    cout << "ALL CURRENT URL TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
