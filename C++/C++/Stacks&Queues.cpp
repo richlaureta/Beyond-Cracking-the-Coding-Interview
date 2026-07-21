@@ -110,7 +110,7 @@ string currentUrl(const vector<pair<string, string>> &actions)
         URLStack.push(action.second);
     }
     
-    if((int) URLStack.size() == 0) return "";
+    if(URLStack.empty()) return "";
     
     return URLStack.top();
 }

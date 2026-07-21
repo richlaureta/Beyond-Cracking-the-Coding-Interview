@@ -1,3 +1,5 @@
+from collections import deque
+
 def compress_array(arr: list[int]) -> list[int]:
     #Problem 32.1 - Compress Array
     
@@ -53,7 +55,7 @@ def compress_array_k(arr: list[int], k: int) -> list[int]:
     
     return numberStack
 
-def current_url(actions: list[list[str]]) -> str:
+def current_url(actions: list[list]) -> str:
     #Problem 32.4 - Current URL
     
     url_stack = []
@@ -67,6 +69,32 @@ def current_url(actions: list[list[str]]) -> str:
                 
         url_stack.append(action[1])
     
+    if len(url_stack) == 0:
+        return ""
+    
+    return url_stack[-1]
+
+def current_url_with_forward(actions: list[list]) -> str:
+    #Problem 32.5 - Current URL with Forward
+    
+    url_stack = []
+    backed_stack_url = deque()
+
+    for action in actions:
+        if action[0] == "go":
+            backed_stack_url = deque()
+            url_stack.append(action[1])
+        elif action[0] == "back":
+            pop_count = 0
+            while pop_count != action[1] and len(url_stack) != 1:
+                backed_stack_url.append(url_stack.pop())
+                pop_count += 1
+        else:
+            pop_count = 0
+            while backed_stack_url and pop_count != action[1]:
+                url_stack.append(backed_stack_url.popleft())
+                pop_count += 1
+            
     if len(url_stack) == 0:
         return ""
     
@@ -141,13 +169,29 @@ def run_current_url_tests():
         assert got == want, f"\ncurrent_url({actions}): got: {got}, want: {want}\n"
 
     print("ALL CURRENT URL TESTS PROVIDED PASSED.")
+
+def run_current_url_with_forward_tests():
+    tests = [
+        ([["go", "google.com"], ["go", "wikipedia.com"], ["back", 1], ["forward", 1], [
+        "back", 3], ["go", "netflix.com"], ["forward", 3]], "netflix.com"),
+        ([["go", "example.com"], ["forward", 1]], "example.com"),
+        ([["go", "site1.com"], ["go", "site2.com"], [
+        "back", 1], ["forward", 1], ["back", 1]], "site1.com"),
+    ]
     
+    for actions, want in tests:
+        got = current_url_with_forward(actions)
+        assert got == want, f"\ncurrent_url_with_forward({actions}): got: {got}, want: {want}\n"
+
+    print("ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED.")
+   
 #ALL TESTS
 
 def Run_All_Stacks_And_Queues_Tests():
     run_compress_array_tests()
     run_compress_array_by_k_tests()
     run_current_url_tests()
+    run_current_url_with_forward_tests()
     
     print()
     print("----------------------------------------------------------")
@@ -155,4 +199,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_current_url_tests()
+    run_current_url_with_forward_tests()
