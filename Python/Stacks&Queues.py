@@ -57,7 +57,7 @@ def compress_array_k(arr: list[int], k: int) -> list[int]:
 
 def run_compress_array_tests():
     tests = [
-        # Examples from problem description
+        # Examples from problem description //TESTING GITHUB
 		([8, 4, 2, 2, 2, 4], [16, 2, 4]),
 		([4, 4, 4, 4], [16]),
 		([1, 2, 3, 4], [1, 2, 3, 4]),
