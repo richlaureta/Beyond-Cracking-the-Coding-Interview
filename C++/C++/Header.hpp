@@ -19,6 +19,7 @@
 #include <random>
 #include <stack>
 #include <span>
+#include <deque>
 #include <charconv>
 #include <system_error>
 
@@ -215,6 +216,7 @@ class CompressArrayK
 public:
     vector<int> solve(const vector<int> &arr, int k);
 };
-string currentUrl(const vector<pair<string, string>>& actions);
+string currentUrl(const vector<pair<string, string>> &actions);
+string currentUrlWithForward(const vector<pair<string, string>> &actions);
 
 #endif // HEADER_HPP

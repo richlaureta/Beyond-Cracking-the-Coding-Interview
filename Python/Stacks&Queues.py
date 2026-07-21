@@ -104,7 +104,7 @@ def current_url_with_forward(actions: list[list]) -> str:
 
 def run_compress_array_tests():
     tests = [
-        # Examples from problem description //TESTING GITHUB
+        # Examples from problem description
 		([8, 4, 2, 2, 2, 4], [16, 2, 4]),
 		([4, 4, 4, 4], [16]),
 		([1, 2, 3, 4], [1, 2, 3, 4]),
@@ -199,4 +199,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_current_url_with_forward_tests()
+    Run_All_Stacks_And_Queues_Tests()

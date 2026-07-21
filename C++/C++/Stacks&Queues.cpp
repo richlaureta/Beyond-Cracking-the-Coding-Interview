@@ -114,3 +114,48 @@ string currentUrl(const vector<pair<string, string>> &actions)
     
     return URLStack.top();
 }
+
+string currentUrlWithForward(const vector<pair<string, string>> &actions)
+{
+    //Problem 32.5 - Current Url with Forward
+    
+    stack<string> urlStack;
+    deque<string> backedURLStack;
+    
+    for(pair<string, string> action: actions)
+    {
+        if(action.first == "go")
+        {
+            backedURLStack = {};
+            urlStack.push(action.second);
+        }
+        else if(action.first == "back")
+        {
+            int popCount = 0;
+            int convertedToInteger;
+            from_chars(action.second.data(), action.second.data() + action.second.size(), convertedToInteger);
+            while(popCount != convertedToInteger and (int) urlStack.size() != 1)
+            {
+                backedURLStack.push_back(urlStack.top());
+                urlStack.pop();
+                popCount++;
+            }
+        }
+        else
+        {
+            int popCount = 0;
+            int convertedToInteger;
+            from_chars(action.second.data(), action.second.data() + action.second.size(), convertedToInteger);
+            while(!backedURLStack.empty() and popCount != convertedToInteger)
+            {
+                urlStack.push(backedURLStack.front());
+                backedURLStack.pop_front();
+                popCount++;
+            }
+        }
+    }
+    
+    if(urlStack.empty()) return "";
+    
+    return urlStack.top();
+}

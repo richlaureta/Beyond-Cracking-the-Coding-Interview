@@ -2478,26 +2478,45 @@ int main(int argc, const char *argv[]) {
     
     //Problem 32.4 - Current URL
     
-    std::vector<
-          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
-          tests = {{{{"go", "google.com"},
-                     {"go", "wikipedia.com"},
-                     {"go", "amazon.com"},
-                     {"back", "4"},
-                     {"go", "youtube.com"},
-                     {"go", "netflix.com"},
-                     {"back", "1"}},
-                    "youtube.com"},
-                   {{{"go", "example.com"}, {"back", "1"}}, "example.com"},
-                   {{{"go", "site1.com"},
-                     {"go", "site2.com"},
-                     {"back", "1"},
-                     {"back", "1"}},
-                    "site1.com"}};
-
-      for (const auto& [actions, want] : tests) {
-        std::string got = currentUrl(actions);
-        if (got != want) {
+//    std::vector<
+//          std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+//          tests = {{{{"go", "google.com"},
+//                     {"go", "wikipedia.com"},
+//                     {"go", "amazon.com"},
+//                     {"back", "4"},
+//                     {"go", "youtube.com"},
+//                     {"go", "netflix.com"},
+//                     {"back", "1"}},
+//                    "youtube.com"},
+//                   {{{"go", "example.com"}, {"back", "1"}}, "example.com"},
+//                   {{{"go", "site1.com"},
+//                     {"go", "site2.com"},
+//                     {"back", "1"},
+//                     {"back", "1"}},
+//                    "site1.com"}};
+//
+//      for (const auto& [actions, want] : tests) {
+//        std::string got = currentUrl(actions);
+//        if (got != want) {
+//          std::string actions_str = "[";
+//          for (size_t i = 0; i < actions.size(); i++) {
+//            if (i > 0) actions_str += ", ";
+//            actions_str +=
+//                "[\"" + actions[i].first + "\", \"" + actions[i].second + "\"]";
+//          }
+//          actions_str += "]";
+//
+//          throw std::runtime_error("\ncurrentUrl(" + actions_str +
+//                                   "): got: " + got + ", want: " + want + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL CURRENT URL TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 32.5 - Current URL with Forward
+    
+    auto actionsToString =
+        [](const std::vector<std::pair<std::string, std::string>>& actions) {
           std::string actions_str = "[";
           for (size_t i = 0; i < actions.size(); i++) {
             if (i > 0) actions_str += ", ";
@@ -2505,13 +2524,37 @@ int main(int argc, const char *argv[]) {
                 "[\"" + actions[i].first + "\", \"" + actions[i].second + "\"]";
           }
           actions_str += "]";
+          return actions_str;
+        };
 
-          throw std::runtime_error("\ncurrentUrl(" + actions_str +
-                                   "): got: " + got + ", want: " + want + "\n");
-        }
+    std::vector<
+        std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+        tests = {{{{"go", "google.com"},
+                   {"go", "wikipedia.com"},
+                   {"back", "1"},
+                   {"forward", "1"},
+                   {"back", "3"},
+                   {"go", "netflix.com"},
+                   {"forward", "3"}},
+                  "netflix.com"},
+                 {{{"go", "example.com"}, {"forward", "1"}}, "example.com"},
+                 {{{"go", "site1.com"},
+                   {"go", "site2.com"},
+                   {"back", "1"},
+                   {"forward", "1"},
+                   {"back", "1"}},
+                  "site1.com"}};
+
+    for (const auto& [actions, want] : tests) {
+      std::string got = currentUrlWithForward(actions);
+      if (got != want) {
+        throw std::runtime_error("\ncurrentUrlWithForward(" +
+                                 actionsToString(actions) + "): got: " + got +
+                                 ", want: " + want + "\n");
       }
+    }
     
-    cout << "ALL CURRENT URL TESTS PROVIDED PASSED." << endl;
+    cout << "ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
