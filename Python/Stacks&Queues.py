@@ -53,6 +53,25 @@ def compress_array_k(arr: list[int], k: int) -> list[int]:
     
     return numberStack
 
+def current_url(actions: list[list[str]]) -> str:
+    #Problem 32.4 - Current URL
+    
+    url_stack = []
+    for action in actions:
+        if action[0] != "go":
+            popCount = 0
+            while popCount != action[1] and len(url_stack) != 1:
+                url_stack.pop()
+                popCount += 1
+            continue
+                
+        url_stack.append(action[1])
+    
+    if len(url_stack) == 0:
+        return ""
+    
+    return url_stack[-1]
+
 #TESTS
 
 def run_compress_array_tests():
@@ -107,12 +126,28 @@ def run_compress_array_by_k_tests():
         assert got == want, f"\ncompress_array_k({arr}, {k}): got: {got}, want: {want}\n"
 
     print("ALL COMPRESS ARRAY BY K TESTS PROVIDED PASSED.")
+
+def run_current_url_tests():
+    tests = [
+        ([["go", "google.com"], ["go", "wikipedia.com"], ["go", "amazon.com"], ["back", 4], [
+        "go", "youtube.com"], ["go", "netflix.com"], ["back", 1]], "youtube.com"),
+        ([["go", "example.com"], ["back", 1]], "example.com"),
+        ([["go", "site1.com"], ["go", "site2.com"],
+        ["back", 1], ["back", 1]], "site1.com"),
+    ]
+    
+    for actions, want in tests:
+        got = current_url(actions)
+        assert got == want, f"\ncurrent_url({actions}): got: {got}, want: {want}\n"
+
+    print("ALL CURRENT URL TESTS PROVIDED PASSED.")
     
 #ALL TESTS
 
 def Run_All_Stacks_And_Queues_Tests():
     run_compress_array_tests()
     run_compress_array_by_k_tests()
+    run_current_url_tests()
     
     print()
     print("----------------------------------------------------------")
@@ -120,4 +155,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Stacks_And_Queues_Tests()
+    run_current_url_tests()
