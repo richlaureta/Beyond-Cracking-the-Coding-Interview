@@ -103,16 +103,16 @@ def current_url_with_forward(actions: list[list]) -> str:
 def max_balanced_partition(s: str) -> int:
     #Problem 32.6 - Balanced Partition
     
-    parenthesis_stack = []
+    parenthesis_count = 0
     balanced_partition_count = 0
     
     for parenthesis in s:
         if parenthesis == "(":
-            parenthesis_stack.append("(")
+            parenthesis_count += 1
         else:
-            parenthesis_stack.pop()
+            parenthesis_count -= 1
         
-            if len(parenthesis_stack) == 0:
+            if parenthesis_count == 0:
                 balanced_partition_count += 1
             
     return balanced_partition_count
