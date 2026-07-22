@@ -2515,46 +2515,66 @@ int main(int argc, const char *argv[]) {
     
     //Problem 32.5 - Current URL with Forward
     
-    auto actionsToString =
-        [](const std::vector<std::pair<std::string, std::string>>& actions) {
-          std::string actions_str = "[";
-          for (size_t i = 0; i < actions.size(); i++) {
-            if (i > 0) actions_str += ", ";
-            actions_str +=
-                "[\"" + actions[i].first + "\", \"" + actions[i].second + "\"]";
-          }
-          actions_str += "]";
-          return actions_str;
-        };
+//    auto actionsToString =
+//        [](const std::vector<std::pair<std::string, std::string>>& actions) {
+//          std::string actions_str = "[";
+//          for (size_t i = 0; i < actions.size(); i++) {
+//            if (i > 0) actions_str += ", ";
+//            actions_str +=
+//                "[\"" + actions[i].first + "\", \"" + actions[i].second + "\"]";
+//          }
+//          actions_str += "]";
+//          return actions_str;
+//        };
+//
+//    std::vector<
+//        std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
+//        tests = {{{{"go", "google.com"},
+//                   {"go", "wikipedia.com"},
+//                   {"back", "1"},
+//                   {"forward", "1"},
+//                   {"back", "3"},
+//                   {"go", "netflix.com"},
+//                   {"forward", "3"}},
+//                  "netflix.com"},
+//                 {{{"go", "example.com"}, {"forward", "1"}}, "example.com"},
+//                 {{{"go", "site1.com"},
+//                   {"go", "site2.com"},
+//                   {"back", "1"},
+//                   {"forward", "1"},
+//                   {"back", "1"}},
+//                  "site1.com"}};
+//
+//    for (const auto& [actions, want] : tests) {
+//      std::string got = currentUrlWithForward(actions);
+//      if (got != want) {
+//        throw std::runtime_error("\ncurrentUrlWithForward(" +
+//                                 actionsToString(actions) + "): got: " + got +
+//                                 ", want: " + want + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED." << endl;
+    
+    //Problem  32.6 - Balanced Partition
+    
+    std::vector<std::pair<std::string, int>> tests = {
+        {"((()))(()())()(()(()))", 4},
+        {"()()()", 3},
+        {"(((())))", 1},
+        {"", 0},
+        {"()", 1}};
 
-    std::vector<
-        std::pair<std::vector<std::pair<std::string, std::string>>, std::string>>
-        tests = {{{{"go", "google.com"},
-                   {"go", "wikipedia.com"},
-                   {"back", "1"},
-                   {"forward", "1"},
-                   {"back", "3"},
-                   {"go", "netflix.com"},
-                   {"forward", "3"}},
-                  "netflix.com"},
-                 {{{"go", "example.com"}, {"forward", "1"}}, "example.com"},
-                 {{{"go", "site1.com"},
-                   {"go", "site2.com"},
-                   {"back", "1"},
-                   {"forward", "1"},
-                   {"back", "1"}},
-                  "site1.com"}};
-
-    for (const auto& [actions, want] : tests) {
-      std::string got = currentUrlWithForward(actions);
+    for (const auto& [s, want] : tests) {
+      int got = maxBalancedPartition(s);
       if (got != want) {
-        throw std::runtime_error("\ncurrentUrlWithForward(" +
-                                 actionsToString(actions) + "): got: " + got +
-                                 ", want: " + want + "\n");
+        throw std::runtime_error("\nmaxBalancedPartition(" + s +
+                                 "): got: " + std::to_string(got) +
+                                 ", want: " + std::to_string(want) + "\n");
       }
     }
     
-    cout << "ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED." << endl;
+    cout << "ALL BALANCED PARTITION TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

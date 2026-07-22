@@ -218,5 +218,5 @@ public:
 };
 string currentUrl(const vector<pair<string, string>> &actions);
 string currentUrlWithForward(const vector<pair<string, string>> &actions);
-
+int maxBalancedPartition(const string &s);
 #endif // HEADER_HPP

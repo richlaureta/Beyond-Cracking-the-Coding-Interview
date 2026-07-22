@@ -159,3 +159,23 @@ string currentUrlWithForward(const vector<pair<string, string>> &actions)
     
     return urlStack.top();
 }
+
+int maxBalancedPartition(const string &s)
+{
+    //Problem 32.6 - Balanced Partition
+    
+    int balancedPartitionCount = 0;
+    int parenthesisCount = 0;
+    
+    for(char parenthesis: s)
+    {
+        if(parenthesis == '(') parenthesisCount++;
+        else
+        {
+            parenthesisCount--;
+            if(parenthesisCount == 0) balancedPartitionCount++;
+        }
+    }
+    
+    return balancedPartitionCount;
+}
