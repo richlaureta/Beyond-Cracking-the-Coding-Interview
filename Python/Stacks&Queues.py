@@ -111,13 +111,12 @@ def max_balanced_partition(s: str) -> int:
             parenthesis_stack.append("(")
         else:
             parenthesis_stack.pop()
-            
-        if len(parenthesis_stack) == 0:
-            balanced_partition_count += 1
+        
+            if len(parenthesis_stack) == 0:
+                balanced_partition_count += 1
             
     return balanced_partition_count
     
-
 #TESTS
 
 def run_compress_array_tests():
