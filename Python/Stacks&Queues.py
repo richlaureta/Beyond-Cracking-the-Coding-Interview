@@ -100,6 +100,24 @@ def current_url_with_forward(actions: list[list]) -> str:
     
     return url_stack[-1]
 
+def max_balanced_partition(s: str) -> int:
+    #Problem 32.6 - Balanced Partition
+    
+    parenthesis_stack = []
+    balanced_partition_count = 0
+    
+    for parenthesis in s:
+        if parenthesis == "(":
+            parenthesis_stack.append("(")
+        else:
+            parenthesis_stack.pop()
+            
+        if len(parenthesis_stack) == 0:
+            balanced_partition_count += 1
+            
+    return balanced_partition_count
+    
+
 #TESTS
 
 def run_compress_array_tests():
@@ -184,7 +202,22 @@ def run_current_url_with_forward_tests():
         assert got == want, f"\ncurrent_url_with_forward({actions}): got: {got}, want: {want}\n"
 
     print("ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED.")
-   
+
+def run_balanced_partition_tests():
+    tests = [
+        ("((()))(()())()(()(()))", 4),
+        ("()()()", 3),
+        ("(((())))", 1),
+        ("", 0),
+        ("()", 1),
+    ]
+    
+    for s, want in tests:
+        got = max_balanced_partition(s)
+        assert got == want, f"\nmax_balanced_partition({s}): got: {got}, want: {want}\n"
+    
+    print("ALL BALANCED PARTITION TESTS PROVIDED PASSED.")
+    
 #ALL TESTS
 
 def Run_All_Stacks_And_Queues_Tests():
@@ -192,6 +225,7 @@ def Run_All_Stacks_And_Queues_Tests():
     run_compress_array_by_k_tests()
     run_current_url_tests()
     run_current_url_with_forward_tests()
+    run_balanced_partition_tests()
     
     print()
     print("----------------------------------------------------------")
