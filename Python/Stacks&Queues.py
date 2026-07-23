@@ -141,13 +141,8 @@ def custom_brackets(s: str, brackets: list[str]) -> bool:
             else:
                 return False
         
+    return len(bracket_stack) == 0
 
-    if len(bracket_stack) != 0:
-        return False
-    
-    return True
-            
-    
 #TESTS
 
 def run_compress_array_tests():
@@ -302,4 +297,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_custom_brackets_tests()
+    Run_All_Stacks_And_Queues_Tests()
