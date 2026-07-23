@@ -2576,6 +2576,57 @@ int main(int argc, const char *argv[]) {
 //    
 //    cout << "ALL BALANCED PARTITION TESTS PROVIDED PASSED." << endl;
     
+    //Problem 32.7 - Custom Brackets
+    
+    std::vector<std::tuple<std::string, std::vector<std::string>, bool>> tests = {
+        // Example 1 from book
+        {"((a+b)*[c-d]-{e/f})", {"()", "[]", "{}"}, true},
+        // Example 2 from book
+        {"(){[}", {"()", "[]", "{}"}, false},
+        // Example 3 from book
+        {"([)]", {"()", "[]", "{}"}, false},
+        // Example 4 from book
+        {"<div> hello :) </div>", {"<>", "()"}, false},
+        // Example 5 from book
+        {")))(()((", {")("}, true},
+        // Empty string
+        {"", {"()"}, true},
+        // Single character
+        {"(", {"()"}, false},
+        // Multiple bracket types
+        {"<<>>()[]{}", {"<>", "()", "[]", "{}"}, true},
+        // Nested brackets
+        {"[{()}]", {"()", "[]", "{}"}, true},
+        // Unmatched opening bracket
+        {"(()", {"()"}, false},
+        // Unmatched closing bracket
+        {"())", {"()"}, false},
+        // Wrong order of closing
+        {"({)}", {"()", "{}"}, false},
+        // Non-bracket characters mixed in
+        {"a(b)c[d]e", {"()", "[]"}, true},
+        // Multiple identical bracket pairs
+        {"<<>>", {"<>"}, true}};
+
+    for (const auto& [s, brackets, want] : tests) {
+      bool got = customBrackets(s, brackets);
+      if (got != want) {
+        std::string brackets_str = "[";
+        for (size_t i = 0; i < brackets.size(); i++) {
+          if (i > 0) brackets_str += ", ";
+          brackets_str += "\"" + brackets[i] + "\"";
+        }
+        brackets_str += "]";
+
+        throw std::runtime_error("\ncustomBrackets(\"" + s + "\", " +
+                                 brackets_str +
+                                 "): got: " + (got ? "true" : "false") +
+                                 ", want: " + (want ? "true" : "false") + "\n");
+      }
+    }
+    
+    cout << "ALL CUSTOM BRACKETS TESTS PROVIDED PASSED." << endl;
+    
     return EXIT_SUCCESS;
 }
 

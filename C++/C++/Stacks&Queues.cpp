@@ -179,3 +179,35 @@ int maxBalancedPartition(const string &s)
     
     return balancedPartitionCount;
 }
+
+bool customBrackets(const string &s, const vector<string> &brackets)
+{
+    //Problem 32.7 - Custom Brackets
+    
+    unordered_map<char, char> openCloseBracketsMap;
+    unordered_set<char> closeBracketsSet;
+    
+    for(string bracket: brackets)
+    {
+        openCloseBracketsMap[bracket[0]] = bracket[1];
+        closeBracketsSet.insert(bracket[1]);
+    }
+    
+    stack<char> bracketStack;
+    
+    for(char character: s)
+    {
+        if(openCloseBracketsMap.find(character) != openCloseBracketsMap.end())
+        {
+            bracketStack.push(openCloseBracketsMap[character]);
+        }
+        else if(closeBracketsSet.find(character) != closeBracketsSet.end())
+        {
+            if(bracketStack.empty() or character != bracketStack.top()) return false;
+            
+            bracketStack.pop();
+        }
+    }
+    
+    return (int) bracketStack.size() == 0;
+}
