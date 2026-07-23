@@ -2557,24 +2557,24 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED." << endl;
     
     //Problem  32.6 - Balanced Partition
-    
-    std::vector<std::pair<std::string, int>> tests = {
-        {"((()))(()())()(()(()))", 4},
-        {"()()()", 3},
-        {"(((())))", 1},
-        {"", 0},
-        {"()", 1}};
-
-    for (const auto& [s, want] : tests) {
-      int got = maxBalancedPartition(s);
-      if (got != want) {
-        throw std::runtime_error("\nmaxBalancedPartition(" + s +
-                                 "): got: " + std::to_string(got) +
-                                 ", want: " + std::to_string(want) + "\n");
-      }
-    }
-    
-    cout << "ALL BALANCED PARTITION TESTS PROVIDED PASSED." << endl;
+//    
+//    std::vector<std::pair<std::string, int>> tests = {
+//        {"((()))(()())()(()(()))", 4},
+//        {"()()()", 3},
+//        {"(((())))", 1},
+//        {"", 0},
+//        {"()", 1}};
+//
+//    for (const auto& [s, want] : tests) {
+//      int got = maxBalancedPartition(s);
+//      if (got != want) {
+//        throw std::runtime_error("\nmaxBalancedPartition(" + s +
+//                                 "): got: " + std::to_string(got) +
+//                                 ", want: " + std::to_string(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL BALANCED PARTITION TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

@@ -121,25 +121,22 @@ def custom_brackets(s: str, brackets: list[str]) -> bool:
     #Problem # 32.7 - Custom Brackets
     
     open_close_brackets_dictionary = dict()
-    close_open_brackets_dictionary = dict()
+    close_brackets_set = set()
     
     for bracket in brackets:
         open_close_brackets_dictionary[bracket[0]] = bracket[1]
-        close_open_brackets_dictionary[bracket[1]] = bracket[0]
+        close_brackets_set.add(bracket[1])
     
     bracket_stack = []
     
     for character in s:
         if character in open_close_brackets_dictionary:
-            bracket_stack.append(character)
-        elif character in close_open_brackets_dictionary:
-            if len(bracket_stack) == 0:
+            bracket_stack.append(open_close_brackets_dictionary[character])
+        elif character in close_brackets_set:
+            if not bracket_stack or character != bracket_stack[-1]:
                 return False
-            
-            if close_open_brackets_dictionary[character] == bracket_stack[-1]:
-                bracket_stack.pop()
-            else:
-                return False
+                        
+            bracket_stack.pop()
         
     return len(bracket_stack) == 0
 
