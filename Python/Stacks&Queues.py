@@ -116,6 +116,37 @@ def max_balanced_partition(s: str) -> int:
                 balanced_partition_count += 1
             
     return balanced_partition_count
+
+def custom_brackets(s: str, brackets: list[str]) -> bool:
+    #Problem # 32.7 - Custom Brackets
+    
+    open_close_brackets_dictionary = dict()
+    close_open_brackets_dictionary = dict()
+    
+    for bracket in brackets:
+        open_close_brackets_dictionary[bracket[0]] = bracket[1]
+        close_open_brackets_dictionary[bracket[1]] = bracket[0]
+    
+    bracket_stack = []
+    
+    for character in s:
+        if character in open_close_brackets_dictionary:
+            bracket_stack.append(character)
+        elif character in close_open_brackets_dictionary:
+            if len(bracket_stack) == 0:
+                return False
+            
+            if close_open_brackets_dictionary[character] == bracket_stack[-1]:
+                bracket_stack.pop()
+            else:
+                return False
+        
+
+    if len(bracket_stack) != 0:
+        return False
+    
+    return True
+            
     
 #TESTS
 
@@ -216,6 +247,44 @@ def run_balanced_partition_tests():
         assert got == want, f"\nmax_balanced_partition({s}): got: {got}, want: {want}\n"
     
     print("ALL BALANCED PARTITION TESTS PROVIDED PASSED.")
+
+def run_custom_brackets_tests():
+    tests = [
+        # Example 1 from book
+        ("((a+b)*[c-d]-{e/f})", ["()", "[]", "{}"], True),
+        # Example 2 from book
+        ("()[}", ["()", "[]", "{}"], False),
+        # Example 3 from book
+        ("([)]", ["()", "[]", "{}"], False),
+        # Example 4 from book
+        ("<div> hello :) </div>", ["<>", "()"], False),
+        # Example 5 from book
+        (")))(()((", [")("], True),
+        # Empty string
+        ("", ["()"], True),
+        # Single character
+        ("(", ["()"], False),
+        # Multiple bracket types
+        ("<<>>()[]{}", ["<>", "()", "[]", "{}"], True),
+        # Nested brackets
+        ("[{()}]", ["()", "[]", "{}"], True),
+        # Unmatched opening bracket
+        ("(()", ["()"], False),
+        # Unmatched closing bracket
+        ("())", ["()"], False),
+        # Wrong order of closing
+        ("({)}", ["()", "{}"], False),
+        # Non-bracket characters mixed in
+        ("a(b)c[d]e", ["()", "[]"], True),
+        # Multiple identical bracket pairs
+        ("<<>>", ["<>"], True),
+    ]
+    
+    for s, brackets, want in tests:
+        got = custom_brackets(s, brackets)
+        assert got == want, f"\ncustom_brackets({s}, {brackets}): got: {got}, want: {want}\n"
+    
+    print("ALL CUSTOM BRACKETS TESTS PROVIDED PASSED.")
     
 #ALL TESTS
 
@@ -225,6 +294,7 @@ def Run_All_Stacks_And_Queues_Tests():
     run_current_url_tests()
     run_current_url_with_forward_tests()
     run_balanced_partition_tests()
+    run_custom_brackets_tests()
     
     print()
     print("----------------------------------------------------------")
@@ -232,4 +302,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Stacks_And_Queues_Tests()
+    run_custom_brackets_tests()
