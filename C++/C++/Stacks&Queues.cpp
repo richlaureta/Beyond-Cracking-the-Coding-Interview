@@ -211,3 +211,38 @@ bool customBrackets(const string &s, const vector<string> &brackets)
     
     return (int) bracketStack.size() == 0;
 }
+
+string longestBalancedSubsequence(const string &s)
+{
+    //Problem 32.8 - Longest Balanced Subsequence
+    
+    int index = 0;
+    stack<int> openParenthesisIndexes;
+    vector<int> indexToBeIncluded;
+    
+    for(char parenthesis: s)
+    {
+        if(parenthesis == '(') openParenthesisIndexes.push(index);
+        else if((int) openParenthesisIndexes.size() > 0)
+        {
+            indexToBeIncluded.push_back(openParenthesisIndexes.top());
+            openParenthesisIndexes.pop();
+            indexToBeIncluded.push_back(index);
+        }
+        
+        index++;
+    }
+    
+    sort(indexToBeIncluded.begin(), indexToBeIncluded.end());
+    
+    vector<char> parenthesisIndex;
+    
+    for(int index: indexToBeIncluded)
+    {
+        parenthesisIndex.push_back(s[index]);
+    }
+    
+    string longestBalancedParentheis(parenthesisIndex.begin(), parenthesisIndex.end());
+    
+    return longestBalancedParentheis;
+}

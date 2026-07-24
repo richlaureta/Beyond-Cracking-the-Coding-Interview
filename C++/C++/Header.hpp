@@ -220,5 +220,6 @@ string currentUrl(const vector<pair<string, string>> &actions);
 string currentUrlWithForward(const vector<pair<string, string>> &actions);
 int maxBalancedPartition(const string &s);
 bool customBrackets(const string &s, const vector<string> &brackets);
+string longestBalancedSubsequence(const string &s);
 
 #endif // HEADER_HPP
