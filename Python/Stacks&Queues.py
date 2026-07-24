@@ -150,10 +150,9 @@ def longest_balanced_subsequence(s: str) -> str:
     for parenthesis in s:
         if parenthesis == "(":
             longest_balanced_indexes.append(index)     
-        else:
-            if len(longest_balanced_indexes) > 0:
-                index_to_be_included.append(longest_balanced_indexes.pop())
-                index_to_be_included.append(index)
+        elif len(longest_balanced_indexes) > 0:
+            index_to_be_included.append(longest_balanced_indexes.pop())
+            index_to_be_included.append(index)
                
         index += 1
     
@@ -329,6 +328,7 @@ def Run_All_Stacks_And_Queues_Tests():
     run_current_url_with_forward_tests()
     run_balanced_partition_tests()
     run_custom_brackets_tests()
+    run_longest_balanced_subsequence_tests()
     
     print()
     print("----------------------------------------------------------")
@@ -336,4 +336,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_longest_balanced_subsequence_tests()
+    Run_All_Stacks_And_Queues_Tests()
