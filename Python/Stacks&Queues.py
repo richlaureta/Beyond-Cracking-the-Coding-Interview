@@ -140,6 +140,37 @@ def custom_brackets(s: str, brackets: list[str]) -> bool:
         
     return len(bracket_stack) == 0
 
+def longest_balanced_subsequence(s: str) -> str:
+    #Problem 32.8 - Longest Balanced Subsequence
+    
+    parenthesis_count = 0
+    longest_balanced_indexes = []
+    index = 0
+    index_to_be_included = []
+    
+    for parenthesis in s:
+        if parenthesis == "(":
+            parenthesis_count += 1
+            longest_balanced_indexes.append(index)     
+        else:
+            if parenthesis_count > 0:
+                parenthesis_count -= 1
+                index_to_be_included.append(longest_balanced_indexes.pop())
+                index_to_be_included.append(index)
+               
+        index += 1
+    
+    index_to_be_included.sort()
+    
+    parenthesis_list = []
+    
+    for index in index_to_be_included:
+        parenthesis_list.append(s[index])
+    
+    longest_balanced_parenthesis = "".join(parenthesis_list)
+    
+    return longest_balanced_parenthesis
+     
 #TESTS
 
 def run_compress_array_tests():
@@ -277,7 +308,23 @@ def run_custom_brackets_tests():
         assert got == want, f"\ncustom_brackets({s}, {brackets}): got: {got}, want: {want}\n"
     
     print("ALL CUSTOM BRACKETS TESTS PROVIDED PASSED.")
+
+def run_longest_balanced_subsequence_tests():
+    tests = [
+        ("))(())(()", ["(())()"]),
+        ("(()()", ["()()", "(())"]),
+        ("(()(()(", ["()()", "(())"]),
+        ("())(()", ["()()"]),
+        ("(", [""]),
+        ("", [""]),
+    ]
     
+    for s, want in tests:
+        got = longest_balanced_subsequence(s)
+        assert got in want, f"\nlongest_balanced_subsequence({s}): got: {got}, want: {want}\n"
+
+    print("ALL LONGEST BALANCED SUBSEQUENCE TESTS PROVIDED PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Stacks_And_Queues_Tests():
@@ -294,4 +341,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Stacks_And_Queues_Tests()
+    run_longest_balanced_subsequence_tests()
