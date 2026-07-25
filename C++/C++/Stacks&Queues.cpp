@@ -218,31 +218,41 @@ string longestBalancedSubsequence(const string &s)
     
     int index = 0;
     stack<int> openParenthesisIndexes;
-    vector<int> indexToBeIncluded;
     
     for(char parenthesis: s)
     {
-        if(parenthesis == '(') openParenthesisIndexes.push(index);
-        else if((int) openParenthesisIndexes.size() > 0)
+        if(!openParenthesisIndexes.empty() and
+           parenthesis == ')' and
+           s[openParenthesisIndexes.top()] == '(')
         {
-            indexToBeIncluded.push_back(openParenthesisIndexes.top());
             openParenthesisIndexes.pop();
-            indexToBeIncluded.push_back(index);
+            index++;
+            continue;
         }
         
+        openParenthesisIndexes.push(index);
         index++;
     }
     
-    sort(indexToBeIncluded.begin(), indexToBeIncluded.end());
+    unordered_set<int> invalidParenthesisIndexSet;
     
-    vector<char> parenthesisIndex;
-    
-    for(int index: indexToBeIncluded)
+    while(!openParenthesisIndexes.empty())
     {
-        parenthesisIndex.push_back(s[index]);
+        invalidParenthesisIndexSet.insert(openParenthesisIndexes.top());
+        openParenthesisIndexes.pop();
     }
     
-    string longestBalancedParentheis(parenthesisIndex.begin(), parenthesisIndex.end());
+    vector<char> validParenthesisVector;
     
-    return longestBalancedParentheis;
+    for(int index = 0; index < (int) s.size(); index++)
+    {
+        if(invalidParenthesisIndexSet.find(index) == invalidParenthesisIndexSet.end())
+        {
+            validParenthesisVector.push_back(s[index]);
+        }
+    }
+    
+    string balancedParentheisSubsequence(validParenthesisVector.begin(), validParenthesisVector.end());
+    
+    return balancedParentheisSubsequence;
 }
