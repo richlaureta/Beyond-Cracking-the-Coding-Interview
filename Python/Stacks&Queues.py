@@ -145,25 +145,30 @@ def longest_balanced_subsequence(s: str) -> str:
     
     longest_balanced_indexes = []
     index = 0
-    index_to_be_included = []
     
     for parenthesis in s:
-        if parenthesis == "(":
-            longest_balanced_indexes.append(index)     
-        elif len(longest_balanced_indexes) > 0:
-            index_to_be_included.append(longest_balanced_indexes.pop())
-            index_to_be_included.append(index)
-               
+        if (len(longest_balanced_indexes) > 0 and 
+            parenthesis == ")" and 
+            s[longest_balanced_indexes[-1]] == "("):
+            longest_balanced_indexes.pop()
+            index += 1
+            continue
+        
+        longest_balanced_indexes.append(index) 
+            
         index += 1
     
-    index_to_be_included.sort()
+    invalid_parenthesis_index_set = set()
     
-    parenthesis_list = []
+    while longest_balanced_indexes:
+        invalid_parenthesis_index_set.add(longest_balanced_indexes.pop())
     
-    for index in index_to_be_included:
-        parenthesis_list.append(s[index])
+    valid_parenthesis_list = []
+    for index in range(len(s)):
+        if index not in invalid_parenthesis_index_set:
+            valid_parenthesis_list.append(s[index])
     
-    return  "".join(parenthesis_list)
+    return  "".join(valid_parenthesis_list)
      
 #TESTS
 
@@ -336,4 +341,4 @@ def Run_All_Stacks_And_Queues_Tests():
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Stacks_And_Queues_Tests()
+    run_longest_balanced_subsequence_tests()
