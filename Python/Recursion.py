@@ -52,8 +52,8 @@ def Run_All_Recursion_Tests():
     
     print()
     print("----------------------------------------------------------")
-    print("ALL INCLUDED STACKS AND QUEUES TESTS IN THE FILE PASSED. |")
+    print("ALL INCLUDED RECURSION TESTS IN THE FILE PASSED. |")
     print("----------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_robot_instructions_tests()
+    Run_All_Recursion_Tests()

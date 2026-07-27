@@ -221,5 +221,7 @@ string currentUrlWithForward(const vector<pair<string, string>> &actions);
 int maxBalancedPartition(const string &s);
 bool customBrackets(const string &s, const vector<string> &brackets);
 string longestBalancedSubsequence(const string &s);
+void recursiveMoves(int index, const string &seq, vector<char> &joinedRobotInstructions);
+string moves(const string &seq);
 
 #endif // HEADER_HPP

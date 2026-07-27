@@ -2629,35 +2629,67 @@ int main(int argc, const char *argv[]) {
     
     //Problem 32.8 - Longest Balanced Subsequence
     
-    std::vector<std::pair<std::string, std::vector<std::string>>> tests = {
-          {"))(())(()", {"(())()"}},
-          {"(()()", {"()()", "(())"}},
-          {"(()(()(", {"()()", "(())"}},
-          {"())(()", {"()()"}},
-          {"(", {""}},
-          {"", {""}}};
+//    std::vector<std::pair<std::string, std::vector<std::string>>> tests = {
+//          {"))(())(()", {"(())()"}},
+//          {"(()()", {"()()", "(())"}},
+//          {"(()(()(", {"()()", "(())"}},
+//          {"())(()", {"()()"}},
+//          {"(", {""}},
+//          {"", {""}}};
+//
+//      for (const auto& [s, want] : tests) {
+//        std::string got = longestBalancedSubsequence(s);
+//        bool found = false;
+//        for (const auto& w : want) {
+//          if (got == w) {
+//            found = true;
+//            break;
+//          }
+//        }
+//        if (!found) {
+//          std::string want_str;
+//          for (size_t i = 0; i < want.size(); i++) {
+//            if (i > 0) want_str += " or ";
+//            want_str += want[i];
+//          }
+//          throw std::runtime_error("\nlongestBalancedSubsequence(" + s +
+//                                   "): got: " + got + ", want: " + want_str + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL LONGEST BALANCED SUBSEQUENCE TESTS PROVIDED PASSED." << endl;
+    
+    //Problem 33.1 - Robot Instructions
+    
+    std::vector<std::pair<std::string, std::string>> tests = {
+        // Example 1 from book
+        {"LL", "LL"},
+        // Example 2 from book
+        {"2LR", "LRR"},
+        // Example 3 from book
+        {"2L", "L"},
+        // Example 4 from book
+        {"22LR", "LRRLR"},
+        // Example 5 from book
+        {"LL2R2L", "LLRLL"},
+        // Edge case - empty string
+        {"", ""},
+        // Edge case - single character
+        {"L", "L"},
+        // Multiple 2s in a row
+        {"2222LR", "LRRLRLRRLRRLR"},
+      };
 
-      for (const auto& [s, want] : tests) {
-        std::string got = longestBalancedSubsequence(s);
-        bool found = false;
-        for (const auto& w : want) {
-          if (got == w) {
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          std::string want_str;
-          for (size_t i = 0; i < want.size(); i++) {
-            if (i > 0) want_str += " or ";
-            want_str += want[i];
-          }
-          throw std::runtime_error("\nlongestBalancedSubsequence(" + s +
-                                   "): got: " + got + ", want: " + want_str + "\n");
+      for (const auto& [seq, want] : tests) {
+        std::string got = moves(seq);
+        if (got != want) {
+          throw std::runtime_error("\nmoves(" + seq +
+                                 "): got: " + got +
+                                 ", want: " + want + "\n");
         }
       }
     
-    cout << "ALL LONGEST BALANCED SUBSEQUENCE TESTS PROVIDED PASSED." << endl;
+    cout << "ALL ROBOT INSTRUCTIONS TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
