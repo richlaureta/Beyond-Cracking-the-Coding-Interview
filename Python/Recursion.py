@@ -99,16 +99,18 @@ def run_nested_array_sum_tests():
         # got_eager = nested_array_sum_eager(arr)
         # assert got_eager == want, \
         #     f"\nnested_array_sum_eager({arr}): got: {got_eager}, want: {want}\n"
-        
+    
+    print("ALL NESTED ARRAY SUM TESTS PROVIDED PASSED.") 
 
 #ALL TESTS
 def Run_All_Recursion_Tests():
     run_robot_instructions_tests()
+    run_nested_array_sum_tests()
     
     print()
-    print("----------------------------------------------------------")
+    print("--------------------------------------------------")
     print("ALL INCLUDED RECURSION TESTS IN THE FILE PASSED. |")
-    print("----------------------------------------------------------")
+    print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    run_nested_array_sum_tests()
+    Run_All_Recursion_Tests()
