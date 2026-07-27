@@ -169,7 +169,7 @@ def longest_balanced_subsequence(s: str) -> str:
             valid_parenthesis_list.append(s[index])
     
     return  "".join(valid_parenthesis_list)
-     
+
 #TESTS
 
 def run_compress_array_tests():
