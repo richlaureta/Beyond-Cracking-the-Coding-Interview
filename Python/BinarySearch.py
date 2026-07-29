@@ -180,7 +180,7 @@ def minSubarraySumSplit(arr: list[int], k: int) -> int:
     #Problem 29.9 - Min-Subarray-Sum Split
     #This might be an incomplete solution to the problem because this is just dividing it and returning the max sum.
     #It is not regulating to keep the large sum at a minimum
-    #All the tests provided passed though. The tests might not be comprehensive.
+    #All the TESTS PROVIDED HAVE PASSED though. The tests might not be comprehensive.
     #I took off the other bonus question tests.
     #I need more comprehensive tests.
     
@@ -272,7 +272,7 @@ def runSearchInSortedArrayTests():
        assert got == want, f"\nsearchInSortedArray({arr}, {target}): got: {
         got}, want: {want}\n"
     
-    print("ALL SEARCH IN SORTED ARRAY TESTS PROVIDED PASSED.")
+    print("ALL SEARCH IN SORTED ARRAY TESTS PROVIDED HAVE PASSED.")
 
 def runValleyBottomTests():
     tests = [
@@ -290,7 +290,7 @@ def runValleyBottomTests():
         got = valleyBottom(arr)
         assert got == want, f"\nvalley_bottom({arr}): got: {got}, want: {want}\n"
 
-    print("ALL VALLEY BOTTOM TESTS PROVIDED PASSED.")
+    print("ALL VALLEY BOTTOM TESTS PROVIDED HAVE PASSED.")
 
 def run2Array2SumTests():
     tests = [
@@ -306,7 +306,7 @@ def run2Array2SumTests():
         got = twoArrayTwoSum(sorted_arr, unsorted_arr)
         assert got == want, f"\ntwo_array_two_sum({sorted_arr}, {unsorted_arr}): got: {got}, want: {want}\n"
         
-    print("ALL 2-ARRAY 2-SUM TESTS PROVIDED PASSED.")
+    print("ALL 2-ARRAY 2-SUM TESTS PROVIDED HAVE PASSED.")
 
 def runTargetCountDivisibleByKTests():
     tests = [
@@ -342,7 +342,7 @@ def runTargetCountDivisibleByKTests():
         got = targetCountDivisibleByK(arr, target, k)
         assert got == want, f"\ntarget_count_divisible_by_k({arr}, {target}, {k}): got: {got}, want: {want}\n"
     
-    print("ALL TARGET COUNT DIVISIBLE BY K TESTS PROVIDED PASSED.")
+    print("ALL TARGET COUNT DIVISIBLE BY K TESTS PROVIDED HAVE PASSED.")
 
 def runRaceOvertakingTests():
     tests = [
@@ -360,7 +360,7 @@ def runRaceOvertakingTests():
         got = raceOvertaking(p1, p2)
         assert got == want, f"\nrace_overtaking({p1}, {p2}): got: {got}, want: {want}\n"
         
-    print("ALL RACE OVERTAKING TESTS PROVIDED PASSED.")
+    print("ALL RACE OVERTAKING TESTS PROVIDED HAVE PASSED.")
 
 def runSearchInSortedGridTests():
     tests = [
@@ -379,7 +379,7 @@ def runSearchInSortedGridTests():
         assert got == want, (
         f"\nsearch_in_sorted_grid({grid}, {target}): got: {got}, want: {want}\n")
     
-    print("ALL SEARCH IN SORTED GRID TESTS PROVIDED PASSED.")
+    print("ALL SEARCH IN SORTED GRID TESTS PROVIDED HAVE PASSED.")
 
 def min_subarray_sum_split_memoization(arr, k):
     n = len(arr)
@@ -426,7 +426,7 @@ def runMinSubarraySumSplitTests():
         assert got == want, f"\nmin_subarray_sum_split({arr}, {k}): got: {
         got}, want: {want}\n"
     
-    print("ALL MIN-SUBARRAY-SUM-SPLIT TESTS PROVIDED PASSED.")
+    print("ALL MIN-SUBARRAY-SUM-SPLIT TESTS PROVIDED HAVE PASSED.")
 
 def runTideAerialViewTests():
     tests = [
@@ -534,7 +534,7 @@ def runTideAerialViewTests():
         got = tideAerialView(pictures)
         assert got == want, f"\ntide_aerial_view({pictures}): got: {got}, want: {want}\n"
     
-    print("ALL TIDE AERIAL VIEW TESTS PROVIDED PASSED.")
+    print("ALL TIDE AERIAL VIEW TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
  
@@ -548,8 +548,9 @@ def RunAllBinarySearchTestsInTheFile():
     runMinSubarraySumSplitTests()
     runTideAerialViewTests()
     
-    print("-----------------------------------------------")
-    print("ALL THE BINARY SEARCH TESTS IN THE FILE PASSED.")
+    print("----------------------------------------------------")
+    print("ALL THE BINARY SEARCH TESTS IN THE FILE HAVE PASSED.|")
+    print("----------------------------------------------------")
     
 if __name__ == "__main__":
     RunAllBinarySearchTestsInTheFile()

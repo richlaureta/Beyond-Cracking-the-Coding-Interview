@@ -476,7 +476,7 @@ def runChessMovesTests():
         assert got == want, (f"\nchess_moves({board}, {piece}, {r}, {c}): "
                             f"got: {got}, want: {want}\n")
 
-    print("ALL CHESS MOVES TESTS PROVIDED PASSED.")
+    print("ALL CHESS MOVES TESTS PROVIDED HAVE PASSED.")
 
 def runSafeCellsTests():
     tests = [
@@ -500,7 +500,7 @@ def runSafeCellsTests():
         got = safeCells(board)
         assert got == want, f"\nsafe_cells({board}): got: {got}, want: {want}\n"
 
-    print("ALL SAFE CELLS TESTS PROVIDED PASSED.")
+    print("ALL SAFE CELLS TESTS PROVIDED HAVE PASSED.")
 
 def runSpiralOrderTests():
     tests = [
@@ -526,7 +526,7 @@ def runSpiralOrderTests():
         got = spiral(n)
         assert got == want, f"\nspiral({n}): got: {got}, want: {want}\n"
 
-    print("ALL SPIRAL ORDER TESTS PROVIDED PASSED.")
+    print("ALL SPIRAL ORDER TESTS PROVIDED HAVE PASSED.")
 
 def runSnowPrintsTests():
     tests = [
@@ -574,7 +574,7 @@ def runSnowPrintsTests():
         assert got == want, f"\ndistance_to_river({field}): got: {
             got}, want: {want}\n"
 
-    print("ALL SNOWPRINTS TESTS PROVIDED PASSED.")
+    print("ALL SNOWPRINTS TESTS PROVIDED HAVE PASSED.")
 
 def runValidSudokuTests():
     tests = [
@@ -616,7 +616,7 @@ def runValidSudokuTests():
         got = validSudoku(board)
         assert got == want, f"\nsolve({board}): got: {got}, want: {want}\n"
 
-    print("ALL VALID SUDOKU TESTS PROVIDED PASSED.")
+    print("ALL VALID SUDOKU TESTS PROVIDED HAVE PASSED.")
 
 def runSubgridMaximumsTests():
     tests = [
@@ -645,7 +645,7 @@ def runSubgridMaximumsTests():
         assert got == want, f"\nsubgrid_maximums({grid}): got: {
             got}, want: {want}\n"
 
-    print("ALL SUBGRID MAXIMUMS TESTS PROVIDED PASSED.")
+    print("ALL SUBGRID MAXIMUMS TESTS PROVIDED HAVE PASSED.")
 
 def runSubgridSumsTests():
     tests = [
@@ -673,7 +673,7 @@ def runSubgridSumsTests():
         got = subgridSums(grid)
         assert got == want, f"\nsubgrid_sums({grid}): got: {got}, want: {want}\n"
 
-    print("ALL SUBGRID SUMS TESTS PROVIDED PASSED.")
+    print("ALL SUBGRID SUMS TESTS PROVIDED HAVE PASSED.")
 
 def runMatrixOperationsTests():
   tests = [
@@ -705,7 +705,7 @@ def runMatrixOperationsTests():
     assert got == want, (f"\nMatrix({grid}).{operation}(): "
                          f"got: {got}, want: {want}\n")
   
-  print("ALL MATRIX OPERATIONS TESTS PROVIDED PASSED.")
+  print("ALL MATRIX OPERATIONS TESTS PROVIDED HAVE PASSED.")
 
 def RunAllGridsAndMatricesTestsInTheFile():
     runChessMovesTests()
@@ -716,8 +716,9 @@ def RunAllGridsAndMatricesTestsInTheFile():
     runSubgridSumsTests()
     runMatrixOperationsTests()
     
-    print("-------------------------------------------------")
-    print("ALL GRIDS AND MATRICES TESTS IN THE FILE PASSED.")
+    print("-----------------------------------------------------")
+    print("ALL GRIDS AND MATRICES TESTS IN THE FILE HAVE PASSED.|")
+    print("-----------------------------------------------------")
     
 if __name__ == "__main__":
     RunAllGridsAndMatricesTestsInTheFile()

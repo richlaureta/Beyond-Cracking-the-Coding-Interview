@@ -612,7 +612,7 @@ def runReverseCaseMatchTests():
         got = reverseCaseMatch(s)
         assert got == want, f"\nreverse_case_match({s}): got: {got}, want: {want}\n"
 
-    print("ALL REVERSE CASE MATCH TESTS PROVIDED PASSED.")
+    print("ALL REVERSE CASE MATCH TESTS PROVIDED HAVE PASSED.")
 
 def runMergeTests():
     #Problem 27.6 Merge Two Sorted Arrays Tests
@@ -633,7 +633,7 @@ def runMergeTests():
         got = merge(arr1, arr2)
         assert got == want, f"\nmerge({arr1}, {arr2}): got: {got}, want: {want}\n"
 
-    print("ALL MERGE TESTS PROVIDED PASSED.")
+    print("ALL MERGE TESTS PROVIDED HAVE PASSED.")
 
 def runTwoSumTests():
     #Problem 27.7 2-Sum Tests
@@ -657,7 +657,7 @@ def runTwoSumTests():
         got = twoSum(arr)
         assert got == want, f"\ntwo_sum({arr}): got: {got}, want: {want}\n"
 
-    print("ALL TWO SUM TESTS PROVIDED PASSED.")
+    print("ALL TWO SUM TESTS PROVIDED HAVE PASSED.")
 
 def runThreeWayMergeTests():
     #Problem 27.8 Three-Way Merge Tests
@@ -677,7 +677,7 @@ def runThreeWayMergeTests():
         got = threeWayMerge(arr1, arr2, arr3)
         assert got == want, f"\nthree_way_merge({arr1}, {arr2}, {arr3}): got: {got}, want: {want}\n"
 
-    print("ALL THREE-WAY MERGE TESTS PROVIDED PASSED.")
+    print("ALL THREE-WAY MERGE TESTS PROVIDED HAVE PASSED.")
 
 def runSortValleyArrayTests():
     #Problem 27.9 Sort Valley-Shaped Array Tests
@@ -701,7 +701,7 @@ def runSortValleyArrayTests():
         assert got == want, f"\nsort_valley_array({arr}): got: {
             got}, want: {want}\n"
             
-    print("ALL SORT VALLEY-SHAPED ARRAY TESTS PROVIDED PASSED.")
+    print("ALL SORT VALLEY-SHAPED ARRAY TESTS PROVIDED HAVE PASSED.")
 
 def runMissingNumbersTests():
     #Problem 27.10 Missing Numbers in Range Tests
@@ -725,7 +725,7 @@ def runMissingNumbersTests():
         assert got == want, f"\nmissing_numbers({arr}, {low}, {high}): got: {
         got}, want: {want}\n"
 
-    print("ALL MISSING NUMBERS IN RANGE TESTS PROVIDED PASSED.")
+    print("ALL MISSING NUMBERS IN RANGE TESTS PROVIDED HAVE PASSED.")
 
 def runIntervalIntersectionTests():
     #Problem 27.11 Interval Intersection Tests
@@ -747,7 +747,7 @@ def runIntervalIntersectionTests():
         assert got == want, f"\ninterval_intersection({arr1}, {arr2}): got: {
         got}, want: {want}\n"
     
-    print("ALL INTERVAL INTERSECTION TESTS PROVIDED PASSED.")
+    print("ALL INTERVAL INTERSECTION TESTS PROVIDED HAVE PASSED.")
 
 def runReverseTests():
     #Problem 27.12 Array Reversal Tests
@@ -767,7 +767,7 @@ def runReverseTests():
         assert arr_copy == want, f"\nreverse({arr}): got: {
         arr_copy}, want: {want}\n"
     
-    print("ALL REVERSE TESTS PROVIDED PASSED.")
+    print("ALL REVERSE TESTS PROVIDED HAVE PASSED.")
 
 def isValidSolutionParitySorting(arr, original):
     #Problem 27.13 Parity Sorting Tests
@@ -816,7 +816,7 @@ def runParitySortingTests():
             f"\nsort_even({arr}): got: {arr_copy}, example solution: {
             example_solution}\n"
     
-    print("ALL PARITY SORTING TESTS PROVIDED PASSED.")
+    print("ALL PARITY SORTING TESTS PROVIDED HAVE PASSED.")
 
 def runRemoveDuplicatesTests():
     #Problem 27.14 In-Place Duplicate Removal Tests
@@ -842,7 +842,7 @@ def runRemoveDuplicatesTests():
             f"\nremove_duplicates({arr}): got prefix: {
             arr_copy[:want_len]}, want prefix: {want_prefix}\n"
 
-    print("ALL IN-PLACE DUPLICATE REMOVAL TESTS PROVIDED PASSED.")
+    print("ALL IN-PLACE DUPLICATE REMOVAL TESTS PROVIDED HAVE PASSED.")
 
 def runPartitionTests():
     #Problem 27.15 QuickSort Partition Tests
@@ -886,7 +886,7 @@ def runPartitionTests():
         assert is_valid_partition(arr_copy, pivot), \
             f"\npartition({arr}, {pivot}): got: {arr_copy}\n"
     
-    print("ALL PARTITION TESTS PROVIDED PASSED.")
+    print("ALL PARTITION TESTS PROVIDED HAVE PASSED.")
     
 def runSortColorTests():
     #Problem 27.16 Dutch Flag Problem Tests
@@ -912,7 +912,7 @@ def runSortColorTests():
         assert arr_copy == want, f"\nsort_colors({arr}): got: {
             arr_copy}, want: {want}\n"
             
-    print("ALL DUTCH FLAG PROBLEM TESTS PROVIDED PASSED.")
+    print("ALL DUTCH FLAG PROBLEM TESTS PROVIDED HAVE PASSED.")
 
 def runPrefixSuffixSwapTests():
     tests = [
@@ -931,7 +931,7 @@ def runPrefixSuffixSwapTests():
         assert arr_copy == want, f"\nswap_prefix_suffix({arr}): got: {
             arr_copy}, want: {want}\n"
     
-    print("ALL PREFIX-SUFFIX SWAP TESTS PROVIDED PASSED.")
+    print("ALL PREFIX-SUFFIX SWAP TESTS PROVIDED HAVE PASSED.")
     
 def runShiftWordToBackTests():
     tests = [
@@ -954,7 +954,7 @@ def runShiftWordToBackTests():
         assert arr_copy == want, f"\nmove_word({arr}, {word}): got: {
             arr_copy}, want: {want}\n"
     
-    print("ALL SHIFT WORD TO BACK TESTS PROVIDED PASSED.")
+    print("ALL SHIFT WORD TO BACK TESTS PROVIDED HAVE PASSED.")
     
 def runAllTwoPointerTestsInTheFile():
     runReverseCaseMatchTests()
@@ -972,7 +972,10 @@ def runAllTwoPointerTestsInTheFile():
     runPrefixSuffixSwapTests()
     runShiftWordToBackTests()
     
-    print("ONLY INCLUDED TWO POINTER ALGORITHM PATTERN TESTS PASSED.")
+    print()
+    print("---------------------------------------------------------")
+    print("ALL INCLUDED TWO POINTER ALGORITHM PATTERN TESTS PASSED. |")
+    print("---------------------------------------------------------")
     
 if __name__ =="__main__":
     runAllTwoPointerTestsInTheFile()

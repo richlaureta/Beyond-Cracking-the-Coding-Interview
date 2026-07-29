@@ -19,7 +19,7 @@ def moves(seq: str) -> str:
     return "".join(character_list)
 
 def nested_array_sum(arr: list):
-    #Problem 33.2 Nested Sum Array
+    #Problem 33.2 - Nested Sum Array
     
     sum = [0]
     
@@ -37,6 +37,31 @@ def nested_array_sum(arr: list):
             recursion_nested_array(iteration)
     
     return sum[0]
+
+def max_laminal_sum(arr: list) -> int:
+    #Problem 33.5 - Laminal Arrays
+    
+    max_sum_overhead = [float('-inf')]
+    
+    def recursion_max_sum_laminal(raise_power):
+        if len(arr) < 2 ** raise_power:
+            return
+        
+        divide_elements = len(arr) // (2 ** raise_power)
+        
+        index_segment = 0
+        while index_segment < len(arr):
+            sum = 0
+            for index in range(index_segment, index_segment + divide_elements):
+                sum += arr[index]
+            index_segment = index + 1
+            max_sum_overhead[0] = max(max_sum_overhead[0], sum)
+
+        recursion_max_sum_laminal(raise_power + 1)
+        
+    recursion_max_sum_laminal(0)
+    
+    return max_sum_overhead[0]
 
 #TESTS
 
@@ -64,7 +89,7 @@ def run_robot_instructions_tests():
         got = moves(seq)
         assert got == want, f"\nmoves({seq}): got: {got}, want: {want}\n"
     
-    print("ALL ROBOT INSTRUCTIONS TESTS PROVIDED PASSED.")
+    print("ALL ROBOT INSTRUCTIONS TESTS PROVIDED HAVE PASSED.")
 
 def run_nested_array_sum_tests():
     tests = [
@@ -100,17 +125,44 @@ def run_nested_array_sum_tests():
         # assert got_eager == want, \
         #     f"\nnested_array_sum_eager({arr}): got: {got_eager}, want: {want}\n"
     
-    print("ALL NESTED ARRAY SUM TESTS PROVIDED PASSED.") 
+    print("ALL NESTED ARRAY SUM TESTS PROVIDED HAVE PASSED.") 
+
+def run_laminal_array_tests():
+    tests = [
+        # Example 1 from book
+        ([3, -9, 2, 4, -1, 5, 5, -4], 6),
+        # Example 2 from book
+        ([1], 1),
+        # Example 3 from book
+        ([-1, -2], -1),
+        # Additional test case
+        ([1, 2, 3, 4], 10),
+        # Additional test case with all negatives
+        ([-2, -1, -4, -3], -1),
+        # Large test case
+        ([1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -
+            12, 13, -14, 15, -16], 15),
+    ]
+    
+    for arr, want in tests:
+        got = max_laminal_sum(arr)
+        assert got == want, f"\nmax_laminal_sum({arr}): got: {got}, want: {want}\n"
+    
+    print("ALL LAMINAL ARRAYS TESTS PROVIDED HAVE PASSED.")
 
 #ALL TESTS
+
 def Run_All_Recursion_Tests():
     run_robot_instructions_tests()
     run_nested_array_sum_tests()
+    run_laminal_array_tests()
     
     print()
-    print("--------------------------------------------------")
-    print("ALL INCLUDED RECURSION TESTS IN THE FILE PASSED. |")
-    print("--------------------------------------------------")
+    print("------------------------------------------------------")
+    print("ALL INCLUDED RECURSION TESTS IN THE FILE HAVE PASSED. |")
+    print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Recursion_Tests()
+    arr = [-1, -2]
+    
+    print(max_laminal_sum(arr))

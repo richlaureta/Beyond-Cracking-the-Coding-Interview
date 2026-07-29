@@ -241,7 +241,7 @@ def runSortByFrequencyTests():
         assert got2 == want, (
 			f"\nletter_occurrences_lambda({word}): got: {got2}, want: {want}\n")
     
-    print("ALL SORT BY FREQUENCY TESTS PROVIDED PASSED.")
+    print("ALL SORT BY FREQUENCY TESTS PROVIDED HAVE PASSED.")
 
 def runNestedCirclesTests():
     tests = [
@@ -275,7 +275,7 @@ def runNestedCirclesTests():
         got = areCirclesNested(circles)
         assert got == want, f"\nare_circles_nested({circles}): got: {got}, want: {want}\n"
     
-    print("ALL NESTED CIRCLES TESTS PROVIDED PASSED.")
+    print("ALL NESTED CIRCLES TESTS PROVIDED HAVE PASSED.")
 
 def runDeleteOperationsTests():
     tests = [
@@ -307,7 +307,7 @@ def runDeleteOperationsTests():
         got = processOperations(nums, operations)
         assert got == want, f"\nprocessOperations({nums}, {operations}): got: {got}, want: {want}\n"
 
-    print("ALL DELETE OPERATIONS TESTS PROVIDED PASSED.")
+    print("ALL DELETE OPERATIONS TESTS PROVIDED HAVE PASSED.")
 
 def runSpreadsheetTests():
     tests = [
@@ -353,7 +353,7 @@ def runSpreadsheetTests():
                 expect = want[r][c]
                 assert got == expect, f"\nget({r}, {c}): got: {got}, want: {expect}\n"
     
-    print("ALL SPREADSHEET TESTS PROVIDED PASSED.")
+    print("ALL SPREADSHEET TESTS PROVIDED HAVE PASSED.")
 
 def runSortByPublicationYearTests():
     tests = [
@@ -398,7 +398,7 @@ def runSortByPublicationYearTests():
         assert len(got) == len(books), f"\nbucket_sort: got length {len(got)}, want length {len(books)}\n"
         assert set(b.title for b in got) == set(b.title for b in books), f"\nbucket_sort: some books were lost or duplicated\n"
 
-    print("ALL SORT BY PUBLICATION YEAR TESTS PROVIDED PASSED.")
+    print("ALL SORT BY PUBLICATION YEAR TESTS PROVIDED HAVE PASSED.")
 
 def first_k_min_heap(arr, k):
     #Part of the 31.6 - First K Problem
@@ -485,7 +485,7 @@ def run_first_k_tests():
             assert sorted(got) == sorted(
             want), f"\n{name}({arr}, {k}): got: {got}, want: {want} (in any order)\n"
     
-    print("ALL FIRST K TESTS PROVIDED PASSED.")
+    print("ALL FIRST K TESTS PROVIDED HAVE PASSED.")
        
 #ALL TESTS
 
@@ -498,9 +498,9 @@ def RunAllSortingTests():
     run_first_k_tests()
     
     print()
-    print("------------------------------------------------")
-    print("ALL INCLUDED SORTING TESTS IN THE FILE PASSED. |")
-    print("------------------------------------------------")
+    print("----------------------------------------------------")
+    print("ALL INCLUDED SORTING TESTS IN THE FILE HAVE PASSED. |")
+    print("----------------------------------------------------")
   
 if __name__ == "__main__":
     RunAllSortingTests()

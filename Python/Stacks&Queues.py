@@ -208,7 +208,7 @@ def run_compress_array_tests():
         got = compress_array(arr)
         assert got == want, f"\ncompress_array({arr}): got: {got}, want: {want}\n"
     
-    print("ALL COMPRESS ARRAY TESTS PROVIDED PASSED.")
+    print("ALL COMPRESS ARRAY TESTS PROVIDED HAVE PASSED.")
 
 def run_compress_array_by_k_tests():
     tests = [
@@ -223,7 +223,7 @@ def run_compress_array_by_k_tests():
         got = compress_array_k(arr, k)
         assert got == want, f"\ncompress_array_k({arr}, {k}): got: {got}, want: {want}\n"
 
-    print("ALL COMPRESS ARRAY BY K TESTS PROVIDED PASSED.")
+    print("ALL COMPRESS ARRAY BY K TESTS PROVIDED HAVE PASSED.")
 
 def run_current_url_tests():
     tests = [
@@ -238,7 +238,7 @@ def run_current_url_tests():
         got = current_url(actions)
         assert got == want, f"\ncurrent_url({actions}): got: {got}, want: {want}\n"
 
-    print("ALL CURRENT URL TESTS PROVIDED PASSED.")
+    print("ALL CURRENT URL TESTS PROVIDED HAVE PASSED.")
 
 def run_current_url_with_forward_tests():
     tests = [
@@ -253,7 +253,7 @@ def run_current_url_with_forward_tests():
         got = current_url_with_forward(actions)
         assert got == want, f"\ncurrent_url_with_forward({actions}): got: {got}, want: {want}\n"
 
-    print("ALL CURRENT URL WITH FORWARD TESTS PROVIDED PASSED.")
+    print("ALL CURRENT URL WITH FORWARD TESTS PROVIDED HAVE PASSED.")
 
 def run_balanced_partition_tests():
     tests = [
@@ -268,7 +268,7 @@ def run_balanced_partition_tests():
         got = max_balanced_partition(s)
         assert got == want, f"\nmax_balanced_partition({s}): got: {got}, want: {want}\n"
     
-    print("ALL BALANCED PARTITION TESTS PROVIDED PASSED.")
+    print("ALL BALANCED PARTITION TESTS PROVIDED HAVE PASSED.")
 
 def run_custom_brackets_tests():
     tests = [
@@ -306,7 +306,7 @@ def run_custom_brackets_tests():
         got = custom_brackets(s, brackets)
         assert got == want, f"\ncustom_brackets({s}, {brackets}): got: {got}, want: {want}\n"
     
-    print("ALL CUSTOM BRACKETS TESTS PROVIDED PASSED.")
+    print("ALL CUSTOM BRACKETS TESTS PROVIDED HAVE PASSED.")
 
 def run_longest_balanced_subsequence_tests():
     tests = [
@@ -322,7 +322,7 @@ def run_longest_balanced_subsequence_tests():
         got = longest_balanced_subsequence(s)
         assert got in want, f"\nlongest_balanced_subsequence({s}): got: {got}, want: {want}\n"
 
-    print("ALL LONGEST BALANCED SUBSEQUENCE TESTS PROVIDED PASSED.")
+    print("ALL LONGEST BALANCED SUBSEQUENCE TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -336,9 +336,9 @@ def Run_All_Stacks_And_Queues_Tests():
     run_longest_balanced_subsequence_tests()
     
     print()
-    print("----------------------------------------------------------")
-    print("ALL INCLUDED STACKS AND QUEUES TESTS IN THE FILE PASSED. |")
-    print("----------------------------------------------------------")
+    print("--------------------------------------------------------------")
+    print("ALL INCLUDED STACKS AND QUEUES TESTS IN THE FILE HAVE PASSED. |")
+    print("--------------------------------------------------------------")
 
 if __name__ == "__main__":
-    run_longest_balanced_subsequence_tests()
+    Run_All_Stacks_And_Queues_Tests()

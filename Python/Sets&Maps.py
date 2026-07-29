@@ -332,7 +332,7 @@ def runAccountSharingDetectionTests():
             assert got == "", f"\naccount_sharing({connections}): got: {got}, want: {want}\n"
             continue
 	
-    print("ALL ACCOUNT SHARING DETECTION TESTS PROVIDED PASSED.")
+    print("ALL ACCOUNT SHARING DETECTION TESTS PROVIDED HAVE PASSED.")
 
 def runMostSharedAccountTests():
     tests = [
@@ -353,7 +353,7 @@ def runMostSharedAccountTests():
                            len([(ip, u) for ip, u in connections if u == want])), \
             f"\nmost_shared_account({connections}): got: {got}, want: {want}\n"
     
-    print("ALL MOST SHARED ACCOUNT TESTS PROVIDED PASSED.")
+    print("ALL MOST SHARED ACCOUNT TESTS PROVIDED HAVE PASSED.")
 
 def runMostFrequentOctetTests():
     tests = [
@@ -370,7 +370,7 @@ def runMostFrequentOctetTests():
         got = mostFrequentOctet(ips)
         assert got == want, f"\nmost_frequent_octet({ips}): got: {got}, want: {want}\n"
         
-    print("ALL MOST FREQUENT OCTET TESTS PROVIDED PASSED.")
+    print("ALL MOST FREQUENT OCTET TESTS PROVIDED HAVE PASSED.")
 
 def runMultiAccountCheatingTests():
     tests = [
@@ -390,7 +390,7 @@ def runMultiAccountCheatingTests():
         got = multiAccountCheating(users)
         assert got == want, f"\nmulti_account_cheating({users}): got: {got}, want: {want}\n"
     
-    print("ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED PASSED.")
+    print("ALL MULTI-ACCOUNT CHEATING TESTS PROVIDED HAVE PASSED.")
 
 def runDomainResolverTests():
     tests = [
@@ -447,7 +447,7 @@ def runDomainResolverTests():
             assert got == want, \
                 f"\n{op[0]}({', '.join(repr(x) for x in op[1:])}): got: {got}, want: {want}\n"
     
-    print("ALL DOMAIN RESOLVER TESTS PROVIDED PASSED.")
+    print("ALL DOMAIN RESOLVER TESTS PROVIDED HAVE PASSED.")
 
 def runFindAllSquaresTests():
     tests = [
@@ -466,7 +466,7 @@ def runFindAllSquaresTests():
         want.sort()
         assert got == want, f"\nfind_squared({arr}): got: {got}, want: {want}\n"
 
-    print("ALL FIND ALL SQUARES TESTS PROVIDED PASSED.")
+    print("ALL FIND ALL SQUARES TESTS PROVIDED HAVE PASSED.")
 
 def runWordExpansionClassTests():
     tests = [
@@ -516,7 +516,7 @@ def runWordExpansionClassTests():
             assert got == want, \
                 f"\nChecker({repr(s)}).expandsInto({repr(s2)}): got: {got}, want: {want}\n"
     
-    print("ALL WORD EXPANSION CLASS TESTS PROVIDED PASSED.")
+    print("ALL WORD EXPANSION CLASS TESTS PROVIDED HAVE PASSED.")
     
 def runCheaterDetectionTests():
     tests = [
@@ -570,7 +570,7 @@ def runCheaterDetectionTests():
         assert got == want, \
             f"\nsuspect_students({answers}, {m}, {students}): got: {got}, want: {want}\n"
             
-    print("ALL CHEATER DETECTION TESTS PROVIDED PASSED.")
+    print("ALL CHEATER DETECTION TESTS PROVIDED HAVE PASSED.")
 
 def runProductOfAlphabeticalSumsTests():
     tests = [
@@ -590,7 +590,7 @@ def runProductOfAlphabeticalSumsTests():
         assert got == want, \
             f"\nalphabetic_sum_product({words}, {target}): got: {got}, want: {want}\n"
     
-    print("ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED PASSED.")
+    print("ALL PRODUCT OF ALPHABETICAL SUMS TESTS PROVIDED HAVE PASSED.")
 
 def runActionLogAnomaliesTests():
     tests = [
@@ -640,7 +640,7 @@ def runActionLogAnomaliesTests():
         want.sort()
         assert got == want, f"\nfind_anomalies({log}): got: {got}, want: {want}\n"
 
-    print("ALL ACTION LOG ANOMALIES TESTS PROVIDED PASSED.")
+    print("ALL ACTION LOG ANOMALIES TESTS PROVIDED HAVE PASSED.")
 
 def largestSetIntersectionPrefixSum(sets):
     #Part of the 30.11 - Largest Set Intersection Tests
@@ -703,7 +703,7 @@ def runLargestSetIntersectionTests():
         assert got_freq == want, f"\nlargest_set_intersection_frequency_map({sets}): got: {got_freq}, want: {want}\n"
         assert got_prefix == want, f"\nlargest_set_intersection_prefix_sum({sets}): got: {got_prefix}, want: {want}\n"
 
-    print("ALL LARGEST SET INTERSECTION TESTS PROVIDED PASSED.")
+    print("ALL LARGEST SET INTERSECTION TESTS PROVIDED HAVE PASSED.")
     
 #ALL TESTS
     
@@ -720,9 +720,9 @@ def RunAllSetsAndMapsTests():
     runLargestSetIntersectionTests()
     
     print()
-    print("------------------------------------------------------")
-    print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE PASSED. |")
-    print("------------------------------------------------------")
+    print("----------------------------------------------------------")
+    print("ALL INCLUDED SETS AND MAPS TESTS IN THE FILE HAVE PASSED. |")
+    print("----------------------------------------------------------")
     
 if __name__ == "__main__":
     RunAllSetsAndMapsTests()
