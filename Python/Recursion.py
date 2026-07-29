@@ -163,6 +163,4 @@ def Run_All_Recursion_Tests():
     print("------------------------------------------------------")
 
 if __name__ == "__main__":
-    arr = [-1, -2]
-    
-    print(max_laminal_sum(arr))
+    Run_All_Recursion_Tests()
