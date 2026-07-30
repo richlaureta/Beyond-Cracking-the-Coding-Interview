@@ -1,12 +1,12 @@
 class Node:
-    #Problem #34.1 - Singly Linked example_linked_list Design
+    #Problem #34.1 - Singly Linked List Design
     
     def __init__(self, v = None):
         self.v = v
         self.next = None
     
 class SinglyLinkedList:
-    #Problem 34.1 - Singly Linked example_linked_list Design
+    #Problem 34.1 - Singly Linked List Design
     
     def __init__(self):
         self.head = None
