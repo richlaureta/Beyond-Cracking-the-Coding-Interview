@@ -2661,35 +2661,73 @@ int main(int argc, const char *argv[]) {
     
     //Problem 33.1 - Robot Instructions
     
-    std::vector<std::pair<std::string, std::string>> tests = {
-        // Example 1 from book
-        {"LL", "LL"},
-        // Example 2 from book
-        {"2LR", "LRR"},
-        // Example 3 from book
-        {"2L", "L"},
-        // Example 4 from book
-        {"22LR", "LRRLR"},
-        // Example 5 from book
-        {"LL2R2L", "LLRLL"},
-        // Edge case - empty string
-        {"", ""},
-        // Edge case - single character
-        {"L", "L"},
-        // Multiple 2s in a row
-        {"2222LR", "LRRLRLRRLRRLR"},
+//    std::vector<std::pair<std::string, std::string>> tests = {
+//        // Example 1 from book
+//        {"LL", "LL"},
+//        // Example 2 from book
+//        {"2LR", "LRR"},
+//        // Example 3 from book
+//        {"2L", "L"},
+//        // Example 4 from book
+//        {"22LR", "LRRLR"},
+//        // Example 5 from book
+//        {"LL2R2L", "LLRLL"},
+//        // Edge case - empty string
+//        {"", ""},
+//        // Edge case - single character
+//        {"L", "L"},
+//        // Multiple 2s in a row
+//        {"2222LR", "LRRLRLRRLRRLR"},
+//      };
+//
+//      for (const auto& [seq, want] : tests) {
+//        std::string got = moves(seq);
+//        if (got != want) {
+//          throw std::runtime_error("\nmoves(" + seq +
+//                                 "): got: " + got +
+//                                 ", want: " + want + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL ROBOT INSTRUCTIONS TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 33.2 - Nested Sum Array
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
+        std::string str = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) str += ", ";
+          str += std::to_string(vec[i]);
+        }
+        str += "]";
+        return str;
       };
 
-      for (const auto& [seq, want] : tests) {
-        std::string got = moves(seq);
+      std::vector<std::pair<std::vector<int>, int>> tests = {
+          // Example 1 from book
+          {{3, -9, 2, 4, -1, 5, 5, -4}, 6},
+          // Example 2 from book
+          {{1}, 1},
+          // Example 3 from book
+          {{-1, -2}, -1},
+          // Additional test case
+          {{1, 2, 3, 4}, 10},
+          // Additional test case with all negatives
+          {{-2, -1, -4, -3}, -1},
+          // Large test case
+          {{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16}, 15},
+      };
+
+      for (const auto& [arr, want] : tests) {
+        int got = maxLaminalSum(arr);
         if (got != want) {
-          throw std::runtime_error("\nmoves(" + seq +
-                                 "): got: " + got +
-                                 ", want: " + want + "\n");
+          throw std::runtime_error("\nsolve(" + vecToStr(arr) +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
         }
       }
     
-    cout << "ALL ROBOT INSTRUCTIONS TESTS PROVIDED PASSED." << endl;
+    cout << "ALL NESTED SUM ARRAY TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

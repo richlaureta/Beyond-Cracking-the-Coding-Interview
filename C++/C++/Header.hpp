@@ -15,6 +15,7 @@
 #include <tuple>
 #include <vector>
 #include <climits>
+#include <limits>
 #include <algorithm>
 #include <random>
 #include <stack>
@@ -221,7 +222,12 @@ string currentUrlWithForward(const vector<pair<string, string>> &actions);
 int maxBalancedPartition(const string &s);
 bool customBrackets(const string &s, const vector<string> &brackets);
 string longestBalancedSubsequence(const string &s);
+
+//Recursion
 void recursiveMoves(int index, const string &seq, vector<char> &joinedRobotInstructions);
 string moves(const string &seq);
+void recursionMaxLaminalSum(const vector<int> &arr, int raiseToThePower, int &maxSumOverhead);
+int maxLaminalSum(const vector<int> &arr);
 
+//Linked List
 #endif // HEADER_HPP
