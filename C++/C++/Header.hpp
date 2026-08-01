@@ -245,12 +245,14 @@ private:
     int size_;
 public:
     SinglyLinkedList();
+    ~SinglyLinkedList();
     void pushFront(int val);
     optional<int> popFront();
     void pushBack(int val);
     optional<int> popBack();
     int size();
     Node* contains(int val);
+    
 };
 
 #endif // HEADER_HPP

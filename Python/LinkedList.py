@@ -122,6 +122,8 @@ def run_singly_linked_list_design_tests():
     sll.push_front(40)
     assert sll.pop_front() == 40, "\npop_front() should return 40\n"
     
+    del sll
+    
     print("ALL SINGLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED.")
 
 #ALL TESTS

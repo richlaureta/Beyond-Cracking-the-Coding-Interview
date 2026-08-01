@@ -9,6 +9,16 @@
 
 Node::Node(int val) : val(val), next(nullptr){};
 
+SinglyLinkedList::~SinglyLinkedList()
+{
+    //Problem 34.1 = Singly Linked List Design
+    
+    while (head) {
+      Node* temp = head;
+      head = head->next;
+      delete temp;
+    }
+}
 
 SinglyLinkedList::SinglyLinkedList(): head(nullptr), size_(0){};
 
@@ -103,3 +113,5 @@ Node* SinglyLinkedList::contains(int val)
         currentNode = currentNode->next;
     }
 }
+
+
