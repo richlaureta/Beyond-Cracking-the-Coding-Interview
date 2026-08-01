@@ -9,6 +9,8 @@
 
 Node::Node(int val) : val(val), next(nullptr){};
 
+SinglyLinkedList::SinglyLinkedList(): head(nullptr), size_(0){};
+
 SinglyLinkedList::~SinglyLinkedList()
 {
     //Problem 34.1 = Singly Linked List Design
@@ -20,19 +22,13 @@ SinglyLinkedList::~SinglyLinkedList()
     }
 }
 
-SinglyLinkedList::SinglyLinkedList(): head(nullptr), size_(0){};
-
 void SinglyLinkedList::pushFront(int val)
 {
     //Problem 34.1 - Singly Linked List Design
     
-    if(head == nullptr) head = new Node(val);
-    else
-    {
-        Node *newHead = new Node(val);
-        newHead->next = head;
-        head = newHead;
-    }
+    Node *newHead = new Node(val);
+    newHead->next = head;
+    head = newHead;
     
     size_++;
 }
@@ -42,13 +38,13 @@ optional<int> SinglyLinkedList::popFront()
     //Problem 34.1 - Singly Linked List Design
     
     if(head == nullptr) return nullopt;
-    else
-    {
-        int returnedValue = head->val;
-        head = head->next;
-        size_--;
-        return returnedValue;
-    }
+    
+    Node* temporaryNode = head;
+    int returnedValue = head->val;
+    head = head->next;
+    delete temporaryNode;
+    size_--;
+    return returnedValue;
 }
 
 void SinglyLinkedList::pushBack(int val)
@@ -75,6 +71,7 @@ optional<int> SinglyLinkedList::popBack()
     if(head->next == nullptr)
     {
         int returnedValue = head->val;
+        delete head;
         head = nullptr;
         size_--;
         return returnedValue;
@@ -86,6 +83,7 @@ optional<int> SinglyLinkedList::popBack()
     
     int returnedValue = currentNode->next->val;
     
+    delete currentNode->next;
     currentNode->next = nullptr;
     
     size_--;

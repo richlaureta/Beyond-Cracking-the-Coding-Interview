@@ -252,7 +252,6 @@ public:
     optional<int> popBack();
     int size();
     Node* contains(int val);
-    
 };
 
 #endif // HEADER_HPP
