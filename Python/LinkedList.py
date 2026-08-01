@@ -13,23 +13,20 @@ class SinglyLinkedList:
         self.size = 0
         
     def push_front(self, v):
-        if self.head == None:
-            self.head = Node(v)
-        else:
-            new_head = Node(v)
-            new_head.next = self.head
-            self.head = new_head
+        new_head = Node(v)
+        new_head.next = self.head
+        self.head = new_head
         
         self.size += 1
     
     def pop_front(self) -> int:
         if self.head == None:
             return None
-        else:
-            returned_value = self.head.v
-            self.head = self.head.next
-            self.size -= 1
-            return returned_value
+        
+        returned_value = self.head.v
+        self.head = self.head.next
+        self.size -= 1
+        return returned_value
  
     def push_back(self, v):
         if self.head == None:
