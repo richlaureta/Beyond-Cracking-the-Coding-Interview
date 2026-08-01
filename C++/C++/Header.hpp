@@ -23,6 +23,7 @@
 #include <deque>
 #include <charconv>
 #include <system_error>
+#include <optional>
 
 using namespace std;
 
@@ -230,4 +231,26 @@ void recursionMaxLaminalSum(const vector<int> &arr, int raiseToThePower, int &ma
 int maxLaminalSum(const vector<int> &arr);
 
 //Linked List
+struct Node
+{
+    int val;
+    Node *next;
+    Node(int val);
+};
+
+class SinglyLinkedList
+{
+private:
+    Node *head;
+    int size_;
+public:
+    SinglyLinkedList();
+    void pushFront(int val);
+    optional<int> popFront();
+    void pushBack(int val);
+    optional<int> popBack();
+    int size();
+    Node* contains(int val);
+};
+
 #endif // HEADER_HPP

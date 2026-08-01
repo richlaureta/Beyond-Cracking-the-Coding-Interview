@@ -2693,41 +2693,138 @@ int main(int argc, const char *argv[]) {
     
     //Problem 33.2 - Nested Sum Array
     
-    auto vecToStr = [](const std::vector<int>& vec) {
-        std::string str = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) str += ", ";
-          str += std::to_string(vec[i]);
-        }
-        str += "]";
-        return str;
-      };
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//        std::string str = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) str += ", ";
+//          str += std::to_string(vec[i]);
+//        }
+//        str += "]";
+//        return str;
+//      };
+//
+//      std::vector<std::pair<std::vector<int>, int>> tests = {
+//          // Example 1 from book
+//          {{3, -9, 2, 4, -1, 5, 5, -4}, 6},
+//          // Example 2 from book
+//          {{1}, 1},
+//          // Example 3 from book
+//          {{-1, -2}, -1},
+//          // Additional test case
+//          {{1, 2, 3, 4}, 10},
+//          // Additional test case with all negatives
+//          {{-2, -1, -4, -3}, -1},
+//          // Large test case
+//          {{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16}, 15},
+//      };
+//
+//      for (const auto& [arr, want] : tests) {
+//        int got = maxLaminalSum(arr);
+//        if (got != want) {
+//          throw std::runtime_error("\nsolve(" + vecToStr(arr) +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL NESTED SUM ARRAY TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 34.1 - Singly Linked List Design
+    
+    SinglyLinkedList list;
 
-      std::vector<std::pair<std::vector<int>, int>> tests = {
-          // Example 1 from book
-          {{3, -9, 2, 4, -1, 5, 5, -4}, 6},
-          // Example 2 from book
-          {{1}, 1},
-          // Example 3 from book
-          {{-1, -2}, -1},
-          // Additional test case
-          {{1, 2, 3, 4}, 10},
-          // Additional test case with all negatives
-          {{-2, -1, -4, -3}, -1},
-          // Large test case
-          {{1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16}, 15},
-      };
+      // Test empty list
+      if (list.size() != 0) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 0\n");
+      }
 
-      for (const auto& [arr, want] : tests) {
-        int got = maxLaminalSum(arr);
-        if (got != want) {
-          throw std::runtime_error("\nsolve(" + vecToStr(arr) +
-                                   "): got: " + std::to_string(got) +
-                                   ", want: " + std::to_string(want) + "\n");
-        }
+      if (list.popFront()) {
+        throw std::runtime_error("\npop_front(): got value, want: nullopt\n");
+      }
+
+      if (list.popBack()) {
+        throw std::runtime_error("\npop_back(): got value, want: nullopt\n");
+      }
+
+      // Test push_front
+      list.pushFront(10);
+      if (list.size() != 1) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 1\n");
+      }
+      if (!list.contains(10)) {
+        throw std::runtime_error("\ncontains(10): got: false, want: true\n");
+      }
+
+      // Test push_back
+      list.pushBack(20);
+      if (list.size() != 2) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 2\n");
+      }
+      if (!list.contains(20)) {
+        throw std::runtime_error("\ncontains(20): got: false, want: true\n");
+      }
+
+      // Test pop_front
+      auto val = list.popFront();
+      if (!val || *val != 10) {
+        throw std::runtime_error(
+            "\npop_front(): got: " + (val ? std::to_string(*val) : "nullopt") +
+            ", want: 10\n");
+      }
+      if (list.size() != 1) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 1\n");
+      }
+      if (list.contains(10)) {
+        throw std::runtime_error("\ncontains(10): got: true, want: false\n");
+      }
+
+      // Test pop_back
+      val = list.popBack();
+      if (!val || *val != 20) {
+        throw std::runtime_error(
+            "\npop_back(): got: " + (val ? std::to_string(*val) : "nullopt") +
+            ", want: 20\n");
+      }
+      if (list.size() != 0) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 0\n");
+      }
+      if (list.contains(20)) {
+        throw std::runtime_error("\ncontains(20): got: true, want: false\n");
+      }
+
+      // Test multiple operations
+      list.pushBack(30);
+      list.pushFront(40);
+      if (list.size() != 2) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 2\n");
+      }
+
+      val = list.popFront();
+      if (!val || *val != 40) {
+        throw std::runtime_error(
+            "\npop_front(): got: " + (val ? std::to_string(*val) : "nullopt") +
+            ", want: 40\n");
+      }
+
+      val = list.popBack();
+      if (!val || *val != 30) {
+        throw std::runtime_error(
+            "\npop_back(): got: " + (val ? std::to_string(*val) : "nullopt") +
+            ", want: 30\n");
+      }
+
+      if (list.size() != 0) {
+        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+                                 ", want: 0\n");
       }
     
-    cout << "ALL NESTED SUM ARRAY TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL SINGLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
