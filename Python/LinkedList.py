@@ -261,4 +261,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    run_doubly_linked_list_design_tests()
+    Run_All_Linked_Lists_Tests()

@@ -2731,7 +2731,104 @@ int main(int argc, const char *argv[]) {
     
     //Problem 34.1 - Singly Linked List Design
     
-    SinglyLinkedList list;
+//    SinglyLinkedList list;
+//
+//      // Test empty list
+//      if (list.size() != 0) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 0\n");
+//      }
+//
+//      if (list.popFront()) {
+//        throw std::runtime_error("\npop_front(): got value, want: nullopt\n");
+//      }
+//
+//      if (list.popBack()) {
+//        throw std::runtime_error("\npop_back(): got value, want: nullopt\n");
+//      }
+//
+//      // Test push_front
+//      list.pushFront(10);
+//      if (list.size() != 1) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 1\n");
+//      }
+//      if (!list.contains(10)) {
+//        throw std::runtime_error("\ncontains(10): got: false, want: true\n");
+//      }
+//
+//      // Test push_back
+//      list.pushBack(20);
+//      if (list.size() != 2) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 2\n");
+//      }
+//      if (!list.contains(20)) {
+//        throw std::runtime_error("\ncontains(20): got: false, want: true\n");
+//      }
+//
+//      // Test pop_front
+//      auto val = list.popFront();
+//      if (!val || *val != 10) {
+//        throw std::runtime_error(
+//            "\npop_front(): got: " + (val ? std::to_string(*val) : "nullopt") +
+//            ", want: 10\n");
+//      }
+//      if (list.size() != 1) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 1\n");
+//      }
+//      if (list.contains(10)) {
+//        throw std::runtime_error("\ncontains(10): got: true, want: false\n");
+//      }
+//
+//      // Test pop_back
+//      val = list.popBack();
+//      if (!val || *val != 20) {
+//        throw std::runtime_error(
+//            "\npop_back(): got: " + (val ? std::to_string(*val) : "nullopt") +
+//            ", want: 20\n");
+//      }
+//      if (list.size() != 0) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 0\n");
+//      }
+//      if (list.contains(20)) {
+//        throw std::runtime_error("\ncontains(20): got: true, want: false\n");
+//      }
+//
+//      // Test multiple operations
+//      list.pushBack(30);
+//      list.pushFront(40);
+//      if (list.size() != 2) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 2\n");
+//      }
+//
+//      val = list.popFront();
+//      if (!val || *val != 40) {
+//        throw std::runtime_error(
+//            "\npop_front(): got: " + (val ? std::to_string(*val) : "nullopt") +
+//            ", want: 40\n");
+//      }
+//
+//      val = list.popBack();
+//      if (!val || *val != 30) {
+//        throw std::runtime_error(
+//            "\npop_back(): got: " + (val ? std::to_string(*val) : "nullopt") +
+//            ", want: 30\n");
+//      }
+//
+//      if (list.size() != 0) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(list.size()) +
+//                                 ", want: 0\n");
+//      }
+//    
+//    cout << "ALL SINGLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 34.2 - Doubly Linked List Design
+    
+    DoublyLinkedList list;
 
       // Test empty list
       if (list.size() != 0) {
@@ -2824,7 +2921,7 @@ int main(int argc, const char *argv[]) {
                                  ", want: 0\n");
       }
     
-    cout << "ALL SINGLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL DOUBLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

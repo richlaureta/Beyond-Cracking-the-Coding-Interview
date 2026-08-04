@@ -234,10 +234,10 @@ int maxLaminalSum(const vector<int> &arr);
 struct Node
 {
     int val;
+    Node* previous;
     Node *next;
     Node(int val);
 };
-
 class SinglyLinkedList
 {
 private:
@@ -246,6 +246,22 @@ private:
 public:
     SinglyLinkedList();
     ~SinglyLinkedList();
+    void pushFront(int val);
+    optional<int> popFront();
+    void pushBack(int val);
+    optional<int> popBack();
+    int size();
+    Node* contains(int val);
+};
+class DoublyLinkedList
+{
+private:
+    Node* head;
+    Node* tail;
+    int size_;
+    
+public:
+    DoublyLinkedList();
     void pushFront(int val);
     optional<int> popFront();
     void pushBack(int val);

@@ -7,7 +7,7 @@
 
 #include "Header.hpp"
 
-Node::Node(int val) : val(val), next(nullptr){};
+Node::Node(int val) : val(val), previous(nullptr), next(nullptr){};
 
 SinglyLinkedList::SinglyLinkedList(): head(nullptr), size_(0){};
 
@@ -112,4 +112,111 @@ Node* SinglyLinkedList::contains(int val)
     }
 }
 
+DoublyLinkedList::DoublyLinkedList(): head(nullptr), tail(nullptr), size_(0){};
 
+void DoublyLinkedList::pushFront(int val)
+{
+    //Problem 34.2 - Doubly Linked List Design
+    
+    Node* frontNode = new Node(val);
+    frontNode->next = head;
+    
+    if(head) head->previous = frontNode;
+    else tail = frontNode;
+    
+    head = frontNode;
+    size_++;
+}
+
+optional<int> DoublyLinkedList::popFront()
+{
+    //Problem 34.2 - Doubly Linked List Design
+    
+    optional<int> returnValue = nullopt;
+    
+    if(head and head == tail)
+    {
+        returnValue = head->val;
+        head = nullptr;
+        tail = nullptr;
+        size_--;
+        
+        return returnValue;
+    }
+    
+    if(head)
+    {
+        returnValue = head->val;
+        head = head->next;
+        
+        if(head) head->previous = nullptr;
+        
+        size_--;
+    }
+    
+    return returnValue;
+}
+
+void DoublyLinkedList::pushBack(int val)
+{
+    //Problem 34.2 Doubly Linked List Design
+    
+    Node* addNode = new Node(val);
+    
+    if(!tail)
+    {
+        head = addNode;
+        tail = addNode;
+        size_++;
+        return;
+    }
+    
+    Node* previousTail = tail;
+    tail->next = addNode;
+    tail = addNode;
+    addNode->previous = previousTail;
+    size_++;
+}
+
+optional<int> DoublyLinkedList::popBack()
+{
+    //Problem 34.2 Doubly Linked List Design
+    
+    optional<int> returnValue = nullopt;
+    
+    if(tail)
+    {
+        returnValue = tail->val;
+        tail = tail->previous;
+        
+        if(tail) tail->next = nullptr;
+        else head = nullptr;
+        
+        size_--;
+    }
+    
+    return returnValue;
+}
+
+int DoublyLinkedList::size()
+{
+    //Problem 34.2 - Doubly Linked List Design
+    
+    return size_;
+}
+
+Node* DoublyLinkedList::contains(int val)
+{
+    //Problem 34.2 - Doubly Linked List Design
+    
+    Node* currentNode = head;
+    
+    while(currentNode)
+    {
+        if(currentNode->val == val) return currentNode;
+        
+        currentNode = currentNode->next;
+    }
+    
+    return currentNode;
+}
