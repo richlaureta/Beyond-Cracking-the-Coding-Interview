@@ -15,10 +15,12 @@ SinglyLinkedList::~SinglyLinkedList()
 {
     //Problem 34.1 = Singly Linked List Design
     
-    while (head) {
-      Node* temp = head;
-      head = head->next;
-      delete temp;
+    while (head)
+    {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        temp = nullptr;
     }
 }
 
@@ -43,6 +45,8 @@ optional<int> SinglyLinkedList::popFront()
     int returnedValue = head->val;
     head = head->next;
     delete temporaryNode;
+    temporaryNode = nullptr;
+    
     size_--;
     return returnedValue;
 }
@@ -147,7 +151,10 @@ optional<int> DoublyLinkedList::popFront()
     if(head)
     {
         returnValue = head->val;
+        Node* deleteHead = head;
         head = head->next;
+        delete deleteHead;
+        deleteHead = nullptr;
         
         if(head) head->previous = nullptr;
         
@@ -175,6 +182,7 @@ void DoublyLinkedList::pushBack(int val)
     tail->next = addNode;
     tail = addNode;
     addNode->previous = previousTail;
+    
     size_++;
 }
 
@@ -187,8 +195,11 @@ optional<int> DoublyLinkedList::popBack()
     if(tail)
     {
         returnValue = tail->val;
+        Node* deleteTail = tail;
         tail = tail->previous;
-        
+        delete deleteTail;
+        deleteTail = nullptr;
+    
         if(tail) tail->next = nullptr;
         else head = nullptr;
         
