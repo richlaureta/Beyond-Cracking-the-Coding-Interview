@@ -160,7 +160,45 @@ class DoublyLinkedList:
             current_node = current_node.next
 
         return current_node
+
+class LinkedListStack:
+    #Problem 34.3 - Linked-List-Based Stack
     
+    def __init__(self):
+        self.head = None
+        self.size_ = 0
+        
+    def push(self, v):
+        new_head = Node(v)
+        
+        new_head.next = self.head
+        self.head = new_head
+        
+        self.size_ += 1
+        
+    def pop(self):
+        return_value = None
+        
+        if self.head:
+            return_value = self.head.v
+            self.head = self.head.next
+            self.size_ -= 1
+        
+        return return_value
+    
+    def peek(self) -> int:
+        return_value = None
+        
+        if self.head:
+            return_value = self.head.v
+        
+        return return_value
+    
+    def size(self):
+        return self.size_
+    
+    def empty(self) -> bool:
+        return self.size_ == 0
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -248,12 +286,44 @@ def run_doubly_linked_list_design_tests():
     assert dll.pop_front() == 40, "\npop_front() should return 40\n"
     
     print("ALL DOUBLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED.")
+
+def run_linked_list_based_stack_tests():
+    stack = LinkedListStack()
+
+    # Test size on empty stack
+    assert stack.size() == 0, f"\nsize(): got: {stack.size()}, want: 0\n"
+
+    # Test pop on empty stack
+    assert stack.pop() is None, "\npop() on empty stack should return None\n"
+
+    # Test peek on empty stack
+    assert stack.peek() is None, "\npeek() on empty stack should return None\n"
+
+    # Test push and size
+    stack.push(10)
+    assert stack.size() == 1, f"\nsize(): got: {stack.size()}, want: 1\n"
+
+    # Test peek
+    assert stack.peek() == 10, "\npeek() should return 10\n"
+
+    # Test push and pop
+    stack.push(20)
+    assert stack.pop() == 20, "\npop() should return 20\n"
+    assert stack.size() == 1, f"\nsize(): got: {stack.size()}, want: 1\n"
+
+    # Test empty
+    assert not stack.empty(), "\nempty() should return False\n"
+    stack.pop()
+    assert stack.empty(), "\nempty() should return True\n"
     
+    print("ALL LINKED-LIST-BASED STACK TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
     run_singly_linked_list_design_tests()
     run_doubly_linked_list_design_tests()
+    run_linked_list_based_stack_tests()
     
     print()
     print("---------------------------------------------------------")
