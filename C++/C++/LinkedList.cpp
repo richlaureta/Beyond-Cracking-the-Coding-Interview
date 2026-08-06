@@ -231,3 +231,66 @@ Node* DoublyLinkedList::contains(int val)
     
     return currentNode;
 }
+
+LinkedListStack::LinkedListStack() : head(nullptr), size_(0){};
+
+LinkedListStack::~LinkedListStack()
+{
+    //Problem 34.3 - Linked-List-Based Stack
+    
+    
+}
+
+void LinkedListStack::push(int v)
+{
+    //Problem 34.3 - Linked-List-Based Stack
+    
+    Node* newHead = new Node(v);
+    
+
+    newHead->next = head;
+    head = newHead;
+    
+    size_++;
+}
+
+optional<int> LinkedListStack::pop()
+{
+    //Problem 34.3 - Linked-List-Based Stack
+    
+    optional<int> returnValue = nullopt;
+    
+    if(head)
+    {
+        returnValue = head->val;
+        head = head->next;
+        size_--;
+    }
+    
+    return returnValue;
+}
+
+optional<int> LinkedListStack::peek()
+{
+    //Problem 34.3 - Linked-List-Based Stack
+    
+    optional<int> returnValue = nullopt;
+    
+    if(head) returnValue = head->val;
+    
+    return returnValue;
+}
+
+int LinkedListStack::size()
+{
+    //Problem 34.3 - Linked-List-Based Stack
+    
+    return size_;
+}
+
+bool LinkedListStack::empty()
+{
+    //Problem 33.3 - Linked-List-Based Stack
+    
+    return size_ == 0;
+}

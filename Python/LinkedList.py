@@ -186,7 +186,7 @@ class LinkedListStack:
         
         return return_value
     
-    def peek(self) -> int:
+    def peek(self):
         return_value = None
         
         if self.head:

@@ -269,5 +269,19 @@ public:
     int size();
     Node* contains(int val);
 };
-
+class LinkedListStack
+{
+private:
+    Node* head;
+    int size_;
+    
+public:
+    LinkedListStack();
+    ~LinkedListStack();
+    void push(int v);
+    optional<int> pop();
+    optional<int> peek();
+    int size();
+    bool empty();
+};
 #endif // HEADER_HPP
