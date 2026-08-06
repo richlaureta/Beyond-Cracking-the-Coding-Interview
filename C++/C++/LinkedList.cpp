@@ -263,7 +263,11 @@ optional<int> LinkedListStack::pop()
     if(head)
     {
         returnValue = head->val;
+        Node* deleteHead = head;
         head = head->next;
+        delete deleteHead;
+        deleteHead = nullptr;
+        
         size_--;
     }
     

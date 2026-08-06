@@ -199,6 +199,7 @@ class LinkedListStack:
     
     def empty(self) -> bool:
         return self.size_ == 0
+    
 #TESTS
 
 def run_singly_linked_list_design_tests():
