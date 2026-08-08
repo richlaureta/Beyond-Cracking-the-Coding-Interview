@@ -199,7 +199,49 @@ class LinkedListStack:
     
     def empty(self) -> bool:
         return self.size_ == 0
+
+class LinkedListQueue:
+    #Problem 34.4 - Linked-List-Based Queue
     
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.size_ = 0
+    
+    def push(self, v):
+        new_node = Node(v)
+        
+        if not self.tail:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
+        
+        self.size_ += 1
+    
+    def pop(self):
+        return_value = None
+        
+        if self.head:
+            return_value = self.head.v
+            self.head = self.head.next
+            self.size_ -= 1
+        
+        return return_value
+
+    def peek(self):
+        if self.head:
+            return self.head.v
+        
+        return None
+    
+    def size(self):
+        return self.size_
+    
+    def empty(self):
+        return self.size_ == 0
+        
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -319,12 +361,38 @@ def run_linked_list_based_stack_tests():
     
     print("ALL LINKED-LIST-BASED STACK TESTS PROVIDED HAVE PASSED.")
 
+def run_linked_list_based_queue_tests():
+    queue = LinkedListQueue()
+
+    # Test size on empty queue
+    assert queue.size() == 0, f"\nsize(): got: {queue.size()}, want: 0\n"
+
+    # Test pop on empty queue
+    assert queue.pop() is None, "\npop() on empty queue should return None\n"
+
+    # Test push and size
+    queue.push(10)
+    assert queue.size() == 1, f"\nsize(): got: {queue.size()}, want: 1\n"
+
+    # Test push and pop
+    queue.push(20)
+    assert queue.pop() == 10, "\npop() should return 10\n"
+    assert queue.size() == 1, f"\nsize(): got: {queue.size()}, want: 1\n"
+
+    # Test empty
+    assert not queue.empty(), "\nempty() should return False\n"
+    queue.pop()
+    assert queue.empty(), "\nempty() should return True\n"
+
+    print("ALL LINKED-LIST-BASED QUEUE TESTS PROVIDED HAVE PASSED.")
+    
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
     run_singly_linked_list_design_tests()
     run_doubly_linked_list_design_tests()
     run_linked_list_based_stack_tests()
+    run_linked_list_based_queue_tests()
     
     print()
     print("---------------------------------------------------------")
