@@ -238,7 +238,15 @@ LinkedListStack::~LinkedListStack()
 {
     //Problem 34.3 - Linked-List-Based Stack
     
+    Node* currentNode = head;
     
+    while(currentNode)
+    {
+        Node* temporaryNode = currentNode;
+        currentNode = currentNode->next;
+        delete temporaryNode;
+        temporaryNode = nullptr;
+    }
 }
 
 void LinkedListStack::push(int v)
@@ -247,7 +255,6 @@ void LinkedListStack::push(int v)
     
     Node* newHead = new Node(v);
     
-
     newHead->next = head;
     head = newHead;
     
