@@ -305,3 +305,80 @@ bool LinkedListStack::empty()
     
     return size_ == 0;
 }
+
+LinkedListQueue::LinkedListQueue() : head(nullptr), tail(nullptr), size_(0) {};
+
+LinkedListQueue::~LinkedListQueue()
+{
+    //Problem 34.4 - Linked-List-Based Queue
+    
+    Node* currentNode = head;
+    
+    while(currentNode)
+    {
+        Node* deleteTemporaryNode = currentNode;
+        currentNode = currentNode->next;
+        
+        delete deleteTemporaryNode;
+        deleteTemporaryNode = nullptr;
+    }
+}
+
+void LinkedListQueue::push(int value)
+{
+    //Problem 34.4 - Linked-List-Based Queue
+    
+    Node* newNode = new Node(value);
+    
+    if(!tail)
+    {
+        head = newNode;
+        tail = newNode;
+    }
+    else
+    {
+        tail->next = newNode;
+        tail = newNode;
+    }
+    
+    size_++;
+}
+
+optional<int> LinkedListQueue::pop()
+{
+    //Problem 34.4 - Linked-List-Based Queue
+    
+    optional<int> returnValue = nullopt;
+    
+    if(head)
+    {
+        returnValue = head->val;
+        head = head->next;
+        size_--;
+    }
+    
+    return returnValue;
+}
+
+optional<int> LinkedListQueue::peek()
+{
+    //Problem 34.4 - Linked-List-Based Queue
+    
+    if(head) return head->val;
+    
+    return nullopt;
+}
+
+int LinkedListQueue::size()
+{
+    //Problem 34.4 - Linked-List-Based Queue
+    
+    return size_;
+}
+
+bool LinkedListQueue::empty()
+{
+    //Problem 34.4 - Linked-List-Based Queue
+    
+    return size_ == 0;
+}

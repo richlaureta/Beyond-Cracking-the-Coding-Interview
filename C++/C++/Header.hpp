@@ -284,4 +284,21 @@ public:
     int size();
     bool empty();
 };
+class LinkedListQueue
+{
+private:
+    Node* head;
+    Node* tail;
+    int size_;
+    
+public:
+    LinkedListQueue();
+    ~LinkedListQueue();
+    void push(int value);
+    optional<int> pop();
+    optional<int> peek();
+    int size();
+    bool empty();
+};
+
 #endif // HEADER_HPP

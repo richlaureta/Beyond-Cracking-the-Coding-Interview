@@ -2924,57 +2924,100 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL DOUBLY LINKED LIST DESIGN TESTS PROVIDED HAVE PASSED." << endl;
     
     //Problem 34.3 - Linked-List-Based Stack
+//    
+//    LinkedListStack stack;
+//
+//      // Test size on empty stack
+//      if (stack.size() != 0) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(stack.size()) +
+//                                 ", want: 0\n");
+//      }
+//
+//      // Test pop on empty stack
+//      if (stack.pop() != std::nullopt) {
+//        throw std::runtime_error("\npop() on empty stack should return null\n");
+//      }
+//
+//      // Test peek on empty stack
+//      if (stack.peek() != std::nullopt) {
+//        throw std::runtime_error("\npeek() on empty stack should return null\n");
+//      }
+//
+//      // Test push and size
+//      stack.push(10);
+//      if (stack.size() != 1) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(stack.size()) +
+//                                 ", want: 1\n");
+//      }
+//
+//      // Test peek
+//      if (stack.peek() != 10) {
+//        throw std::runtime_error("\npeek() should return 10\n");
+//      }
+//
+//      // Test push and pop
+//      stack.push(20);
+//      if (stack.pop() != 20) {
+//        throw std::runtime_error("\npop() should return 20\n");
+//      }
+//      if (stack.size() != 1) {
+//        throw std::runtime_error("\nsize(): got: " + std::to_string(stack.size()) +
+//                                 ", want: 1\n");
+//      }
+//
+//      // Test empty
+//      if (stack.empty()) {
+//        throw std::runtime_error("\nempty() should return false\n");
+//      }
+//      stack.pop();
+//      if (!stack.empty()) {
+//        throw std::runtime_error("\nempty() should return true\n");
+//      }
+//
+//    cout << "ALL LINKED-LIST-BASED STACK TESTS PROVIDED HAVE PASSED." << endl;
     
-    LinkedListStack stack;
-
-      // Test size on empty stack
-      if (stack.size() != 0) {
-        throw std::runtime_error("\nsize(): got: " + std::to_string(stack.size()) +
-                                 ", want: 0\n");
-      }
-
-      // Test pop on empty stack
-      if (stack.pop() != std::nullopt) {
-        throw std::runtime_error("\npop() on empty stack should return null\n");
-      }
-
-      // Test peek on empty stack
-      if (stack.peek() != std::nullopt) {
-        throw std::runtime_error("\npeek() on empty stack should return null\n");
-      }
-
-      // Test push and size
-      stack.push(10);
-      if (stack.size() != 1) {
-        throw std::runtime_error("\nsize(): got: " + std::to_string(stack.size()) +
-                                 ", want: 1\n");
-      }
-
-      // Test peek
-      if (stack.peek() != 10) {
-        throw std::runtime_error("\npeek() should return 10\n");
-      }
-
-      // Test push and pop
-      stack.push(20);
-      if (stack.pop() != 20) {
-        throw std::runtime_error("\npop() should return 20\n");
-      }
-      if (stack.size() != 1) {
-        throw std::runtime_error("\nsize(): got: " + std::to_string(stack.size()) +
-                                 ", want: 1\n");
-      }
-
-      // Test empty
-      if (stack.empty()) {
-        throw std::runtime_error("\nempty() should return false\n");
-      }
-      stack.pop();
-      if (!stack.empty()) {
-        throw std::runtime_error("\nempty() should return true\n");
-      }
+    //Problem 34.4 - Linked-List-Based Queue
     
-    cout << "ALL LINKED-LIST-BASED STACK TESTS PROVIDED HAVE PASSED." << endl;
+    LinkedListQueue queue;
+
+     // Test size on empty queue
+     if (queue.size() != 0) {
+       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
+                                ", want: 0\n");
+     }
+
+     // Test pop on empty queue
+     if (queue.pop() != std::nullopt) {
+       throw std::runtime_error("\npop() on empty queue should return null\n");
+     }
+
+     // Test push and size
+     queue.push(10);
+     if (queue.size() != 1) {
+       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
+                                ", want: 1\n");
+     }
+
+     // Test push and pop
+     queue.push(20);
+     if (queue.pop() != 10) {
+       throw std::runtime_error("\npop() should return 10\n");
+     }
+     if (queue.size() != 1) {
+       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
+                                ", want: 1\n");
+     }
+
+     // Test empty
+     if (queue.empty()) {
+       throw std::runtime_error("\nempty() should return false\n");
+     }
+     queue.pop();
+     if (!queue.empty()) {
+       throw std::runtime_error("\nempty() should return true\n");
+     }
+    
+    cout << "ALL LINKED-LIST-BASED QUEUE TESTS PROVIDED PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
