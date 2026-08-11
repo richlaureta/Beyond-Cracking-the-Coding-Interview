@@ -263,9 +263,6 @@ def copy_list(head: Node):
 def reverse_list(head: Node):
     #Problem 34.6 - Linked-List Reversal
     
-    if not head:
-        return head
-    
     current_node = head
     previous_node = None
     

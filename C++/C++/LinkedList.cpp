@@ -408,8 +408,6 @@ Node* reverseList(Node* head)
 {
     //Problem 34.6 - Linked-List Reversal
     
-    if(!head) return head;
-    
     Node* currentNode = head;
     Node* previousNode = nullptr;
     
