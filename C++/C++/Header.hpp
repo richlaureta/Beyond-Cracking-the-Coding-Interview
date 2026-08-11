@@ -301,5 +301,6 @@ public:
     bool empty();
 };
 Node* copyList(Node* head);
+Node* reverseList(Node* head);
 
 #endif // HEADER_HPP

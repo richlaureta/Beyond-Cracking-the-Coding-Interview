@@ -403,3 +403,24 @@ Node* copyList(Node* head)
     
     return copyHead;
 }
+
+Node* reverseList(Node* head)
+{
+    //Problem 34.6 - Linked-List Reversal
+    
+    if(!head) return head;
+    
+    Node* currentNode = head;
+    Node* previousNode = nullptr;
+    Node* nextNode = currentNode->next;
+    
+    while(currentNode)
+    {
+        currentNode->next = previousNode;
+        previousNode = currentNode;
+        currentNode = nextNode;
+        if(nextNode) nextNode = nextNode->next;
+    }
+    
+    return previousNode;
+}
