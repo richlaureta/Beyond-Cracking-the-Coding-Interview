@@ -260,6 +260,25 @@ def copy_list(head: Node):
 
     return copy_head
 
+def reverse_list(head: Node):
+    #Problem 34.6 - Linked-List Reversal
+    
+    if not head:
+        return head
+    
+    current_node = head
+    previous_node = None
+    next_node = current_node.next
+    
+    while current_node:
+        current_node.next = previous_node
+        previous_node = current_node
+        current_node = next_node
+        if next_node:
+            next_node = next_node.next
+    
+    return previous_node
+        
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -459,6 +478,53 @@ def run_linked_list_copy_tests():
     
   print("ALL LINKED-LIST COPY TESTS PROVIDED PASSED.")
 
+def run_linked_list_reversal_tests():
+
+  def linked_list_to_array(head):
+    result = []
+    current = head
+    while current:
+      result.append(current.v)
+      current = current.next
+    return result
+
+
+  def array_to_linked_list(arr):
+    dummy_head = Node(0)
+    current = dummy_head
+    for val in arr:
+      current.next = Node(val)
+      current = current.next
+    return dummy_head.next
+
+  # Test cases
+  tests = [
+      # Test empty list
+      ([], []),
+      # Test single element list
+      ([1], [1]),
+      # Test multiple elements list
+      ([1, 2, 3], [3, 2, 1]),
+      # Test list with repeated values
+      ([1, 1, 1], [1, 1, 1]),
+      # Test list with negative values
+      ([-1, -2, -3], [-3, -2, -1]),
+      # Test list with zero
+      ([0], [0]),
+      # Test longer list
+      ([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]),
+      # Test list with mixed values
+      ([-1, 0, 1], [1, 0, -1]),
+  ]
+
+  for i, (arr, expected) in enumerate(tests):
+    head = array_to_linked_list(arr)
+    reversed_head = reverse_list(head)
+    got = linked_list_to_array(reversed_head)
+    assert got == expected, f"\nTest {i + 1}: got: {got}, want: {expected}\n"
+  
+  print("ALL LINKED-LIST REVERSAL TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -467,6 +533,7 @@ def Run_All_Linked_Lists_Tests():
     run_linked_list_based_stack_tests()
     run_linked_list_based_queue_tests()
     run_linked_list_copy_tests()
+    run_linked_list_reversal_tests()
     
     print()
     print("---------------------------------------------------------")
