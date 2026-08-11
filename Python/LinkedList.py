@@ -474,4 +474,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    run_linked_list_copy_tests()
+    Run_All_Linked_Lists_Tests()
