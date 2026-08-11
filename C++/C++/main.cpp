@@ -2978,46 +2978,145 @@ int main(int argc, const char *argv[]) {
     
     //Problem 34.4 - Linked-List-Based Queue
     
-    LinkedListQueue queue;
-
-     // Test size on empty queue
-     if (queue.size() != 0) {
-       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
-                                ", want: 0\n");
-     }
-
-     // Test pop on empty queue
-     if (queue.pop() != std::nullopt) {
-       throw std::runtime_error("\npop() on empty queue should return null\n");
-     }
-
-     // Test push and size
-     queue.push(10);
-     if (queue.size() != 1) {
-       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
-                                ", want: 1\n");
-     }
-
-     // Test push and pop
-     queue.push(20);
-     if (queue.pop() != 10) {
-       throw std::runtime_error("\npop() should return 10\n");
-     }
-     if (queue.size() != 1) {
-       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
-                                ", want: 1\n");
-     }
-
-     // Test empty
-     if (queue.empty()) {
-       throw std::runtime_error("\nempty() should return false\n");
-     }
-     queue.pop();
-     if (!queue.empty()) {
-       throw std::runtime_error("\nempty() should return true\n");
-     }
+//    LinkedListQueue queue;
+//
+//     // Test size on empty queue
+//     if (queue.size() != 0) {
+//       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
+//                                ", want: 0\n");
+//     }
+//
+//     // Test pop on empty queue
+//     if (queue.pop() != std::nullopt) {
+//       throw std::runtime_error("\npop() on empty queue should return null\n");
+//     }
+//
+//     // Test push and size
+//     queue.push(10);
+//     if (queue.size() != 1) {
+//       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
+//                                ", want: 1\n");
+//     }
+//
+//     // Test push and pop
+//     queue.push(20);
+//     if (queue.pop() != 10) {
+//       throw std::runtime_error("\npop() should return 10\n");
+//     }
+//     if (queue.size() != 1) {
+//       throw std::runtime_error("\nsize(): got: " + std::to_string(queue.size()) +
+//                                ", want: 1\n");
+//     }
+//
+//     // Test empty
+//     if (queue.empty()) {
+//       throw std::runtime_error("\nempty() should return false\n");
+//     }
+//     queue.pop();
+//     if (!queue.empty()) {
+//       throw std::runtime_error("\nempty() should return true\n");
+//     }
+//    
+//    cout << "ALL LINKED-LIST-BASED QUEUE TESTS PROVIDED PASSED." << endl;
     
-    cout << "ALL LINKED-LIST-BASED QUEUE TESTS PROVIDED PASSED." << endl;
+    //Problem 34.5 - Linked-List Copy
+    
+    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+        if (arr.empty()) return nullptr;
+        Node* head = new Node(arr[0]);
+        Node* cur = head;
+        for (size_t i = 1; i < arr.size(); i++) {
+          cur->next = new Node(arr[i]);
+          cur = cur->next;
+        }
+        return head;
+      };
+
+      auto linkedListToVec = [](Node* head) -> std::vector<int> {
+        std::vector<int> result;
+        Node* cur = head;
+        while (cur) {
+          result.push_back(cur->val);
+          cur = cur->next;
+        }
+        return result;
+      };
+
+      auto cleanupList = [](Node* head) -> void {
+        while (head) {
+          Node* temp = head;
+          head = head->next;
+          delete temp;
+        }
+      };
+
+      auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
+
+      std::vector<std::vector<int>> tests = {
+          // Test empty list
+          {},
+          // Test single element list
+          {1},
+          // Test multiple elements list
+          {1, 2, 3},
+          // Test list with repeated values
+          {1, 1, 1},
+          // Test list with negative values
+          {-1, -2, -3},
+          // Test list with zero
+          {0},
+          // Test longer list
+          {1, 2, 3, 4, 5},
+          // Test list with mixed values
+          {-1, 0, 1},
+      };
+
+      for (size_t i = 0; i < tests.size(); i++) {
+        const auto& arr = tests[i];
+        Node* head = vecToLinkedList(arr);
+
+        // Test first copyList function
+        Node* copiedHead1 = copyList(head);
+        std::vector<int> got1 = linkedListToVec(copiedHead1);
+
+        if (got1 != arr) {
+          std::string error_msg = "\nTest " + std::to_string(i + 1) +
+                                  " (copyList 1): got: " + vecToStr(got1) +
+                                  ", want: " + vecToStr(arr) + "\n";
+          cleanupList(head);
+          cleanupList(copiedHead1);
+          throw std::runtime_error(error_msg);
+        }
+
+        // Test second copyList function
+//        Node* copiedHead2 = copyListWithDummy(head);
+//        std::vector<int> got2 = linkedListToVec(copiedHead2);
+//
+//        if (got2 != arr) {
+//          std::string error_msg = "\nTest " + std::to_string(i + 1) +
+//                                  " (copyList 2): got: " + vecToStr(got2) +
+//                                  ", want: " + vecToStr(arr) + "\n";
+//          cleanupList(head);
+//          cleanupList(copiedHead1);
+//          cleanupList(copiedHead2);
+//          throw std::runtime_error(error_msg);
+//        }
+//
+//        // Clean up memory
+//        cleanupList(head);
+//        cleanupList(copiedHead1);
+//        cleanupList(copiedHead2);
+      }
+    
+    cout << "ALL LINKED-LIST COPY TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

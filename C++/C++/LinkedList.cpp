@@ -382,3 +382,24 @@ bool LinkedListQueue::empty()
     
     return size_ == 0;
 }
+
+Node* copyList(Node* head)
+{
+    //Problem 34.5 - Linked-List Copy
+    
+    if(!head) return head;
+    
+    Node* currentNode = head->next;
+    Node* copyHead = new Node(head->val);
+    Node* previousNode = copyHead;
+    
+    while(currentNode)
+    {
+        Node* newNode = new Node(currentNode->val);
+        previousNode->next = newNode;
+        previousNode = newNode;
+        currentNode = currentNode->next;
+    }
+    
+    return copyHead;
+}

@@ -300,5 +300,6 @@ public:
     int size();
     bool empty();
 };
+Node* copyList(Node* head);
 
 #endif // HEADER_HPP
