@@ -268,14 +268,12 @@ def reverse_list(head: Node):
     
     current_node = head
     previous_node = None
-    next_node = current_node.next
     
     while current_node:
+        next_node = current_node.next
         current_node.next = previous_node
         previous_node = current_node
         current_node = next_node
-        if next_node:
-            next_node = next_node.next
     
     return previous_node
         
