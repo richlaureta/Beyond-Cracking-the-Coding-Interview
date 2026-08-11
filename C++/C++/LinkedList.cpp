@@ -412,14 +412,13 @@ Node* reverseList(Node* head)
     
     Node* currentNode = head;
     Node* previousNode = nullptr;
-    Node* nextNode = currentNode->next;
     
     while(currentNode)
     {
+        Node* nextNode = currentNode->next;
         currentNode->next = previousNode;
         previousNode = currentNode;
         currentNode = nextNode;
-        if(nextNode) nextNode = nextNode->next;
     }
     
     return previousNode;
