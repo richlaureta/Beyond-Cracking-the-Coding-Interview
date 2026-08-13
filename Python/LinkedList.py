@@ -273,6 +273,43 @@ def reverse_list(head: Node):
         current_node = next_node
     
     return previous_node
+
+def reverse_section(head, left, right):
+    #Problem 34.7 - Sublist Reversal
+    
+    index_counter = -1
+    current_node = head
+    behind_left_index_node = None
+    
+    while current_node and left - 1 != index_counter:
+        behind_left_index_node = current_node
+        current_node = current_node.next
+        index_counter += 1
+    
+    if not current_node:
+        return head
+    
+    reversed_right_most_node = current_node
+    previous_node = current_node
+    current_node = current_node.next
+    
+    while current_node and index_counter + 1 != right:
+        next_node = current_node.next
+        current_node.next = previous_node
+        previous_node = current_node
+        current_node = next_node
+        index_counter += 1
+    
+    if behind_left_index_node:
+        behind_left_index_node.next = previous_node
+        
+    reversed_right_most_node.next = current_node
+    
+    if left == 0:
+        head = previous_node
+    
+    return head
+    
         
 #TESTS
 
@@ -520,6 +557,60 @@ def run_linked_list_reversal_tests():
   
   print("ALL LINKED-LIST REVERSAL TESTS PROVIDED HAVE PASSED.")
 
+def run_sublist_reversal_tests():
+
+  def linked_list_to_array(head):
+    result = []
+    current = head
+    while current:
+      result.append(current.v)
+      current = current.next
+    return result
+
+
+  def array_to_linked_list(arr):
+    dummy = Node(0)
+    current = dummy
+    for val in arr:
+      current.next = Node(val)
+      current = current.next
+    return dummy.next
+
+  # Test cases
+  tests = [
+      # From book
+      ([1, 2, 3, 4, 5], 1, 3, [1, 4, 3, 2, 5]),
+      ([1, 2, 3, 4, 5], 2, 7, [1, 2, 5, 4, 3]),
+      ([1, 2], 5, 6, [1, 2]),
+
+      # Test empty list
+      ([], 0, 1, []),
+      # Test single element list
+      ([1], 0, 1, [1]),
+      # Test reversing entire list
+      ([1, 2, 3], 0, 3, [3, 2, 1]),
+      # Test reversing sublist with repeated values
+      ([1, 1, 1, 2, 2], 1, 3, [1, 2, 1, 1, 2]),
+      # Test reversing sublist with negative values
+      ([-1, -2, -3, -4], 1, 3, [-1, -4, -3, -2]),
+      # Test reversing sublist with zero
+      ([0, 1, 2], 0, 1, [1, 0, 2]),
+      # Test reversing sublist at the end
+      ([1, 2, 3, 4, 5], 2, 4, [1, 2, 5, 4, 3]),
+      # Test left beyond list length - should not modify
+      ([1, 2, 3], 4, 5, [1, 2, 3]),
+      # Test right beyond list length - reverse to end
+      ([1, 2, 3], 1, 5, [1, 3, 2]),
+  ]
+
+  for i, (arr, left, right, expected) in enumerate(tests):
+    head = array_to_linked_list(arr)
+    reversed_head = reverse_section(head, left, right)
+    got = linked_list_to_array(reversed_head)
+    assert got == expected, f"\nTest {i + 1}: got: {got}, want: {expected}\n"
+    
+  print("ALL SUBLIST REVERSAL TESTS PROVIDED PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -529,6 +620,7 @@ def Run_All_Linked_Lists_Tests():
     run_linked_list_based_queue_tests()
     run_linked_list_copy_tests()
     run_linked_list_reversal_tests()
+    run_sublist_reversal_tests()
     
     print()
     print("---------------------------------------------------------")
