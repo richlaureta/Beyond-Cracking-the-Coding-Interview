@@ -277,6 +277,9 @@ def reverse_list(head: Node):
 def reverse_section(head, left, right):
     #Problem 34.7 - Sublist Reversal
     
+    if left < 0:
+        return head
+    
     index_counter = -1
     current_node = head
     behind_left_index_node = None
@@ -310,7 +313,6 @@ def reverse_section(head, left, right):
     
     return head
     
-        
 #TESTS
 
 def run_singly_linked_list_design_tests():
