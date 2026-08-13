@@ -609,7 +609,7 @@ def run_sublist_reversal_tests():
     got = linked_list_to_array(reversed_head)
     assert got == expected, f"\nTest {i + 1}: got: {got}, want: {expected}\n"
     
-  print("ALL SUBLIST REVERSAL TESTS PROVIDED PASSED.")
+  print("ALL SUBLIST REVERSAL TESTS PROVIDED HAVE PASSED.")
 
 #ALL TESTS
 
