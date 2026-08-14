@@ -421,3 +421,42 @@ Node* reverseList(Node* head)
     
     return previousNode;
 }
+
+Node* reverseSection(Node* head, int left, int right)
+{
+    //Problem 34.7 - Sublist Reversal
+    
+    int indexCounter = -1;
+    Node* currentNode = head;
+    Node* behindLeftIndexNode = nullptr;
+    
+    while(currentNode and left - 1 != indexCounter)
+    {
+        behindLeftIndexNode = currentNode;
+        currentNode = currentNode->next;
+        indexCounter++;
+    }
+    
+    if(!currentNode) return head;
+    
+    Node* reversedRightMostNode = currentNode;
+    Node* previousNode = currentNode;
+    currentNode = currentNode->next;
+    
+    while(currentNode and indexCounter + 1 != right)
+    {
+        Node* nextNode = currentNode->next;
+        currentNode->next = previousNode;
+        previousNode = currentNode;
+        currentNode = nextNode;
+        indexCounter++;
+    }
+    
+    if(behindLeftIndexNode) behindLeftIndexNode->next = previousNode;
+    
+    reversedRightMostNode->next = currentNode;
+    
+    if(left == 0) head = previousNode;
+    
+    return head;
+}

@@ -3120,83 +3120,174 @@ int main(int argc, const char *argv[]) {
     
     //Problem 34.6 - Linked-List Reversal
     
+//    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+//      if (arr.empty()) return nullptr;
+//      Node* head = new Node(arr[0]);
+//      Node* cur = head;
+//      for (size_t i = 1; i < arr.size(); i++) {
+//        cur->next = new Node(arr[i]);
+//        cur = cur->next;
+//      }
+//      return head;
+//    };
+//
+//    auto linkedListToVec = [](Node* head) -> std::vector<int> {
+//      std::vector<int> result;
+//      Node* cur = head;
+//      while (cur) {
+//        result.push_back(cur->val);
+//        cur = cur->next;
+//      }
+//      return result;
+//    };
+//
+//    auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+//      std::string result = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) result += ", ";
+//        result += std::to_string(vec[i]);
+//      }
+//      result += "]";
+//      return result;
+//    };
+//
+//    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+//        // Test empty list
+//        {{}, {}},
+//        // Test single element list
+//        {{1}, {1}},
+//        // Test multiple elements list
+//        {{1, 2, 3}, {3, 2, 1}},
+//        // Test list with repeated values
+//        {{1, 1, 1}, {1, 1, 1}},
+//        // Test list with negative values
+//        {{-1, -2, -3}, {-3, -2, -1}},
+//        // Test list with zero
+//        {{0}, {0}},
+//        // Test longer list
+//        {{1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}},
+//        // Test list with mixed values
+//        {{-1, 0, 1}, {1, 0, -1}},
+//    };
+//
+//    for (size_t i = 0; i < tests.size(); i++) {
+//      auto [input, want] = tests[i];
+//      Node* head = vecToLinkedList(input);
+//      Node* reversedHead = reverseList(head);
+//      std::vector<int> got = linkedListToVec(reversedHead);
+//
+//      if (got != want) {
+//        std::string error_msg = "\nTest " + std::to_string(i + 1) +
+//                                ": got: " + vecToStr(got) +
+//                                ", want: " + vecToStr(want) + "\n";
+//
+//        while (reversedHead) {
+//          Node* temp = reversedHead;
+//          reversedHead = reversedHead->next;
+//          delete temp;
+//        }
+//        throw std::runtime_error(error_msg);
+//      }
+//
+//      while (reversedHead) {
+//        Node* temp = reversedHead;
+//        reversedHead = reversedHead->next;
+//        delete temp;
+//      }
+//    }
+//    
+//    cout << "ALL LINKED-LIST REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 34.7 - Sublist Reversal
+    
     auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
-      if (arr.empty()) return nullptr;
-      Node* head = new Node(arr[0]);
-      Node* cur = head;
-      for (size_t i = 1; i < arr.size(); i++) {
-        cur->next = new Node(arr[i]);
-        cur = cur->next;
-      }
-      return head;
-    };
+        if (arr.empty()) return nullptr;
+        Node* head = new Node(arr[0]);
+        Node* cur = head;
+        for (size_t i = 1; i < arr.size(); i++) {
+          cur->next = new Node(arr[i]);
+          cur = cur->next;
+        }
+        return head;
+      };
 
-    auto linkedListToVec = [](Node* head) -> std::vector<int> {
-      std::vector<int> result;
-      Node* cur = head;
-      while (cur) {
-        result.push_back(cur->val);
-        cur = cur->next;
-      }
-      return result;
-    };
+      auto linkedListToVec = [](Node* head) -> std::vector<int> {
+        std::vector<int> result;
+        Node* cur = head;
+        while (cur) {
+          result.push_back(cur->val);
+          cur = cur->next;
+        }
+        return result;
+      };
 
-    auto vecToStr = [](const std::vector<int>& vec) -> std::string {
-      std::string result = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) result += ", ";
-        result += std::to_string(vec[i]);
-      }
-      result += "]";
-      return result;
-    };
+      auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+        std::string result = "[";
+        for (size_t i = 0; i < vec.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(vec[i]);
+        }
+        result += "]";
+        return result;
+      };
 
-    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
-        // Test empty list
-        {{}, {}},
-        // Test single element list
-        {{1}, {1}},
-        // Test multiple elements list
-        {{1, 2, 3}, {3, 2, 1}},
-        // Test list with repeated values
-        {{1, 1, 1}, {1, 1, 1}},
-        // Test list with negative values
-        {{-1, -2, -3}, {-3, -2, -1}},
-        // Test list with zero
-        {{0}, {0}},
-        // Test longer list
-        {{1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}},
-        // Test list with mixed values
-        {{-1, 0, 1}, {1, 0, -1}},
-    };
+      std::vector<std::tuple<std::vector<int>, int, int, std::vector<int>>> tests =
+          {
+              // From book
+              {{1, 2, 3, 4, 5}, 1, 3, {1, 4, 3, 2, 5}},
+              {{1, 2, 3, 4, 5}, 2, 7, {1, 2, 5, 4, 3}},
+              {{1, 2}, 5, 6, {1, 2}},
 
-    for (size_t i = 0; i < tests.size(); i++) {
-      auto [input, want] = tests[i];
-      Node* head = vecToLinkedList(input);
-      Node* reversedHead = reverseList(head);
-      std::vector<int> got = linkedListToVec(reversedHead);
+              // Test empty list
+              {{}, 0, 1, {}},
+              // Test single element list
+              {{1}, 0, 1, {1}},
+              // Test reversing entire list
+              {{1, 2, 3}, 0, 3, {3, 2, 1}},
+              // Test reversing sublist with repeated values
+              {{1, 1, 1, 2, 2}, 1, 3, {1, 2, 1, 1, 2}},
+              // Test reversing sublist with negative values
+              {{-1, -2, -3, -4}, 1, 3, {-1, -4, -3, -2}},
+              // Test reversing sublist with zero
+              {{0, 1, 2}, 0, 1, {1, 0, 2}},
+              // Test reversing sublist at the end
+              {{1, 2, 3, 4, 5}, 2, 4, {1, 2, 5, 4, 3}},
+              // Test left beyond list length - should not modify
+              {{1, 2, 3}, 4, 5, {1, 2, 3}},
+              // Test right beyond list length - reverse to end
+              {{1, 2, 3}, 1, 5, {1, 3, 2}},
+          };
 
-      if (got != want) {
-        std::string error_msg = "\nTest " + std::to_string(i + 1) +
-                                ": got: " + vecToStr(got) +
-                                ", want: " + vecToStr(want) + "\n";
+      for (size_t i = 0; i < tests.size(); i++) {
+        auto [input, left, right, want] = tests[i];
+        Node* head = vecToLinkedList(input);
+        Node* reversedHead = reverseSection(head, left, right);
+        std::vector<int> got = linkedListToVec(reversedHead);
 
+        if (got != want) {
+          std::string error_msg = "\nTest " + std::to_string(i + 1) +
+                                  ": got: " + vecToStr(got) +
+                                  ", want: " + vecToStr(want) + "\n";
+
+          // Clean up memory before throwing
+          while (reversedHead) {
+            Node* temp = reversedHead;
+            reversedHead = reversedHead->next;
+            delete temp;
+          }
+
+          throw std::runtime_error(error_msg);
+        }
+
+        // Clean up memory
         while (reversedHead) {
           Node* temp = reversedHead;
           reversedHead = reversedHead->next;
           delete temp;
         }
-        throw std::runtime_error(error_msg);
       }
-
-      while (reversedHead) {
-        Node* temp = reversedHead;
-        reversedHead = reversedHead->next;
-        delete temp;
-      }
-    }
     
-    cout << "ALL LINKED-LIST REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL SUBLIST REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
