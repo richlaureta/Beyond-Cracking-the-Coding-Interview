@@ -309,7 +309,22 @@ def reverse_section(head, left, right):
         head = previous_node
     
     return head
+
+def has_cycle(head: Node) -> bool:
+    #Problem 34.8 - Linked-List Cycle Detection
     
+    slow_pointer = head
+    fast_pointer = head
+    
+    while fast_pointer and fast_pointer.next:
+        slow_pointer = slow_pointer.next
+        fast_pointer = fast_pointer.next.next
+        
+        if slow_pointer == fast_pointer:
+            return True
+    
+    return False
+
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -610,6 +625,72 @@ def run_sublist_reversal_tests():
     
   print("ALL SUBLIST REVERSAL TESTS PROVIDED HAVE PASSED.")
 
+def run_linked_list_cycle_detection_tests():
+
+  # arr: non-empty array representing the linked list
+  # final_pointer_index: index of the node that the last pointer's next pointer
+  # should point to.
+  # If final_pointer_index is -1, then the last pointer's next pointer should
+  # point to null.
+  #
+  # Returns the head of the list
+  def create_cyclic_list(arr, final_pointer_index):
+
+    # Build list and store cycle start node
+    dummy_head = Node(0)
+    current = dummy_head
+    cycle_start_node = None
+    for i, val in enumerate(arr):
+      current.next = Node(val)
+      current = current.next
+      if i == final_pointer_index:
+        cycle_start_node = current
+
+    # Create cycle if needed
+    if cycle_start_node:
+      current.next = cycle_start_node
+
+    return dummy_head.next
+
+  tests = [
+      # Test: (list, final_pointer_index, want)
+
+      # Single node no cycle
+      ([1], -1, False),
+      # Single node with cycle
+      ([1], 0, True),
+      # Multiple nodes with no cycle
+      ([1, 2, 3, 4, 5], -1, False),
+      # Multiple nodes all in a cycle
+      ([1, 2, 3, 4, 5], 0, True),
+      # Multiple nodes with cycle in the middle
+      ([1, 2, 3, 4, 5], 2, True),
+      # Multiple nodes with cycle at the end
+      ([1, 2, 3, 4, 5], 4, True),
+      # The length of the cycle is equal to the distance from the
+      # head to the start of the cycle (both are 5)
+      ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5, True),
+      # The length of the cycle is greater than the distance from the
+      # head to the start of the cycle
+      ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 4, True),
+      # The length of the cycle is less than the distance from the
+      # head to the start of the cycle
+      ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6, True),
+  ]
+
+  for i, (arr, final_pointer_index, want) in enumerate(tests):
+    head = create_cyclic_list(arr, final_pointer_index)
+    got = has_cycle(head)
+
+    if final_pointer_index == -1:
+      cycle_desc = "no cycle"
+    else:
+      cycle_desc = f"cycle starting at index {final_pointer_index}"
+    test_case_str = f"Test {i + 1}: has_cycle(list {arr} with {cycle_desc})"
+    assert got == want, f"\n{test_case_str}: got: {got}, want: {want}"
+  
+  print("ALL LINKED-LIST CYCLE DETECTION TESTS PROVIDED PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -620,6 +701,7 @@ def Run_All_Linked_Lists_Tests():
     run_linked_list_copy_tests()
     run_linked_list_reversal_tests()
     run_sublist_reversal_tests()
+    run_linked_list_cycle_detection_tests()
     
     print()
     print("---------------------------------------------------------")
@@ -627,4 +709,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Linked_Lists_Tests()
+    run_linked_list_cycle_detection_tests()
