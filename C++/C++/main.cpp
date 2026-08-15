@@ -3199,26 +3199,162 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL LINKED-LIST REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
     
     //Problem 34.7 - Sublist Reversal
+//    
+//    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+//        if (arr.empty()) return nullptr;
+//        Node* head = new Node(arr[0]);
+//        Node* cur = head;
+//        for (size_t i = 1; i < arr.size(); i++) {
+//          cur->next = new Node(arr[i]);
+//          cur = cur->next;
+//        }
+//        return head;
+//      };
+//
+//      auto linkedListToVec = [](Node* head) -> std::vector<int> {
+//        std::vector<int> result;
+//        Node* cur = head;
+//        while (cur) {
+//          result.push_back(cur->val);
+//          cur = cur->next;
+//        }
+//        return result;
+//      };
+//
+//      auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, int, int, std::vector<int>>> tests =
+//          {
+//              // From book
+//              {{1, 2, 3, 4, 5}, 1, 3, {1, 4, 3, 2, 5}},
+//              {{1, 2, 3, 4, 5}, 2, 7, {1, 2, 5, 4, 3}},
+//              {{1, 2}, 5, 6, {1, 2}},
+//
+//              // Test empty list
+//              {{}, 0, 1, {}},
+//              // Test single element list
+//              {{1}, 0, 1, {1}},
+//              // Test reversing entire list
+//              {{1, 2, 3}, 0, 3, {3, 2, 1}},
+//              // Test reversing sublist with repeated values
+//              {{1, 1, 1, 2, 2}, 1, 3, {1, 2, 1, 1, 2}},
+//              // Test reversing sublist with negative values
+//              {{-1, -2, -3, -4}, 1, 3, {-1, -4, -3, -2}},
+//              // Test reversing sublist with zero
+//              {{0, 1, 2}, 0, 1, {1, 0, 2}},
+//              // Test reversing sublist at the end
+//              {{1, 2, 3, 4, 5}, 2, 4, {1, 2, 5, 4, 3}},
+//              // Test left beyond list length - should not modify
+//              {{1, 2, 3}, 4, 5, {1, 2, 3}},
+//              // Test right beyond list length - reverse to end
+//              {{1, 2, 3}, 1, 5, {1, 3, 2}},
+//          };
+//
+//      for (size_t i = 0; i < tests.size(); i++) {
+//        auto [input, left, right, want] = tests[i];
+//        Node* head = vecToLinkedList(input);
+//        Node* reversedHead = reverseSection(head, left, right);
+//        std::vector<int> got = linkedListToVec(reversedHead);
+//
+//        if (got != want) {
+//          std::string error_msg = "\nTest " + std::to_string(i + 1) +
+//                                  ": got: " + vecToStr(got) +
+//                                  ", want: " + vecToStr(want) + "\n";
+//
+//          // Clean up memory before throwing
+//          while (reversedHead) {
+//            Node* temp = reversedHead;
+//            reversedHead = reversedHead->next;
+//            delete temp;
+//          }
+//
+//          throw std::runtime_error(error_msg);
+//        }
+//
+//        // Clean up memory
+//        while (reversedHead) {
+//          Node* temp = reversedHead;
+//          reversedHead = reversedHead->next;
+//          delete temp;
+//        }
+//      }
+//    
+//    cout << "ALL SUBLIST REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
     
-    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
-        if (arr.empty()) return nullptr;
-        Node* head = new Node(arr[0]);
-        Node* cur = head;
-        for (size_t i = 1; i < arr.size(); i++) {
-          cur->next = new Node(arr[i]);
-          cur = cur->next;
+    //Problem 34.7 - Linked-List Cycle Detection
+    
+    // arr: non-empty array representing the linked list
+      // finalPointerIndex: index of the node that the last pointer's next pointer
+      // should point to.
+      // If finalPointerIndex is -1, then the last pointer's next pointer should
+      // point to null.
+      //
+      // Returns the head of the list
+      auto createCyclicList = [](const std::vector<int>& arr,
+                                 int finalPointerIndex) -> Node* {
+        // Build list and store cycle start node
+        Node* dummyHead = new Node(0);
+        Node* current = dummyHead;
+        Node* cycleStartNode = nullptr;
+        for (size_t i = 0; i < arr.size(); i++) {
+          current->next = new Node(arr[i]);
+          current = current->next;
+          if ((int)i == finalPointerIndex) {
+            cycleStartNode = current;
+          }
         }
+
+        // Create cycle if needed
+        if (cycleStartNode) {
+          current->next = cycleStartNode;
+        }
+
+        Node* head = dummyHead->next;
+        delete dummyHead;
         return head;
       };
 
-      auto linkedListToVec = [](Node* head) -> std::vector<int> {
-        std::vector<int> result;
-        Node* cur = head;
-        while (cur) {
-          result.push_back(cur->val);
-          cur = cur->next;
+      // Helper function to clean up linked list with potential cycle
+      auto cleanupLinkedList = [](Node* head) {
+        if (!head) return;
+
+        // Break any cycles first
+        Node* slow = head;
+        Node* fast = head;
+        bool hasCycleFlag = false;
+
+        while (fast && fast->next) {
+          slow = slow->next;
+          fast = fast->next->next;
+          if (slow == fast) {
+            hasCycleFlag = true;
+            break;
+          }
         }
-        return result;
+
+        if (hasCycleFlag) {
+          // Break the cycle at slow pointer
+          Node* cur = head;
+          while (cur->next != slow) {
+            cur = cur->next;
+          }
+          cur->next = nullptr;
+        }
+
+        // Now delete all nodes
+        while (head) {
+          Node* temp = head;
+          head = head->next;
+          delete temp;
+        }
       };
 
       auto vecToStr = [](const std::vector<int>& vec) -> std::string {
@@ -3231,63 +3367,62 @@ int main(int argc, const char *argv[]) {
         return result;
       };
 
-      std::vector<std::tuple<std::vector<int>, int, int, std::vector<int>>> tests =
-          {
-              // From book
-              {{1, 2, 3, 4, 5}, 1, 3, {1, 4, 3, 2, 5}},
-              {{1, 2, 3, 4, 5}, 2, 7, {1, 2, 5, 4, 3}},
-              {{1, 2}, 5, 6, {1, 2}},
+      std::vector<std::pair<std::vector<int>, std::pair<int, bool>>> tests = {
+          // Test: (list, (finalPointerIndex, want))
 
-              // Test empty list
-              {{}, 0, 1, {}},
-              // Test single element list
-              {{1}, 0, 1, {1}},
-              // Test reversing entire list
-              {{1, 2, 3}, 0, 3, {3, 2, 1}},
-              // Test reversing sublist with repeated values
-              {{1, 1, 1, 2, 2}, 1, 3, {1, 2, 1, 1, 2}},
-              // Test reversing sublist with negative values
-              {{-1, -2, -3, -4}, 1, 3, {-1, -4, -3, -2}},
-              // Test reversing sublist with zero
-              {{0, 1, 2}, 0, 1, {1, 0, 2}},
-              // Test reversing sublist at the end
-              {{1, 2, 3, 4, 5}, 2, 4, {1, 2, 5, 4, 3}},
-              // Test left beyond list length - should not modify
-              {{1, 2, 3}, 4, 5, {1, 2, 3}},
-              // Test right beyond list length - reverse to end
-              {{1, 2, 3}, 1, 5, {1, 3, 2}},
-          };
+          // Single node no cycle
+          {{1}, {-1, false}},
+          // Single node with cycle
+          {{1}, {0, true}},
+          // Multiple nodes with no cycle
+          {{1, 2, 3, 4, 5}, {-1, false}},
+          // Multiple nodes all in a cycle
+          {{1, 2, 3, 4, 5}, {0, true}},
+          // Multiple nodes with cycle in the middle
+          {{1, 2, 3, 4, 5}, {2, true}},
+          // Multiple nodes with cycle at the end
+          {{1, 2, 3, 4, 5}, {4, true}},
+          // The length of the cycle is equal to the distance from the
+          // head to the start of the cycle (both are 5)
+          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {5, true}},
+          // The length of the cycle is greater than the distance from the
+          // head to the start of the cycle
+          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {4, true}},
+          // The length of the cycle is less than the distance from the
+          // head to the start of the cycle
+          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {6, true}},
+      };
 
       for (size_t i = 0; i < tests.size(); i++) {
-        auto [input, left, right, want] = tests[i];
-        Node* head = vecToLinkedList(input);
-        Node* reversedHead = reverseSection(head, left, right);
-        std::vector<int> got = linkedListToVec(reversedHead);
+        auto [arr, testParams] = tests[i];
+        auto [finalPointerIndex, want] = testParams;
+        Node* head = createCyclicList(arr, finalPointerIndex);
+        bool got = hasCycle(head);
+
+        std::string cycleDesc;
+        if (finalPointerIndex == -1) {
+          cycleDesc = "no cycle";
+        } else {
+          cycleDesc =
+              "cycle starting at index " + std::to_string(finalPointerIndex);
+        }
+
+        std::string testCaseStr = "Test " + std::to_string(i + 1) +
+                                  ": hasCycle(list " + vecToStr(arr) + " with " +
+                                  cycleDesc + ")";
 
         if (got != want) {
-          std::string error_msg = "\nTest " + std::to_string(i + 1) +
-                                  ": got: " + vecToStr(got) +
-                                  ", want: " + vecToStr(want) + "\n";
-
-          // Clean up memory before throwing
-          while (reversedHead) {
-            Node* temp = reversedHead;
-            reversedHead = reversedHead->next;
-            delete temp;
-          }
-
-          throw std::runtime_error(error_msg);
+          std::string errorMsg = "\n" + testCaseStr +
+                                 ": got: " + (got ? "true" : "false") +
+                                 ", want: " + (want ? "true" : "false");
+          cleanupLinkedList(head);
+          throw std::runtime_error(errorMsg);
         }
 
-        // Clean up memory
-        while (reversedHead) {
-          Node* temp = reversedHead;
-          reversedHead = reversedHead->next;
-          delete temp;
-        }
+        cleanupLinkedList(head);
       }
     
-    cout << "ALL SUBLIST REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL LINKED-LIST CYCLE DETECTION TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }

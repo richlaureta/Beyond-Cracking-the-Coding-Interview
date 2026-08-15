@@ -303,5 +303,6 @@ public:
 Node* copyList(Node* head);
 Node* reverseList(Node* head);
 Node* reverseSection(Node* head, int left, int right);
+bool hasCycle(Node* head);
 
 #endif // HEADER_HPP

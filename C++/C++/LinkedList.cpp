@@ -460,3 +460,21 @@ Node* reverseSection(Node* head, int left, int right)
     
     return head;
 }
+
+bool hasCycle(Node* head)
+{
+    //Problem 34.8 - Linked-List Cycle Detection
+    
+    Node* slowPointer = head;
+    Node* fastPointer = head;
+    
+    while(fastPointer and fastPointer->next)
+    {
+        slowPointer = slowPointer->next;
+        fastPointer = fastPointer->next->next;
+        
+        if(slowPointer == fastPointer) return true;
+    }
+    
+    return false;
+}
