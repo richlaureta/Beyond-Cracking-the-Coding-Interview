@@ -331,29 +331,18 @@ def convert_to_array(node: Node) -> list:
     if not node:
         return []
     
-    left_array = []
-    right_array = []
+    current_node = node
     
-    left_pointer_node = node.previous
-    right_pointer_node = node
-    
-    while left_pointer_node:
-        left_array.append(left_pointer_node.v)
-        left_pointer_node = left_pointer_node.previous
-
-    while right_pointer_node:
-        right_array.append(right_pointer_node.v)
-        right_pointer_node = right_pointer_node.next
+    while current_node.previous:
+        current_node = current_node.previous
     
     merged_array = []
     
-    for value in reversed(left_array):
-        merged_array.append(value)
+    while current_node:
+        merged_array.append(current_node.v)
+        current_node = current_node.next
     
-    for value in (right_array):
-        merged_array.append(value)
-        
-    return merged_array
+    return merged_array    
 
 #TESTS
 
@@ -773,6 +762,7 @@ def Run_All_Linked_Lists_Tests():
     run_linked_list_reversal_tests()
     run_sublist_reversal_tests()
     run_linked_list_cycle_detection_tests()
+    run_doubly_linked_list_to_array_tests()
     
     print()
     print("---------------------------------------------------------")
@@ -780,25 +770,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    run_doubly_linked_list_to_array_tests()
-    
-    # dll = DoublyLinkedList()
-    
-    # node1 = Node(1)
-    # node2 = Node(2)
-    # node3 = Node(3)
-    # node4 = Node(4)
-    # node5 = Node(5)
-    
-    # node2.previous = node1
-    # node1.previous = None
-    # node1.next = node2
-    # node2.next = node3
-    # node3.previous = node2
-    # node3.next = node4
-    # node4.previous = node3
-    # node4.next = node5
-    # node5.previous = node4
-    # node5.next = None
-    
-    # print(convert_to_array(node1))
+    Run_All_Linked_Lists_Tests()
