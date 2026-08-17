@@ -478,3 +478,24 @@ bool hasCycle(Node* head)
     
     return false;
 }
+
+vector<int> convertToArray(Node* node)
+{
+    //Problem 34.9 - Doubly Linked List to Array
+    
+    if(!node) return {};
+    
+    Node* currentNode = node;
+    
+    while(currentNode->previous) currentNode = currentNode->previous;
+    
+    vector<int> mergedVector;
+    
+    while(currentNode)
+    {
+        mergedVector.push_back(currentNode->val);
+        currentNode = currentNode->next;
+    }
+    
+    return mergedVector;
+}

@@ -3298,63 +3298,152 @@ int main(int argc, const char *argv[]) {
       // point to null.
       //
       // Returns the head of the list
-      auto createCyclicList = [](const std::vector<int>& arr,
-                                 int finalPointerIndex) -> Node* {
-        // Build list and store cycle start node
-        Node* dummyHead = new Node(0);
-        Node* current = dummyHead;
-        Node* cycleStartNode = nullptr;
-        for (size_t i = 0; i < arr.size(); i++) {
-          current->next = new Node(arr[i]);
-          current = current->next;
-          if ((int)i == finalPointerIndex) {
-            cycleStartNode = current;
-          }
+//      auto createCyclicList = [](const std::vector<int>& arr,
+//                                 int finalPointerIndex) -> Node* {
+//        // Build list and store cycle start node
+//        Node* dummyHead = new Node(0);
+//        Node* current = dummyHead;
+//        Node* cycleStartNode = nullptr;
+//        for (size_t i = 0; i < arr.size(); i++) {
+//          current->next = new Node(arr[i]);
+//          current = current->next;
+//          if ((int)i == finalPointerIndex) {
+//            cycleStartNode = current;
+//          }
+//        }
+//
+//        // Create cycle if needed
+//        if (cycleStartNode) {
+//          current->next = cycleStartNode;
+//        }
+//
+//        Node* head = dummyHead->next;
+//        delete dummyHead;
+//        return head;
+//      };
+//
+//      // Helper function to clean up linked list with potential cycle
+//      auto cleanupLinkedList = [](Node* head) {
+//        if (!head) return;
+//
+//        // Break any cycles first
+//        Node* slow = head;
+//        Node* fast = head;
+//        bool hasCycleFlag = false;
+//
+//        while (fast && fast->next) {
+//          slow = slow->next;
+//          fast = fast->next->next;
+//          if (slow == fast) {
+//            hasCycleFlag = true;
+//            break;
+//          }
+//        }
+//
+//        if (hasCycleFlag) {
+//          // Break the cycle at slow pointer
+//          Node* cur = head;
+//          while (cur->next != slow) {
+//            cur = cur->next;
+//          }
+//          cur->next = nullptr;
+//        }
+//
+//        // Now delete all nodes
+//        while (head) {
+//          Node* temp = head;
+//          head = head->next;
+//          delete temp;
+//        }
+//      };
+//
+//      auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<int>, std::pair<int, bool>>> tests = {
+//          // Test: (list, (finalPointerIndex, want))
+//
+//          // Single node no cycle
+//          {{1}, {-1, false}},
+//          // Single node with cycle
+//          {{1}, {0, true}},
+//          // Multiple nodes with no cycle
+//          {{1, 2, 3, 4, 5}, {-1, false}},
+//          // Multiple nodes all in a cycle
+//          {{1, 2, 3, 4, 5}, {0, true}},
+//          // Multiple nodes with cycle in the middle
+//          {{1, 2, 3, 4, 5}, {2, true}},
+//          // Multiple nodes with cycle at the end
+//          {{1, 2, 3, 4, 5}, {4, true}},
+//          // The length of the cycle is equal to the distance from the
+//          // head to the start of the cycle (both are 5)
+//          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {5, true}},
+//          // The length of the cycle is greater than the distance from the
+//          // head to the start of the cycle
+//          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {4, true}},
+//          // The length of the cycle is less than the distance from the
+//          // head to the start of the cycle
+//          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {6, true}},
+//      };
+//
+//      for (size_t i = 0; i < tests.size(); i++) {
+//        auto [arr, testParams] = tests[i];
+//        auto [finalPointerIndex, want] = testParams;
+//        Node* head = createCyclicList(arr, finalPointerIndex);
+//        bool got = hasCycle(head);
+//
+//        std::string cycleDesc;
+//        if (finalPointerIndex == -1) {
+//          cycleDesc = "no cycle";
+//        } else {
+//          cycleDesc =
+//              "cycle starting at index " + std::to_string(finalPointerIndex);
+//        }
+//
+//        std::string testCaseStr = "Test " + std::to_string(i + 1) +
+//                                  ": hasCycle(list " + vecToStr(arr) + " with " +
+//                                  cycleDesc + ")";
+//
+//        if (got != want) {
+//          std::string errorMsg = "\n" + testCaseStr +
+//                                 ": got: " + (got ? "true" : "false") +
+//                                 ", want: " + (want ? "true" : "false");
+//          cleanupLinkedList(head);
+//          throw std::runtime_error(errorMsg);
+//        }
+//
+//        cleanupLinkedList(head);
+//      }
+//    
+//    cout << "ALL LINKED-LIST CYCLE DETECTION TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 34.9 - Doubly Linked List to Array
+    
+    auto createDoublyLinkedList = [](const std::vector<int>& arr) -> Node* {
+        Node* head = new Node(arr[0]);
+        Node* cur = head;
+        for (size_t i = 1; i < arr.size(); i++) {
+          Node* newNode = new Node(arr[i]);
+          cur->next = newNode;
+          newNode->previous = cur;
+          cur = newNode;
         }
-
-        // Create cycle if needed
-        if (cycleStartNode) {
-          current->next = cycleStartNode;
-        }
-
-        Node* head = dummyHead->next;
-        delete dummyHead;
         return head;
       };
 
-      // Helper function to clean up linked list with potential cycle
-      auto cleanupLinkedList = [](Node* head) {
-        if (!head) return;
-
-        // Break any cycles first
-        Node* slow = head;
-        Node* fast = head;
-        bool hasCycleFlag = false;
-
-        while (fast && fast->next) {
-          slow = slow->next;
-          fast = fast->next->next;
-          if (slow == fast) {
-            hasCycleFlag = true;
-            break;
-          }
+      auto nodeAtIndex = [](Node* head, int index) -> Node* {
+        Node* cur = head;
+        for (int i = 0; i < index; i++) {
+          cur = cur->next;
         }
-
-        if (hasCycleFlag) {
-          // Break the cycle at slow pointer
-          Node* cur = head;
-          while (cur->next != slow) {
-            cur = cur->next;
-          }
-          cur->next = nullptr;
-        }
-
-        // Now delete all nodes
-        while (head) {
-          Node* temp = head;
-          head = head->next;
-          delete temp;
-        }
+        return cur;
       };
 
       auto vecToStr = [](const std::vector<int>& vec) -> std::string {
@@ -3367,62 +3456,40 @@ int main(int argc, const char *argv[]) {
         return result;
       };
 
-      std::vector<std::pair<std::vector<int>, std::pair<int, bool>>> tests = {
-          // Test: (list, (finalPointerIndex, want))
+      std::vector<std::pair<std::vector<int>, int>> tests = {
+          // Examples from the book
+          {{1, 2, 3, 4}, 2},
+          {{1, 2, 3, 4}, 0},
 
-          // Single node no cycle
-          {{1}, {-1, false}},
-          // Single node with cycle
-          {{1}, {0, true}},
-          // Multiple nodes with no cycle
-          {{1, 2, 3, 4, 5}, {-1, false}},
-          // Multiple nodes all in a cycle
-          {{1, 2, 3, 4, 5}, {0, true}},
-          // Multiple nodes with cycle in the middle
-          {{1, 2, 3, 4, 5}, {2, true}},
-          // Multiple nodes with cycle at the end
-          {{1, 2, 3, 4, 5}, {4, true}},
-          // The length of the cycle is equal to the distance from the
-          // head to the start of the cycle (both are 5)
-          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {5, true}},
-          // The length of the cycle is greater than the distance from the
-          // head to the start of the cycle
-          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {4, true}},
-          // The length of the cycle is less than the distance from the
-          // head to the start of the cycle
-          {{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, {6, true}},
+          {{1, 2, 3, 4, 5}, 0},
+          {{1, 2, 3, 4, 5}, 1},
+          {{1, 2, 3, 4, 5}, 2},
+          {{1, 2, 3, 4, 5}, 3},
+          {{1, 2, 3, 4, 5}, 4},
+          // Test single node
+          {{1}, 0},
       };
-
       for (size_t i = 0; i < tests.size(); i++) {
-        auto [arr, testParams] = tests[i];
-        auto [finalPointerIndex, want] = testParams;
-        Node* head = createCyclicList(arr, finalPointerIndex);
-        bool got = hasCycle(head);
+        auto [arr, index] = tests[i];
+        Node* head = createDoublyLinkedList(arr);
+        Node* node = nodeAtIndex(head, index);
+        auto got = convertToArray(node);
 
-        std::string cycleDesc;
-        if (finalPointerIndex == -1) {
-          cycleDesc = "no cycle";
-        } else {
-          cycleDesc =
-              "cycle starting at index " + std::to_string(finalPointerIndex);
+        if (got != arr) {
+          throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+                                   ": got: " + vecToStr(got) +
+                                   ", want: " + vecToStr(arr) + "\n");
         }
 
-        std::string testCaseStr = "Test " + std::to_string(i + 1) +
-                                  ": hasCycle(list " + vecToStr(arr) + " with " +
-                                  cycleDesc + ")";
-
-        if (got != want) {
-          std::string errorMsg = "\n" + testCaseStr +
-                                 ": got: " + (got ? "true" : "false") +
-                                 ", want: " + (want ? "true" : "false");
-          cleanupLinkedList(head);
-          throw std::runtime_error(errorMsg);
+        // Clean up memory
+        while (head) {
+          Node* next = head->next;
+          delete head;
+          head = next;
         }
-
-        cleanupLinkedList(head);
       }
     
-    cout << "ALL LINKED-LIST CYCLE DETECTION TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL DOUBLY LINKED LIST TO ARRAY TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
