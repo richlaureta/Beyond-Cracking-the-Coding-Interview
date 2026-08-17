@@ -325,6 +325,36 @@ def has_cycle(head: Node) -> bool:
     
     return False
 
+def convert_to_array(node: Node) -> list:
+    #Problem 34.9 - Doubly Linked List to Array
+    
+    if not node:
+        return []
+    
+    left_array = []
+    right_array = []
+    
+    left_pointer_node = node.previous
+    right_pointer_node = node
+    
+    while left_pointer_node:
+        left_array.append(left_pointer_node.v)
+        left_pointer_node = left_pointer_node.previous
+
+    while right_pointer_node:
+        right_array.append(right_pointer_node.v)
+        right_pointer_node = right_pointer_node.next
+    
+    merged_array = []
+    
+    for value in reversed(left_array):
+        merged_array.append(value)
+    
+    for value in (right_array):
+        merged_array.append(value)
+        
+    return merged_array
+
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -691,6 +721,47 @@ def run_linked_list_cycle_detection_tests():
   
   print("ALL LINKED-LIST CYCLE DETECTION TESTS PROVIDED PASSED.")
 
+def run_doubly_linked_list_to_array_tests():
+
+  def create_doubly_linked_list(arr):
+    head = Node(arr[0])
+    cur = head
+    for val in arr[1:]:
+      new_node = Node(val)
+      cur.next = new_node
+      new_node.previous = cur
+      cur = new_node
+    return head
+
+
+  def node_at_index(head, index):
+    cur = head
+    for _ in range(index):
+      cur = cur.next
+    return cur
+
+  tests = [
+      # Examples from the book
+      ([1, 2, 3, 4], 2),
+      ([1, 2, 3, 4], 0),
+
+      ([1, 2, 3, 4, 5], 0),
+      ([1, 2, 3, 4, 5], 1),
+      ([1, 2, 3, 4, 5], 2),
+      ([1, 2, 3, 4, 5], 3),
+      ([1, 2, 3, 4, 5], 4),
+      # Test single node
+      ([1], 0),
+  ]
+
+  for i, (arr, index) in enumerate(tests):
+    head = create_doubly_linked_list(arr)
+    node = node_at_index(head, index)
+    got = convert_to_array(node)
+    assert got == arr, f"\nTest {i + 1}: got: {got}, want: {arr}\n"
+  
+  print("ALL DOUBLY LINKED LIST TO ARRAY TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -709,4 +780,25 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    run_linked_list_cycle_detection_tests()
+    run_doubly_linked_list_to_array_tests()
+    
+    # dll = DoublyLinkedList()
+    
+    # node1 = Node(1)
+    # node2 = Node(2)
+    # node3 = Node(3)
+    # node4 = Node(4)
+    # node5 = Node(5)
+    
+    # node2.previous = node1
+    # node1.previous = None
+    # node1.next = node2
+    # node2.next = node3
+    # node3.previous = node2
+    # node3.next = node4
+    # node4.previous = node3
+    # node4.next = node5
+    # node5.previous = node4
+    # node5.next = None
+    
+    # print(convert_to_array(node1))
