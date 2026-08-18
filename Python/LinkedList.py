@@ -344,6 +344,21 @@ def convert_to_array(node: Node) -> list:
     
     return merged_array    
 
+def get_middle(head: Node):
+    #Problem 34.10 - Linked-List Midpoint
+    
+    if not head:
+        return None
+    
+    slow_pointer = head
+    fast_pointer = head
+    
+    while fast_pointer and fast_pointer.next:
+        slow_pointer = slow_pointer.next
+        fast_pointer = fast_pointer.next.next
+    
+    return slow_pointer.v
+
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -751,6 +766,46 @@ def run_doubly_linked_list_to_array_tests():
   
   print("ALL DOUBLY LINKED LIST TO ARRAY TESTS PROVIDED HAVE PASSED.")
 
+def run_linked_list_midpoint_tests():
+
+  def array_to_linked_list(arr):
+    head = Node(arr[0])
+    current = head
+    for val in arr[1:]:
+      current.next = Node(val)
+      current = current.next
+    return head
+
+  tests = [
+      # Test single node
+      ([10], 10),
+      # Test two nodes
+      ([10, 20], 20),
+      # Test odd number of nodes
+      ([10, 20, 30], 20),
+      # Test even number of nodes
+      ([10, 20, 30, 40], 30),
+      # Test longer odd list
+      ([10, 20, 30, 40, 50], 30),
+      # Test longer even list
+      ([10, 20, 30, 40, 50, 60], 40),
+      # Test with negative values
+      ([-10, -20, -30], -20),
+      # Test with zeros
+      ([0, 0, 0], 0),
+  ]
+  for i, (input_arr, want) in enumerate(tests):
+    # Test the fast/slow pointer solution
+    head = array_to_linked_list(input_arr)
+    got = get_middle(head)
+    assert got == want, f"\nTest {i + 1} (fast/slow): got: {got}, want: {want}\n"
+
+    # # Test the two pass solution
+    # got = get_middle_two_pass(head)
+    # assert got == want, f"\nTest {i + 1} (two pass): got: {got}, want: {want}\n"
+
+  print("ALL LINKED-LIST MIDPOINT TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -763,6 +818,7 @@ def Run_All_Linked_Lists_Tests():
     run_sublist_reversal_tests()
     run_linked_list_cycle_detection_tests()
     run_doubly_linked_list_to_array_tests()
+    run_linked_list_midpoint_tests()
     
     print()
     print("---------------------------------------------------------")
