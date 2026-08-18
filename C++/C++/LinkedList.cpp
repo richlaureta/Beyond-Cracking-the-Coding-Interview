@@ -499,3 +499,19 @@ vector<int> convertToArray(Node* node)
     
     return mergedVector;
 }
+
+int getMiddle(Node* head)
+{
+    //Problem 34.10 - Linked-List Midpoint
+    
+    Node* slowPointer = head;
+    Node* fastPointer = head;
+    
+    while(fastPointer and fastPointer->next)
+    {
+        slowPointer = slowPointer->next;
+        fastPointer = fastPointer->next->next;
+    }
+    
+    return slowPointer->val;
+}

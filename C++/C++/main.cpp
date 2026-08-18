@@ -3426,70 +3426,143 @@ int main(int argc, const char *argv[]) {
     
     //Problem 34.9 - Doubly Linked List to Array
     
-    auto createDoublyLinkedList = [](const std::vector<int>& arr) -> Node* {
+//    auto createDoublyLinkedList = [](const std::vector<int>& arr) -> Node* {
+//        Node* head = new Node(arr[0]);
+//        Node* cur = head;
+//        for (size_t i = 1; i < arr.size(); i++) {
+//          Node* newNode = new Node(arr[i]);
+//          cur->next = newNode;
+//          newNode->previous = cur;
+//          cur = newNode;
+//        }
+//        return head;
+//      };
+//
+//      auto nodeAtIndex = [](Node* head, int index) -> Node* {
+//        Node* cur = head;
+//        for (int i = 0; i < index; i++) {
+//          cur = cur->next;
+//        }
+//        return cur;
+//      };
+//
+//      auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+//        std::string result = "[";
+//        for (size_t i = 0; i < vec.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(vec[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::pair<std::vector<int>, int>> tests = {
+//          // Examples from the book
+//          {{1, 2, 3, 4}, 2},
+//          {{1, 2, 3, 4}, 0},
+//
+//          {{1, 2, 3, 4, 5}, 0},
+//          {{1, 2, 3, 4, 5}, 1},
+//          {{1, 2, 3, 4, 5}, 2},
+//          {{1, 2, 3, 4, 5}, 3},
+//          {{1, 2, 3, 4, 5}, 4},
+//          // Test single node
+//          {{1}, 0},
+//      };
+//      for (size_t i = 0; i < tests.size(); i++) {
+//        auto [arr, index] = tests[i];
+//        Node* head = createDoublyLinkedList(arr);
+//        Node* node = nodeAtIndex(head, index);
+//        auto got = convertToArray(node);
+//
+//        if (got != arr) {
+//          throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+//                                   ": got: " + vecToStr(got) +
+//                                   ", want: " + vecToStr(arr) + "\n");
+//        }
+//
+//        // Clean up memory
+//        while (head) {
+//          Node* next = head->next;
+//          delete head;
+//          head = next;
+//        }
+//      }
+//    
+//    cout << "ALL DOUBLY LINKED LIST TO ARRAY TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 34.10 - Linked-List Midpoint
+    
+    // Helper function to convert array to linked list
+      auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
         Node* head = new Node(arr[0]);
-        Node* cur = head;
+        Node* curr = head;
         for (size_t i = 1; i < arr.size(); i++) {
-          Node* newNode = new Node(arr[i]);
-          cur->next = newNode;
-          newNode->previous = cur;
-          cur = newNode;
+          curr->next = new Node(arr[i]);
+          curr = curr->next;
         }
         return head;
       };
 
-      auto nodeAtIndex = [](Node* head, int index) -> Node* {
-        Node* cur = head;
-        for (int i = 0; i < index; i++) {
-          cur = cur->next;
-        }
-        return cur;
-      };
-
-      auto vecToStr = [](const std::vector<int>& vec) -> std::string {
-        std::string result = "[";
-        for (size_t i = 0; i < vec.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(vec[i]);
-        }
-        result += "]";
-        return result;
-      };
-
       std::vector<std::pair<std::vector<int>, int>> tests = {
-          // Examples from the book
-          {{1, 2, 3, 4}, 2},
-          {{1, 2, 3, 4}, 0},
-
-          {{1, 2, 3, 4, 5}, 0},
-          {{1, 2, 3, 4, 5}, 1},
-          {{1, 2, 3, 4, 5}, 2},
-          {{1, 2, 3, 4, 5}, 3},
-          {{1, 2, 3, 4, 5}, 4},
           // Test single node
-          {{1}, 0},
+          {{10}, 10},
+          // Test two nodes
+          {{10, 20}, 20},
+          // Test odd number of nodes
+          {{10, 20, 30}, 20},
+          // Test even number of nodes
+          {{10, 20, 30, 40}, 30},
+          // Test longer odd list
+          {{10, 20, 30, 40, 50}, 30},
+          // Test longer even list
+          {{10, 20, 30, 40, 50, 60}, 40},
+          // Test with negative values
+          {{-10, -20, -30}, -20},
+          // Test with zeros
+          {{0, 0, 0}, 0},
       };
-      for (size_t i = 0; i < tests.size(); i++) {
-        auto [arr, index] = tests[i];
-        Node* head = createDoublyLinkedList(arr);
-        Node* node = nodeAtIndex(head, index);
-        auto got = convertToArray(node);
 
-        if (got != arr) {
+      for (size_t i = 0; i < tests.size(); i++) {
+        const std::vector<int>& input = tests[i].first;
+        const int want = tests[i].second;
+        Node* head = vecToLinkedList(input);
+
+        // Test the fast/slow pointer solution
+        int got = getMiddle(head);
+        if (got != want) {
+          while (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+          }
           throw std::runtime_error("\nTest " + std::to_string(i + 1) +
-                                   ": got: " + vecToStr(got) +
-                                   ", want: " + vecToStr(arr) + "\n");
+                                   " (fast/slow): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
         }
 
-        // Clean up memory
+        // Test the two pass solution
+//        int gotTwoPass = getMiddleTwoPass(head);
+//        if (gotTwoPass != want) {
+//          while (head) {
+//            Node* temp = head;
+//            head = head->next;
+//            delete temp;
+//          }
+//          throw std::runtime_error(
+//              "\nTest " + std::to_string(i + 1) +
+//              " (two pass): got: " + std::to_string(gotTwoPass) +
+//              ", want: " + std::to_string(want) + "\n");
+//        }
+
         while (head) {
-          Node* next = head->next;
-          delete head;
-          head = next;
+          Node* temp = head;
+          head = head->next;
+          delete temp;
         }
       }
     
-    cout << "ALL DOUBLY LINKED LIST TO ARRAY TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL LINKED-LIST MIDPOINT TESTS PROVIDED HAVE PASSED." << endl;
     
     return EXIT_SUCCESS;
 }
