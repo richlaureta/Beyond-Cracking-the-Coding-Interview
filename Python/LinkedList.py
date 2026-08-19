@@ -359,6 +359,34 @@ def get_middle(head: Node):
     
     return slow_pointer.v
 
+def remove_kth_node(head: Node, k: int):
+    #Problem 34.11 - Remove Kth Node from the End
+    
+    if k < 1:
+        return head
+    
+    if not head:
+        return None
+    
+    current_node = head
+    
+    index_counter = 1
+    while current_node and index_counter <= k:
+        current_node = current_node.next
+        index_counter += 1    
+    
+    if not current_node:
+        return head.next
+    
+    begin_again_node = head
+
+    while current_node.next:
+        begin_again_node = begin_again_node.next
+        current_node = current_node.next
+        
+    begin_again_node.next = begin_again_node.next.next
+    
+    return head
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -806,6 +834,63 @@ def run_linked_list_midpoint_tests():
 
   print("ALL LINKED-LIST MIDPOINT TESTS PROVIDED HAVE PASSED.")
 
+def run_remove_kth_node_from_the_end_tests():
+
+  def linked_list_to_array(head):
+    result = []
+    current = head
+    while current:
+      result.append(current.v)
+      current = current.next
+    return result
+
+
+  def array_to_linked_list(arr):
+    if not arr:
+      return None
+    head = Node(arr[0])
+    current = head
+    for val in arr[1:]:
+      current.next = Node(val)
+      current = current.next
+    return head
+
+  tests = [
+      # Test single element list
+      ([1], 1, []),
+      # Test removing first element (k = length)
+      ([1, 2, 3], 3, [2, 3]),
+      # Test removing last element (k = 1)
+      ([1, 2, 3], 1, [1, 2]),
+      # Test removing middle element
+      ([1, 2, 3], 2, [1, 3]),
+      # Test longer list removing first
+      ([1, 2, 3, 4, 5], 5, [2, 3, 4, 5]),
+      # Test longer list removing last
+      ([1, 2, 3, 4, 5], 1, [1, 2, 3, 4]),
+      # Test longer list removing middle
+      ([1, 2, 3, 4, 5], 3, [1, 2, 4, 5]),
+      # Test with repeated values
+      ([1, 1, 1], 2, [1, 1]),
+      # Test with negative values
+      ([-1, -2, -3], 2, [-1, -3]),
+  ]
+
+  for i, (arr, k, want) in enumerate(tests):
+    # Test the fast/slow pointer solution
+    result = remove_kth_node(array_to_linked_list(arr), k)
+    got = linked_list_to_array(result)
+    assert got == want, f"\nTest {
+        i + 1} (fast/slow): remove_kth_node({arr}, {k}): got: {got}, want: {want}\n"
+
+    # Test the two pass solution
+    # result = remove_kth_node_two_pass(array_to_linked_list(arr), k)
+    # got = linked_list_to_array(result)
+    # assert got == want, f"\nTest {
+    #     i + 1} (two pass): remove_kth_node_two_pass({arr}, {k}): got: {got}, want: {want}\n"
+    
+  print("ALL REMOVE KTH NODE FROM THE END TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -819,6 +904,7 @@ def Run_All_Linked_Lists_Tests():
     run_linked_list_cycle_detection_tests()
     run_doubly_linked_list_to_array_tests()
     run_linked_list_midpoint_tests()
+    run_remove_kth_node_from_the_end_tests()
     
     print()
     print("---------------------------------------------------------")
@@ -826,4 +912,22 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
+    sll = SinglyLinkedList()
+    sll.push_back(1)
+    sll.push_back(2)
+    sll.push_back(3)
+    sll.push_back(4)
+
+    k = 4
+    if sll.size >= k:
+        sll.head = remove_kth_node(sll.head, k)
+    
+    current_node = sll.head
+    
+    while current_node:
+        print(f'{current_node.v}->', end = "")
+        current_node = current_node.next
+        
+    print(current_node)
+    
     Run_All_Linked_Lists_Tests()
