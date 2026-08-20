@@ -375,6 +375,9 @@ def remove_kth_node(head: Node, k: int):
         current_node = current_node.next
         index_counter += 1    
     
+    if index_counter < k:
+        return head
+    
     if not current_node:
         return head.next
     
@@ -912,22 +915,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    sll = SinglyLinkedList()
-    sll.push_back(1)
-    sll.push_back(2)
-    sll.push_back(3)
-    sll.push_back(4)
-
-    k = 4
-    if sll.size >= k:
-        sll.head = remove_kth_node(sll.head, k)
-    
-    current_node = sll.head
-    
-    while current_node:
-        print(f'{current_node.v}->', end = "")
-        current_node = current_node.next
-        
-    print(current_node)
-    
     Run_All_Linked_Lists_Tests()
