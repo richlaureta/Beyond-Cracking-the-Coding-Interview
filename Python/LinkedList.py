@@ -390,6 +390,7 @@ def remove_kth_node(head: Node, k: int):
     begin_again_node.next = begin_again_node.next.next
     
     return head
+
 #TESTS
 
 def run_singly_linked_list_design_tests():

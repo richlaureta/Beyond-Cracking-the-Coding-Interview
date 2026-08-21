@@ -306,5 +306,6 @@ Node* reverseSection(Node* head, int left, int right);
 bool hasCycle(Node* head);
 vector<int> convertToArray(Node* node);
 int getMiddle(Node* head);
+Node* removeKthNode(Node *head, int k);
 
 #endif // HEADER_HPP

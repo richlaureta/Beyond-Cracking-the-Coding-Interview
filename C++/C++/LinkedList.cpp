@@ -515,3 +515,38 @@ int getMiddle(Node* head)
     
     return slowPointer->val;
 }
+
+Node* removeKthNode(Node* head, int k)
+{
+    //Problem 34.11 - Remove Kth Node from the End
+    
+    if(k < 1) return head;
+    
+    if(!head) return nullptr;
+    
+    Node* currentNode = head;
+    
+    int indexCounter = 1;
+    
+    while(currentNode and indexCounter <= k)
+    {
+        currentNode = currentNode->next;
+        indexCounter++;
+    }
+    
+    if(indexCounter < k) return head;
+    
+    if(!currentNode) return head->next;
+    
+    Node* beginAgainNode = head;
+    
+    while(currentNode->next)
+    {
+        beginAgainNode = beginAgainNode->next;
+        currentNode = currentNode->next;
+    }
+    
+    beginAgainNode->next = beginAgainNode->next->next;
+    
+    return head;
+}
