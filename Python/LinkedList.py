@@ -397,9 +397,6 @@ def merge(head1: Node, head2: Node) -> Node:
     if not head1:
         return head2
     
-    if not head2:
-        return head1
-    
     current_node_1 = head1
     current_node_2 = head2
     
@@ -419,11 +416,8 @@ def merge(head1: Node, head2: Node) -> Node:
         current_node_1 = next_node_1
         current_node_2 = next_node_2
      
-    current_node = next_node_2
-    while current_node:
-        previous_node_2.next = current_node
-        previous_node_2 = current_node
-        current_node = current_node.next
+    if next_node_2:
+        previous_node_2.next = next_node_2
         
     return head
 
