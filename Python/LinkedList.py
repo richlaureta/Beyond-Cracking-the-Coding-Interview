@@ -391,6 +391,42 @@ def remove_kth_node(head: Node, k: int):
     
     return head
 
+def merge(head1: Node, head2: Node) -> Node:
+    #Problem 34.12 - Linked-List Zip
+    
+    if not head1:
+        return head2
+    
+    if not head2:
+        return head1
+    
+    current_node_1 = head1
+    current_node_2 = head2
+    
+    head = head1
+    
+    next_node_1 = None
+    next_node_2 = None
+    
+    previous_node_2 = None
+    
+    while current_node_1 and current_node_2:
+        previous_node_2 = current_node_2
+        next_node_1 = current_node_1.next
+        next_node_2 = current_node_2.next 
+        current_node_1.next = current_node_2
+        current_node_2.next = next_node_1
+        current_node_1 = next_node_1
+        current_node_2 = next_node_2
+     
+    current_node = next_node_2
+    while current_node:
+        previous_node_2.next = current_node
+        previous_node_2 = current_node
+        current_node = current_node.next
+        
+    return head
+
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -895,6 +931,58 @@ def run_remove_kth_node_from_the_end_tests():
     
   print("ALL REMOVE KTH NODE FROM THE END TESTS PROVIDED HAVE PASSED.")
 
+def run_linked_list_zip_tests():
+
+  def linked_list_to_array(head):
+    result = []
+    current = head
+    while current:
+      result.append(current.v)
+      current = current.next
+    return result
+
+
+  def array_to_linked_list(arr):
+    dummy = Node(0)
+    current = dummy
+    for val in arr:
+      current.next = Node(val)
+      current = current.next
+    return dummy.next
+
+  tests = [
+      # Book examples
+      ([1, 3, 5], [2, 4, 6], [1, 2, 3, 4, 5, 6]),
+      ([1, 2, 3, 4], [8, 7], [1, 8, 2, 7, 3, 4]),
+
+      # Test empty lists
+      ([], [], []),
+      # Test one empty list
+      ([1, 2], [], [1, 2]),
+      ([], [1, 2], [1, 2]),
+      # Test equal length lists
+      ([1, 3], [2, 4], [1, 2, 3, 4]),
+      # Test different length lists
+      ([1, 3, 5], [2, 4], [1, 2, 3, 4, 5]),
+      ([1, 3], [2, 4, 6], [1, 2, 3, 4, 6]),
+      # Test with negative numbers
+      ([-1, -3], [-2, -4], [-1, -2, -3, -4]),
+      # Test with zeros
+      ([0, 0], [0, 0], [0, 0, 0, 0]),
+      # Test longer lists
+      ([1, 3, 5, 7, 9], [2, 4, 6, 8, 10], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+  ]
+
+  for i, (list1, list2, want) in enumerate(tests):
+    head1 = array_to_linked_list(list1)
+    head2 = array_to_linked_list(list2)
+    got = merge(head1, head2)
+    got_list = linked_list_to_array(got)
+    assert got_list == want, f"\nTest {
+        i + 1}: merge({list1}, {list2}): got: {got_list}, want: {want}\n"
+
+  print("ALL LINKED-LIST ZIP TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -909,6 +997,7 @@ def Run_All_Linked_Lists_Tests():
     run_doubly_linked_list_to_array_tests()
     run_linked_list_midpoint_tests()
     run_remove_kth_node_from_the_end_tests()
+    run_linked_list_zip_tests()
     
     print()
     print("---------------------------------------------------------")
@@ -916,4 +1005,23 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Linked_Lists_Tests()
+    # sll1 = SinglyLinkedList()
+    # sll1.push_back(1)
+    # sll1.push_back(2)
+    # sll1.push_back(3)
+    # sll1.push_back(4)
+      
+    # sll2 = SinglyLinkedList()
+    # # sll2.push_back(8)
+    # # sll2.push_back(7)
+    # # sll2.push_back(6)
+    
+    # current_node = merge(sll1.head, sll2.head)
+    
+    # while current_node:
+    #     print(f'{current_node.v}->', end="")
+    #     current_node = current_node.next
+    
+    # print(current_node)
+    
+    run_linked_list_zip_tests()
