@@ -3643,25 +3643,25 @@ int main(int argc, const char *argv[]) {
         throw std::runtime_error(error_msg);
       }
 
-      // Clean up memory
+//       Clean up memory
       while (result1) {
         Node* temp = result1;
         result1 = result1->next;
         delete temp;
       }
 
-      // Test the two pass solution
+//       Test the two pass solution
 //      Node* result2 = removeKthNodeTwoPass(vecToLinkedList(arr), k);
 //      std::vector<int> got2 = linkedListToVec(result2);
-
+//
 //      if (got2 != want) {
 //        std::string error_msg = "\nTest " + std::to_string(i + 1) +
 //                                " (two pass): removeKthNodeTwoPass(" +
 //                                vecToStr(arr) + ", " + std::to_string(k) +
 //                                "): got: " + vecToStr(got2) +
 //                                ", want: " + vecToStr(want) + "\n";
-//
-//        // Clean up memory before throwing
+
+        // Clean up memory before throwing
 //        while (result2) {
 //          Node* temp = result2;
 //          result2 = result2->next;
@@ -3671,7 +3671,7 @@ int main(int argc, const char *argv[]) {
 //        throw std::runtime_error(error_msg);
 //      }
 
-      // Clean up memory
+//       Clean up memory
 //      while (result2) {
 //        Node* temp = result2;
 //        result2 = result2->next;
@@ -3680,6 +3680,8 @@ int main(int argc, const char *argv[]) {
     }
     
     cout << "ALL REMOVE KTH NODE FROM THE END TESTS PROVIDED HAVE PASSED." << endl;
+    
+    cout << "RUN SUCCESSFULL." << endl;
     
     return EXIT_SUCCESS;
 }

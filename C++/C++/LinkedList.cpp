@@ -546,7 +546,10 @@ Node* removeKthNode(Node* head, int k)
         currentNode = currentNode->next;
     }
     
+    Node* deleteNode = beginAgainNode->next;
     beginAgainNode->next = beginAgainNode->next->next;
+    delete deleteNode;
+    deleteNode = nullptr;
     
     return head;
 }
