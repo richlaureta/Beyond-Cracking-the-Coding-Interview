@@ -402,10 +402,7 @@ def merge(head1: Node, head2: Node) -> Node:
     
     head = head1
     
-    next_node_1 = None
     next_node_2 = None
-    
-    previous_node_2 = None
     
     while current_node_1 and current_node_2:
         previous_node_2 = current_node_2
