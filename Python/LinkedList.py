@@ -432,10 +432,9 @@ def remove_duplicates(head: Node) -> Node:
         
         if current_node.v == previous_node.v:
             connect_flag = True
-            current_node = current_node.next
-            
-        while current_node and current_node.v == previous_node.v:
-            current_node = current_node.next
+                  
+            while current_node and current_node.v == previous_node.v:
+                current_node = current_node.next
         
         if connect_flag == True:
             previous_node.next = current_node
