@@ -418,6 +418,31 @@ def merge(head1: Node, head2: Node) -> Node:
         
     return head
 
+def remove_duplicates(head: Node) -> Node:
+    #Problem 34.13 - Duplicate Removal in Sorted Linked List
+    
+    if not head:
+        return None
+    
+    current_node = head.next
+    previous_node = head
+    
+    while current_node:
+        connect_flag = False
+        while current_node and current_node.v == previous_node.v:
+            connect_flag = True
+            current_node = current_node.next
+        
+        if connect_flag == True:
+            previous_node.next = current_node
+        
+        previous_node = current_node
+        
+        if current_node:
+            current_node = current_node.next
+    
+    return head
+
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -973,7 +998,60 @@ def run_linked_list_zip_tests():
         i + 1}: merge({list1}, {list2}): got: {got_list}, want: {want}\n"
 
   print("ALL LINKED-LIST ZIP TESTS PROVIDED HAVE PASSED.")
-  
+
+def run_duplicate_removal_in_sorted_linked_list_tests():
+
+  def linked_list_to_array(head):
+    result = []
+    current = head
+    while current:
+      result.append(current.v)
+      current = current.next
+    return result
+
+
+  def array_to_linked_list(arr):
+    dummy = Node(0)
+    current = dummy
+    for val in arr:
+      current.next = Node(val)
+      current = current.next
+    return dummy.next
+
+  tests = [
+      # Book example
+      ([1, 1, 1, 3, 5, 5], [1, 3, 5]),
+
+      # Test empty list
+      ([], []),
+      # Test single node
+      ([1], [1]),
+      # Test no duplicates
+      ([1, 2, 3], [1, 2, 3]),
+      # Test all duplicates
+      ([1, 1, 1, 1, 1], [1]),
+      # Test some duplicates
+      ([1, 1, 2, 3, 3], [1, 2, 3]),
+      # Test duplicates at start
+      ([1, 1, 2, 3], [1, 2, 3]),
+      # Test duplicates at end
+      ([1, 2, 3, 3], [1, 2, 3]),
+      # Test duplicates in middle
+      ([1, 2, 2, 3], [1, 2, 3]),
+      # Test with negative numbers
+      ([-3, -3, -2, -1, -1], [-3, -2, -1]),
+      # Test with zeros
+      ([0, 0, 0, 1, 1], [0, 1]),
+  ]
+  for i, (input_arr, want) in enumerate(tests):
+    head = array_to_linked_list(input_arr)
+    got = remove_duplicates(head)
+    got_list = linked_list_to_array(got)
+    assert got_list == want, f"\nTest {
+        i + 1}: remove_duplicates({input_arr}): got: {got_list}, want: {want}\n"
+        
+  print("ALL DUPLICATE REMOVAL IN SORTED LINKED LIST TESTS PROVIDED HAVE PASSED.")
+ 
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -996,4 +1074,19 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Linked_Lists_Tests()
+    run_duplicate_removal_in_sorted_linked_list_tests()
+    # sll = SinglyLinkedList()
+    # sll.push_back(float('-inf'))
+    # sll.push_back(float('-inf'))
+    # sll.push_back(1)
+    # sll.push_back(3)
+    # sll.push_back(5)
+    # sll.push_back(5)
+    
+    # current_node = remove_duplicates(sll.head)
+    
+    # while current_node:
+    #     print(f'{current_node.v}->', end = "")
+    #     current_node = current_node.next
+    
+    # print(current_node)
