@@ -996,23 +996,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    # sll1 = SinglyLinkedList()
-    # sll1.push_back(1)
-    # sll1.push_back(2)
-    # sll1.push_back(3)
-    # sll1.push_back(4)
-      
-    # sll2 = SinglyLinkedList()
-    # # sll2.push_back(8)
-    # # sll2.push_back(7)
-    # # sll2.push_back(6)
-    
-    # current_node = merge(sll1.head, sll2.head)
-    
-    # while current_node:
-    #     print(f'{current_node.v}->', end="")
-    #     current_node = current_node.next
-    
-    # print(current_node)
-    
-    run_linked_list_zip_tests()
+    Run_All_Linked_Lists_Tests()

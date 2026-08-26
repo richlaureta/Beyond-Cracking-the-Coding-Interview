@@ -307,5 +307,6 @@ bool hasCycle(Node* head);
 vector<int> convertToArray(Node* node);
 int getMiddle(Node* head);
 Node* removeKthNode(Node *head, int k);
+Node* merge(Node* head1, Node* head2);
 
 #endif // HEADER_HPP

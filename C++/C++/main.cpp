@@ -3566,89 +3566,89 @@ int main(int argc, const char *argv[]) {
     
     //Problem 34.11 - Remove Kth Node from the End
     
-    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
-      if (arr.empty()) return nullptr;
-      Node* head = new Node(arr[0]);
-      Node* cur = head;
-      for (size_t i = 1; i < arr.size(); i++) {
-        cur->next = new Node(arr[i]);
-        cur = cur->next;
-      }
-      return head;
-    };
+//    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+//      if (arr.empty()) return nullptr;
+//      Node* head = new Node(arr[0]);
+//      Node* cur = head;
+//      for (size_t i = 1; i < arr.size(); i++) {
+//        cur->next = new Node(arr[i]);
+//        cur = cur->next;
+//      }
+//      return head;
+//    };
+//
+//    auto linkedListToVec = [](Node* head) -> std::vector<int> {
+//      std::vector<int> result;
+//      Node* cur = head;
+//      while (cur) {
+//        result.push_back(cur->val);
+//        cur = cur->next;
+//      }
+//      return result;
+//    };
+//
+//    auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+//      std::string result = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) result += ", ";
+//        result += std::to_string(vec[i]);
+//      }
+//      result += "]";
+//      return result;
+//    };
 
-    auto linkedListToVec = [](Node* head) -> std::vector<int> {
-      std::vector<int> result;
-      Node* cur = head;
-      while (cur) {
-        result.push_back(cur->val);
-        cur = cur->next;
-      }
-      return result;
-    };
+//    std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
+//        // Test single element list
+//        {std::vector<int>{1}, 1, std::vector<int>{}},
+//        // Test removing first element (k = length)
+//        {std::vector<int>{1, 2, 3}, 3, std::vector<int>{2, 3}},
+//        // Test removing last element (k = 1)
+//        {std::vector<int>{1, 2, 3}, 1, std::vector<int>{1, 2}},
+//        // Test removing middle element
+//        {std::vector<int>{1, 2, 3}, 2, std::vector<int>{1, 3}},
+//        // Test longer list removing first
+//        {std::vector<int>{1, 2, 3, 4, 5}, 5, std::vector<int>{2, 3, 4, 5}},
+//        // Test longer list removing last
+//        {std::vector<int>{1, 2, 3, 4, 5}, 1, std::vector<int>{1, 2, 3, 4}},
+//        // Test longer list removing middle
+//        {std::vector<int>{1, 2, 3, 4, 5}, 3, std::vector<int>{1, 2, 4, 5}},
+//        // Test with repeated values
+//        {std::vector<int>{1, 1, 1}, 2, std::vector<int>{1, 1}},
+//        // Test with negative values
+//        {std::vector<int>{-1, -2, -3}, 2, std::vector<int>{-1, -3}},
+//    };
 
-    auto vecToStr = [](const std::vector<int>& vec) -> std::string {
-      std::string result = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) result += ", ";
-        result += std::to_string(vec[i]);
-      }
-      result += "]";
-      return result;
-    };
-
-    std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
-        // Test single element list
-        {std::vector<int>{1}, 1, std::vector<int>{}},
-        // Test removing first element (k = length)
-        {std::vector<int>{1, 2, 3}, 3, std::vector<int>{2, 3}},
-        // Test removing last element (k = 1)
-        {std::vector<int>{1, 2, 3}, 1, std::vector<int>{1, 2}},
-        // Test removing middle element
-        {std::vector<int>{1, 2, 3}, 2, std::vector<int>{1, 3}},
-        // Test longer list removing first
-        {std::vector<int>{1, 2, 3, 4, 5}, 5, std::vector<int>{2, 3, 4, 5}},
-        // Test longer list removing last
-        {std::vector<int>{1, 2, 3, 4, 5}, 1, std::vector<int>{1, 2, 3, 4}},
-        // Test longer list removing middle
-        {std::vector<int>{1, 2, 3, 4, 5}, 3, std::vector<int>{1, 2, 4, 5}},
-        // Test with repeated values
-        {std::vector<int>{1, 1, 1}, 2, std::vector<int>{1, 1}},
-        // Test with negative values
-        {std::vector<int>{-1, -2, -3}, 2, std::vector<int>{-1, -3}},
-    };
-
-    for (size_t i = 0; i < tests.size(); i++) {
-      const std::vector<int>& arr = std::get<0>(tests[i]);
-      int k = std::get<1>(tests[i]);
-      const std::vector<int>& want = std::get<2>(tests[i]);
+//    for (size_t i = 0; i < tests.size(); i++) {
+//      const std::vector<int>& arr = std::get<0>(tests[i]);
+//      int k = std::get<1>(tests[i]);
+//      const std::vector<int>& want = std::get<2>(tests[i]);
 
       // Test the fast/slow pointer solution
-      Node* result1 = removeKthNode(vecToLinkedList(arr), k);
-      std::vector<int> got1 = linkedListToVec(result1);
-
-      if (got1 != want) {
-        std::string error_msg =
-            "\nTest " + std::to_string(i + 1) + " (fast/slow): removeKthNode(" +
-            vecToStr(arr) + ", " + std::to_string(k) +
-            "): got: " + vecToStr(got1) + ", want: " + vecToStr(want) + "\n";
-
-        // Clean up memory before throwing
-        while (result1) {
-          Node* temp = result1;
-          result1 = result1->next;
-          delete temp;
-        }
-
-        throw std::runtime_error(error_msg);
-      }
+//      Node* result1 = removeKthNode(vecToLinkedList(arr), k);
+//      std::vector<int> got1 = linkedListToVec(result1);
+//
+//      if (got1 != want) {
+//        std::string error_msg =
+//            "\nTest " + std::to_string(i + 1) + " (fast/slow): removeKthNode(" +
+//            vecToStr(arr) + ", " + std::to_string(k) +
+//            "): got: " + vecToStr(got1) + ", want: " + vecToStr(want) + "\n";
+//
+//        // Clean up memory before throwing
+//        while (result1) {
+//          Node* temp = result1;
+//          result1 = result1->next;
+//          delete temp;
+//        }
+//
+//        throw std::runtime_error(error_msg);
+//      }
 
 //       Clean up memory
-      while (result1) {
-        Node* temp = result1;
-        result1 = result1->next;
-        delete temp;
-      }
+//      while (result1) {
+//        Node* temp = result1;
+//        result1 = result1->next;
+//        delete temp;
+//      }
 
 //       Test the two pass solution
 //      Node* result2 = removeKthNodeTwoPass(vecToLinkedList(arr), k);
@@ -3677,9 +3677,94 @@ int main(int argc, const char *argv[]) {
 //        result2 = result2->next;
 //        delete temp;
 //      }
-    }
+//    }
     
-    cout << "ALL REMOVE KTH NODE FROM THE END TESTS PROVIDED HAVE PASSED." << endl;
+//    cout << "ALL REMOVE KTH NODE FROM THE END TESTS PROVIDED HAVE PASSED." << endl;
+//
+    //Problem 34.12 - Linked-List Zip
+    
+    // Helper function to convert array to linked list
+      auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+        if (arr.empty()) return nullptr;
+        Node* head = new Node(arr[0]);
+        Node* curr = head;
+        for (size_t i = 1; i < arr.size(); i++) {
+          curr->next = new Node(arr[i]);
+          curr = curr->next;
+        }
+        return head;
+      };
+
+      // Helper function to convert linked list to vector
+      auto linkedListToVec = [](Node* head) -> std::vector<int> {
+        std::vector<int> result;
+        while (head) {
+          result.push_back(head->val);
+          head = head->next;
+        }
+        return result;
+      };
+
+      // Helper function to convert vector to string
+      auto vecToStr = [](const std::vector<int>& v) -> std::string {
+        std::string result = "[";
+        for (size_t i = 0; i < v.size(); i++) {
+          if (i > 0) result += ", ";
+          result += std::to_string(v[i]);
+        }
+        result += "]";
+        return result;
+      };
+
+      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
+          tests = {
+              // Test empty lists
+              {{}, {}, {}},
+              // Test one empty list
+              {{1, 2}, {}, {1, 2}},
+              {{}, {1, 2}, {1, 2}},
+              // Test equal length lists
+              {{1, 3}, {2, 4}, {1, 2, 3, 4}},
+              // Test different length lists
+              {{1, 3, 5}, {2, 4}, {1, 2, 3, 4, 5}},
+              {{1, 3}, {2, 4, 6}, {1, 2, 3, 4, 6}},
+              // Test with negative numbers
+              {{-1, -3}, {-2, -4}, {-1, -2, -3, -4}},
+              // Test with zeros
+              {{0, 0}, {0, 0}, {0, 0, 0, 0}},
+              // Test longer lists
+              {{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}},
+          };
+
+      for (size_t i = 0; i < tests.size(); i++) {
+        auto [input1, input2, want] = tests[i];
+        Node* head1 = vecToLinkedList(input1);
+        Node* head2 = vecToLinkedList(input2);
+        Node* result = merge(head1, head2);
+        std::vector<int> got = linkedListToVec(result);
+
+        if (got != want) {
+          std::string error_msg = "\nTest " + std::to_string(i + 1) + ": merge(" +
+                                  vecToStr(input1) + ", " + vecToStr(input2) +
+                                  "): got: " + vecToStr(got) +
+                                  ", want: " + vecToStr(want) + "\n";
+
+          while (result) {
+            Node* temp = result;
+            result = result->next;
+            delete temp;
+          }
+          throw std::runtime_error(error_msg);
+        }
+
+        while (result) {
+          Node* temp = result;
+          result = result->next;
+          delete temp;
+        }
+      }
+    
+    cout << "ALL LINKED-LIST ZIP TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFULL." << endl;
     

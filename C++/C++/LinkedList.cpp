@@ -553,3 +553,33 @@ Node* removeKthNode(Node* head, int k)
     
     return head;
 }
+
+Node* merge(Node* head1, Node* head2)
+{
+    //Problem 34.12 - Linked-List Zip
+    
+    if(!head1) return head2;
+    
+    Node* currentNode1 = head1;
+    Node* currentNode2 = head2;
+    
+    Node* head = head1;
+    
+    Node* nextNode2 = nullptr;
+    Node* previousNode2 = nullptr;
+    
+    while(currentNode1 and currentNode2)
+    {
+        previousNode2 = currentNode2;
+        Node* nextNode1 = currentNode1->next;
+        nextNode2 = currentNode2->next;
+        currentNode1->next = currentNode2;
+        currentNode2->next = nextNode1;
+        currentNode1 = nextNode1;
+        currentNode2 = nextNode2;
+    }
+    
+    if(nextNode2) previousNode2->next = nextNode2;
+    
+    return head;
+}
