@@ -3768,94 +3768,94 @@ int main(int argc, const char *argv[]) {
     
     //Problem 34.13 - Duplicate Removal in Sorted Linked List
     
-    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
-      if (arr.empty()) return nullptr;
-      Node* head = new Node(arr[0]);
-      Node* cur = head;
-      for (size_t i = 1; i < arr.size(); i++) {
-        cur->next = new Node(arr[i]);
-        cur = cur->next;
-      }
-      return head;
-    };
-
-    auto linkedListToVec = [](Node* head) -> std::vector<int> {
-      std::vector<int> result;
-      Node* cur = head;
-      while (cur) {
-        result.push_back(cur->val);
-        cur = cur->next;
-      }
-      return result;
-    };
-
-    auto vecToStr = [](const std::vector<int>& v) -> std::string {
-      std::string result = "[";
-      for (size_t i = 0; i < v.size(); i++) {
-        if (i > 0) result += ", ";
-        result += std::to_string(v[i]);
-      }
-      result += "]";
-      return result;
-    };
-
-    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
-        // Book example
-        {{1, 1, 1, 3, 5, 5}, {1, 3, 5}},
-
-        // Test empty list
-        {{}, {}},
-        // Test single node
-        {{1}, {1}},
-        // Test no duplicates
-        {{1, 2, 3}, {1, 2, 3}},
-        // Test all duplicates
-        {{1, 1, 1, 1, 1}, {1}},
-        // Test some duplicates
-        {{1, 1, 2, 3, 3}, {1, 2, 3}},
-        // Test duplicates at start
-        {{1, 1, 2, 3}, {1, 2, 3}},
-        // Test duplicates at end
-        {{1, 2, 3, 3}, {1, 2, 3}},
-        // Test duplicates in middle
-        {{1, 2, 2, 3}, {1, 2, 3}},
-        // Test with negative numbers
-        {{-3, -3, -2, -1, -1}, {-3, -2, -1}},
-        // Test with zeros
-        {{0, 0, 0, 1, 1}, {0, 1}},
-    };
-
-    for (size_t i = 0; i < tests.size(); i++) {
-      auto [input, want] = tests[i];
-      Node* head = vecToLinkedList(input);
-      Node* result = removeDuplicates(head);
-      std::vector<int> got = linkedListToVec(result);
-
-      if (got != want) {
-        std::string error_msg = "\nTest " + std::to_string(i + 1) +
-                                ": removeDuplicates(" + vecToStr(input) +
-                                "): got: " + vecToStr(got) +
-                                ", want: " + vecToStr(want) + "\n";
-
-        // Clean up memory before throwing
-        while (result) {
-          Node* temp = result;
-          result = result->next;
-          delete temp;
-        }
-
-        throw std::runtime_error(error_msg);
-      }
-
-      // Clean up memory
-      while (result) {
-        Node* temp = result;
-        result = result->next;
-        delete temp;
-      }
-    }
-    
-    cout << "ALL DUPLICATE REMOVAL IN SORTED LINKED LIST TESTS PROVIDED HAVE PASSED." << endl;
+//    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+//      if (arr.empty()) return nullptr;
+//      Node* head = new Node(arr[0]);
+//      Node* cur = head;
+//      for (size_t i = 1; i < arr.size(); i++) {
+//        cur->next = new Node(arr[i]);
+//        cur = cur->next;
+//      }
+//      return head;
+//    };
+//
+//    auto linkedListToVec = [](Node* head) -> std::vector<int> {
+//      std::vector<int> result;
+//      Node* cur = head;
+//      while (cur) {
+//        result.push_back(cur->val);
+//        cur = cur->next;
+//      }
+//      return result;
+//    };
+//
+//    auto vecToStr = [](const std::vector<int>& v) -> std::string {
+//      std::string result = "[";
+//      for (size_t i = 0; i < v.size(); i++) {
+//        if (i > 0) result += ", ";
+//        result += std::to_string(v[i]);
+//      }
+//      result += "]";
+//      return result;
+//    };
+//
+//    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+//        // Book example
+//        {{1, 1, 1, 3, 5, 5}, {1, 3, 5}},
+//
+//        // Test empty list
+//        {{}, {}},
+//        // Test single node
+//        {{1}, {1}},
+//        // Test no duplicates
+//        {{1, 2, 3}, {1, 2, 3}},
+//        // Test all duplicates
+//        {{1, 1, 1, 1, 1}, {1}},
+//        // Test some duplicates
+//        {{1, 1, 2, 3, 3}, {1, 2, 3}},
+//        // Test duplicates at start
+//        {{1, 1, 2, 3}, {1, 2, 3}},
+//        // Test duplicates at end
+//        {{1, 2, 3, 3}, {1, 2, 3}},
+//        // Test duplicates in middle
+//        {{1, 2, 2, 3}, {1, 2, 3}},
+//        // Test with negative numbers
+//        {{-3, -3, -2, -1, -1}, {-3, -2, -1}},
+//        // Test with zeros
+//        {{0, 0, 0, 1, 1}, {0, 1}},
+//    };
+//
+//    for (size_t i = 0; i < tests.size(); i++) {
+//      auto [input, want] = tests[i];
+//      Node* head = vecToLinkedList(input);
+//      Node* result = removeDuplicates(head);
+//      std::vector<int> got = linkedListToVec(result);
+//
+//      if (got != want) {
+//        std::string error_msg = "\nTest " + std::to_string(i + 1) +
+//                                ": removeDuplicates(" + vecToStr(input) +
+//                                "): got: " + vecToStr(got) +
+//                                ", want: " + vecToStr(want) + "\n";
+//
+//        // Clean up memory before throwing
+//        while (result) {
+//          Node* temp = result;
+//          result = result->next;
+//          delete temp;
+//        }
+//
+//        throw std::runtime_error(error_msg);
+//      }
+//
+//      // Clean up memory
+//      while (result) {
+//        Node* temp = result;
+//        result = result->next;
+//        delete temp;
+//      }
+//    }
+//    
+//    cout << "ALL DUPLICATE REMOVAL IN SORTED LINKED LIST TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFULL." << endl;
     

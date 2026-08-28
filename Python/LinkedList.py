@@ -441,6 +441,28 @@ def remove_duplicates(head: Node) -> Node:
     
     return head
 
+def reverse_k_group(head: Node, k) -> Node:
+    #Problem 34.14 - Linked List Block Reversal
+
+    current_node = head
+    node_count = 0
+    
+    while current_node:
+        node_count += 1
+        current_node = current_node.next
+    
+    if node_count < k:
+        return head
+    
+    iterate_times = node_count // k
+    
+    head = reverse_section(head, 0, k - 1)
+    
+    for index in range(iterate_times - 1):
+        reverse_section(head, (k * index) + k, (k * index) + k + k - 1)
+    
+    return head
+        
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -1049,7 +1071,62 @@ def run_duplicate_removal_in_sorted_linked_list_tests():
         i + 1}: remove_duplicates({input_arr}): got: {got_list}, want: {want}\n"
         
   print("ALL DUPLICATE REMOVAL IN SORTED LINKED LIST TESTS PROVIDED HAVE PASSED.")
- 
+
+def run_linked_list_block_reversal_tests():
+
+  def linked_list_to_array(head):
+    result = []
+    current = head
+    while current:
+      result.append(current.v)
+      current = current.next
+    return result
+
+
+  def array_to_linked_list(arr):
+    dummy = Node(0)
+    current = dummy
+    for val in arr:
+      current.next = Node(val)
+      current = current.next
+    return dummy.next
+
+  tests = [
+      # Book examples
+      ([1, 2, 3, 4], 2, [2, 1, 4, 3]),
+      ([1, 2, 3, 4, 5], 3, [3, 2, 1, 4, 5]),
+
+      ([1, 2, 3, 4, 5, 6], 2, [2, 1, 4, 3, 6, 5]),
+      # Test empty list
+      ([], 2, []),
+      # Test single element list
+      ([1], 2, [1]),
+      # Test k greater than list length
+      ([1, 2, 3], 4, [1, 2, 3]),
+      # Test k equal to list length
+      ([1, 2, 3], 3, [3, 2, 1]),
+      # Test k less than list length
+      ([1, 2, 3, 4, 5], 2, [2, 1, 4, 3, 5]),
+      # Test k is 1 (no change)
+      ([1, 2, 3, 4, 5], 1, [1, 2, 3, 4, 5]),
+      # Test list with repeated values
+      ([1, 1, 1, 2, 2], 2, [1, 1, 2, 1, 2]),
+      # Test list with negative values
+      ([-1, -2, -3, -4], 2, [-2, -1, -4, -3]),
+      # Test list with zero
+      ([0, 1, 2], 2, [1, 0, 2]),
+      # Test longer list
+      ([1, 2, 3, 4, 5, 6, 7, 8], 3, [3, 2, 1, 6, 5, 4, 7, 8]),
+  ]
+
+  for i, (arr, k, want) in enumerate(tests):
+    head = array_to_linked_list(arr)
+    reversed_head = reverse_k_group(head, k)
+    got = linked_list_to_array(reversed_head)
+    assert got == want, f"\nTest {i + 1}: got: {got}, want: {want}\n"
+
+  print("ALL LINKED LIST BLOCK REVERSAL TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Linked_Lists_Tests():
@@ -1065,6 +1142,7 @@ def Run_All_Linked_Lists_Tests():
     run_linked_list_midpoint_tests()
     run_remove_kth_node_from_the_end_tests()
     run_linked_list_zip_tests()
+    run_linked_list_block_reversal_tests()
     
     print()
     print("---------------------------------------------------------")
@@ -1072,16 +1150,15 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    run_duplicate_removal_in_sorted_linked_list_tests()
+    run_linked_list_block_reversal_tests()
     # sll = SinglyLinkedList()
-    # sll.push_back(float('-inf'))
-    # sll.push_back(float('-inf'))
     # sll.push_back(1)
+    # sll.push_back(2)
     # sll.push_back(3)
-    # sll.push_back(5)
+    # sll.push_back(4)
     # sll.push_back(5)
     
-    # current_node = remove_duplicates(sll.head)
+    # current_node = reverse_k_group(sll.head, 3)
     
     # while current_node:
     #     print(f'{current_node.v}->', end = "")
