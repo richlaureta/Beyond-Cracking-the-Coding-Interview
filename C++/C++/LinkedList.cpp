@@ -583,3 +583,32 @@ Node* merge(Node* head1, Node* head2)
     
     return head;
 }
+
+Node* removeDuplicates(Node* head)
+{
+    //Problem 34.13 - Duplicate Removal in Sorted Linked List
+    
+    if(!head) return nullptr;
+    
+    Node* currentNode = head->next;
+    Node* previousNode = head;
+    
+    while(currentNode)
+    {
+        if(currentNode->val == previousNode->val)
+        {
+            while(currentNode and currentNode->val == previousNode->val)
+            {
+                currentNode = currentNode->next;
+            }
+            
+            previousNode->next = currentNode;
+        }
+        
+        previousNode = currentNode;
+        
+        if(currentNode) currentNode = currentNode->next;
+    }
+    
+    return head;
+}

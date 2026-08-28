@@ -3684,87 +3684,178 @@ int main(int argc, const char *argv[]) {
     //Problem 34.12 - Linked-List Zip
     
     // Helper function to convert array to linked list
-      auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
-        if (arr.empty()) return nullptr;
-        Node* head = new Node(arr[0]);
-        Node* curr = head;
-        for (size_t i = 1; i < arr.size(); i++) {
-          curr->next = new Node(arr[i]);
-          curr = curr->next;
-        }
-        return head;
-      };
+//      auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+//        if (arr.empty()) return nullptr;
+//        Node* head = new Node(arr[0]);
+//        Node* curr = head;
+//        for (size_t i = 1; i < arr.size(); i++) {
+//          curr->next = new Node(arr[i]);
+//          curr = curr->next;
+//        }
+//        return head;
+//      };
+//
+//      // Helper function to convert linked list to vector
+//      auto linkedListToVec = [](Node* head) -> std::vector<int> {
+//        std::vector<int> result;
+//        while (head) {
+//          result.push_back(head->val);
+//          head = head->next;
+//        }
+//        return result;
+//      };
+//
+//      // Helper function to convert vector to string
+//      auto vecToStr = [](const std::vector<int>& v) -> std::string {
+//        std::string result = "[";
+//        for (size_t i = 0; i < v.size(); i++) {
+//          if (i > 0) result += ", ";
+//          result += std::to_string(v[i]);
+//        }
+//        result += "]";
+//        return result;
+//      };
+//
+//      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
+//          tests = {
+//              // Test empty lists
+//              {{}, {}, {}},
+//              // Test one empty list
+//              {{1, 2}, {}, {1, 2}},
+//              {{}, {1, 2}, {1, 2}},
+//              // Test equal length lists
+//              {{1, 3}, {2, 4}, {1, 2, 3, 4}},
+//              // Test different length lists
+//              {{1, 3, 5}, {2, 4}, {1, 2, 3, 4, 5}},
+//              {{1, 3}, {2, 4, 6}, {1, 2, 3, 4, 6}},
+//              // Test with negative numbers
+//              {{-1, -3}, {-2, -4}, {-1, -2, -3, -4}},
+//              // Test with zeros
+//              {{0, 0}, {0, 0}, {0, 0, 0, 0}},
+//              // Test longer lists
+//              {{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}},
+//          };
+//
+//      for (size_t i = 0; i < tests.size(); i++) {
+//        auto [input1, input2, want] = tests[i];
+//        Node* head1 = vecToLinkedList(input1);
+//        Node* head2 = vecToLinkedList(input2);
+//        Node* result = merge(head1, head2);
+//        std::vector<int> got = linkedListToVec(result);
+//
+//        if (got != want) {
+//          std::string error_msg = "\nTest " + std::to_string(i + 1) + ": merge(" +
+//                                  vecToStr(input1) + ", " + vecToStr(input2) +
+//                                  "): got: " + vecToStr(got) +
+//                                  ", want: " + vecToStr(want) + "\n";
+//
+//          while (result) {
+//            Node* temp = result;
+//            result = result->next;
+//            delete temp;
+//          }
+//          throw std::runtime_error(error_msg);
+//        }
+//
+//        while (result) {
+//          Node* temp = result;
+//          result = result->next;
+//          delete temp;
+//        }
+//      }
+//    
+//    cout << "ALL LINKED-LIST ZIP TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 34.13 - Duplicate Removal in Sorted Linked List
+    
+    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+      if (arr.empty()) return nullptr;
+      Node* head = new Node(arr[0]);
+      Node* cur = head;
+      for (size_t i = 1; i < arr.size(); i++) {
+        cur->next = new Node(arr[i]);
+        cur = cur->next;
+      }
+      return head;
+    };
 
-      // Helper function to convert linked list to vector
-      auto linkedListToVec = [](Node* head) -> std::vector<int> {
-        std::vector<int> result;
-        while (head) {
-          result.push_back(head->val);
-          head = head->next;
-        }
-        return result;
-      };
+    auto linkedListToVec = [](Node* head) -> std::vector<int> {
+      std::vector<int> result;
+      Node* cur = head;
+      while (cur) {
+        result.push_back(cur->val);
+        cur = cur->next;
+      }
+      return result;
+    };
 
-      // Helper function to convert vector to string
-      auto vecToStr = [](const std::vector<int>& v) -> std::string {
-        std::string result = "[";
-        for (size_t i = 0; i < v.size(); i++) {
-          if (i > 0) result += ", ";
-          result += std::to_string(v[i]);
-        }
-        result += "]";
-        return result;
-      };
+    auto vecToStr = [](const std::vector<int>& v) -> std::string {
+      std::string result = "[";
+      for (size_t i = 0; i < v.size(); i++) {
+        if (i > 0) result += ", ";
+        result += std::to_string(v[i]);
+      }
+      result += "]";
+      return result;
+    };
 
-      std::vector<std::tuple<std::vector<int>, std::vector<int>, std::vector<int>>>
-          tests = {
-              // Test empty lists
-              {{}, {}, {}},
-              // Test one empty list
-              {{1, 2}, {}, {1, 2}},
-              {{}, {1, 2}, {1, 2}},
-              // Test equal length lists
-              {{1, 3}, {2, 4}, {1, 2, 3, 4}},
-              // Test different length lists
-              {{1, 3, 5}, {2, 4}, {1, 2, 3, 4, 5}},
-              {{1, 3}, {2, 4, 6}, {1, 2, 3, 4, 6}},
-              // Test with negative numbers
-              {{-1, -3}, {-2, -4}, {-1, -2, -3, -4}},
-              // Test with zeros
-              {{0, 0}, {0, 0}, {0, 0, 0, 0}},
-              // Test longer lists
-              {{1, 3, 5, 7, 9}, {2, 4, 6, 8, 10}, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}},
-          };
+    std::vector<std::pair<std::vector<int>, std::vector<int>>> tests = {
+        // Book example
+        {{1, 1, 1, 3, 5, 5}, {1, 3, 5}},
 
-      for (size_t i = 0; i < tests.size(); i++) {
-        auto [input1, input2, want] = tests[i];
-        Node* head1 = vecToLinkedList(input1);
-        Node* head2 = vecToLinkedList(input2);
-        Node* result = merge(head1, head2);
-        std::vector<int> got = linkedListToVec(result);
+        // Test empty list
+        {{}, {}},
+        // Test single node
+        {{1}, {1}},
+        // Test no duplicates
+        {{1, 2, 3}, {1, 2, 3}},
+        // Test all duplicates
+        {{1, 1, 1, 1, 1}, {1}},
+        // Test some duplicates
+        {{1, 1, 2, 3, 3}, {1, 2, 3}},
+        // Test duplicates at start
+        {{1, 1, 2, 3}, {1, 2, 3}},
+        // Test duplicates at end
+        {{1, 2, 3, 3}, {1, 2, 3}},
+        // Test duplicates in middle
+        {{1, 2, 2, 3}, {1, 2, 3}},
+        // Test with negative numbers
+        {{-3, -3, -2, -1, -1}, {-3, -2, -1}},
+        // Test with zeros
+        {{0, 0, 0, 1, 1}, {0, 1}},
+    };
 
-        if (got != want) {
-          std::string error_msg = "\nTest " + std::to_string(i + 1) + ": merge(" +
-                                  vecToStr(input1) + ", " + vecToStr(input2) +
-                                  "): got: " + vecToStr(got) +
-                                  ", want: " + vecToStr(want) + "\n";
+    for (size_t i = 0; i < tests.size(); i++) {
+      auto [input, want] = tests[i];
+      Node* head = vecToLinkedList(input);
+      Node* result = removeDuplicates(head);
+      std::vector<int> got = linkedListToVec(result);
 
-          while (result) {
-            Node* temp = result;
-            result = result->next;
-            delete temp;
-          }
-          throw std::runtime_error(error_msg);
-        }
+      if (got != want) {
+        std::string error_msg = "\nTest " + std::to_string(i + 1) +
+                                ": removeDuplicates(" + vecToStr(input) +
+                                "): got: " + vecToStr(got) +
+                                ", want: " + vecToStr(want) + "\n";
 
+        // Clean up memory before throwing
         while (result) {
           Node* temp = result;
           result = result->next;
           delete temp;
         }
+
+        throw std::runtime_error(error_msg);
       }
+
+      // Clean up memory
+      while (result) {
+        Node* temp = result;
+        result = result->next;
+        delete temp;
+      }
+    }
     
-    cout << "ALL LINKED-LIST ZIP TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL DUPLICATE REMOVAL IN SORTED LINKED LIST TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFULL." << endl;
     
