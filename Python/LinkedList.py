@@ -1186,19 +1186,4 @@ def Run_All_Linked_Lists_Tests():
     print("---------------------------------------------------------")
     
 if __name__ == "__main__":
-    run_linked_list_block_reversal_tests()
-    # sll = SinglyLinkedList()
-    # sll.push_back(1)
-    # sll.push_back(2)
-    # sll.push_back(3)
-    # sll.push_back(4)
-    # sll.push_back(5)
-    # sll.push_back(6)
-    
-    # current_node = reverse_k_group(sll.head, 2)
-    
-    # while current_node:
-    #     print(f'{current_node.v}->', end = "")
-    #     current_node = current_node.next
-    
-    # print(current_node)
+    Run_All_Linked_Lists_Tests()
