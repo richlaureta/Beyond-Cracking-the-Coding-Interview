@@ -445,24 +445,60 @@ def reverse_k_group(head: Node, k) -> Node:
     #Problem 34.14 - Linked List Block Reversal
 
     current_node = head
-    node_count = 0
-    
-    while current_node:
-        node_count += 1
+    node_array = []
+    while current_node and len(node_array) <= k:
+        node_array.append(current_node)
         current_node = current_node.next
     
-    if node_count < k:
+    if len(node_array) < k:
         return head
     
-    iterate_times = node_count // k
+    previous_node = None
+    current_node = head
+    link_to_next_node = head
     
-    head = reverse_section(head, 0, k - 1)
+    for index in range(k):
+        next_node = current_node.next
+        current_node.next = previous_node
+        previous_node = current_node
+        current_node = next_node
     
-    for index in range(iterate_times - 1):
-        reverse_section(head, (k * index) + k, (k * index) + k + k - 1)
+    if len(node_array) == k + 1:
+        link_to_next_node.next = node_array[len(node_array) - 1]   
+         
+    head = previous_node
+    
+    while len(node_array) == k + 1:
+        link_to_next_node = node_array[0]
+        node_array = []
+        while current_node and len(node_array) <= k:
+            node_array.append(current_node)
+            current_node = current_node.next
+            
+        if len(node_array) < k:
+            return head
+        
+        previous_node = None
+        current_node = node_array[0]
+        
+        for index in range(k):
+            next_node = current_node.next
+            current_node.next = previous_node
+            previous_node = current_node
+            current_node = next_node
+        
+        if len(node_array) == k + 1:
+            link_to_next_node.next = node_array[len(node_array) - 2]
+            node_array[0].next = node_array[len(node_array) - 1]
+        else:
+            link_to_next_node.next = node_array[len(node_array) - 1]
+            
     
     return head
-        
+
+    
+    
+    
 #TESTS
 
 def run_singly_linked_list_design_tests():
@@ -1157,8 +1193,9 @@ if __name__ == "__main__":
     # sll.push_back(3)
     # sll.push_back(4)
     # sll.push_back(5)
+    # sll.push_back(6)
     
-    # current_node = reverse_k_group(sll.head, 3)
+    # current_node = reverse_k_group(sll.head, 2)
     
     # while current_node:
     #     print(f'{current_node.v}->', end = "")
