@@ -3857,6 +3857,99 @@ int main(int argc, const char *argv[]) {
 //    
 //    cout << "ALL DUPLICATE REMOVAL IN SORTED LINKED LIST TESTS PROVIDED HAVE PASSED." << endl;
     
+    //Problem 34.14  - Linked List Block Reversal
+    
+    auto vecToLinkedList = [](const std::vector<int>& arr) -> Node* {
+      if (arr.empty()) return nullptr;
+      Node* head = new Node(arr[0]);
+      Node* cur = head;
+      for (size_t i = 1; i < arr.size(); i++) {
+        cur->next = new Node(arr[i]);
+        cur = cur->next;
+      }
+      return head;
+    };
+
+    auto linkedListToVec = [](Node* head) -> std::vector<int> {
+      std::vector<int> result;
+      Node* cur = head;
+      while (cur) {
+        result.push_back(cur->val);
+        cur = cur->next;
+      }
+      return result;
+    };
+
+    auto vecToStr = [](const std::vector<int>& vec) -> std::string {
+      std::string result = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) result += ", ";
+        result += std::to_string(vec[i]);
+      }
+      result += "]";
+      return result;
+    };
+
+    std::vector<std::tuple<std::vector<int>, int, std::vector<int>>> tests = {
+        // Book examples
+        {std::vector<int>{1, 2, 3, 4}, 2, std::vector<int>{2, 1, 4, 3}},
+        {std::vector<int>{1, 2, 3, 4, 5}, 3, std::vector<int>{3, 2, 1, 4, 5}},
+
+        {std::vector<int>{1, 2, 3, 4, 5, 6}, 2,
+         std::vector<int>{2, 1, 4, 3, 6, 5}},
+        // Test empty list
+        {std::vector<int>{}, 2, std::vector<int>{}},
+        // Test single element list
+        {std::vector<int>{1}, 2, std::vector<int>{1}},
+        // Test k greater than list length
+        {std::vector<int>{1, 2, 3}, 4, std::vector<int>{1, 2, 3}},
+        // Test k equal to list length
+        {std::vector<int>{1, 2, 3}, 3, std::vector<int>{3, 2, 1}},
+        // Test k less than list length
+        {std::vector<int>{1, 2, 3, 4, 5}, 2, std::vector<int>{2, 1, 4, 3, 5}},
+        // Test k is 1 (no change)
+        {std::vector<int>{1, 2, 3, 4, 5}, 1, std::vector<int>{1, 2, 3, 4, 5}},
+        // Test list with repeated values
+        {std::vector<int>{1, 1, 1, 2, 2}, 2, std::vector<int>{1, 1, 2, 1, 2}},
+        // Test list with negative values
+        {std::vector<int>{-1, -2, -3, -4}, 2, std::vector<int>{-2, -1, -4, -3}},
+        // Test list with zero
+        {std::vector<int>{0, 1, 2}, 2, std::vector<int>{1, 0, 2}},
+        // Test longer list
+        {std::vector<int>{1, 2, 3, 4, 5, 6, 7, 8}, 3,
+         std::vector<int>{3, 2, 1, 6, 5, 4, 7, 8}},
+    };
+
+    for (size_t i = 0; i < tests.size(); i++) {
+      auto [input, k, want] = tests[i];
+      Node* head = vecToLinkedList(input);
+      Node* reversedHead = reverseKGroup(head, k);
+      std::vector<int> got = linkedListToVec(reversedHead);
+
+      if (got != want) {
+        std::string error_msg = "\nTest " + std::to_string(i + 1) +
+                                ": got: " + vecToStr(got) +
+                                ", want: " + vecToStr(want) + "\n";
+
+        // Clean up memory before throwing
+        while (reversedHead) {
+          Node* temp = reversedHead;
+          reversedHead = reversedHead->next;
+          delete temp;
+        }
+
+        throw std::runtime_error(error_msg);
+      }
+
+      // Clean up memory
+      while (reversedHead) {
+        Node* temp = reversedHead;
+        reversedHead = reversedHead->next;
+        delete temp;
+      }
+    }
+    
+    cout << "ALL LINKED LIST BLOCK REVERSAL TESTS PROVIDED HAVE PASSED." << endl;
     cout << "RUN SUCCESSFULL." << endl;
     
     return EXIT_SUCCESS;

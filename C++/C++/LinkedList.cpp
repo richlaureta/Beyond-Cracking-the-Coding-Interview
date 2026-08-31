@@ -612,3 +612,72 @@ Node* removeDuplicates(Node* head)
     
     return head;
 }
+
+Node* reverseKGroup(Node* head, int k)
+{
+    //Problem 34.14 - Linked List Block Reversal
+    
+    Node* currentNode = head;
+    vector<Node*> nodeVector;
+    
+    while(currentNode and nodeVector.size() <= k)
+    {
+        nodeVector.push_back(currentNode);
+        currentNode = currentNode->next;
+    }
+    
+    if(nodeVector.size() < k) return head;
+    
+    Node* previousNode = nullptr;
+    currentNode = head;
+    Node* linkedToNextNode = head;
+    
+    for(int index = 0; index < k; index++)
+    {
+        Node* nextNode = currentNode->next;
+        currentNode->next = previousNode;
+        previousNode = currentNode;
+        currentNode = nextNode;
+    }
+    
+    if(nodeVector.size() == k + 1)
+    {
+        linkedToNextNode->next = nodeVector[nodeVector.size() - 1];
+    }
+    
+    head = previousNode;
+    
+    while(nodeVector.size() == k + 1)
+    {
+        linkedToNextNode = nodeVector[0];
+        nodeVector = {};
+        while(currentNode and nodeVector.size() <= k)
+        {
+            nodeVector.push_back(currentNode);
+            currentNode = currentNode->next;
+        }
+        
+        if(nodeVector.size() < k) return head;
+        
+        previousNode = nullptr;
+        currentNode = nodeVector[0];
+        
+        for(int index = 0; index < k; index++)
+        {
+            Node* nextNode = currentNode->next;
+            currentNode->next = previousNode;
+            previousNode = currentNode;
+            currentNode = nextNode;
+        }
+        
+        if(nodeVector.size() == k + 1)
+        {
+            linkedToNextNode->next = nodeVector[nodeVector.size() - 2];
+            nodeVector[0]->next = nodeVector[nodeVector.size() - 1];
+        }
+        else linkedToNextNode->next = nodeVector[nodeVector.size() - 1];
+    }
+    
+    return head;
+    
+}

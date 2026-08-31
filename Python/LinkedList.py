@@ -492,13 +492,9 @@ def reverse_k_group(head: Node, k) -> Node:
             node_array[0].next = node_array[len(node_array) - 1]
         else:
             link_to_next_node.next = node_array[len(node_array) - 1]
-            
-    
+                
     return head
 
-    
-    
-    
 #TESTS
 
 def run_singly_linked_list_design_tests():
