@@ -339,6 +339,6 @@ def Run_All_Stacks_And_Queues_Tests():
     print("--------------------------------------------------------------")
     print("ALL INCLUDED STACKS AND QUEUES TESTS IN THE FILE HAVE PASSED. |")
     print("--------------------------------------------------------------")
-
+    print("TESTING. TESTING. MIC CHECK 1-2 1-2.")
 if __name__ == "__main__":
     Run_All_Stacks_And_Queues_Tests()
