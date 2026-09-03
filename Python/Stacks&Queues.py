@@ -169,7 +169,7 @@ def longest_balanced_subsequence(s: str) -> str:
             valid_parenthesis_list.append(s[index])
     
     return  "".join(valid_parenthesis_list)
-
+    
 #TESTS
 
 def run_compress_array_tests():
@@ -339,6 +339,6 @@ def Run_All_Stacks_And_Queues_Tests():
     print("--------------------------------------------------------------")
     print("ALL INCLUDED STACKS AND QUEUES TESTS IN THE FILE HAVE PASSED. |")
     print("--------------------------------------------------------------")
-    print("TESTING. TESTING. MIC CHECK 1-2 1-2.")
+
 if __name__ == "__main__":
     Run_All_Stacks_And_Queues_Tests()
