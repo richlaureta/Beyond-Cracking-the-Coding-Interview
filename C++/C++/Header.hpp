@@ -311,4 +311,17 @@ Node* merge(Node* head1, Node* head2);
 Node* removeDuplicates(Node* head);
 Node* reverseKGroup(Node* head, int k);
 
+//Trees
+struct TreeNode
+{
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int val);
+    TreeNode(int val, TreeNode* left, TreeNode* right);
+};
+
+void recursionChain(TreeNode* node, int depthLevel, int alignedChainCount, int *maxAlignedChainCount);
+int longestAlignedChain(TreeNode* root);
+
 #endif // HEADER_HPP

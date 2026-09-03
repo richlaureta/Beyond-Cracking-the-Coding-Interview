@@ -93,28 +93,5 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    run_aligned_chain_tests()
+    Run_All_Trees_Tests()
     
-    # node7 = Node(7)
-    # node1 = Node(1)
-    # node3 = Node(3)
-    # node2 = Node(2)
-    # node8 = Node(8)
-    # node_other_2 = Node(2)
-    # node4 = Node(4)
-    # node_other_3 = Node(3)
-    # node_other_other_3 = Node(3)
-    # node_other_other_other_3 = Node(3)
-    
-    # node7.left = node1
-    # node7.right = node3
-    # node1.left = node2
-    # node1.right = node8
-    # node3.right = node_other_2
-    # node_other_2.left = node_other_other_3
-    # node_other_2.right = node_other_other_other_3
-    # node2.left = node4
-    # node2.right = node_other_3
-    
-    # root = node7
-    # print(longest_aligned_chain(root))
