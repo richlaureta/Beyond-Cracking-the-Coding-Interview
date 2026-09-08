@@ -50,6 +50,51 @@ def most_stacked(root: Node):
     
     return max_stack_count[0]
 
+def aligned_path(root: Node):
+    #Problem 35.3 - Aligned Path
+        
+    node_list = []
+    
+    def dfs_traversal(node: Node, depth_level):
+        if not node:
+            return
+        
+        node_list.append((node, depth_level))
+        
+        dfs_traversal(node.left, depth_level + 1)
+        dfs_traversal(node.right, depth_level + 1)
+    
+    dfs_traversal(root, 0)
+    
+    max_aligned_node_count = [0]
+    
+    def dfs_aligned_path(node: Node, depth_level, aligned_node_count):
+        if not node or node.val != depth_level:
+            return
+        
+
+        aligned_node_count += 1
+        max_aligned_node_count[0] = max(aligned_node_count, max_aligned_node_count[0])
+
+            
+        dfs_aligned_path(node.left, depth_level + 1, aligned_node_count)
+        dfs_aligned_path(node.right, depth_level + 1, aligned_node_count)
+    
+    max_aligned_path_count = 0
+       
+    for node_depth_level in node_list:
+        max_aligned_node_count[0] = 0
+        
+        if node_depth_level[0].val == node_depth_level[1]:
+            dfs_aligned_path(node_depth_level[0].left, node_depth_level[1] + 1, 0)
+            max_left_aligned_node_count = max_aligned_node_count[0] + 1
+            max_aligned_node_count[0] = 0
+            dfs_aligned_path(node_depth_level[0].right, node_depth_level[1] + 1, 0)
+            max_right_aligned_node_count = max_aligned_node_count[0]
+            
+            max_aligned_path_count = max(max_aligned_path_count, max_left_aligned_node_count + max_right_aligned_node_count)
+        
+    return max_aligned_path_count
 #TESTS
 
 def run_aligned_chain_tests():
@@ -151,12 +196,47 @@ def run_tree_layout_tests():
     assert got == want, f"\nmost_stacked(): got: {got}, want: {want}\n"
 
   print("ALL TREE LAYOUT TESTS PROVIDED HAVE PASSED.")
-  
+
+def run_aligned_path_tests():
+  tests = [
+      # Test 1: Example from the book
+      (Node(7, Node(1, Node(2, Node(4), Node(3)),
+                    Node(8)), Node(3, Node(2, Node(3), Node(3)))), 3),
+      # Variation 1
+      (Node(7, Node(1, Node(20, Node(4), Node(3)),
+                    Node(8)), Node(3, Node(2, Node(3), Node(3)))), 3),
+      # Variation 2
+      (Node(7, Node(1, Node(2, Node(4), Node(3)),
+                    Node(8)), Node(3, Node(20, Node(3), Node(3)))), 3),
+      # Variation 3
+      (Node(7, Node(1, Node(20, Node(4), Node(3)),
+                    Node(8)), Node(3, Node(20, Node(3), Node(3)))), 1),
+      # Test 2: Empty tree
+      (None, 0),
+      # Test 3: Single aligned node
+      (Node(0), 1),
+      # Test 4: Single unaligned node
+      (Node(1), 0),
+      # Test 5: Path through root
+      (Node(0, Node(1), Node(1)), 3),
+      # Test 6: No aligned nodes
+      (Node(5, Node(4), Node(2)), 0),
+      # Test 7
+      (Node(0, Node(1, Node(2), Node(2)), Node(1)), 4),
+  ]
+
+  for i, (root, want) in enumerate(tests, 1):
+    got = aligned_path(root)
+    assert got == want, f"\naligned_path(): got: {got}, want: {want}\n"
+    
+  print("ALL ALIGNED PATH TESTS PROVIDED PASSED.")
+
 #ALL TESTS
 
 def Run_All_Trees_Tests():
     run_aligned_chain_tests()
     run_tree_layout_tests()
+    run_aligned_path_tests()
     
     print()
     print("--------------------------------------------------")
@@ -164,4 +244,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    run_tree_layout_tests()
+    run_aligned_path_tests()
