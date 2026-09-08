@@ -41,6 +41,8 @@ int longestAlignedChain(TreeNode* root)
 
 void dfsStacked(TreeNode* node, int leftCoordinate, int rightCoordinate, int* maxStackedCount, map<pair<int, int>, int>& coordinateMapCount)
 {
+    //Problem 35.4 - Tree Layout
+    
     if(!node) return;
     
     coordinateMapCount[{leftCoordinate, rightCoordinate}]++;
@@ -53,6 +55,8 @@ void dfsStacked(TreeNode* node, int leftCoordinate, int rightCoordinate, int* ma
 
 int mostStacked(TreeNode* root)
 {
+    //Problem 35.4 - Tree Layout
+    
     int maxStackCount = 0;
     
     map<pair<int, int>, int> coordinateMapCount;
