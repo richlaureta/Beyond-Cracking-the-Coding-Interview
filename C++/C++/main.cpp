@@ -3953,56 +3953,107 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.1 - Aligned Chain
     
+//    std::vector<std::pair<TreeNode*, int>> tests = {
+//          // Test 1: from the book
+//          {new TreeNode(7,
+//                    new TreeNode(1,
+//                             new TreeNode(2, new TreeNode(4, nullptr, nullptr),
+//                                      new TreeNode(3, nullptr, nullptr)),
+//                             new TreeNode(8, nullptr, nullptr)),
+//                    new TreeNode(3, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
+//                             nullptr)),
+//           3},
+//          // Test 2
+//          {new TreeNode(0,
+//                    new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
+//                             new TreeNode(4, nullptr, nullptr)),
+//                    new TreeNode(5, nullptr, nullptr)),
+//           4},
+//          // Test 3: Empty tree
+//          {nullptr, 0},
+//          // Test 4: Single node aligned at root
+//          {new TreeNode(0, nullptr, nullptr), 1},
+//          // Test 5: Single node not aligned
+//          {new TreeNode(1, nullptr, nullptr), 0},
+//          // Test 6: Multiple valid chains, should return longest
+//          {new TreeNode(0,
+//                    new TreeNode(1, new TreeNode(2, new TreeNode(4, nullptr, nullptr), nullptr),
+//                             new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr)),
+//                    nullptr),
+//           4},
+//          // Test 7: No aligned nodes
+//          {new TreeNode(5,
+//                    new TreeNode(4, new TreeNode(3, nullptr, nullptr),
+//                             new TreeNode(3, nullptr, nullptr)),
+//                    new TreeNode(2, nullptr, nullptr)),
+//           0},
+//          // Test 8
+//          {new TreeNode(0, new TreeNode(1, nullptr, nullptr),
+//                    new TreeNode(1, nullptr, nullptr)),
+//           2}};
+//
+//      for (int i = 0; i < tests.size(); i++) {
+//        auto [root, want] = tests[i];
+//        int got = longestAlignedChain(root);
+//        if (got != want) {
+//          throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+//                                   " failed! Got: " + std::to_string(got) +
+//                                   ", Want: " + std::to_string(want));
+//        }
+//      }
+//    
+//    cout << "ALL ALIGNED CHAIN TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 35.4 - Tree Layout
+    
     std::vector<std::pair<TreeNode*, int>> tests = {
-          // Test 1: from the book
-          {new TreeNode(7,
-                    new TreeNode(1,
-                             new TreeNode(2, new TreeNode(4, nullptr, nullptr),
-                                      new TreeNode(3, nullptr, nullptr)),
-                             new TreeNode(8, nullptr, nullptr)),
-                    new TreeNode(3, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
+          // Test 1: Example from the book - two nodes stacked
+          {new TreeNode(1,
+                    new TreeNode(2, new TreeNode(4, nullptr, new TreeNode(7, nullptr, nullptr)),
+                             new TreeNode(5, nullptr, nullptr)),
+                    new TreeNode(3,
+                             new TreeNode(6, new TreeNode(8, nullptr, nullptr),
+                                      new TreeNode(9, nullptr, nullptr)),
                              nullptr)),
-           3},
-          // Test 2
-          {new TreeNode(0,
-                    new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
-                             new TreeNode(4, nullptr, nullptr)),
-                    new TreeNode(5, nullptr, nullptr)),
+           2},
+          // Test 2: Single node
+          {new TreeNode(1, nullptr, nullptr), 1},
+          // Test 3: Simple tree
+          {new TreeNode(1, new TreeNode(2, nullptr, nullptr),
+                    new TreeNode(3, nullptr, nullptr)),
+           1},
+          // Test 4: Perfect binary tree of depth 4
+          {new TreeNode(
+               1,
+               new TreeNode(
+                   2,
+                   new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+                            new TreeNode(9, nullptr, new TreeNode(16, nullptr, nullptr))),
+                   new TreeNode(5,
+                            new TreeNode(10, nullptr, new TreeNode(17, nullptr, nullptr)),
+                            new TreeNode(11, new TreeNode(18, nullptr, nullptr), nullptr))),
+               new TreeNode(
+                   3,
+                   new TreeNode(6, new TreeNode(12, nullptr, nullptr),
+                            new TreeNode(13, nullptr, nullptr)),
+                   new TreeNode(
+                       7, new TreeNode(14, new TreeNode(19, nullptr, nullptr), nullptr),
+                       new TreeNode(15, new TreeNode(20, nullptr, nullptr), nullptr)))),
            4},
-          // Test 3: Empty tree
-          {nullptr, 0},
-          // Test 4: Single node aligned at root
-          {new TreeNode(0, nullptr, nullptr), 1},
-          // Test 5: Single node not aligned
-          {new TreeNode(1, nullptr, nullptr), 0},
-          // Test 6: Multiple valid chains, should return longest
-          {new TreeNode(0,
-                    new TreeNode(1, new TreeNode(2, new TreeNode(4, nullptr, nullptr), nullptr),
-                             new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr)),
-                    nullptr),
-           4},
-          // Test 7: No aligned nodes
-          {new TreeNode(5,
-                    new TreeNode(4, new TreeNode(3, nullptr, nullptr),
-                             new TreeNode(3, nullptr, nullptr)),
-                    new TreeNode(2, nullptr, nullptr)),
-           0},
-          // Test 8
-          {new TreeNode(0, new TreeNode(1, nullptr, nullptr),
-                    new TreeNode(1, nullptr, nullptr)),
-           2}};
+      };
 
       for (int i = 0; i < tests.size(); i++) {
-        auto [root, want] = tests[i];
-        int got = longestAlignedChain(root);
-        if (got != want) {
-          throw std::runtime_error("\nTest " + std::to_string(i + 1) +
-                                   " failed! Got: " + std::to_string(got) +
-                                   ", Want: " + std::to_string(want));
-        }
+          auto [root, want] = tests[i];
+          int got = mostStacked(root);
+          if (got != want) {
+              throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+                                       " failed! Got: " + std::to_string(got) +
+                                       ", Want: " + std::to_string(want));
+          }
       }
     
-    cout << "ALL ALIGNED CHAIN TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL TREE LAYOUT TESTS PROVIDED HAVE PASSED." << endl;
+    
     cout << "RUN SUCCESSFULL." << endl;
     
     return EXIT_SUCCESS;

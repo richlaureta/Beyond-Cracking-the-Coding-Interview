@@ -95,6 +95,7 @@ def aligned_path(root: Node):
             max_aligned_path_count = max(max_aligned_path_count, max_left_aligned_node_count + max_right_aligned_node_count)
         
     return max_aligned_path_count
+
 #TESTS
 
 def run_aligned_chain_tests():

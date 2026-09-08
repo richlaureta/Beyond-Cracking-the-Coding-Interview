@@ -24,6 +24,7 @@
 #include <charconv>
 #include <system_error>
 #include <optional>
+#include <map>
 
 using namespace std;
 
@@ -323,5 +324,7 @@ struct TreeNode
 
 void recursionChain(TreeNode* node, int depthLevel, int alignedChainCount, int *maxAlignedChainCount);
 int longestAlignedChain(TreeNode* root);
+void dfsStacked(TreeNode* node, int leftCoordinate, int rightCoordinate, int* maxStackedCount, map<pair<int, int>, int>& coordinateMapCount);
+int mostStacked(TreeNode* root);
 
 #endif // HEADER_HPP

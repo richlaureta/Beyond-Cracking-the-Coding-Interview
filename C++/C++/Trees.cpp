@@ -38,3 +38,26 @@ int longestAlignedChain(TreeNode* root)
     
     return maxAlignedChainCount;
 }
+
+void dfsStacked(TreeNode* node, int leftCoordinate, int rightCoordinate, int* maxStackedCount, map<pair<int, int>, int>& coordinateMapCount)
+{
+    if(!node) return;
+    
+    coordinateMapCount[{leftCoordinate, rightCoordinate}]++;
+    
+    *maxStackedCount = max(*maxStackedCount, coordinateMapCount[{leftCoordinate, rightCoordinate}]);
+
+    dfsStacked(node->left, leftCoordinate + 1, rightCoordinate, maxStackedCount, coordinateMapCount);
+    dfsStacked(node->right, leftCoordinate, rightCoordinate + 1, maxStackedCount, coordinateMapCount);
+}
+
+int mostStacked(TreeNode* root)
+{
+    int maxStackCount = 0;
+    
+    map<pair<int, int>, int> coordinateMapCount;
+    
+    dfsStacked(root, 0, 0, &maxStackCount, coordinateMapCount);
+    
+    return maxStackCount;
+}
