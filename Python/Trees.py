@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections import deque
 
 class Node:
     def __init__(self, val, left = None, right = None):
@@ -95,6 +96,38 @@ def aligned_path(root: Node):
             max_aligned_path_count = max(max_aligned_path_count, max_left_aligned_node_count + max_right_aligned_node_count)
         
     return max_aligned_path_count
+
+def triangle_count(root: Node):
+    #Problem 35.5 - Triangle Count
+    
+    if not root:
+        return 0
+    
+    node_triangle_list = []
+    node_dequeue = deque([root])
+    
+    while node_dequeue:
+        popped_node = node_dequeue.popleft()
+        
+        if popped_node.left and popped_node.right:
+            node_triangle_list.append(popped_node)
+        
+        if popped_node.left:
+            node_dequeue.append(popped_node.left)
+        
+        if popped_node.right:
+            node_dequeue.append(popped_node.right)
+            
+    triangle_count = 0
+    for node in node_triangle_list:
+        left_node = node.left
+        right_node = node.right
+        while left_node and right_node:
+            triangle_count += 1
+            left_node = left_node.left
+            right_node = right_node.right
+    
+    return triangle_count
 
 #TESTS
 
@@ -232,12 +265,48 @@ def run_aligned_path_tests():
     
   print("ALL ALIGNED PATH TESTS PROVIDED PASSED.")
 
+def run_triangle_count_tests():
+  tests = [
+      # Example
+      (Node(1,
+            Node(2,
+                 Node(4),
+                 Node(5)),
+            Node(3,
+                 Node(6),
+                 Node(7))), 4),
+      (None, 0),  # Empty tree
+      (Node(1), 0),  # Single node
+      # No triangles - only left children
+      (Node(1,
+            Node(2,
+                     Node(3),
+                     None),
+            None), 0),
+      # No triangles - only right children
+      (Node(1,
+            None,
+            Node(2,
+                 None,
+                 Node(3))), 0),
+      (Node(1,
+            Node(2),
+            Node(3)), 1),
+  ]
+
+  for _, (root, want) in enumerate(tests):
+    got = triangle_count(root)
+    assert got == want, f"\ntriangle_count(): got: {got}, want: {want}\n"
+  
+  print("ALL TRIANGLE COUNT TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Trees_Tests():
     run_aligned_chain_tests()
     run_tree_layout_tests()
     run_aligned_path_tests()
+    run_triangle_count_tests()
     
     print()
     print("--------------------------------------------------")
@@ -245,4 +314,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_triangle_count_tests()
