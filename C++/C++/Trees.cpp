@@ -65,3 +65,42 @@ int mostStacked(TreeNode* root)
     
     return maxStackCount;
 }
+
+int triangleCount(TreeNode* root)
+{
+    //Problem 35.5 - Triangle Count
+    
+    if(!root) return 0;
+    
+    vector<TreeNode*> nodeTriangleVector;
+    deque<TreeNode*> nodeDequeue;
+    nodeDequeue.push_back(root);
+    
+    while(!nodeDequeue.empty())
+    {
+        TreeNode* poppedNode = nodeDequeue.front();
+        nodeDequeue.pop_front();
+        
+        if(poppedNode->left and poppedNode->right) nodeTriangleVector.push_back(poppedNode);
+        
+        if(poppedNode->left) nodeDequeue.push_back(poppedNode->left);
+        
+        if(poppedNode->right) nodeDequeue.push_back(poppedNode->right);
+    }
+    
+    int triangleCount = 0;
+    
+    for(TreeNode* node : nodeTriangleVector)
+    {
+        TreeNode* leftNode = node->left;
+        TreeNode* rightNode = node->right;
+        while(leftNode and rightNode)
+        {
+            triangleCount++;
+            leftNode = leftNode->left;
+            rightNode = rightNode->right;
+        }
+    }
+    return triangleCount;
+
+}

@@ -326,5 +326,6 @@ void recursionChain(TreeNode* node, int depthLevel, int alignedChainCount, int *
 int longestAlignedChain(TreeNode* root);
 void dfsStacked(TreeNode* node, int leftCoordinate, int rightCoordinate, int* maxStackedCount, map<pair<int, int>, int>& coordinateMapCount);
 int mostStacked(TreeNode* root);
+int triangleCount(TreeNode* root);
 
 #endif // HEADER_HPP

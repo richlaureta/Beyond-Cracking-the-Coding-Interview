@@ -4005,54 +4005,115 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL ALIGNED CHAIN TESTS PROVIDED HAVE PASSED." << endl;
     
     //Problem 35.4 - Tree Layout
+//    
+//    std::vector<std::pair<TreeNode*, int>> tests = {
+//          // Test 1: Example from the book - two nodes stacked
+//          {new TreeNode(1,
+//                    new TreeNode(2, new TreeNode(4, nullptr, new TreeNode(7, nullptr, nullptr)),
+//                             new TreeNode(5, nullptr, nullptr)),
+//                    new TreeNode(3,
+//                             new TreeNode(6, new TreeNode(8, nullptr, nullptr),
+//                                      new TreeNode(9, nullptr, nullptr)),
+//                             nullptr)),
+//           2},
+//          // Test 2: Single node
+//          {new TreeNode(1, nullptr, nullptr), 1},
+//          // Test 3: Simple tree
+//          {new TreeNode(1, new TreeNode(2, nullptr, nullptr),
+//                    new TreeNode(3, nullptr, nullptr)),
+//           1},
+//          // Test 4: Perfect binary tree of depth 4
+//          {new TreeNode(
+//               1,
+//               new TreeNode(
+//                   2,
+//                   new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+//                            new TreeNode(9, nullptr, new TreeNode(16, nullptr, nullptr))),
+//                   new TreeNode(5,
+//                            new TreeNode(10, nullptr, new TreeNode(17, nullptr, nullptr)),
+//                            new TreeNode(11, new TreeNode(18, nullptr, nullptr), nullptr))),
+//               new TreeNode(
+//                   3,
+//                   new TreeNode(6, new TreeNode(12, nullptr, nullptr),
+//                            new TreeNode(13, nullptr, nullptr)),
+//                   new TreeNode(
+//                       7, new TreeNode(14, new TreeNode(19, nullptr, nullptr), nullptr),
+//                       new TreeNode(15, new TreeNode(20, nullptr, nullptr), nullptr)))),
+//           4},
+//      };
+//
+//      for (int i = 0; i < tests.size(); i++) {
+//          auto [root, want] = tests[i];
+//          int got = mostStacked(root);
+//          if (got != want) {
+//              throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+//                                       " failed! Got: " + std::to_string(got) +
+//                                       ", Want: " + std::to_string(want));
+//          }
+//      }
+//    
+//    cout << "ALL TREE LAYOUT TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 35.5 - Triangle Count
     
     std::vector<std::pair<TreeNode*, int>> tests = {
-          // Test 1: Example from the book - two nodes stacked
-          {new TreeNode(1,
-                    new TreeNode(2, new TreeNode(4, nullptr, new TreeNode(7, nullptr, nullptr)),
-                             new TreeNode(5, nullptr, nullptr)),
-                    new TreeNode(3,
-                             new TreeNode(6, new TreeNode(8, nullptr, nullptr),
-                                      new TreeNode(9, nullptr, nullptr)),
-                             nullptr)),
-           2},
-          // Test 2: Single node
-          {new TreeNode(1, nullptr, nullptr), 1},
-          // Test 3: Simple tree
-          {new TreeNode(1, new TreeNode(2, nullptr, nullptr),
-                    new TreeNode(3, nullptr, nullptr)),
-           1},
-          // Test 4: Perfect binary tree of depth 4
-          {new TreeNode(
-               1,
-               new TreeNode(
-                   2,
-                   new TreeNode(4, new TreeNode(8, nullptr, nullptr),
-                            new TreeNode(9, nullptr, new TreeNode(16, nullptr, nullptr))),
-                   new TreeNode(5,
-                            new TreeNode(10, nullptr, new TreeNode(17, nullptr, nullptr)),
-                            new TreeNode(11, new TreeNode(18, nullptr, nullptr), nullptr))),
-               new TreeNode(
-                   3,
-                   new TreeNode(6, new TreeNode(12, nullptr, nullptr),
-                            new TreeNode(13, nullptr, nullptr)),
-                   new TreeNode(
-                       7, new TreeNode(14, new TreeNode(19, nullptr, nullptr), nullptr),
-                       new TreeNode(15, new TreeNode(20, nullptr, nullptr), nullptr)))),
+          // Example
+          {new TreeNode(1), 0},  // Single node
+          {nullptr, 0},      // Empty tree
+
+          // Example from the book
+          {[] {
+             TreeNode* root = new TreeNode(1);
+             root->left = new TreeNode(2);
+             root->right = new TreeNode(3);
+             root->left->left = new TreeNode(4);
+             root->left->right = new TreeNode(5);
+             root->right->left = new TreeNode(6);
+             root->right->right = new TreeNode(7);
+             return root;
+           }(),
            4},
+
+          // No triangles - only left children
+          {[] {
+             TreeNode* root = new TreeNode(1);
+             root->left = new TreeNode(2);
+             root->left->left = new TreeNode(3);
+             return root;
+           }(),
+           0},
+
+          // No triangles - only right children
+          {[] {
+             TreeNode* root = new TreeNode(1);
+             root->right = new TreeNode(2);
+             root->right->right = new TreeNode(3);
+             return root;
+           }(),
+           0},
+
+          // Single triangle
+          {[] {
+             TreeNode* root = new TreeNode(1);
+             root->left = new TreeNode(2);
+             root->right = new TreeNode(3);
+             return root;
+           }(),
+           1},
       };
 
       for (int i = 0; i < tests.size(); i++) {
-          auto [root, want] = tests[i];
-          int got = mostStacked(root);
-          if (got != want) {
-              throw std::runtime_error("\nTest " + std::to_string(i + 1) +
-                                       " failed! Got: " + std::to_string(got) +
-                                       ", Want: " + std::to_string(want));
-          }
+        auto [root, want] = tests[i];
+        int got = triangleCount(root);
+        if (got != want) {
+          std::string error_msg =
+              "\ntriangle_count(): got: " + std::to_string(got) +
+              ", want: " + std::to_string(want) + "\n";
+          throw std::runtime_error(error_msg);
+        }
       }
     
-    cout << "ALL TREE LAYOUT TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL TRIANGLE COUNT TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFULL." << endl;
     
