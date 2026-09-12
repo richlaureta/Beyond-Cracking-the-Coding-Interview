@@ -129,6 +129,30 @@ def triangle_count(root: Node):
     
     return triangle_count
 
+def invert(root: Node):
+    #Problem 35.6 - Invert a Binary Tree
+    
+    if not root:
+        return None
+    
+    node_dequeue = deque([root])
+    
+    while node_dequeue:
+        popped_node = node_dequeue.popleft()
+        
+        left_node = popped_node.left
+        right_node = popped_node.right
+        
+        if popped_node.left:
+            node_dequeue.append(popped_node.left)
+        popped_node.left = right_node
+        
+        if popped_node.right:
+            node_dequeue.append(popped_node.right)
+        popped_node.right = left_node
+        
+    return root
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -300,6 +324,68 @@ def run_triangle_count_tests():
   
   print("ALL TRIANGLE COUNT TESTS PROVIDED HAVE PASSED.")
 
+def run_invert_a_binary_tree_tests():
+
+  # Test 1: Example from the book - tree with 4 triangles
+  root1a = Node(1,
+                Node(6,
+                     Node(4,
+                          None,
+                          Node(5)),
+                     Node(11)),
+                Node(7,
+                     Node(2,
+                          None,
+                          Node(9)),
+                     None))
+  root1b = Node(1)
+  root1b.left = Node(7)
+  root1b.right = Node(6)
+  root1b.left.right = Node(2)
+  root1b.left.right.left = Node(9)
+  root1b.right.left = Node(11)
+  root1b.right.right = Node(4)
+  root1b.right.right.left = Node(5)
+
+  # Test 2: Empty tree
+  root2 = None
+
+  # Test 3: Single node
+  root3 = Node(1)
+
+  root4a = Node(1,
+                Node(2,
+                     Node(3),
+                     None),
+                None)
+  root4b = Node(1,
+                None,
+                Node(2,
+                     None,
+                     Node(3)))
+
+  tests = [
+      (root1a, root1b),  # Example from book
+      (root2, None),  # Empty tree
+      (root3, root3),  # Single node
+      (root4a, root4b),
+  ]
+
+  def same_values(t1, t2):
+    if not t1 and not t2:
+      return True
+    if not t1 or not t2:
+      return False
+    return (t1.val == t2.val and
+            same_values(t1.left, t2.left) and
+            same_values(t1.right, t2.right))
+
+  for i, (root, want) in enumerate(tests, 1):
+    got = invert(root)
+    assert same_values(got, want), f"\ninvert(): got != want\n"
+  
+  print("ALL INVERT A BINARY TREE TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Trees_Tests():
@@ -307,6 +393,7 @@ def Run_All_Trees_Tests():
     run_tree_layout_tests()
     run_aligned_path_tests()
     run_triangle_count_tests()
+    run_invert_a_binary_tree_tests()
     
     print()
     print("--------------------------------------------------")
@@ -315,4 +402,4 @@ def Run_All_Trees_Tests():
     
     #TESTING
 if __name__ == "__main__":
-    run_triangle_count_tests()
+    Run_All_Trees_Tests()
