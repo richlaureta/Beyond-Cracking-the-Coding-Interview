@@ -160,40 +160,35 @@ def invert(root: Node):
 
 def evaluate(root: Nary_Node):
     #Problem 35.7 - Evaluate Expression Tree
-    
-    def dfs_evaluate(node: Nary_Node):        
-        if node.kind == "num":
-            return node.num
-        elif node.kind == "sum":            
-            sum = 0
-            for child in node.children:
-                sum += dfs_evaluate(child)
-            return sum
-        elif node.kind == "product":            
-            product = 1
-            for child in node.children:
-                product *= dfs_evaluate(child)
-            
-            return product
-        elif node.kind == "min":            
-            minimum_number = float('inf')
-            for child in node.children:
-                minimum_number = min(minimum_number, dfs_evaluate(child))
-            
-            return minimum_number
-        elif node.kind == "max":            
-            maximum_number = float('-inf')
-            for child in node.children:
-                maximum_number = max(maximum_number, dfs_evaluate(child))
-            
-            return maximum_number
-        
-        raise ValueError("Invalid node kind.")
-                 
-    number_output = dfs_evaluate(root)
-    
-    return number_output
 
+    if root.kind == "num":
+        return root.num
+    elif root.kind == "sum":            
+        sum = 0
+        for child in root.children:
+            sum += evaluate(child)
+        return sum
+    elif root.kind == "product":            
+        product = 1
+        for child in root.children:
+            product *= evaluate(child)
+        
+        return product
+    elif root.kind == "min":            
+        minimum_number = float('inf')
+        for child in root.children:
+            minimum_number = min(minimum_number, evaluate(child))
+        
+        return minimum_number
+    elif root.kind == "max":            
+        maximum_number = float('-inf')
+        for child in root.children:
+            maximum_number = max(maximum_number, evaluate(child))
+        
+        return maximum_number
+    
+    raise ValueError("Invalid node kind.")
+                 
 #TESTS
 
 def run_aligned_chain_tests():
