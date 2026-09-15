@@ -7,6 +7,11 @@ class Node:
         self.left = left
         self.right = right
 
+class Nary_Node:
+    def __init__(self, kind, num, children):
+        self.kind = kind
+        self.num = num
+        self.children = children
 
 def longest_aligned_chain(root):
     #Problem 35.1 - Aligned Chain
@@ -152,6 +157,42 @@ def invert(root: Node):
         popped_node.right = left_node
         
     return root
+
+def evaluate(root: Nary_Node):
+    #Problem 35.7 - Evaluate Expression Tree
+    
+    def dfs_evaluate(node: Nary_Node):        
+        if node.kind == "num":
+            return node.num
+        elif node.kind == "sum":            
+            sum = 0
+            for child in node.children:
+                sum += dfs_evaluate(child)
+            return sum
+        elif node.kind == "product":            
+            product = 1
+            for child in node.children:
+                product *= dfs_evaluate(child)
+            
+            return product
+        elif node.kind == "min":            
+            minimum_number = float('inf')
+            for child in node.children:
+                minimum_number = min(minimum_number, dfs_evaluate(child))
+            
+            return minimum_number
+        elif node.kind == "max":            
+            maximum_number = float('-inf')
+            for child in node.children:
+                maximum_number = max(maximum_number, dfs_evaluate(child))
+            
+            return maximum_number
+        
+        raise ValueError("Invalid node kind.")
+                 
+    number_output = dfs_evaluate(root)
+    
+    return number_output
 
 #TESTS
 
@@ -385,6 +426,77 @@ def run_invert_a_binary_tree_tests():
     assert same_values(got, want), f"\ninvert(): got != want\n"
   
   print("ALL INVERT A BINARY TREE TESTS PROVIDED HAVE PASSED.")
+
+def run_evaluate_expression_tree_tests():
+  # Test 0: Example from the book
+  root0 = Nary_Node("min", None, [
+      Nary_Node("max", None, [
+          Nary_Node("num", 4, None),
+          Nary_Node("num", 6, None),
+          Nary_Node("sum", None, [
+              Nary_Node("num", 5, None),
+              Nary_Node("num", 7, None)
+          ])
+      ]),
+      Nary_Node("sum", None, [
+          Nary_Node("product", None, [
+              Nary_Node("num", 6, None),
+              Nary_Node("num", 8, None)
+          ])
+      ])
+  ])
+
+  # Test 1: Example - (2 + 3) * 4
+  root1 = Nary_Node("product", None, [
+      Nary_Node("sum", None, [
+          Nary_Node("num", 2, None),
+          Nary_Node("num", 3, None)
+      ]),
+      Nary_Node("num", 4, None)
+  ])
+
+  # Test 2: Single number node
+  root2 = Nary_Node("num", 5, None)
+
+  # Test 3: Empty sum node
+  root3 = Nary_Node("sum", None, [])
+
+  # Test 4: Empty product node
+  root4 = Nary_Node("product", None, [])
+
+  # Test 5: Complex expression with all operations
+  # min(2, max(3,4)) + product(1,2,3)
+  root5 = Nary_Node("sum", None, [
+      Nary_Node("min", None, [
+          Nary_Node("num", 2, None),
+          Nary_Node("max", None, [
+              Nary_Node("num", 3, None),
+              Nary_Node("num", 4, None)
+          ])
+      ]),
+      Nary_Node("product", None, [
+          Nary_Node("num", 1, None),
+          Nary_Node("num", 2, None),
+          Nary_Node("num", 3, None)
+      ])
+  ])
+
+  tests = [
+      (root0, 12),
+      (root1, 20),  # (2 + 3) * 4 = 20
+      (root2, 5),   # Single number
+      (root3, 0),   # Empty sum = 0
+      (root4, 1),   # Empty product = 1
+      (root5, 8),   # min(2,max(3,4)) + product(1,2,3) = 2 + 6 = 8
+      (root0.children[0], 12),
+      (root0.children[1], 48),
+  ]
+
+  for i, (root, want) in enumerate(tests, 1):
+    got = evaluate(root)
+    assert got == want, f"\nevaluate(root{i}): got: {got}, want: {want}\n"
+  
+  print("ALL EVALUATE EXPRESSION TREE TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -394,6 +506,7 @@ def Run_All_Trees_Tests():
     run_aligned_path_tests()
     run_triangle_count_tests()
     run_invert_a_binary_tree_tests()
+    run_evaluate_expression_tree_tests()
     
     print()
     print("--------------------------------------------------")
@@ -402,4 +515,4 @@ def Run_All_Trees_Tests():
     
     #TESTING
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_evaluate_expression_tree_tests()
