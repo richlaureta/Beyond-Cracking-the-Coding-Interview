@@ -104,3 +104,46 @@ int triangleCount(TreeNode* root)
     return triangleCount;
 
 }
+
+bool sameValues(TreeNode* t1, TreeNode* t2) {
+    //Problem 35.6 - Invert a Binary Tree
+    
+      if (!t1 && !t2) {
+        return true;
+      }
+      if (!t1 || !t2) {
+        return false;
+      }
+      return (t1->val == t2->val && sameValues(t1->left, t2->left) &&
+              sameValues(t1->right, t2->right));
+}
+
+TreeNode* invert(TreeNode* root)
+{
+    //Problem 35.6 - Invert a Binary Tree
+    
+    if(!root) return nullptr;
+    
+    deque<TreeNode*> nodeDequeue;
+    
+    nodeDequeue.push_back(root);
+    
+    while(nodeDequeue.size() > 0)
+    {
+        TreeNode* poppedNode = nodeDequeue.front();
+        nodeDequeue.pop_front();
+        
+        TreeNode* leftNode = poppedNode->left;
+        TreeNode* rightNode = poppedNode->right;
+        
+        if(poppedNode->left) nodeDequeue.push_back(poppedNode->left);
+        
+        poppedNode->left = rightNode;
+        
+        if(poppedNode->right) nodeDequeue.push_back(poppedNode->right);
+        
+        poppedNode->right = leftNode;
+    }
+    
+    return root;
+}
