@@ -9,6 +9,7 @@
 
 TreeNode::TreeNode(int val) : val(val), left(nullptr), right(nullptr) {};
 TreeNode::TreeNode(int val, TreeNode* left, TreeNode* right) : val(val), left(left), right(right) {};
+NaryNode::NaryNode(string kind, int num, vector<NaryNode*> children) : kind(kind), num(num), children(children) {};
 
 void recursionChain(TreeNode* node, int depthLevel, int alignedChainCount, int* maxAlignedChainCount)
 {
@@ -146,4 +147,37 @@ TreeNode* invert(TreeNode* root)
     }
     
     return root;
+}
+
+int evaluate(NaryNode* node)
+{
+    //Problem 35.7 - Evaluate Expression Tree
+    
+    if(node->kind == "num") return node->num;
+    else if(node->kind == "sum")
+    {
+        int sum = 0;
+        for(NaryNode* child : node->children) sum += evaluate(child);
+        return sum;
+    }
+    else if(node->kind == "product")
+    {
+        int product = 1;
+        for(NaryNode* child : node->children) product *= evaluate(child);
+        return product;
+    }
+    else if(node->kind == "min")
+    {
+        int minimumNumber = INT_MAX;
+        for(NaryNode* child : node->children) minimumNumber = min(minimumNumber, evaluate(child));
+        return minimumNumber;
+    }
+    else if (node->kind == "max")
+    {
+        int maximumNumber = INT_MIN;
+        for(NaryNode* child : node->children) maximumNumber = max(maximumNumber, evaluate(child));
+        return maximumNumber;
+    }
+    
+    throw invalid_argument("Invalid node kind.");
 }

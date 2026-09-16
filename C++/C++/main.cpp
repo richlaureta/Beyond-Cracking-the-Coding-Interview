@@ -4116,41 +4116,95 @@ int main(int argc, const char *argv[]) {
 //    cout << "ALL TRIANGLE COUNT TESTS PROVIDED HAVE PASSED." << endl;
     
     //Problem 35.6 - Invert a Binary Tree
+//    
+//    std::vector<std::pair<TreeNode*, TreeNode*>> tests = {
+//          // Test 1: Example from the book - tree with 4 triangles
+//          {new TreeNode(1,
+//                    new TreeNode(6, new TreeNode(4, nullptr, new TreeNode(5, nullptr, nullptr)),
+//                             new TreeNode(11, nullptr, nullptr)),
+//                    new TreeNode(7, new TreeNode(2, nullptr, new TreeNode(9, nullptr, nullptr)),
+//                             nullptr)),
+//           new TreeNode(1,
+//                    new TreeNode(7, nullptr,
+//                             new TreeNode(2, new TreeNode(9, nullptr, nullptr), nullptr)),
+//                    new TreeNode(6, new TreeNode(11, nullptr, nullptr),
+//                             new TreeNode(4, new TreeNode(5, nullptr, nullptr), nullptr)))},
+//          // Test 2: Empty tree
+//          {nullptr, nullptr},
+//          // Test 3: Single node
+//          {new TreeNode(1, nullptr, nullptr), new TreeNode(1, nullptr, nullptr)},
+//          // Test 4: Left-heavy to right-heavy transformation
+//          {new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
+//                    nullptr),
+//           new TreeNode(1, nullptr,
+//                    new TreeNode(2, nullptr, new TreeNode(3, nullptr, nullptr)))},
+//      };
+//
+//      for (int i = 0; i < tests.size(); i++) {
+//        auto [root, want] = tests[i];
+//        TreeNode* got = invert(root);
+//        if (!sameValues(got, want)) {
+//          throw std::runtime_error("\ninvert(): got != want\n");
+//        }
+//      }
+//    
+//    cout << "ALL INVERT A BINARY TREE TESTS PROVIDED HAVE PASSED." << endl;
     
-    std::vector<std::pair<TreeNode*, TreeNode*>> tests = {
-          // Test 1: Example from the book - tree with 4 triangles
-          {new TreeNode(1,
-                    new TreeNode(6, new TreeNode(4, nullptr, new TreeNode(5, nullptr, nullptr)),
-                             new TreeNode(11, nullptr, nullptr)),
-                    new TreeNode(7, new TreeNode(2, nullptr, new TreeNode(9, nullptr, nullptr)),
-                             nullptr)),
-           new TreeNode(1,
-                    new TreeNode(7, nullptr,
-                             new TreeNode(2, new TreeNode(9, nullptr, nullptr), nullptr)),
-                    new TreeNode(6, new TreeNode(11, nullptr, nullptr),
-                             new TreeNode(4, new TreeNode(5, nullptr, nullptr), nullptr)))},
-          // Test 2: Empty tree
-          {nullptr, nullptr},
-          // Test 3: Single node
-          {new TreeNode(1, nullptr, nullptr), new TreeNode(1, nullptr, nullptr)},
-          // Test 4: Left-heavy to right-heavy transformation
-          {new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
-                    nullptr),
-           new TreeNode(1, nullptr,
-                    new TreeNode(2, nullptr, new TreeNode(3, nullptr, nullptr)))},
-      };
+    //Problem 35.7 - Evaluate Expression Tree
+    
+    std::vector<std::pair<NaryNode*, int>> tests = {
+        // Test 0: Example from the book
+        {new NaryNode(
+             "min", 0,
+             {new NaryNode(
+                  "max", 0,
+                  {new NaryNode("num", 4, {}), new NaryNode("num", 6, {}),
+                   new NaryNode("sum", 0,
+                            {new NaryNode("num", 5, {}), new NaryNode("num", 7, {})})}),
+              new NaryNode(
+                  "sum", 0,
+                  {new NaryNode("product", 0,
+                            {new NaryNode("num", 6, {}), new NaryNode("num", 8, {})})})}),
+         12},
+        // Test 1: Example - (2 + 3) * 4
+        {new NaryNode("product", 0,
+                  {new NaryNode("sum", 0,
+                            {new NaryNode("num", 2, {}), new NaryNode("num", 3, {})}),
+                   new NaryNode("num", 4, {})}),
+         20},
+        // Test 2: Single number node
+        {new NaryNode("num", 5, {}), 5},
+        // Test 3: Empty sum node
+        {new NaryNode("sum", 0, {}), 0},
+        // Test 4: Empty product node
+        {new NaryNode("product", 0, {}), 1},
+        // Test 5: Complex expression with all operations
+        // min(2, max(3,4)) + product(1,2,3)
+        {new NaryNode("sum", 0,
+                  {new NaryNode("min", 0,
+                            {new NaryNode("num", 2, {}),
+                             new NaryNode("max", 0,
+                                      {new NaryNode("num", 3, {}),
+                                       new NaryNode("num", 4, {})})}),
+                   new NaryNode("product", 0,
+                            {new NaryNode("num", 1, {}), new NaryNode("num", 2, {}),
+                             new NaryNode("num", 3, {})})}),
+         8},
+    };
 
-      for (int i = 0; i < tests.size(); i++) {
-        auto [root, want] = tests[i];
-        TreeNode* got = invert(root);
-        if (!sameValues(got, want)) {
-          throw std::runtime_error("\ninvert(): got != want\n");
-        }
+    for (int i = 0; i < tests.size(); i++) {
+      auto [root, want] = tests[i];
+      int got = evaluate(root);
+      if (got != want) {
+        throw std::runtime_error("\nevaluate(root" + std::to_string(i + 1) +
+                                 "): got: " + std::to_string(got) +
+                                 ", want: " + std::to_string(want) + "\n");
       }
+    }
     
-    cout << "ALL INVERT A BINARY TREE TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL EVALUATE EXPRESSION TREE TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "RUN SUCCESSFULL." << endl;
+    cout << "RUN SUCCESSFUL." << endl;
     
     return EXIT_SUCCESS;
 }

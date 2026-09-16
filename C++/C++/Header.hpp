@@ -329,5 +329,13 @@ int mostStacked(TreeNode* root);
 int triangleCount(TreeNode* root);
 bool sameValues(TreeNode* t1, TreeNode* t2);
 TreeNode* invert(TreeNode* root);
-
+class NaryNode
+{
+public:
+    string kind;
+    int num;
+    vector<NaryNode*> children;
+    NaryNode(string kind, int num, vector<NaryNode*> children);
+};
+int evaluate(NaryNode* node);
 #endif // HEADER_HPP
