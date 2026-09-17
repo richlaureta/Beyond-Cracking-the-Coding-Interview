@@ -508,6 +508,5 @@ def Run_All_Trees_Tests():
     print("ALL INCLUDED TREES TESTS IN THE FILE HAVE PASSED. |")
     print("--------------------------------------------------")
     
-    #TESTING
 if __name__ == "__main__":
     run_evaluate_expression_tree_tests()
