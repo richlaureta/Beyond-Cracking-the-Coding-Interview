@@ -188,7 +188,34 @@ def evaluate(node: Nary_Node):
         return maximum_number
     
     raise ValueError("Invalid node kind.")
-                 
+
+def left_view(root: Node):
+    #Problem #35.8 - Left View
+    
+    if not root:
+        return []
+    
+    node_dequeue = deque([(root , 0)])
+    left_view_node_list = [root.val]
+    depth_level_set = set()
+    
+    while node_dequeue:
+        popped_node = node_dequeue.popleft()
+        
+        if popped_node[0].left:
+            node_dequeue.append((popped_node[0].left, popped_node[1] + 1))
+            if popped_node[1] + 1 not in depth_level_set:
+                depth_level_set.add(popped_node[1] + 1)
+                left_view_node_list.append(popped_node[0].left.val)
+        
+        if popped_node[0].right:
+            node_dequeue.append((popped_node[0].right, popped_node[1] + 1))
+            if popped_node[1] + 1 not in depth_level_set:
+                depth_level_set.add(popped_node[1] + 1)
+                left_view_node_list.append(popped_node[0].right.val)
+        
+    return left_view_node_list
+                
 #TESTS
 
 def run_aligned_chain_tests():
@@ -492,6 +519,63 @@ def run_evaluate_expression_tree_tests():
     assert got == want, f"\nevaluate(root{i}): got: {got}, want: {want}\n"
   
   print("ALL EVALUATE EXPRESSION TREE TESTS PROVIDED HAVE PASSED.")
+
+def run_left_view_tests():
+
+  # Test 1
+  root1 = Node(1,
+               Node(2,
+                    Node(4),
+                    Node(5)),
+               Node(3,
+                    None,
+                    Node(6)))
+
+  # Test 2: Empty tree
+  root2 = None
+
+  # Test 3: Single node
+  root3 = Node(1)
+
+  # Test 4: Only right children
+  root4 = Node(1,
+               None,
+               Node(2,
+                    None,
+                    Node(3)))
+
+  # Test 5: Only left children
+  root5 = Node(1,
+               Node(2,
+                    Node(3),
+                    None),
+               None)
+
+  # Test 6: Example from the book
+  root6 = Node(5,
+               Node(2,
+                    None,
+                    Node(6)),
+               Node(9,
+                    Node(9,
+                         None,
+                         Node(1)),
+                    Node(8)))
+
+  tests = [
+      (root1, [1, 2, 4]),  # Example
+      (root2, []),  # Empty tree
+      (root3, [1]),  # Single node
+      (root4, [1, 2, 3]),  # Only right children
+      (root5, [1, 2, 3]),  # Only left children
+      (root6, [5, 2, 6, 1])  # Example from the book
+  ]
+
+  for i, (root, want) in enumerate(tests):
+    got = left_view(root)
+    assert got == want, f"\nleft_view(root{i + 1}): got: {got}, want: {want}\n"
+
+  print("ALL LEFT VIEW TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -502,6 +586,7 @@ def Run_All_Trees_Tests():
     run_triangle_count_tests()
     run_invert_a_binary_tree_tests()
     run_evaluate_expression_tree_tests()
+    run_left_view_tests()
     
     print()
     print("--------------------------------------------------")
@@ -509,4 +594,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    run_evaluate_expression_tree_tests()
+    Run_All_Trees_Tests()
