@@ -338,4 +338,6 @@ public:
     NaryNode(string kind, int num, vector<NaryNode*> children);
 };
 int evaluate(NaryNode* node);
+vector<int> leftView(TreeNode* root);
+
 #endif // HEADER_HPP

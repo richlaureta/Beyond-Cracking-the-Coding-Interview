@@ -181,3 +181,44 @@ int evaluate(NaryNode* node)
     
     throw invalid_argument("Invalid node kind.");
 }
+
+vector<int> leftView(TreeNode* root)
+{
+    //Problem 35.8 - Left View
+    
+    if(!root) return {};
+    
+    deque<pair<TreeNode*, int>> nodeDequeue;
+    nodeDequeue.push_back({root, 0});
+    
+    vector<int> leftViewNodeVector = {root->val};
+    unordered_set<int> depthLevelSet;
+    
+    while(nodeDequeue.size() > 0)
+    {
+        pair<TreeNode*, int> poppedNode = nodeDequeue.front();
+        nodeDequeue.pop_front();
+        
+        if(poppedNode.first->left)
+        {
+            nodeDequeue.push_back({poppedNode.first->left, poppedNode.second + 1});
+            if(depthLevelSet.find(poppedNode.second + 1) == depthLevelSet.end())
+            {
+                depthLevelSet.insert(poppedNode.second + 1);
+                leftViewNodeVector.push_back(poppedNode.first->left->val);
+            }
+        }
+        
+        if(poppedNode.first->right)
+        {
+            nodeDequeue.push_back({poppedNode.first->right, poppedNode.second + 1});
+            if(depthLevelSet.find(poppedNode.second + 1) == depthLevelSet.end())
+            {
+                depthLevelSet.insert(poppedNode.second + 1);
+                leftViewNodeVector.push_back(poppedNode.first->right->val);
+            }
+        }
+    }
+    
+    return leftViewNodeVector;
+}

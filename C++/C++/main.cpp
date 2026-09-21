@@ -4152,57 +4152,96 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.7 - Evaluate Expression Tree
     
-    std::vector<std::pair<NaryNode*, int>> tests = {
-        // Test 0: Example from the book
-        {new NaryNode(
-             "min", 0,
-             {new NaryNode(
-                  "max", 0,
-                  {new NaryNode("num", 4, {}), new NaryNode("num", 6, {}),
-                   new NaryNode("sum", 0,
-                            {new NaryNode("num", 5, {}), new NaryNode("num", 7, {})})}),
-              new NaryNode(
-                  "sum", 0,
-                  {new NaryNode("product", 0,
-                            {new NaryNode("num", 6, {}), new NaryNode("num", 8, {})})})}),
-         12},
-        // Test 1: Example - (2 + 3) * 4
-        {new NaryNode("product", 0,
-                  {new NaryNode("sum", 0,
-                            {new NaryNode("num", 2, {}), new NaryNode("num", 3, {})}),
-                   new NaryNode("num", 4, {})}),
-         20},
-        // Test 2: Single number node
-        {new NaryNode("num", 5, {}), 5},
-        // Test 3: Empty sum node
-        {new NaryNode("sum", 0, {}), 0},
-        // Test 4: Empty product node
-        {new NaryNode("product", 0, {}), 1},
-        // Test 5: Complex expression with all operations
-        // min(2, max(3,4)) + product(1,2,3)
-        {new NaryNode("sum", 0,
-                  {new NaryNode("min", 0,
-                            {new NaryNode("num", 2, {}),
-                             new NaryNode("max", 0,
-                                      {new NaryNode("num", 3, {}),
-                                       new NaryNode("num", 4, {})})}),
-                   new NaryNode("product", 0,
-                            {new NaryNode("num", 1, {}), new NaryNode("num", 2, {}),
-                             new NaryNode("num", 3, {})})}),
-         8},
-    };
-
-    for (int i = 0; i < tests.size(); i++) {
-      auto [root, want] = tests[i];
-      int got = evaluate(root);
-      if (got != want) {
-        throw std::runtime_error("\nevaluate(root" + std::to_string(i + 1) +
-                                 "): got: " + std::to_string(got) +
-                                 ", want: " + std::to_string(want) + "\n");
-      }
-    }
+//    std::vector<std::pair<NaryNode*, int>> tests = {
+//        // Test 0: Example from the book
+//        {new NaryNode(
+//             "min", 0,
+//             {new NaryNode(
+//                  "max", 0,
+//                  {new NaryNode("num", 4, {}), new NaryNode("num", 6, {}),
+//                   new NaryNode("sum", 0,
+//                            {new NaryNode("num", 5, {}), new NaryNode("num", 7, {})})}),
+//              new NaryNode(
+//                  "sum", 0,
+//                  {new NaryNode("product", 0,
+//                            {new NaryNode("num", 6, {}), new NaryNode("num", 8, {})})})}),
+//         12},
+//        // Test 1: Example - (2 + 3) * 4
+//        {new NaryNode("product", 0,
+//                  {new NaryNode("sum", 0,
+//                            {new NaryNode("num", 2, {}), new NaryNode("num", 3, {})}),
+//                   new NaryNode("num", 4, {})}),
+//         20},
+//        // Test 2: Single number node
+//        {new NaryNode("num", 5, {}), 5},
+//        // Test 3: Empty sum node
+//        {new NaryNode("sum", 0, {}), 0},
+//        // Test 4: Empty product node
+//        {new NaryNode("product", 0, {}), 1},
+//        // Test 5: Complex expression with all operations
+//        // min(2, max(3,4)) + product(1,2,3)
+//        {new NaryNode("sum", 0,
+//                  {new NaryNode("min", 0,
+//                            {new NaryNode("num", 2, {}),
+//                             new NaryNode("max", 0,
+//                                      {new NaryNode("num", 3, {}),
+//                                       new NaryNode("num", 4, {})})}),
+//                   new NaryNode("product", 0,
+//                            {new NaryNode("num", 1, {}), new NaryNode("num", 2, {}),
+//                             new NaryNode("num", 3, {})})}),
+//         8},
+//    };
+//
+//    for (int i = 0; i < tests.size(); i++) {
+//      auto [root, want] = tests[i];
+//      int got = evaluate(root);
+//      if (got != want) {
+//        throw std::runtime_error("\nevaluate(root" + std::to_string(i + 1) +
+//                                 "): got: " + std::to_string(got) +
+//                                 ", want: " + std::to_string(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL EVALUATE EXPRESSION TREE TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL EVALUATE EXPRESSION TREE TESTS PROVIDED HAVE PASSED." << endl;
+    std::vector<std::pair<TreeNode *, std::vector<int>>> tests = {
+          // Test 1
+          {new TreeNode(1,
+                    new TreeNode(2, new TreeNode(4, nullptr, nullptr),
+                             new TreeNode(5, nullptr, nullptr)),
+                    new TreeNode(3, nullptr, new TreeNode(6, nullptr, nullptr))),
+           {1, 2, 4}},
+          // Test 2: Empty tree
+          {nullptr, {}},
+          // Test 3: Single node
+          {new TreeNode(1, nullptr, nullptr), {1}},
+          // Test 4: Only right children
+          {new TreeNode(1, nullptr,
+                    new TreeNode(2, nullptr, new TreeNode(3, nullptr, nullptr))),
+           {1, 2, 3}},
+          // Test 5: Only left children
+          {new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
+                    nullptr),
+           {1, 2, 3}},
+          // Test 6: Example from the book
+          {new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(6, nullptr, nullptr)),
+                    new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(1, nullptr, nullptr)),
+                             new TreeNode(8, nullptr, nullptr))),
+           {5, 2, 6, 1}},
+      };
+
+      for (int i = 0; i < tests.size(); i++) {
+        auto [root, want] = tests[i];
+        auto got = leftView(root);
+        if (got != want) {
+          throw std::runtime_error(
+              "\nleft_view(root" + std::to_string(i + 1) +
+              "): got: " + std::to_string(got.size()) +
+              " elements, want: " + std::to_string(want.size()) + " elements\n");
+        }
+      }
+    
+    cout << "ALL LEFT VIEW TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     
