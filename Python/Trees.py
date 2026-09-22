@@ -702,6 +702,7 @@ def Run_All_Trees_Tests():
     run_invert_a_binary_tree_tests()
     run_evaluate_expression_tree_tests()
     run_left_view_tests()
+    run_most_prolific_level_tests()
     
     print()
     print("--------------------------------------------------")
@@ -709,4 +710,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    run_most_prolific_level_tests()
+    Run_All_Trees_Tests()
