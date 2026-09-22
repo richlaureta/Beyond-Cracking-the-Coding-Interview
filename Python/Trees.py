@@ -228,24 +228,36 @@ def most_prolific_level(root: Node):
     node_dequeue = deque([(root, 0)])
     depth_level_node_count_dictionary = defaultdict(int) 
     
+    max_prolific_value = float('-inf')
+    max_prolific_level = float('-inf')
+    
+    depth_level_set = set([-2, -1])
+    
+    popped_node = None
     while node_dequeue:
         popped_node = node_dequeue.popleft()
         depth_level_node_count_dictionary[popped_node[1]] += 1
         
+        if popped_node[1] - 2 not in depth_level_set:
+            prolific_value = depth_level_node_count_dictionary[popped_node[1] - 1]/depth_level_node_count_dictionary[popped_node[1] - 2]
+                
+            if prolific_value > max_prolific_value:
+                max_prolific_value = prolific_value
+                max_prolific_level = popped_node[1] - 2
+            
+            depth_level_set.add(popped_node[1] - 2)
+                
         if popped_node[0].left:
             node_dequeue.append((popped_node[0].left, popped_node[1] + 1))
         
         if popped_node[0].right:
             node_dequeue.append((popped_node[0].right, popped_node[1] + 1))
     
-    max_prolific_value = float('-inf')
-    max_prolific_level = float('-inf')
+    prolific_value = depth_level_node_count_dictionary[popped_node[1]] / depth_level_node_count_dictionary[popped_node[1] - 1]
     
-    for index in range(len(depth_level_node_count_dictionary) - 1):
-        prolific_value = depth_level_node_count_dictionary[index + 1]/depth_level_node_count_dictionary[index]
-        if prolific_value > max_prolific_value:
-            max_prolific_value = prolific_value
-            max_prolific_level = index
+    if prolific_value > max_prolific_value:
+        max_prolific_value = prolific_value
+        max_prolific_level = popped_node[1] - 1
             
     return max_prolific_level
         
