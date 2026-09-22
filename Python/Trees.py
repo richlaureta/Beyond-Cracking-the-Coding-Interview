@@ -215,7 +215,40 @@ def left_view(root: Node):
                 left_view_node_list.append(popped_node[0].right.val)
         
     return left_view_node_list
-                
+
+def most_prolific_level(root: Node):
+    #Problem 35.9 - Most Prolific Level
+    
+    if not root:
+        return -1
+    
+    if not root.left and not root.right:
+        return 0
+    
+    node_dequeue = deque([(root, 0)])
+    depth_level_node_count_dictionary = defaultdict(int) 
+    
+    while node_dequeue:
+        popped_node = node_dequeue.popleft()
+        depth_level_node_count_dictionary[popped_node[1]] += 1
+        
+        if popped_node[0].left:
+            node_dequeue.append((popped_node[0].left, popped_node[1] + 1))
+        
+        if popped_node[0].right:
+            node_dequeue.append((popped_node[0].right, popped_node[1] + 1))
+    
+    max_prolific_value = float('-inf')
+    max_prolific_level = float('-inf')
+    
+    for index in range(len(depth_level_node_count_dictionary) - 1):
+        prolific_value = depth_level_node_count_dictionary[index + 1]/depth_level_node_count_dictionary[index]
+        if prolific_value > max_prolific_value:
+            max_prolific_value = prolific_value
+            max_prolific_level = index
+            
+    return max_prolific_level
+        
 #TESTS
 
 def run_aligned_chain_tests():
@@ -576,6 +609,76 @@ def run_left_view_tests():
     assert got == want, f"\nleft_view(root{i + 1}): got: {got}, want: {want}\n"
 
   print("ALL LEFT VIEW TESTS PROVIDED HAVE PASSED.")
+
+def run_most_prolific_level_tests():
+  # Test 1
+  root1 = Node(5,
+               Node(2,
+                    None,
+                    Node(6)),
+               Node(9,
+                    Node(9,
+                         None,
+                         Node(1)),
+                    Node(8)))
+
+  # Test 2: Empty tree
+  root2 = None
+
+  # Test 3: Single node
+  root3 = Node(1)
+
+  # Test 4: Perfect binary tree
+  root4 = Node(1,
+               Node(2,
+                    Node(4),
+                    Node(5)),
+               Node(3,
+                    Node(6),
+                    Node(7)))
+
+  # Test 5: Unbalanced tree
+  root5 = Node(1,
+               Node(2,
+                    Node(4,
+                         Node(8),
+                         Node(9)),
+                    Node(5)),
+               Node(3))
+
+  # Test 6: Example from the book
+  root6 = Node(1,
+               Node(2,
+                    Node(4,
+                         Node(8),
+                         Node(9)),
+                    Node(5,
+                         None,
+                         Node(11))),
+               None)
+  # Test 7
+  root7 = Node(1,
+               Node(2,
+                    Node(4,
+                         Node(8),
+                         Node(9))))
+  tests = [
+      (root1, [0]),
+      (root2, [-1]),  # Empty tree
+      (root3, [0]),  # Single node: level 0 has prolificness 0
+      # Level 0->1 and 1->2 both have prolificness 2
+      (root4, [0, 1]), # Both level 0 and 1 are valid answers
+      (root5, [0]),
+      (root6, [1]),
+      (root7, [2]),
+  ]
+
+  for i, (root, valid_wants) in enumerate(tests):
+    got = most_prolific_level(root)
+    assert got in valid_wants, f"\nmost_prolific_level(root{
+        i + 1}): got: {got}, valid_wants: {valid_wants}\n"
+  
+  print("ALL MOST PROLIFIC LEVEL TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -594,4 +697,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_most_prolific_level_tests()
