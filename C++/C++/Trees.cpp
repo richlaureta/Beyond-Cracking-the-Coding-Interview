@@ -222,3 +222,56 @@ vector<int> leftView(TreeNode* root)
     
     return leftViewNodeVector;
 }
+
+int mostProlificLevel(TreeNode* root)
+{
+    //Problem 35.9 - Most Prolific Level
+    
+    if(!root) return -1;
+    
+    if (!root->left and !root->right) return 0;
+    
+    deque<pair<TreeNode*, int>> nodeDequeue;
+    nodeDequeue.push_back({root, 0});
+    unordered_map<int, int> depthLevelNodeCountMap;
+    
+    double maxProlificValue = INT_MIN;
+    int maxProlificLevel = INT_MIN;
+    
+    unordered_set depthLevelSet = {-2, -1};
+    
+    pair<TreeNode*, int> poppedNode;
+    while(nodeDequeue.size() > 0)
+    {
+        poppedNode = nodeDequeue.front();
+        nodeDequeue.pop_front();
+        depthLevelNodeCountMap[poppedNode.second]++;
+        
+        if(depthLevelSet.find(poppedNode.second - 2) == depthLevelSet.end())
+        {
+            double prolificValue = depthLevelNodeCountMap[poppedNode.second - 1]/depthLevelNodeCountMap[poppedNode.second - 2];
+            
+            if(prolificValue > maxProlificValue)
+            {
+                maxProlificValue = prolificValue;
+                maxProlificLevel = poppedNode.second - 2;
+            }
+            
+            depthLevelSet.insert(poppedNode.second - 2);
+        }
+        
+        if(poppedNode.first->left) nodeDequeue.push_back({poppedNode.first->left, poppedNode.second + 1});
+        
+        if(poppedNode.first->right) nodeDequeue.push_back({poppedNode.first->right, poppedNode.second + 1});
+    }
+    
+    double prolificValue = depthLevelNodeCountMap[poppedNode.second] / depthLevelNodeCountMap[poppedNode.second - 1];
+    
+    if(prolificValue > maxProlificValue)
+    {
+        maxProlificValue = prolificValue;
+        maxProlificLevel = poppedNode.second - 1;
+    }
+            
+    return maxProlificLevel;
+}

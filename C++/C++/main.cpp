@@ -4204,44 +4204,121 @@ int main(int argc, const char *argv[]) {
 //    
 //    cout << "ALL EVALUATE EXPRESSION TREE TESTS PROVIDED HAVE PASSED." << endl;
     
-    std::vector<std::pair<TreeNode *, std::vector<int>>> tests = {
-          // Test 1
-          {new TreeNode(1,
-                    new TreeNode(2, new TreeNode(4, nullptr, nullptr),
-                             new TreeNode(5, nullptr, nullptr)),
-                    new TreeNode(3, nullptr, new TreeNode(6, nullptr, nullptr))),
-           {1, 2, 4}},
-          // Test 2: Empty tree
-          {nullptr, {}},
-          // Test 3: Single node
-          {new TreeNode(1, nullptr, nullptr), {1}},
-          // Test 4: Only right children
-          {new TreeNode(1, nullptr,
-                    new TreeNode(2, nullptr, new TreeNode(3, nullptr, nullptr))),
-           {1, 2, 3}},
-          // Test 5: Only left children
-          {new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
-                    nullptr),
-           {1, 2, 3}},
-          // Test 6: Example from the book
-          {new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(6, nullptr, nullptr)),
-                    new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(1, nullptr, nullptr)),
-                             new TreeNode(8, nullptr, nullptr))),
-           {5, 2, 6, 1}},
-      };
+    //Problem 35.8 - Left View
+    
+//    std::vector<std::pair<TreeNode *, std::vector<int>>> tests = {
+//          // Test 1
+//          {new TreeNode(1,
+//                    new TreeNode(2, new TreeNode(4, nullptr, nullptr),
+//                             new TreeNode(5, nullptr, nullptr)),
+//                    new TreeNode(3, nullptr, new TreeNode(6, nullptr, nullptr))),
+//           {1, 2, 4}},
+//          // Test 2: Empty tree
+//          {nullptr, {}},
+//          // Test 3: Single node
+//          {new TreeNode(1, nullptr, nullptr), {1}},
+//          // Test 4: Only right children
+//          {new TreeNode(1, nullptr,
+//                    new TreeNode(2, nullptr, new TreeNode(3, nullptr, nullptr))),
+//           {1, 2, 3}},
+//          // Test 5: Only left children
+//          {new TreeNode(1, new TreeNode(2, new TreeNode(3, nullptr, nullptr), nullptr),
+//                    nullptr),
+//           {1, 2, 3}},
+//          // Test 6: Example from the book
+//          {new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(6, nullptr, nullptr)),
+//                    new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(1, nullptr, nullptr)),
+//                             new TreeNode(8, nullptr, nullptr))),
+//           {5, 2, 6, 1}},
+//      };
+//
+//      for (int i = 0; i < tests.size(); i++) {
+//        auto [root, want] = tests[i];
+//        auto got = leftView(root);
+//        if (got != want) {
+//          throw std::runtime_error(
+//              "\nleft_view(root" + std::to_string(i + 1) +
+//              "): got: " + std::to_string(got.size()) +
+//              " elements, want: " + std::to_string(want.size()) + " elements\n");
+//        }
+//      }
+//    
+//    cout << "ALL LEFT VIEW TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 35.9 - Most Prolific Level
+    
+    struct TestCase {
+      TreeNode* root;
+      std::vector<int> valid_wants; // There can be multiple valid answers
+    };
 
-      for (int i = 0; i < tests.size(); i++) {
-        auto [root, want] = tests[i];
-        auto got = leftView(root);
-        if (got != want) {
-          throw std::runtime_error(
-              "\nleft_view(root" + std::to_string(i + 1) +
-              "): got: " + std::to_string(got.size()) +
-              " elements, want: " + std::to_string(want.size()) + " elements\n");
+    std::vector<TestCase> tests = {
+        // Test 1
+        {new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(6, nullptr, nullptr)),
+                  new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(1, nullptr, nullptr)),
+                           new TreeNode(8, nullptr, nullptr))),
+         {0}},
+        // Test 2: Empty tree
+        {nullptr, {-1}},
+        // Test 3: Single node
+        {new TreeNode(1, nullptr, nullptr), {0}},
+        // Test 4: Perfect binary tree
+        {new TreeNode(1,
+                  new TreeNode(2, new TreeNode(4, nullptr, nullptr),
+                           new TreeNode(5, nullptr, nullptr)),
+                  new TreeNode(3, new TreeNode(6, nullptr, nullptr),
+                           new TreeNode(7, nullptr, nullptr))),
+         {0, 1}},  // Both level 0 and 1 are valid answers
+        // Test 5: Unbalanced tree
+        {new TreeNode(1,
+                  new TreeNode(2,
+                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+                                    new TreeNode(9, nullptr, nullptr)),
+                           new TreeNode(5, nullptr, nullptr)),
+                  new TreeNode(3, nullptr, nullptr)),
+         {0}},
+        // Test 6: Example from the book
+        {new TreeNode(1,
+                  new TreeNode(2,
+                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+                                    new TreeNode(9, nullptr, nullptr)),
+                           new TreeNode(5, nullptr, new TreeNode(11, nullptr, nullptr))),
+                  nullptr),
+         {1}},
+        // Test 7
+        {new TreeNode(1,
+                  new TreeNode(2,
+                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+                                    new TreeNode(9, nullptr, nullptr)),
+                           nullptr),
+                  nullptr),
+         {2}},
+    };
+
+    for (int i = 0; i < tests.size(); i++) {
+      auto [root, valid_wants] = tests[i];
+      int got = mostProlificLevel(root);
+      bool ok = false;
+      for (int want : valid_wants) {
+        if (got == want) {
+          ok = true;
+          break;
         }
       }
+      if (!ok) {
+        std::string wants_str = "[";
+        for (size_t j = 0; j < valid_wants.size(); j++) {
+          if (j > 0) wants_str += ", ";
+          wants_str += std::to_string(valid_wants[j]);
+        }
+        wants_str += "]";
+        throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+                                 " failed! Got: " + std::to_string(got) +
+                                 ", valid_wants: " + wants_str);
+      }
+    }
     
-    cout << "ALL LEFT VIEW TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL MOST PROLIFIC LEVEL TEST PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     
