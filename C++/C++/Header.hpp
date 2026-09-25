@@ -340,5 +340,6 @@ public:
 int evaluate(NaryNode* node);
 vector<int> leftView(TreeNode* root);
 int mostProlificLevel(TreeNode* root);
+vector<int> zigzagOrder(TreeNode* root);
 
 #endif // HEADER_HPP

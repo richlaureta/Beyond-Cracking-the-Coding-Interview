@@ -271,11 +271,11 @@ def zig_zag_order(root: Node):
     depth_level_set = set([-1, 0])
     
     level_value_list_dictionary = defaultdict(list)
-    node_level_deueue = deque([(root, 0)])
+    node_level_dequeue = deque([(root, 0)])
     
     popped_node_level = None
-    while node_level_deueue:
-        popped_node_level = node_level_deueue.popleft()
+    while node_level_dequeue:
+        popped_node_level = node_level_dequeue.popleft()
         level_value_list_dictionary[popped_node_level[1]].append(popped_node_level[0].val)
         
         if popped_node_level[1] - 1 not in depth_level_set:
@@ -289,18 +289,18 @@ def zig_zag_order(root: Node):
             depth_level_set.add(popped_node_level[1] - 1)
                     
         if popped_node_level[0].left:
-            node_level_deueue.append((popped_node_level[0].left, popped_node_level[1] + 1))
+            node_level_dequeue.append((popped_node_level[0].left, popped_node_level[1] + 1))
             
         if popped_node_level[0].right:
-            node_level_deueue.append((popped_node_level[0].right, popped_node_level[1] + 1))
+            node_level_dequeue.append((popped_node_level[0].right, popped_node_level[1] + 1))
     
     if popped_node_level[1] not in depth_level_set:
-            if popped_node_level[1] % 2 == 0:
-                for number in level_value_list_dictionary[popped_node_level[1]]:
-                    zigzag_list.append(number)
-            else:
-                for number in reversed(level_value_list_dictionary[popped_node_level[1]]):
-                    zigzag_list.append(number)
+        if popped_node_level[1] % 2 == 0:
+            for number in level_value_list_dictionary[popped_node_level[1]]:
+                zigzag_list.append(number)
+        else:
+            for number in reversed(level_value_list_dictionary[popped_node_level[1]]):
+                zigzag_list.append(number)
             
     return zigzag_list
         
@@ -812,4 +812,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    run_zigzag_order_tests()
+    Run_All_Trees_Tests()

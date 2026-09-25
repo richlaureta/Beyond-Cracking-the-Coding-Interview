@@ -275,3 +275,47 @@ int mostProlificLevel(TreeNode* root)
             
     return maxProlificLevel;
 }
+
+vector<int> zigzagOrder(TreeNode* root)
+{
+    //Problem 35.10 - Zig-Zag Order
+    
+    if(!root) return {};
+     
+    vector<int> zigzagVector = {root->val};
+    unordered_set<int> depthLevelSet = {-1, 0};
+
+    unordered_map<int, vector<int>> levelValueVectorMap;
+    deque<pair<TreeNode*, int>> nodeLevelDequeue;
+
+    pair<TreeNode*, int> poppedNodeLevel;
+    while node_l
+     popped_node_level = node_level_deueue.popleft()
+     level_value_list_dictionary[popped_node_level[1]].append(popped_node_level[0].val)
+     
+     if popped_node_level[1] - 1 not in depth_level_set:
+         if (popped_node_level[1] - 1) % 2 == 0:
+             for number in level_value_list_dictionary[popped_node_level[1] - 1]:
+                 zigzag_list.append(number)
+         else:
+             for number in reversed(level_value_list_dictionary[popped_node_level[1] - 1]):
+                 zigzag_list.append(number)
+         
+         depth_level_set.add(popped_node_level[1] - 1)
+                 
+     if popped_node_level[0].left:
+         node_level_deueue.append((popped_node_level[0].left, popped_node_level[1] + 1))
+         
+     if popped_node_level[0].right:
+         node_level_deueue.append((popped_node_level[0].right, popped_node_level[1] + 1))
+
+    if popped_node_level[1] not in depth_level_set:
+     if popped_node_level[1] % 2 == 0:
+         for number in level_value_list_dictionary[popped_node_level[1]]:
+             zigzag_list.append(number)
+     else:
+         for number in reversed(level_value_list_dictionary[popped_node_level[1]]):
+             zigzag_list.append(number)
+         
+    return zigzag_list
+}

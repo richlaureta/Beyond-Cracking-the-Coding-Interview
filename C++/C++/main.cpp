@@ -4247,78 +4247,152 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.9 - Most Prolific Level
     
-    struct TestCase {
-      TreeNode* root;
-      std::vector<int> valid_wants; // There can be multiple valid answers
-    };
+//    struct TestCase {
+//      TreeNode* root;
+//      std::vector<int> valid_wants; // There can be multiple valid answers
+//    };
+//
+//    std::vector<TestCase> tests = {
+//        // Test 1
+//        {new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(6, nullptr, nullptr)),
+//                  new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(1, nullptr, nullptr)),
+//                           new TreeNode(8, nullptr, nullptr))),
+//         {0}},
+//        // Test 2: Empty tree
+//        {nullptr, {-1}},
+//        // Test 3: Single node
+//        {new TreeNode(1, nullptr, nullptr), {0}},
+//        // Test 4: Perfect binary tree
+//        {new TreeNode(1,
+//                  new TreeNode(2, new TreeNode(4, nullptr, nullptr),
+//                           new TreeNode(5, nullptr, nullptr)),
+//                  new TreeNode(3, new TreeNode(6, nullptr, nullptr),
+//                           new TreeNode(7, nullptr, nullptr))),
+//         {0, 1}},  // Both level 0 and 1 are valid answers
+//        // Test 5: Unbalanced tree
+//        {new TreeNode(1,
+//                  new TreeNode(2,
+//                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+//                                    new TreeNode(9, nullptr, nullptr)),
+//                           new TreeNode(5, nullptr, nullptr)),
+//                  new TreeNode(3, nullptr, nullptr)),
+//         {0}},
+//        // Test 6: Example from the book
+//        {new TreeNode(1,
+//                  new TreeNode(2,
+//                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+//                                    new TreeNode(9, nullptr, nullptr)),
+//                           new TreeNode(5, nullptr, new TreeNode(11, nullptr, nullptr))),
+//                  nullptr),
+//         {1}},
+//        // Test 7
+//        {new TreeNode(1,
+//                  new TreeNode(2,
+//                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
+//                                    new TreeNode(9, nullptr, nullptr)),
+//                           nullptr),
+//                  nullptr),
+//         {2}},
+//    };
+//
+//    for (int i = 0; i < tests.size(); i++) {
+//      auto [root, valid_wants] = tests[i];
+//      int got = mostProlificLevel(root);
+//      bool ok = false;
+//      for (int want : valid_wants) {
+//        if (got == want) {
+//          ok = true;
+//          break;
+//        }
+//      }
+//      if (!ok) {
+//        std::string wants_str = "[";
+//        for (size_t j = 0; j < valid_wants.size(); j++) {
+//          if (j > 0) wants_str += ", ";
+//          wants_str += std::to_string(valid_wants[j]);
+//        }
+//        wants_str += "]";
+//        throw std::runtime_error("\nTest " + std::to_string(i + 1) +
+//                                 " failed! Got: " + std::to_string(got) +
+//                                 ", valid_wants: " + wants_str);
+//      }
+//    }
+//    
+//    cout << "ALL MOST PROLIFIC LEVEL TEST PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 35.10 - Zig-Zag Order
+    
+    // Example 1 from the book
+    TreeNode* root1 = new TreeNode(1);
+    root1->left = new TreeNode(2);
+    root1->right = new TreeNode(3);
+    root1->left->left = new TreeNode(4);
+    root1->left->right = new TreeNode(5);
+    root1->right->left = new TreeNode(6);
+    root1->right->right = new TreeNode(7);
 
-    std::vector<TestCase> tests = {
-        // Test 1
-        {new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(6, nullptr, nullptr)),
-                  new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(1, nullptr, nullptr)),
-                           new TreeNode(8, nullptr, nullptr))),
-         {0}},
-        // Test 2: Empty tree
-        {nullptr, {-1}},
-        // Test 3: Single node
-        {new TreeNode(1, nullptr, nullptr), {0}},
-        // Test 4: Perfect binary tree
-        {new TreeNode(1,
-                  new TreeNode(2, new TreeNode(4, nullptr, nullptr),
-                           new TreeNode(5, nullptr, nullptr)),
-                  new TreeNode(3, new TreeNode(6, nullptr, nullptr),
-                           new TreeNode(7, nullptr, nullptr))),
-         {0, 1}},  // Both level 0 and 1 are valid answers
-        // Test 5: Unbalanced tree
-        {new TreeNode(1,
-                  new TreeNode(2,
-                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
-                                    new TreeNode(9, nullptr, nullptr)),
-                           new TreeNode(5, nullptr, nullptr)),
-                  new TreeNode(3, nullptr, nullptr)),
-         {0}},
-        // Test 6: Example from the book
-        {new TreeNode(1,
-                  new TreeNode(2,
-                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
-                                    new TreeNode(9, nullptr, nullptr)),
-                           new TreeNode(5, nullptr, new TreeNode(11, nullptr, nullptr))),
-                  nullptr),
-         {1}},
-        // Test 7
-        {new TreeNode(1,
-                  new TreeNode(2,
-                           new TreeNode(4, new TreeNode(8, nullptr, nullptr),
-                                    new TreeNode(9, nullptr, nullptr)),
-                           nullptr),
-                  nullptr),
-         {2}},
-    };
+    // Example 2 - empty tree
+    TreeNode* root2 = nullptr;
+
+    // Example 3 - single node
+    TreeNode* root3 = new TreeNode(1);
+
+    // Example 4 - unbalanced tree
+    TreeNode* root4 = new TreeNode(1);
+    root4->left = new TreeNode(2);
+    root4->left->left = new TreeNode(3);
+    root4->left->left->left = new TreeNode(4);
+
+    // Example 5 - complete binary tree
+    TreeNode* root5 = new TreeNode(1);
+    root5->left = new TreeNode(2);
+    root5->right = new TreeNode(3);
+    root5->left->left = new TreeNode(4);
+    root5->left->right = new TreeNode(5);
+    root5->right->left = new TreeNode(6);
+    root5->right->right = new TreeNode(7);
+    root5->left->left->left = new TreeNode(8);
+    root5->left->left->right = new TreeNode(9);
+    root5->left->right->left = new TreeNode(10);
+    root5->left->right->right = new TreeNode(11);
+    root5->right->left->left = new TreeNode(12);
+    root5->right->right->left = new TreeNode(14);
+    root5->right->right->right = new TreeNode(15);
+
+    std::vector<std::pair<TreeNode*, std::vector<int>>> tests = {
+        // Example 1 - basic tree
+        {root1, {1, 3, 2, 4, 5, 6, 7}},
+        // Example 2 - empty tree
+        {root2, {}},
+        // Example 3 - single node
+        {root3, {1}},
+        // Example 4 - unbalanced tree
+        {root4, {1, 2, 3, 4}},
+        // Example 5 - complete binary tree
+        {root5, {1, 3, 2, 4, 5, 6, 7, 15, 14, 12, 11, 10, 9, 8}}};
+
 
     for (int i = 0; i < tests.size(); i++) {
-      auto [root, valid_wants] = tests[i];
-      int got = mostProlificLevel(root);
-      bool ok = false;
-      for (int want : valid_wants) {
-        if (got == want) {
-          ok = true;
-          break;
+      auto [root, want] = tests[i];
+      auto got = zigzagOrder(root);
+      if (got != want) {
+        std::string error_msg =
+            "\nExample " + std::to_string(i + 1) + ": solve(): got: [";
+        for (size_t j = 0; j < got.size(); j++) {
+          if (j > 0) error_msg += ", ";
+          error_msg += std::to_string(got[j]);
         }
-      }
-      if (!ok) {
-        std::string wants_str = "[";
-        for (size_t j = 0; j < valid_wants.size(); j++) {
-          if (j > 0) wants_str += ", ";
-          wants_str += std::to_string(valid_wants[j]);
+        error_msg += "], want: [";
+        for (size_t j = 0; j < want.size(); j++) {
+          if (j > 0) error_msg += ", ";
+          error_msg += std::to_string(want[j]);
         }
-        wants_str += "]";
-        throw std::runtime_error("\nTest " + std::to_string(i + 1) +
-                                 " failed! Got: " + std::to_string(got) +
-                                 ", valid_wants: " + wants_str);
+        error_msg += "]\n";
+        throw std::runtime_error(error_msg);
       }
     }
     
-    cout << "ALL MOST PROLIFIC LEVEL TEST PROVIDED HAVE PASSED." << endl;
+    cout << "ALL ZIG-ZAG ORDER TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     
