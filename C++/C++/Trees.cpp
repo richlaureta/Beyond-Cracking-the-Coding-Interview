@@ -286,36 +286,50 @@ vector<int> zigzagOrder(TreeNode* root)
     unordered_set<int> depthLevelSet = {-1, 0};
 
     unordered_map<int, vector<int>> levelValueVectorMap;
-    deque<pair<TreeNode*, int>> nodeLevelDequeue;
+    deque<pair<TreeNode*, int>> nodeLevelDequeue = {{root, 0}};
 
     pair<TreeNode*, int> poppedNodeLevel;
-    while node_l
-     popped_node_level = node_level_deueue.popleft()
-     level_value_list_dictionary[popped_node_level[1]].append(popped_node_level[0].val)
-     
-     if popped_node_level[1] - 1 not in depth_level_set:
-         if (popped_node_level[1] - 1) % 2 == 0:
-             for number in level_value_list_dictionary[popped_node_level[1] - 1]:
-                 zigzag_list.append(number)
-         else:
-             for number in reversed(level_value_list_dictionary[popped_node_level[1] - 1]):
-                 zigzag_list.append(number)
-         
-         depth_level_set.add(popped_node_level[1] - 1)
-                 
-     if popped_node_level[0].left:
-         node_level_deueue.append((popped_node_level[0].left, popped_node_level[1] + 1))
-         
-     if popped_node_level[0].right:
-         node_level_deueue.append((popped_node_level[0].right, popped_node_level[1] + 1))
-
-    if popped_node_level[1] not in depth_level_set:
-     if popped_node_level[1] % 2 == 0:
-         for number in level_value_list_dictionary[popped_node_level[1]]:
-             zigzag_list.append(number)
-     else:
-         for number in reversed(level_value_list_dictionary[popped_node_level[1]]):
-             zigzag_list.append(number)
-         
-    return zigzag_list
+    while(nodeLevelDequeue.size() > 0)
+    {
+        poppedNodeLevel = nodeLevelDequeue.front();
+        nodeLevelDequeue.pop_front();
+        levelValueVectorMap[poppedNodeLevel.second].push_back(poppedNodeLevel.first->val);
+        
+        if(depthLevelSet.find(poppedNodeLevel.second - 1) == depthLevelSet.end())
+        {
+            if((poppedNodeLevel.second - 1) % 2 == 0)
+            {
+                for(int number : levelValueVectorMap[poppedNodeLevel.second - 1]) zigzagVector.push_back(number);
+            }
+            else
+            {
+                for (auto it = levelValueVectorMap[poppedNodeLevel.second - 1].rbegin(); it != levelValueVectorMap[poppedNodeLevel.second - 1].rend(); ++it)
+                {
+                    zigzagVector.push_back(*it);
+                }
+            }
+            
+            depthLevelSet.insert(poppedNodeLevel.second - 1);
+        }
+        
+        if(poppedNodeLevel.first->left) nodeLevelDequeue.push_back({poppedNodeLevel.first->left, poppedNodeLevel.second + 1});
+        
+        if(poppedNodeLevel.first->right) nodeLevelDequeue.push_back({poppedNodeLevel.first->right, poppedNodeLevel.second + 1});
+    }
+    
+    if(depthLevelSet.find(poppedNodeLevel.second) == depthLevelSet.end())
+    {
+        if(poppedNodeLevel.second % 2 == 0)
+        {
+            for(int number : levelValueVectorMap[poppedNodeLevel.second]) zigzagVector.push_back(number);
+        }
+        else
+        {
+            for (auto it = levelValueVectorMap[poppedNodeLevel.second].rbegin(); it != levelValueVectorMap[poppedNodeLevel.second].rend(); ++it)
+            {
+                zigzagVector.push_back(*it);
+            }
+        }
+    }
+    return zigzagVector;
 }
