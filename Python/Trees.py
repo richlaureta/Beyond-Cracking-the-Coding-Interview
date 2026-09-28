@@ -303,7 +303,22 @@ def zig_zag_order(root: Node):
                 zigzag_list.append(number)
             
     return zigzag_list
-        
+
+def contains_target(node: Node, target) :
+    #Problem 35.12 - Binary Search Trees
+    
+    if not node:
+        return False
+    
+    if node.val == target:
+        return True
+    elif target < node.val:
+        return contains_target(node.left, target)
+    elif target > node.val:
+        return contains_target(node.right, target)
+
+    
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -793,6 +808,64 @@ def run_zigzag_order_tests():
 
   print("ALL ZIG-ZAG ORDER TESTS PROVIDED HAVE PASSED.")
 
+def run_binary_search_trees_tests():
+  # Test 1
+  root1 = Node(5,
+               Node(2,
+                    None,
+                    Node(4)),
+               Node(9,
+                    Node(9,
+                         None,
+                         Node(9)),
+                    Node(11)))
+
+  # Test 2: Empty tree
+  root2 = None
+
+  # Test 3: Single node
+  root3 = Node(1)
+
+  # Test 4: Perfect BST
+  root4 = Node(4,
+               Node(2,
+                    Node(1),
+                    Node(3)),
+               Node(6,
+                    Node(5),
+                    Node(7)))
+
+  # Test 5: Unbalanced BST
+  root5 = Node(5,
+               Node(3,
+                    Node(2,
+                         Node(1),
+                         None),
+                    Node(4)),
+               None)
+
+  tests = [
+      (root1, 6, False),
+      (root1, 9, True),
+      (root1, 3, False),
+      (root1, 4, True),
+      (root2, 1, False),  # Empty tree
+      (root3, 1, True),  # Single node, target exists
+      (root3, 2, False),  # Single node, target doesn't exist
+      (root4, 5, True),  # Perfect BST, target exists
+      (root4, 8, False),  # Perfect BST, target doesn't exist
+      (root5, 1, True),  # Unbalanced BST, target exists at leaf
+      (root5, 5, True),  # Unbalanced BST, target exists at root
+      (root5, 6, False),  # Unbalanced BST, target doesn't exist
+  ]
+
+  for i, (root, target, want) in enumerate(tests):
+    got = contains_target(root, target)
+    assert got == want, f"\nfind(root{
+        i + 1}, {target}): got: {got}, want: {want}\n"
+  
+  print("ALL BINARY SEARCH TREES TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Trees_Tests():
@@ -805,6 +878,7 @@ def Run_All_Trees_Tests():
     run_left_view_tests()
     run_most_prolific_level_tests()
     run_zigzag_order_tests()
+    run_binary_search_trees_tests()
     
     print()
     print("--------------------------------------------------")
@@ -812,4 +886,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_binary_search_trees_tests()
