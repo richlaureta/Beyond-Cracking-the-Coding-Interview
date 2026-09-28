@@ -307,17 +307,16 @@ def zig_zag_order(root: Node):
 def contains_target(node: Node, target) :
     #Problem 35.12 - Binary Search Trees
     
-    if not node:
-        return False
-    
-    if node.val == target:
-        return True
-    elif target < node.val:
-        return contains_target(node.left, target)
-    elif target > node.val:
-        return contains_target(node.right, target)
-
-    
+    current_node = node
+    while current_node:
+        if current_node.val == target:
+            return True
+        elif target < current_node.val:
+            current_node = current_node.left
+        else:
+            current_node = current_node.right
+            
+    return False
 
 #TESTS
 
