@@ -318,6 +318,41 @@ def contains_target(node: Node, target) :
             
     return False
 
+def most_protected_node(root: Node):
+    #Problem 35.12 - Most Protected Node
+    
+    node_address_minimum_value_dictionary = defaultdict(int)
+    depth_level_node_count_dictionary = defaultdict(int)
+    node_address_index_depth_level_dictionary = defaultdict()
+        
+    def dfs_ancestors_descendants_count(node: Node, depth_level: int):
+        if not node:
+            return depth_level - 1
+        
+        depth_level_node_count_dictionary[depth_level] += 1
+        node_address_index_depth_level_dictionary[node] = (depth_level_node_count_dictionary[depth_level] - 1, depth_level)
+        node_address_minimum_value_dictionary[node] = depth_level
+        
+        descendants_count_left = dfs_ancestors_descendants_count(node.left, depth_level + 1) - depth_level
+
+        descendants_count_right = dfs_ancestors_descendants_count(node.right, depth_level + 1) - depth_level
+        
+        max_descendants_count = max(descendants_count_left, descendants_count_right)
+        
+        node_address_minimum_value_dictionary[node] = min(node_address_minimum_value_dictionary[node], max_descendants_count, node_address_index_depth_level_dictionary[node][0])
+        
+        return depth_level + max_descendants_count
+    
+    dfs_ancestors_descendants_count(root, 0)
+    
+    highest_protection_level = [0]
+    for key_node in node_address_index_depth_level_dictionary:
+        right_side_count = depth_level_node_count_dictionary[node_address_index_depth_level_dictionary[key_node][1]] - node_address_index_depth_level_dictionary[key_node][0] - 1
+        node_minimum_value = min(node_address_minimum_value_dictionary[key_node], right_side_count)
+        highest_protection_level[0] = max(highest_protection_level[0], node_minimum_value)
+        
+    return highest_protection_level[0]
+    
 #TESTS
 
 def run_aligned_chain_tests():
@@ -864,6 +899,51 @@ def run_binary_search_trees_tests():
         i + 1}, {target}): got: {got}, want: {want}\n"
   
   print("ALL BST SEARCH TESTS PROVIDED HAVE PASSED.")
+
+def run_most_protected_node_tests():
+  def perfect_tree(height):
+    if height == 1:
+      return Node(1)
+    return Node(1, perfect_tree(height - 1), perfect_tree(height - 1))
+
+  root = Node(1,
+               Node(2,
+                    Node(3,
+                         Node(4,
+                              Node(5, Node(6)),
+                              Node(7, Node(8), Node(9))),
+                         Node(10, Node(11))),
+                    Node(12,
+                         Node(13,
+                              Node(14,
+                                   Node(15),
+                                   Node(16))))),
+               Node(17,
+                    Node(18, Node(
+                        19, Node(20, Node(21)))),
+                    Node(22, Node(23, Node(24, Node(25))))))
+
+  tests = [
+      (root, 2),
+      (Node(1), 0),  # Single node
+      (Node(1, Node(2, Node(3, Node(4)))), 0),  # Linear tree
+      (perfect_tree(1), 0), 
+      (perfect_tree(2), 0), 
+      (perfect_tree(3), 0), 
+      (perfect_tree(4), 1), 
+      (perfect_tree(5), 1), 
+      (perfect_tree(6), 2), 
+      (perfect_tree(7), 3), 
+      (perfect_tree(8), 3), 
+      (perfect_tree(9), 4), 
+  ]
+
+  for i, (root, want) in enumerate(tests):
+    got = most_protected_node(root)
+    assert got == want, f"\nExample {
+        i + 1}: most_protected_node(): got: {got}, want: {want}\n"
+  
+  print("ALL MOST PROTECTED NODE TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -878,6 +958,7 @@ def Run_All_Trees_Tests():
     run_most_prolific_level_tests()
     run_zigzag_order_tests()
     run_binary_search_trees_tests()
+    run_most_protected_node_tests()
     
     print()
     print("--------------------------------------------------")
@@ -885,4 +966,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_most_protected_node_tests()
