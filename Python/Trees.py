@@ -325,7 +325,7 @@ def most_protected_node(root: Node):
     depth_level_node_count_dictionary = defaultdict(int)
     node_address_index_depth_level_dictionary = defaultdict()
         
-    def dfs_ancestors_descendants_count(node: Node, depth_level: int):
+    def dfs_ancestors_descendants_left_count(node: Node, depth_level: int):
         if not node:
             return depth_level - 1
         
@@ -333,9 +333,9 @@ def most_protected_node(root: Node):
         node_address_index_depth_level_dictionary[node] = (depth_level_node_count_dictionary[depth_level] - 1, depth_level)
         node_address_minimum_value_dictionary[node] = depth_level
         
-        descendants_count_left = dfs_ancestors_descendants_count(node.left, depth_level + 1) - depth_level
+        descendants_count_left = dfs_ancestors_descendants_left_count(node.left, depth_level + 1) - depth_level
 
-        descendants_count_right = dfs_ancestors_descendants_count(node.right, depth_level + 1) - depth_level
+        descendants_count_right = dfs_ancestors_descendants_left_count(node.right, depth_level + 1) - depth_level
         
         max_descendants_count = max(descendants_count_left, descendants_count_right)
         
@@ -343,7 +343,7 @@ def most_protected_node(root: Node):
         
         return depth_level + max_descendants_count
     
-    dfs_ancestors_descendants_count(root, 0)
+    dfs_ancestors_descendants_left_count(root, 0)
     
     highest_protection_level = [0]
     for key_node in node_address_index_depth_level_dictionary:
