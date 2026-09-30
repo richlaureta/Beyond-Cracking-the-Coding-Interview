@@ -319,7 +319,7 @@ def contains_target(node: Node, target) :
     return False
 
 def most_protected_node(root: Node):
-    #Problem 35.12 - Most Protected Node
+    #Problem 35.11 - Most Protected Node
     
     node_address_minimum_value_dictionary = defaultdict(int)
     depth_level_node_count_dictionary = defaultdict(int)
@@ -345,13 +345,13 @@ def most_protected_node(root: Node):
     
     dfs_ancestors_descendants_left_count(root, 0)
     
-    highest_protection_level = [0]
+    highest_protection_level = 0
     for key_node in node_address_index_depth_level_dictionary:
         right_side_count = depth_level_node_count_dictionary[node_address_index_depth_level_dictionary[key_node][1]] - node_address_index_depth_level_dictionary[key_node][0] - 1
         node_minimum_value = min(node_address_minimum_value_dictionary[key_node], right_side_count)
-        highest_protection_level[0] = max(highest_protection_level[0], node_minimum_value)
+        highest_protection_level = max(highest_protection_level, node_minimum_value)
         
-    return highest_protection_level[0]
+    return highest_protection_level
     
 #TESTS
 
