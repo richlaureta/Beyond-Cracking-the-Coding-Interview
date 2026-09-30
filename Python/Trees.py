@@ -863,7 +863,7 @@ def run_binary_search_trees_tests():
     assert got == want, f"\nfind(root{
         i + 1}, {target}): got: {got}, want: {want}\n"
   
-  print("ALL BINARY SEARCH TREES TESTS PROVIDED HAVE PASSED.")
+  print("ALL BST SEARCH TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -885,4 +885,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
     
 if __name__ == "__main__":
-    run_binary_search_trees_tests()
+    Run_All_Trees_Tests()
