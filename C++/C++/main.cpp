@@ -4323,76 +4323,136 @@ int main(int argc, const char *argv[]) {
     //Problem 35.10 - Zig-Zag Order
     
     // Example 1 from the book
-    TreeNode* root1 = new TreeNode(1);
-    root1->left = new TreeNode(2);
-    root1->right = new TreeNode(3);
-    root1->left->left = new TreeNode(4);
-    root1->left->right = new TreeNode(5);
-    root1->right->left = new TreeNode(6);
-    root1->right->right = new TreeNode(7);
-
-    // Example 2 - empty tree
-    TreeNode* root2 = nullptr;
-
-    // Example 3 - single node
-    TreeNode* root3 = new TreeNode(1);
-
-    // Example 4 - unbalanced tree
-    TreeNode* root4 = new TreeNode(1);
-    root4->left = new TreeNode(2);
-    root4->left->left = new TreeNode(3);
-    root4->left->left->left = new TreeNode(4);
-
-    // Example 5 - complete binary tree
-    TreeNode* root5 = new TreeNode(1);
-    root5->left = new TreeNode(2);
-    root5->right = new TreeNode(3);
-    root5->left->left = new TreeNode(4);
-    root5->left->right = new TreeNode(5);
-    root5->right->left = new TreeNode(6);
-    root5->right->right = new TreeNode(7);
-    root5->left->left->left = new TreeNode(8);
-    root5->left->left->right = new TreeNode(9);
-    root5->left->right->left = new TreeNode(10);
-    root5->left->right->right = new TreeNode(11);
-    root5->right->left->left = new TreeNode(12);
-    root5->right->right->left = new TreeNode(14);
-    root5->right->right->right = new TreeNode(15);
-
-    std::vector<std::pair<TreeNode*, std::vector<int>>> tests = {
-        // Example 1 - basic tree
-        {root1, {1, 3, 2, 4, 5, 6, 7}},
-        // Example 2 - empty tree
-        {root2, {}},
-        // Example 3 - single node
-        {root3, {1}},
-        // Example 4 - unbalanced tree
-        {root4, {1, 2, 3, 4}},
-        // Example 5 - complete binary tree
-        {root5, {1, 3, 2, 4, 5, 6, 7, 15, 14, 12, 11, 10, 9, 8}}};
-
-
-    for (int i = 0; i < tests.size(); i++) {
-      auto [root, want] = tests[i];
-      auto got = zigzagOrder(root);
-      if (got != want) {
-        std::string error_msg =
-            "\nExample " + std::to_string(i + 1) + ": solve(): got: [";
-        for (size_t j = 0; j < got.size(); j++) {
-          if (j > 0) error_msg += ", ";
-          error_msg += std::to_string(got[j]);
-        }
-        error_msg += "], want: [";
-        for (size_t j = 0; j < want.size(); j++) {
-          if (j > 0) error_msg += ", ";
-          error_msg += std::to_string(want[j]);
-        }
-        error_msg += "]\n";
-        throw std::runtime_error(error_msg);
-      }
-    }
+//    TreeNode* root1 = new TreeNode(1);
+//    root1->left = new TreeNode(2);
+//    root1->right = new TreeNode(3);
+//    root1->left->left = new TreeNode(4);
+//    root1->left->right = new TreeNode(5);
+//    root1->right->left = new TreeNode(6);
+//    root1->right->right = new TreeNode(7);
+//
+//    // Example 2 - empty tree
+//    TreeNode* root2 = nullptr;
+//
+//    // Example 3 - single node
+//    TreeNode* root3 = new TreeNode(1);
+//
+//    // Example 4 - unbalanced tree
+//    TreeNode* root4 = new TreeNode(1);
+//    root4->left = new TreeNode(2);
+//    root4->left->left = new TreeNode(3);
+//    root4->left->left->left = new TreeNode(4);
+//
+//    // Example 5 - complete binary tree
+//    TreeNode* root5 = new TreeNode(1);
+//    root5->left = new TreeNode(2);
+//    root5->right = new TreeNode(3);
+//    root5->left->left = new TreeNode(4);
+//    root5->left->right = new TreeNode(5);
+//    root5->right->left = new TreeNode(6);
+//    root5->right->right = new TreeNode(7);
+//    root5->left->left->left = new TreeNode(8);
+//    root5->left->left->right = new TreeNode(9);
+//    root5->left->right->left = new TreeNode(10);
+//    root5->left->right->right = new TreeNode(11);
+//    root5->right->left->left = new TreeNode(12);
+//    root5->right->right->left = new TreeNode(14);
+//    root5->right->right->right = new TreeNode(15);
+//
+//    std::vector<std::pair<TreeNode*, std::vector<int>>> tests = {
+//        // Example 1 - basic tree
+//        {root1, {1, 3, 2, 4, 5, 6, 7}},
+//        // Example 2 - empty tree
+//        {root2, {}},
+//        // Example 3 - single node
+//        {root3, {1}},
+//        // Example 4 - unbalanced tree
+//        {root4, {1, 2, 3, 4}},
+//        // Example 5 - complete binary tree
+//        {root5, {1, 3, 2, 4, 5, 6, 7, 15, 14, 12, 11, 10, 9, 8}}};
+//
+//
+//    for (int i = 0; i < tests.size(); i++) {
+//      auto [root, want] = tests[i];
+//      auto got = zigzagOrder(root);
+//      if (got != want) {
+//        std::string error_msg =
+//            "\nExample " + std::to_string(i + 1) + ": solve(): got: [";
+//        for (size_t j = 0; j < got.size(); j++) {
+//          if (j > 0) error_msg += ", ";
+//          error_msg += std::to_string(got[j]);
+//        }
+//        error_msg += "], want: [";
+//        for (size_t j = 0; j < want.size(); j++) {
+//          if (j > 0) error_msg += ", ";
+//          error_msg += std::to_string(want[j]);
+//        }
+//        error_msg += "]\n";
+//        throw std::runtime_error(error_msg);
+//      }
+//    }
+//    
+//    cout << "ALL ZIG-ZAG ORDER TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL ZIG-ZAG ORDER TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 35.12 - BST Search
+    
+    // Test 1
+     TreeNode* root1 = new TreeNode(5);
+     root1->left = new TreeNode(2);
+     root1->right = new TreeNode(9);
+     root1->left->right = new TreeNode(4);
+     root1->right->left = new TreeNode(9);
+     root1->right->right = new TreeNode(11);
+     root1->right->left->right = new TreeNode(9);
+
+     // Test 2: Empty tree
+     TreeNode* root2 = nullptr;
+
+     // Test 3: Single node
+     TreeNode* root3 = new TreeNode(1);
+
+     // Test 4: Perfect BST
+     TreeNode* root4 = new TreeNode(4);
+     root4->left = new TreeNode(2);
+     root4->right = new TreeNode(6);
+     root4->left->left = new TreeNode(1);
+     root4->left->right = new TreeNode(3);
+     root4->right->left = new TreeNode(5);
+     root4->right->right = new TreeNode(7);
+
+     // Test 5: Unbalanced BST
+     TreeNode* root5 = new TreeNode(5);
+     root5->left = new TreeNode(3);
+     root5->left->left = new TreeNode(2);
+     root5->left->right = new TreeNode(4);
+     root5->left->left->left = new TreeNode(1);
+
+     std::vector<std::pair<std::pair<TreeNode*, int>, bool>> tests = {
+         {{root1, 6}, false}, {{root1, 9}, true},  {{root1, 3}, false},
+         {{root1, 4}, true},  {{root2, 1}, false},  // Empty tree
+         {{root3, 1}, true},                        // Single node, target exists
+         {{root3, 2}, false},  // Single node, target doesn't exist
+         {{root4, 5}, true},   // Perfect BST, target exists
+         {{root4, 8}, false},  // Perfect BST, target doesn't exist
+         {{root5, 1}, true},   // Unbalanced BST, target exists at leaf
+         {{root5, 5}, true},   // Unbalanced BST, target exists at root
+         {{root5, 6}, false},  // Unbalanced BST, target doesn't exist
+     };
+
+     for (int i = 0; i < tests.size(); i++) {
+       auto [input, want] = tests[i];
+       auto [root, target] = input;
+         bool got = containsTarget(root, target);
+       if (got != want) {
+         std::string error_msg = "\nfind(root" + std::to_string(i + 1) + ", " +
+                                 std::to_string(target) +
+                                 "): got: " + std::to_string(got) +
+                                 ", want: " + std::to_string(want) + "\n";
+         throw std::runtime_error(error_msg);
+       }
+     }
+    
+    cout << "ALL BST SEARCH TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

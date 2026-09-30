@@ -305,7 +305,7 @@ def zig_zag_order(root: Node):
     return zigzag_list
 
 def contains_target(node: Node, target) :
-    #Problem 35.12 - Binary Search Trees
+    #Problem 35.12 - BST Search
     
     current_node = node
     while current_node:

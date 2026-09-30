@@ -333,3 +333,19 @@ vector<int> zigzagOrder(TreeNode* root)
     }
     return zigzagVector;
 }
+
+bool containsTarget(TreeNode* root, int target)
+{
+    //Problem 35.12 - BST Search
+    
+    TreeNode* currentNode = root;
+    
+    while(currentNode)
+    {
+        if(currentNode->val == target) return true;
+        else if(target < currentNode->val) currentNode = currentNode->left;
+        else currentNode = currentNode->right;
+    }
+    
+    return false;
+}

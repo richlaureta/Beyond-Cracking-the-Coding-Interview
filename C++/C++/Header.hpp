@@ -341,5 +341,6 @@ int evaluate(NaryNode* node);
 vector<int> leftView(TreeNode* root);
 int mostProlificLevel(TreeNode* root);
 vector<int> zigzagOrder(TreeNode* root);
+bool containsTarget(TreeNode* root, int target);
 
 #endif // HEADER_HPP
