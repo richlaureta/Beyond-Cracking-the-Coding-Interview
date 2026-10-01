@@ -342,5 +342,9 @@ vector<int> leftView(TreeNode* root);
 int mostProlificLevel(TreeNode* root);
 vector<int> zigzagOrder(TreeNode* root);
 bool containsTarget(TreeNode* root, int target);
+int dfsAncestorsDescendantsLeftCount(TreeNode* node, int depthLevel, unordered_map<TreeNode*, int>& nodeAddressMinimumValueMap,
+                                     unordered_map<int, int>& depthLevelNodeCountMap,
+                                     unordered_map<TreeNode*, pair<int, int>>& nodeAddressIndexDepthLevelMap);
+int mostProtectedNode(TreeNode* root);
 
 #endif // HEADER_HPP

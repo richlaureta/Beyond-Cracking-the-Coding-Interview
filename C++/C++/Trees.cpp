@@ -349,3 +349,48 @@ bool containsTarget(TreeNode* root, int target)
     
     return false;
 }
+
+int dfsAncestorsDescendantsLeftCount(TreeNode* node, int depthLevel,
+                                     unordered_map<TreeNode*, int>& nodeAddressMinimumValueMap,
+                                     unordered_map<int, int>& depthLevelNodeCountMap,
+                                     unordered_map<TreeNode*, pair<int, int>>& nodeAddressIndexDepthLevelMap)
+{
+    //Problem 35.11 - Most Protected Node
+    
+    if(!node) return depthLevel - 1;
+    
+    depthLevelNodeCountMap[depthLevel]++;
+    nodeAddressIndexDepthLevelMap[node] = {depthLevelNodeCountMap[depthLevel] - 1, depthLevel};
+    nodeAddressMinimumValueMap[node] = depthLevel;
+    
+    int descendantsCountLeft = dfsAncestorsDescendantsLeftCount(node->left, depthLevel + 1, nodeAddressMinimumValueMap, depthLevelNodeCountMap, nodeAddressIndexDepthLevelMap) - depthLevel;
+
+    int descendantsCountRight = dfsAncestorsDescendantsLeftCount(node->right, depthLevel + 1, nodeAddressMinimumValueMap, depthLevelNodeCountMap, nodeAddressIndexDepthLevelMap) - depthLevel;
+    
+    int maxDescendantsCount = max(descendantsCountLeft, descendantsCountRight);
+    
+    nodeAddressMinimumValueMap[node] = min({nodeAddressMinimumValueMap[node], maxDescendantsCount, nodeAddressIndexDepthLevelMap[node].first});
+    
+    return depthLevel + maxDescendantsCount;
+}
+
+int mostProtectedNode(TreeNode* root)
+{
+    //Problem 35.11 - Most Protected Node
+    
+    unordered_map<TreeNode*, int> nodeAddressMinimumValueMap;
+    unordered_map<int, int> depthLevelNodeCountMap;
+    unordered_map<TreeNode*, pair<int, int>> nodeAddressIndexDepthLevelMap;
+        
+    dfsAncestorsDescendantsLeftCount(root, 0, nodeAddressMinimumValueMap, depthLevelNodeCountMap, nodeAddressIndexDepthLevelMap);
+    
+    int highestProtectionLevel = 0;
+    for(const auto& [keyNode, value] : nodeAddressIndexDepthLevelMap)
+    {
+        int rightSideCount =  depthLevelNodeCountMap[nodeAddressIndexDepthLevelMap[keyNode].second] - (nodeAddressIndexDepthLevelMap[keyNode].first + 1);
+        int nodeMinimumValue = min(nodeAddressMinimumValueMap[keyNode], rightSideCount);
+        highestProtectionLevel = max(highestProtectionLevel, nodeMinimumValue);
+    }
+        
+    return highestProtectionLevel;
+}
