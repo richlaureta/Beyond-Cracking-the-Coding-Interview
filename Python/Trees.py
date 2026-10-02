@@ -364,15 +364,19 @@ def find_closest(root: Node, target):
         if current_node.val == target:
             return current_node.val
         
-        if abs(current_node.val - target) < closest_difference_to_target:            
-            closest_difference_to_target = abs(current_node.val - target)
-            closest_value_to_target = current_node.val
-        elif abs(current_node.val - target) == closest_difference_to_target and current_node.val < closest_value_to_target:
-            closest_value_to_target = current_node.val
-        
         if target < current_node.val:
+            if abs(current_node.val - target) < closest_difference_to_target:            
+                closest_difference_to_target = abs(current_node.val - target)
+                closest_value_to_target = current_node.val
+                
             current_node = current_node.left
         else:
+            if abs(current_node.val - target) < closest_difference_to_target:            
+                closest_difference_to_target = abs(current_node.val - target)
+                closest_value_to_target = current_node.val
+            elif abs(current_node.val - target) == closest_difference_to_target:
+                closest_value_to_target = current_node.val
+                
             current_node = current_node.right
             
     return closest_value_to_target
