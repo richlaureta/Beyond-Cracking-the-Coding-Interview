@@ -346,5 +346,6 @@ int dfsAncestorsDescendantsLeftCount(TreeNode* node, int depthLevel, unordered_m
                                      unordered_map<int, int>& depthLevelNodeCountMap,
                                      unordered_map<TreeNode*, pair<int, int>>& nodeAddressIndexDepthLevelMap);
 int mostProtectedNode(TreeNode* root);
+long long findClosest(TreeNode* root, int target);
 
 #endif // HEADER_HPP

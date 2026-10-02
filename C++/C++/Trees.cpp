@@ -394,3 +394,41 @@ int mostProtectedNode(TreeNode* root)
         
     return highestProtectionLevel;
 }
+
+long long findClosest(TreeNode* root, int target)
+{
+    //Problem 35.13 - BST Nearest Value
+    
+    TreeNode* currentNode = root;
+    long long closestDifferenceToTarget = INT_MAX;
+    long long closestValueToTarget = INT_MAX;
+    
+    while(currentNode)
+    {
+        if(currentNode->val == target) return currentNode->val;
+            
+        if(target < currentNode->val)
+        {
+            if (abs(currentNode->val - target) < closestDifferenceToTarget)
+            {
+                closestDifferenceToTarget = abs(currentNode->val - target);
+                closestValueToTarget = currentNode->val;
+            }
+            
+            currentNode = currentNode->left;
+        }
+        else
+        {
+            if(abs(currentNode->val - target) < closestDifferenceToTarget)
+            {
+                closestDifferenceToTarget = abs(currentNode->val - target);
+                closestValueToTarget = currentNode->val;
+            }
+            else if(abs(currentNode->val - target) == closestDifferenceToTarget) closestValueToTarget = currentNode->val;
+            
+            currentNode = currentNode->right;
+        }
+    }
+            
+    return closestValueToTarget;
+}

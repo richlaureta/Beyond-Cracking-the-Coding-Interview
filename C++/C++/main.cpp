@@ -4456,86 +4456,157 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.11 - Most Protected Node
     
-    TreeNode* root = new TreeNode(
-        1,
-        new TreeNode(
-            2,
-            new TreeNode(
-                3,
-                new TreeNode(4, new TreeNode(5, new TreeNode(6, nullptr, nullptr), nullptr),
-                         new TreeNode(7, new TreeNode(8, nullptr, nullptr),
-                                  new TreeNode(9, nullptr, nullptr))),
-                new TreeNode(10, new TreeNode(11, nullptr, nullptr), nullptr)),
-            new TreeNode(12,
-                     new TreeNode(13,
-                              new TreeNode(14, new TreeNode(15, nullptr, nullptr),
-                                       new TreeNode(16, nullptr, nullptr)),
-                              nullptr),
-                     nullptr)),
-        new TreeNode(
-            17,
-            new TreeNode(
-                18,
-                new TreeNode(19,
-                         new TreeNode(20, new TreeNode(21, nullptr, nullptr), nullptr),
-                         nullptr),
-                nullptr),
-            new TreeNode(
-                22,
-                new TreeNode(23,
-                         new TreeNode(24, new TreeNode(25, nullptr, nullptr), nullptr),
-                         nullptr),
-                nullptr)));
-
-    // Helper function to create perfect binary trees
-    auto perfectTree = [](int height) -> TreeNode* {
-      TreeNode* root = new TreeNode(1, nullptr, nullptr);
-      std::vector<TreeNode*> level;
-      level.push_back(root);
-      for (int h = 2; h <= height; h++) {
-        std::vector<TreeNode*> nextLevel;
-        for (TreeNode* node : level) {
-          node->left = new TreeNode(1, nullptr, nullptr);
-          node->right = new TreeNode(1, nullptr, nullptr);
-          nextLevel.push_back(node->left);
-          nextLevel.push_back(node->right);
-        }
-        level = nextLevel;
-      }
-      return root;
-    };
-
-    std::vector<std::pair<TreeNode*, int>> tests = {
-        {root, 2},
-        {new TreeNode(1, nullptr, nullptr), 0},  // Single node
-        {new TreeNode(1,
-                  new TreeNode(2, new TreeNode(3, new TreeNode(4, nullptr, nullptr), nullptr),
-                           nullptr),
-                  nullptr),
-         0},  // Linear tree
-        {perfectTree(1), 0},
-        {perfectTree(2), 0},
-        {perfectTree(3), 0},
-        {perfectTree(4), 1},
-        {perfectTree(5), 1},
-        {perfectTree(6), 2},
-        {perfectTree(7), 3},
-        {perfectTree(8), 3},
-        {perfectTree(9), 4},
-    };
-
-    for (int i = 0; i < tests.size(); i++) {
-      auto [root, want] = tests[i];
-      int got = mostProtectedNode(root);
-      if (got != want) {
-        throw std::runtime_error(
-            "\nExample " + std::to_string(i + 1) +
-            ": mostProtectedNode(): got: " + std::to_string(got) +
-            ", want: " + std::to_string(want));
-      }
-    }
+//    TreeNode* root = new TreeNode(
+//        1,
+//        new TreeNode(
+//            2,
+//            new TreeNode(
+//                3,
+//                new TreeNode(4, new TreeNode(5, new TreeNode(6, nullptr, nullptr), nullptr),
+//                         new TreeNode(7, new TreeNode(8, nullptr, nullptr),
+//                                  new TreeNode(9, nullptr, nullptr))),
+//                new TreeNode(10, new TreeNode(11, nullptr, nullptr), nullptr)),
+//            new TreeNode(12,
+//                     new TreeNode(13,
+//                              new TreeNode(14, new TreeNode(15, nullptr, nullptr),
+//                                       new TreeNode(16, nullptr, nullptr)),
+//                              nullptr),
+//                     nullptr)),
+//        new TreeNode(
+//            17,
+//            new TreeNode(
+//                18,
+//                new TreeNode(19,
+//                         new TreeNode(20, new TreeNode(21, nullptr, nullptr), nullptr),
+//                         nullptr),
+//                nullptr),
+//            new TreeNode(
+//                22,
+//                new TreeNode(23,
+//                         new TreeNode(24, new TreeNode(25, nullptr, nullptr), nullptr),
+//                         nullptr),
+//                nullptr)));
+//
+//    // Helper function to create perfect binary trees
+//    auto perfectTree = [](int height) -> TreeNode* {
+//      TreeNode* root = new TreeNode(1, nullptr, nullptr);
+//      std::vector<TreeNode*> level;
+//      level.push_back(root);
+//      for (int h = 2; h <= height; h++) {
+//        std::vector<TreeNode*> nextLevel;
+//        for (TreeNode* node : level) {
+//          node->left = new TreeNode(1, nullptr, nullptr);
+//          node->right = new TreeNode(1, nullptr, nullptr);
+//          nextLevel.push_back(node->left);
+//          nextLevel.push_back(node->right);
+//        }
+//        level = nextLevel;
+//      }
+//      return root;
+//    };
+//
+//    std::vector<std::pair<TreeNode*, int>> tests = {
+//        {root, 2},
+//        {new TreeNode(1, nullptr, nullptr), 0},  // Single node
+//        {new TreeNode(1,
+//                  new TreeNode(2, new TreeNode(3, new TreeNode(4, nullptr, nullptr), nullptr),
+//                           nullptr),
+//                  nullptr),
+//         0},  // Linear tree
+//        {perfectTree(1), 0},
+//        {perfectTree(2), 0},
+//        {perfectTree(3), 0},
+//        {perfectTree(4), 1},
+//        {perfectTree(5), 1},
+//        {perfectTree(6), 2},
+//        {perfectTree(7), 3},
+//        {perfectTree(8), 3},
+//        {perfectTree(9), 4},
+//    };
+//
+//    for (int i = 0; i < tests.size(); i++) {
+//      auto [root, want] = tests[i];
+//      int got = mostProtectedNode(root);
+//      if (got != want) {
+//        throw std::runtime_error(
+//            "\nExample " + std::to_string(i + 1) +
+//            ": mostProtectedNode(): got: " + std::to_string(got) +
+//            ", want: " + std::to_string(want));
+//      }
+//    }
+//    
+//    cout << "ALL MOST PROTECTED NODE TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL MOST PROTECTED NODE TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 35.13 - BST Nearest Value
+    
+    TreeNode* root1 =
+          new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
+                   new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(9, nullptr, nullptr)),
+                            new TreeNode(11, nullptr, nullptr)));
+
+      // Single node
+      TreeNode* root3 = new TreeNode(1, nullptr, nullptr);
+
+      // Perfect BST
+      TreeNode* root4 = new TreeNode(
+          4,
+          new TreeNode(2, new TreeNode(1, nullptr, nullptr), new TreeNode(3, nullptr, nullptr)),
+          new TreeNode(6, new TreeNode(5, nullptr, nullptr),
+                   new TreeNode(7, nullptr, nullptr)));
+
+      // Unbalanced BST
+      TreeNode* root5 =
+          new TreeNode(5,
+                   new TreeNode(3, new TreeNode(2, new TreeNode(1, nullptr, nullptr), nullptr),
+                            new TreeNode(4, nullptr, nullptr)),
+                   nullptr);
+
+      // Example from the book
+      TreeNode* root6 = new TreeNode(
+          8,
+          new TreeNode(6,
+                   new TreeNode(5, new TreeNode(2, nullptr, nullptr),
+                            new TreeNode(6, nullptr, nullptr)),
+                   new TreeNode(8, new TreeNode(8, nullptr, nullptr),
+                            new TreeNode(8, nullptr, nullptr))),
+          new TreeNode(12, new TreeNode(10, new TreeNode(9, nullptr, nullptr), nullptr),
+                   nullptr));
+
+      std::vector<std::pair<std::pair<TreeNode*, int>, long long>> tests = {
+          {{root1, 6}, 5},  // Closest to 6 is 5
+          {{root1, 9}, 9},  // Exact match
+          {{root1, 3}, 2},  // Closest to 3 is 2
+          {{root1, 4}, 4},  // Exact match
+          {{root3, 1}, 1},  // Single node, exact match
+          {{root3, 2}, 1},  // Single node, closest is 1
+          {{root4, 5}, 5},  // Perfect BST, exact match
+          {{root4, 8}, 7},  // Perfect BST, closest is 7
+          {{root5, 1}, 1},  // Unbalanced BST, exact match at leaf
+          {{root5, 5}, 5},  // Unbalanced BST, exact match at root
+          {{root5, 6}, 5},  // Unbalanced BST, closest is 5
+          {{root6, 9}, 9},
+          {{root6, 13}, 12},
+          {{root6, 1}, 2},
+          {{root6, 8}, 8},
+          {{root6, 6}, 6},
+          {{root6, 7}, 6},
+          {{root6, 11}, 10},
+          {{root6, 4}, 5},
+      };
+
+      for (int i = 0; i < tests.size(); i++) {
+        auto [input, want] = tests[i];
+        auto [root, target] = input;
+        long long got = findClosest(root, target);
+        if (got != want) {
+          throw std::runtime_error("\nfind_closest(root" + std::to_string(i + 1) +
+                                   ", " + std::to_string(target) +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
+        }
+      }
+    
+    cout << "ALL BST NEAREST VALUE TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

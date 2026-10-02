@@ -1070,4 +1070,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    run_bst_nearest_value_tests()
+    Run_All_Trees_Tests()
