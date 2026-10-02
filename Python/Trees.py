@@ -352,7 +352,31 @@ def most_protected_node(root: Node):
         highest_protection_level = max(highest_protection_level, node_minimum_value)
         
     return highest_protection_level
+
+def find_closest(root: Node, target):
+    #Problem 35.13 - BST Nearest Value
     
+    current_node = root
+    closest_difference_to_target = float('inf')
+    closest_value_to_target = float('inf')
+    
+    while current_node:
+        if current_node.val == target:
+            return current_node.val
+        
+        if abs(current_node.val - target) < closest_difference_to_target:            
+            closest_difference_to_target = abs(current_node.val - target)
+            closest_value_to_target = current_node.val
+        elif abs(current_node.val - target) == closest_difference_to_target and current_node.val < closest_value_to_target:
+            closest_value_to_target = current_node.val
+        
+        if target < current_node.val:
+            current_node = current_node.left
+        else:
+            current_node = current_node.right
+            
+    return closest_value_to_target
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -944,6 +968,81 @@ def run_most_protected_node_tests():
         i + 1}: most_protected_node(): got: {got}, want: {want}\n"
   
   print("ALL MOST PROTECTED NODE TESTS PROVIDED HAVE PASSED.")
+
+def run_bst_nearest_value_tests():
+  root1 = Node(5,
+               Node(2,
+                    None,
+                    Node(4)),
+               Node(9,
+                    Node(9,
+                         None,
+                         Node(9)),
+                    Node(11)))
+
+  # Single node
+  root3 = Node(1)
+
+  # Perfect BST
+  root4 = Node(4,
+               Node(2,
+                    Node(1),
+                    Node(3)),
+               Node(6,
+                    Node(5),
+                    Node(7)))
+
+  # Unbalanced BST
+  root5 = Node(5,
+               Node(3,
+                    Node(2,
+                         Node(1),
+                         None),
+                    Node(4)),
+               None)
+
+  # Example from the book
+  root6 = Node(8,
+               Node(6,
+                    Node(5,
+                         Node(2),
+                         Node(6)),
+                    Node(8,
+                         Node(8),
+                         Node(8))),
+               Node(12,
+                    Node(10,
+                         Node(9),
+                         None),
+                    None))
+  tests = [
+      (root1, 6, 5),  # Closest to 6 is 5
+      (root1, 9, 9),  # Exact match
+      (root1, 3, 2),  # Closest to 3 is 2
+      (root1, 4, 4),  # Exact match
+      (root3, 1, 1),  # Single node, exact match
+      (root3, 2, 1),  # Single node, closest is 1
+      (root4, 5, 5),  # Perfect BST, exact match
+      (root4, 8, 7),  # Perfect BST, closest is 7
+      (root5, 1, 1),  # Unbalanced BST, exact match at leaf
+      (root5, 5, 5),  # Unbalanced BST, exact match at root
+      (root5, 6, 5),  # Unbalanced BST, closest is 5
+      (root6, 9, 9),
+      (root6, 13, 12),
+      (root6, 1, 2),
+      (root6, 8, 8),
+      (root6, 6, 6),
+      (root6, 7, 6),
+      (root6, 11, 10),
+      (root6, 4, 5),
+  ]
+
+  for i, (root, target, want) in enumerate(tests):
+    got = find_closest(root, target)
+    assert got == want, f"\nfind_closest(root{
+        i + 1}, {target}): got: {got}, want: {want}\n"
+  
+  print("ALL BST NEAREST VALUE TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -959,11 +1058,12 @@ def Run_All_Trees_Tests():
     run_zigzag_order_tests()
     run_binary_search_trees_tests()
     run_most_protected_node_tests()
+    run_bst_nearest_value_tests()
     
     print()
     print("--------------------------------------------------")
     print("ALL INCLUDED TREES TESTS IN THE FILE HAVE PASSED. |")
     print("--------------------------------------------------")
-    #TESTING: GIVE ME THE GREEN LIGHT.
+
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_bst_nearest_value_tests()
