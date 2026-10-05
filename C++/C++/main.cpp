@@ -4539,74 +4539,122 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.13 - BST Nearest Value
     
-    TreeNode* root1 =
-          new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
-                   new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(9, nullptr, nullptr)),
-                            new TreeNode(11, nullptr, nullptr)));
+//    TreeNode* root1 =
+//          new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
+//                   new TreeNode(9, new TreeNode(9, nullptr, new TreeNode(9, nullptr, nullptr)),
+//                            new TreeNode(11, nullptr, nullptr)));
+//
+//      // Single node
+//      TreeNode* root3 = new TreeNode(1, nullptr, nullptr);
+//
+//      // Perfect BST
+//      TreeNode* root4 = new TreeNode(
+//          4,
+//          new TreeNode(2, new TreeNode(1, nullptr, nullptr), new TreeNode(3, nullptr, nullptr)),
+//          new TreeNode(6, new TreeNode(5, nullptr, nullptr),
+//                   new TreeNode(7, nullptr, nullptr)));
+//
+//      // Unbalanced BST
+//      TreeNode* root5 =
+//          new TreeNode(5,
+//                   new TreeNode(3, new TreeNode(2, new TreeNode(1, nullptr, nullptr), nullptr),
+//                            new TreeNode(4, nullptr, nullptr)),
+//                   nullptr);
+//
+//      // Example from the book
+//      TreeNode* root6 = new TreeNode(
+//          8,
+//          new TreeNode(6,
+//                   new TreeNode(5, new TreeNode(2, nullptr, nullptr),
+//                            new TreeNode(6, nullptr, nullptr)),
+//                   new TreeNode(8, new TreeNode(8, nullptr, nullptr),
+//                            new TreeNode(8, nullptr, nullptr))),
+//          new TreeNode(12, new TreeNode(10, new TreeNode(9, nullptr, nullptr), nullptr),
+//                   nullptr));
+//
+//      std::vector<std::pair<std::pair<TreeNode*, int>, long long>> tests = {
+//          {{root1, 6}, 5},  // Closest to 6 is 5
+//          {{root1, 9}, 9},  // Exact match
+//          {{root1, 3}, 2},  // Closest to 3 is 2
+//          {{root1, 4}, 4},  // Exact match
+//          {{root3, 1}, 1},  // Single node, exact match
+//          {{root3, 2}, 1},  // Single node, closest is 1
+//          {{root4, 5}, 5},  // Perfect BST, exact match
+//          {{root4, 8}, 7},  // Perfect BST, closest is 7
+//          {{root5, 1}, 1},  // Unbalanced BST, exact match at leaf
+//          {{root5, 5}, 5},  // Unbalanced BST, exact match at root
+//          {{root5, 6}, 5},  // Unbalanced BST, closest is 5
+//          {{root6, 9}, 9},
+//          {{root6, 13}, 12},
+//          {{root6, 1}, 2},
+//          {{root6, 8}, 8},
+//          {{root6, 6}, 6},
+//          {{root6, 7}, 6},
+//          {{root6, 11}, 10},
+//          {{root6, 4}, 5},
+//      };
+//
+//      for (int i = 0; i < tests.size(); i++) {
+//        auto [input, want] = tests[i];
+//        auto [root, target] = input;
+//        long long got = findClosest(root, target);
+//        if (got != want) {
+//          throw std::runtime_error("\nfind_closest(root" + std::to_string(i + 1) +
+//                                   ", " + std::to_string(target) +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL BST NEAREST VALUE TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 35.14 - BST Validation
+    
+    // Example 1 - valid BST
+      TreeNode* root1 = new TreeNode(5);
+      root1->left = new TreeNode(2);
+      root1->right = new TreeNode(9);
+      root1->left->right = new TreeNode(4);
+      root1->right->left = new TreeNode(9);
+      root1->right->right = new TreeNode(11);
+      root1->right->left->right = new TreeNode(9);
 
-      // Single node
-      TreeNode* root3 = new TreeNode(1, nullptr, nullptr);
+      // Example 2 - empty tree
+      TreeNode* root2 = nullptr;
 
-      // Perfect BST
-      TreeNode* root4 = new TreeNode(
-          4,
-          new TreeNode(2, new TreeNode(1, nullptr, nullptr), new TreeNode(3, nullptr, nullptr)),
-          new TreeNode(6, new TreeNode(5, nullptr, nullptr),
-                   new TreeNode(7, nullptr, nullptr)));
+      // Example 3 - single node
+      TreeNode* root3 = new TreeNode(1);
 
-      // Unbalanced BST
-      TreeNode* root5 =
-          new TreeNode(5,
-                   new TreeNode(3, new TreeNode(2, new TreeNode(1, nullptr, nullptr), nullptr),
-                            new TreeNode(4, nullptr, nullptr)),
-                   nullptr);
+      // Example 4 - invalid BST (right child smaller than parent)
+      TreeNode* root4 = new TreeNode(5);
+      root4->left = new TreeNode(2);
+      root4->right = new TreeNode(4);
 
-      // Example from the book
-      TreeNode* root6 = new TreeNode(
-          8,
-          new TreeNode(6,
-                   new TreeNode(5, new TreeNode(2, nullptr, nullptr),
-                            new TreeNode(6, nullptr, nullptr)),
-                   new TreeNode(8, new TreeNode(8, nullptr, nullptr),
-                            new TreeNode(8, nullptr, nullptr))),
-          new TreeNode(12, new TreeNode(10, new TreeNode(9, nullptr, nullptr), nullptr),
-                   nullptr));
+      // Example 5 - invalid BST (left child larger than parent)
+      TreeNode* root5 = new TreeNode(5);
+      root5->left = new TreeNode(6);
+      root5->right = new TreeNode(7);
 
-      std::vector<std::pair<std::pair<TreeNode*, int>, long long>> tests = {
-          {{root1, 6}, 5},  // Closest to 6 is 5
-          {{root1, 9}, 9},  // Exact match
-          {{root1, 3}, 2},  // Closest to 3 is 2
-          {{root1, 4}, 4},  // Exact match
-          {{root3, 1}, 1},  // Single node, exact match
-          {{root3, 2}, 1},  // Single node, closest is 1
-          {{root4, 5}, 5},  // Perfect BST, exact match
-          {{root4, 8}, 7},  // Perfect BST, closest is 7
-          {{root5, 1}, 1},  // Unbalanced BST, exact match at leaf
-          {{root5, 5}, 5},  // Unbalanced BST, exact match at root
-          {{root5, 6}, 5},  // Unbalanced BST, closest is 5
-          {{root6, 9}, 9},
-          {{root6, 13}, 12},
-          {{root6, 1}, 2},
-          {{root6, 8}, 8},
-          {{root6, 6}, 6},
-          {{root6, 7}, 6},
-          {{root6, 11}, 10},
-          {{root6, 4}, 5},
+      std::vector<std::pair<TreeNode*, bool>> tests = {
+          {root1, true},   // Valid BST
+          {root2, true},   // Empty tree is valid
+          {root3, true},   // Single node is valid
+          {root4, false},  // Invalid - right child smaller than parent
+          {root5, false},  // Invalid - left child larger than parent
       };
 
       for (int i = 0; i < tests.size(); i++) {
-        auto [input, want] = tests[i];
-        auto [root, target] = input;
-        long long got = findClosest(root, target);
+        auto [root, want] = tests[i];
+        bool got = isBST(root);
         if (got != want) {
-          throw std::runtime_error("\nfind_closest(root" + std::to_string(i + 1) +
-                                   ", " + std::to_string(target) +
-                                   "): got: " + std::to_string(got) +
-                                   ", want: " + std::to_string(want) + "\n");
+          std::string error_msg = "\nis_bst(root" + std::to_string(i + 1) +
+                                  "): got: " + std::to_string(got) +
+                                  ", want: " + std::to_string(want) + "\n";
+          throw std::runtime_error(error_msg);
         }
       }
     
-    cout << "ALL BST NEAREST VALUE TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL BST VALIDATION TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

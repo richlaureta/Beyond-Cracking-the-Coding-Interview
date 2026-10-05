@@ -432,3 +432,32 @@ long long findClosest(TreeNode* root, int target)
             
     return closestValueToTarget;
 }
+
+bool isBST(TreeNode* root)
+{
+    //Problem 35.14 - BST Validation
+    
+    if(!root) return true;
+    
+    deque<TreeNode*> nodeDequeue{root};
+    
+    while(nodeDequeue.size() > 0)
+    {
+        TreeNode* poppedNode = nodeDequeue.front();
+        nodeDequeue.pop_front();
+        
+        if(poppedNode->left)
+        {
+            if(poppedNode->left->val > poppedNode->val) return false;
+            nodeDequeue.push_back(poppedNode->left);
+        }
+        
+        if(poppedNode->right)
+        {
+            if(poppedNode->right->val < poppedNode->val) return false;
+            nodeDequeue.push_back(poppedNode->right);
+        }
+    }
+    
+    return true;
+}
