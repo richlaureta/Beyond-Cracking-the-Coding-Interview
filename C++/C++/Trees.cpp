@@ -461,3 +461,29 @@ bool isBST(TreeNode* root)
     
     return true;
 }
+
+bool hasDuplicate(TreeNode* root)
+{
+    //Problem 35.15 - BST Duplicate Detection
+    
+    if(!root) return false;
+    
+    unordered_set<int> valueSet;
+    deque<TreeNode*> nodeDequeue({root});
+    
+    while(nodeDequeue.size() > 0)
+    {
+        TreeNode* poppedNode = nodeDequeue.front();
+        nodeDequeue.pop_front();
+        
+        if(valueSet.find(poppedNode->val) !=  valueSet.end()) return true;
+        
+        valueSet.insert(poppedNode->val);
+        
+        if(poppedNode->left) nodeDequeue.push_back(poppedNode->left);
+        
+        if(poppedNode->right) nodeDequeue.push_back(poppedNode->right);
+    }
+    
+    return false;
+}

@@ -348,5 +348,6 @@ int dfsAncestorsDescendantsLeftCount(TreeNode* node, int depthLevel, unordered_m
 int mostProtectedNode(TreeNode* root);
 long long findClosest(TreeNode* root, int target);
 bool isBST(TreeNode* root);
+bool hasDuplicate(TreeNode* root);
 
 #endif // HEADER_HPP
