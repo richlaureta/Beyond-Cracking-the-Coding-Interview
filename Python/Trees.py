@@ -381,6 +381,29 @@ def find_closest(root: Node, target):
             
     return closest_value_to_target
 
+def is_bst(root: Node):
+    #Problem 35.14 - BST Validation
+    
+    if not root:
+        return True
+    
+    node_dequeue = deque([root])
+    
+    while node_dequeue:
+        popped_node = node_dequeue.popleft()
+        
+        if popped_node.left:
+            if popped_node.left.val > popped_node.val:
+                return False
+            node_dequeue.append(popped_node.left)
+        
+        if popped_node.right:
+            if popped_node.right.val < popped_node.val:
+                return False
+            node_dequeue.append(popped_node.right)
+            
+    return True
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -1047,7 +1070,49 @@ def run_bst_nearest_value_tests():
         i + 1}, {target}): got: {got}, want: {want}\n"
   
   print("ALL BST NEAREST VALUE TESTS PROVIDED HAVE PASSED.")
-  
+
+def run_bst_validation_tests():
+  # Example 1 - valid BST
+  root1 = Node(5,
+               Node(2,
+                    None,
+                    Node(4)),
+               Node(9,
+                    Node(9,
+                         None,
+                         Node(9)),
+                    Node(11)))
+
+  # Example 2 - empty tree
+  root2 = None
+
+  # Example 3 - single node
+  root3 = Node(1)
+
+  # Example 4 - invalid BST (right child smaller than parent)
+  root4 = Node(5,
+               Node(2),
+               Node(4))
+
+  # Example 5 - invalid BST (left child larger than parent)
+  root5 = Node(5,
+               Node(6),
+               Node(7))
+
+  tests = [
+      (root1, True),  # Valid BST
+      (root2, True),  # Empty tree is valid
+      (root3, True),  # Single node is valid
+      (root4, False),  # Invalid - right child smaller than parent
+      (root5, False),  # Invalid - left child larger than parent
+  ]
+
+  for i, (root, want) in enumerate(tests):
+    got = is_bst(root)
+    assert got == want, f"\nis_bst(root{i + 1}): got: {got}, want: {want}\n"
+
+  print("ALL BST VALIDATION TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Trees_Tests():
@@ -1070,4 +1135,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_bst_validation_tests()
