@@ -404,6 +404,31 @@ def is_bst(root: Node):
             
     return True
 
+def has_duplicate(root: Node):
+    #Problem 35.15 - BST Duplicate Deletion
+    
+    if not root:
+        return False
+    
+    value_set = set()
+    node_dequeue = deque([root])
+    
+    while node_dequeue:
+        popped_node = node_dequeue.popleft()
+        
+        if popped_node.val in value_set:
+            return True
+        
+        value_set.add(popped_node.val)
+        
+        if popped_node.left:
+            node_dequeue.append(popped_node.left)
+        
+        if popped_node.right:
+            node_dequeue.append(popped_node.right)
+            
+    return False
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -1113,6 +1138,47 @@ def run_bst_validation_tests():
 
   print("ALL BST VALIDATION TESTS PROVIDED HAVE PASSED.")
 
+def run_bst_duplicate_detection_tests():
+  # Example 1 - BST with duplicates
+  root1 = Node(5,
+               Node(2,
+                    None,
+                    Node(4)),
+               Node(9,
+                    Node(9,
+                         None,
+                         Node(9)),
+                    Node(11)))
+
+  # Example 2 - empty tree
+  root2 = None
+
+  # Example 3 - single node
+  root3 = Node(1)
+
+  # Example 4 - BST without duplicates
+  root4 = Node(5,
+               Node(2,
+                    Node(1),
+                    Node(4)),
+               Node(8,
+                    Node(6),
+                    Node(9)))
+
+  tests = [
+      (root1, True),  # Has duplicates (9s)
+      (root2, False),  # Empty tree has no duplicates
+      (root3, False),  # Single node has no duplicates
+      (root4, False),  # No duplicates
+  ]
+
+  for i, (root, want) in enumerate(tests):
+    got = has_duplicate(root)
+    assert got == want, f"\nhas_duplicate(root{
+        i + 1}): got: {got}, want: {want}\n"
+
+  print("ALL BST DUPLICATE DETECTION TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Trees_Tests():
@@ -1128,6 +1194,8 @@ def Run_All_Trees_Tests():
     run_binary_search_trees_tests()
     run_most_protected_node_tests()
     run_bst_nearest_value_tests()
+    run_bst_validation_tests()
+    run_bst_duplicate_detection_tests()
     
     print()
     print("--------------------------------------------------")
@@ -1135,4 +1203,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    run_bst_validation_tests()
+    run_bst_duplicate_detection_tests()
