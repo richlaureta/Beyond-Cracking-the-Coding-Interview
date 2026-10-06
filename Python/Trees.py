@@ -429,6 +429,33 @@ def has_duplicate(root: Node):
             
     return False
 
+def kth_element(root: Node, k):
+    #Problem 35.16 - BST Kth Element
+    
+    if not root:
+        return None
+    
+    kth_value = [None]
+    kth_count = [-1]
+    
+    def dfs_bst(node: Node, k):
+        if not node:
+            return
+        
+        dfs_bst(node.left, k)
+        
+        kth_count[0] += 1
+        
+        if kth_count[0] == k:
+            kth_value[0] = node.val
+            return
+        
+        dfs_bst(node.right, k)
+    
+    dfs_bst(root, k)
+    
+    return kth_value[0]
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -1179,6 +1206,40 @@ def run_bst_duplicate_detection_tests():
 
   print("ALL BST DUPLICATE DETECTION TESTS PROVIDED HAVE PASSED.")
 
+def run_bst_kth_element_tests():
+
+  root = Node(5,
+              Node(2,
+                   Node(1),
+                   Node(4)),
+              Node(8,
+                   Node(6),
+                   Node(9)))
+
+  tests = [
+      (Node(5,
+            Node(2,
+                 None,
+                 Node(4)),
+            Node(9,
+                 Node(9),
+                 Node(11))), 4, 9),
+      (Node(1), 0, 1),  # Single node
+      (root, 0, 1),
+      (root, 1, 2),
+      (root, 2, 4),
+      (root, 3, 5),
+      (root, 4, 6),
+      (root, 5, 8),
+      (root, 6, 9),
+  ]
+
+  for root, k, want in tests:
+    got = kth_element(root, k)
+    assert got == want, f"\nkth_element(root, {k}): got: {got}, want: {want}\n"
+  
+  print("ALL BST KTH ELEMENT TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Trees_Tests():
@@ -1203,4 +1264,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Trees_Tests()
+    run_bst_kth_element_tests()
