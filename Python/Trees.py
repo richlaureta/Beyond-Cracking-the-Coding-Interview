@@ -456,6 +456,52 @@ def kth_element(root: Node, k):
     
     return kth_value[0]
 
+def merge_into_array(root1: Node, root2: Node):
+    #Problem 35.17 - BST Merge Into Array
+    
+    root1_list = []
+    root2_list = []
+    
+    def root1_dfs(node: Node):
+        if not node:
+            return
+        
+        root1_dfs(node.left)
+        root1_list.append(node.val)
+        root1_dfs(node.right)
+    
+    def root2_dfs(node: Node):
+        if not node:
+            return
+        
+        root2_dfs(node.left)
+        root2_list.append(node.val)
+        root2_dfs(node.right)
+    
+    root1_dfs(root1)
+    root2_dfs(root2)
+    
+    root1_pointer = 0
+    root2_pointer = 0
+    
+    sorted_list = []
+    while root1_pointer < len(root1_list) and root2_pointer < len(root2_list):
+        if root1_list[root1_pointer] < root2_list[root2_pointer]:
+            sorted_list.append(root1_list[root1_pointer])
+            root1_pointer += 1
+        else:
+            sorted_list.append(root2_list[root2_pointer])
+            root2_pointer += 1
+        
+    if root1_pointer == len(root1_list):
+        for index in range(root2_pointer, len(root2_list)):
+            sorted_list.append(root2_list[index])
+    else:
+        for index in range(root1_pointer, len(root1_list)):
+            sorted_list.append(root1_list[index])
+        
+    return sorted_list
+
 #TESTS
 
 def run_aligned_chain_tests():
@@ -1239,6 +1285,49 @@ def run_bst_kth_element_tests():
     assert got == want, f"\nkth_element(root, {k}): got: {got}, want: {want}\n"
   
   print("ALL BST KTH ELEMENT TESTS PROVIDED HAVE PASSED.")
+
+def run_bst_merge_into_array_tests():
+  root1 = Node(5,
+               Node(2,
+                    None,
+                    Node(4)),
+               Node(9,
+                    Node(9),
+                    Node(11)))
+
+  root2 = Node(3,
+               Node(2,
+                    Node(1)),
+               Node(7,
+                    Node(6),
+                    Node(8)))
+
+  root3 = Node(2,
+               Node(2),
+               Node(2))
+
+  root4 = Node(2,
+               Node(2),
+               Node(2))
+
+  tests = [
+      # Example 1 from the book
+      (root1, root2, [1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 9, 11]),
+      # Example 2 from the book
+      (root3, root4, [2, 2, 2, 2, 2, 2]),
+      # Edge cases
+      (None, None, []),
+      (Node(1), None, [1]),
+      (None, Node(1), [1]),
+      (Node(1), Node(2), [1, 2]),
+  ]
+
+  for root1, root2, want in tests:
+    got = merge_into_array(root1, root2)
+    assert got == want, f"\nmerge_into_array({root1}, {root2}): got: {
+        got}, want: {want}\n"
+  
+  print("ALL BST MERGE INTO ARRAY TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS
 
@@ -1257,6 +1346,8 @@ def Run_All_Trees_Tests():
     run_bst_nearest_value_tests()
     run_bst_validation_tests()
     run_bst_duplicate_detection_tests()
+    run_bst_kth_element_tests()
+    run_bst_merge_into_array_tests()
     
     print()
     print("--------------------------------------------------")
@@ -1264,4 +1355,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    run_bst_kth_element_tests()
+    run_bst_merge_into_array_tests()
