@@ -494,11 +494,9 @@ def merge_into_array(root1: Node, root2: Node):
             root2_pointer += 1
         
     if root1_pointer == len(root1_list):
-        for index in range(root2_pointer, len(root2_list)):
-            sorted_list.append(root2_list[index])
+        sorted_list.extend(root2_list[root2_pointer:])
     else:
-        for index in range(root1_pointer, len(root1_list)):
-            sorted_list.append(root1_list[index])
+        sorted_list.extend(root1_list[root1_pointer:])
         
     return sorted_list
 
@@ -1355,4 +1353,4 @@ def Run_All_Trees_Tests():
     print("--------------------------------------------------")
 
 if __name__ == "__main__":
-    run_bst_merge_into_array_tests()
+    Run_All_Trees_Tests()
