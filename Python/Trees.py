@@ -462,24 +462,16 @@ def merge_into_array(root1: Node, root2: Node):
     root1_list = []
     root2_list = []
     
-    def root1_dfs(node: Node):
+    def merge_dfs(node: Node, sorted_array: list):
         if not node:
             return
         
-        root1_dfs(node.left)
-        root1_list.append(node.val)
-        root1_dfs(node.right)
+        merge_dfs(node.left, sorted_array)
+        sorted_array.append(node.val)
+        merge_dfs(node.right, sorted_array)
     
-    def root2_dfs(node: Node):
-        if not node:
-            return
-        
-        root2_dfs(node.left)
-        root2_list.append(node.val)
-        root2_dfs(node.right)
-    
-    root1_dfs(root1)
-    root2_dfs(root2)
+    merge_dfs(root1, root1_list)
+    merge_dfs(root2, root2_list)
     
     root1_pointer = 0
     root2_pointer = 0
