@@ -4659,48 +4659,85 @@ int main(int argc, const char *argv[]) {
     //Problem 35.15 - BST Duplicate Detection
     
     // Example 1 - BST with duplicates
-    TreeNode* root1 = new TreeNode(5);
-    root1->left = new TreeNode(2);
-    root1->right = new TreeNode(9);
-    root1->left->right = new TreeNode(4);
-    root1->right->left = new TreeNode(9);
-    root1->right->right = new TreeNode(11);
-    root1->right->left->right = new TreeNode(9);
-
-    // Example 2 - empty tree
-    TreeNode* root2 = nullptr;
-
-    // Example 3 - single node
-    TreeNode* root3 = new TreeNode(1);
-
-    // Example 4 - BST without duplicates
-    TreeNode* root4 = new TreeNode(5);
-    root4->left = new TreeNode(2);
-    root4->right = new TreeNode(8);
-    root4->left->left = new TreeNode(1);
-    root4->left->right = new TreeNode(4);
-    root4->right->left = new TreeNode(6);
-    root4->right->right = new TreeNode(9);
-
-    std::vector<std::pair<TreeNode*, bool>> tests = {
-        {root1, true},   // Has duplicates (9s)
-        {root2, false},  // Empty tree has no duplicates
-        {root3, false},  // Single node has no duplicates
-        {root4, false},  // No duplicates
-    };
-
-    for (int i = 0; i < tests.size(); i++) {
-      auto [root, want] = tests[i];
-      bool got = hasDuplicate(root);
-      if (got != want) {
-        std::string error_msg = "\nhas_duplicate(root" + std::to_string(i + 1) +
-                                "): got: " + std::to_string(got) +
-                                ", want: " + std::to_string(want) + "\n";
-        throw std::runtime_error(error_msg);
-      }
-    }
+//    TreeNode* root1 = new TreeNode(5);
+//    root1->left = new TreeNode(2);
+//    root1->right = new TreeNode(9);
+//    root1->left->right = new TreeNode(4);
+//    root1->right->left = new TreeNode(9);
+//    root1->right->right = new TreeNode(11);
+//    root1->right->left->right = new TreeNode(9);
+//
+//    // Example 2 - empty tree
+//    TreeNode* root2 = nullptr;
+//
+//    // Example 3 - single node
+//    TreeNode* root3 = new TreeNode(1);
+//
+//    // Example 4 - BST without duplicates
+//    TreeNode* root4 = new TreeNode(5);
+//    root4->left = new TreeNode(2);
+//    root4->right = new TreeNode(8);
+//    root4->left->left = new TreeNode(1);
+//    root4->left->right = new TreeNode(4);
+//    root4->right->left = new TreeNode(6);
+//    root4->right->right = new TreeNode(9);
+//
+//    std::vector<std::pair<TreeNode*, bool>> tests = {
+//        {root1, true},   // Has duplicates (9s)
+//        {root2, false},  // Empty tree has no duplicates
+//        {root3, false},  // Single node has no duplicates
+//        {root4, false},  // No duplicates
+//    };
+//
+//    for (int i = 0; i < tests.size(); i++) {
+//      auto [root, want] = tests[i];
+//      bool got = hasDuplicate(root);
+//      if (got != want) {
+//        std::string error_msg = "\nhas_duplicate(root" + std::to_string(i + 1) +
+//                                "): got: " + std::to_string(got) +
+//                                ", want: " + std::to_string(want) + "\n";
+//        throw std::runtime_error(error_msg);
+//      }
+//    }
+//    
+//    cout << "ALL BST DUPLICATE DETECTION TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL BST DUPLICATE DETECTION TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 35.16 - Kth Element
+    
+    TreeNode* root = new TreeNode(
+          5,
+          new TreeNode(2, new TreeNode(1, nullptr, nullptr), new TreeNode(4, nullptr, nullptr)),
+          new TreeNode(8, new TreeNode(6, nullptr, nullptr),
+                   new TreeNode(9, nullptr, nullptr)));
+
+      std::vector<std::pair<std::pair<TreeNode*, int>, int>> tests = {
+          {{new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
+                     new TreeNode(9, new TreeNode(9, nullptr, nullptr),
+                              new TreeNode(11, nullptr, nullptr))),
+            4},
+           9},
+          {{new TreeNode(1, nullptr, nullptr), 0}, 1},  // Single node
+          {{root, 0}, 1},
+          {{root, 1}, 2},
+          {{root, 2}, 4},
+          {{root, 3}, 5},
+          {{root, 4}, 6},
+          {{root, 5}, 8},
+          {{root, 6}, 9},
+      };
+
+      for (int i = 0; i < tests.size(); i++) {
+        auto [input, want] = tests[i];
+        auto [root, k] = input;
+        int got = kthElement(root, k);
+        if (got != want) {
+          throw std::runtime_error("\nkth_element(root, " + std::to_string(k) +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
+        }
+      }
+    
+    cout << "ALL BST KTH ELEMENT TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

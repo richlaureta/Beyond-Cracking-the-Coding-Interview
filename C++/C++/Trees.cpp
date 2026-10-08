@@ -487,3 +487,36 @@ bool hasDuplicate(TreeNode* root)
     
     return false;
 }
+
+void dfsBST(TreeNode* node, int k, int& kthValue, int& kthCount)
+{
+    //Problem 35.16 - BST Kth Element
+    
+    if(!node) return;
+        
+    dfsBST(node->left, k, kthValue, kthCount);
+        
+    kthCount++;
+        
+    if(kthCount == k)
+    {
+        kthValue = node->val;
+        return;
+    }
+        
+    dfsBST(node->right, k, kthValue, kthCount);
+}
+
+int kthElement(TreeNode* root, int k)
+{
+    //Problem 35.16 - BST Kth Element
+    
+    if(!root) return INT_MIN;
+    
+    int kthValue = INT_MIN;
+    int kthCount = -1;
+    
+    dfsBST(root, k, kthValue, kthCount);
+    
+    return kthValue;
+}
