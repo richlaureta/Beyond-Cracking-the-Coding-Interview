@@ -351,6 +351,7 @@ bool isBST(TreeNode* root);
 bool hasDuplicate(TreeNode* root);
 void dfsBST(TreeNode* node, int k, int& kthValue, int& kthCount);
 int kthElement(TreeNode* root, int k);
+void mergeDFS(TreeNode* node, vector<int>& sortedVector);
 vector<int> mergeIntoArray(TreeNode* root1, TreeNode* root2);
 
 #endif // HEADER_HPP

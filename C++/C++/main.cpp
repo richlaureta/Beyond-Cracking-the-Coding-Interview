@@ -4704,40 +4704,90 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.16 - Kth Element
     
-    TreeNode* root = new TreeNode(
-          5,
-          new TreeNode(2, new TreeNode(1, nullptr, nullptr), new TreeNode(4, nullptr, nullptr)),
-          new TreeNode(8, new TreeNode(6, nullptr, nullptr),
-                   new TreeNode(9, nullptr, nullptr)));
-
-      std::vector<std::pair<std::pair<TreeNode*, int>, int>> tests = {
-          {{new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
-                     new TreeNode(9, new TreeNode(9, nullptr, nullptr),
-                              new TreeNode(11, nullptr, nullptr))),
-            4},
-           9},
-          {{new TreeNode(1, nullptr, nullptr), 0}, 1},  // Single node
-          {{root, 0}, 1},
-          {{root, 1}, 2},
-          {{root, 2}, 4},
-          {{root, 3}, 5},
-          {{root, 4}, 6},
-          {{root, 5}, 8},
-          {{root, 6}, 9},
-      };
-
-      for (int i = 0; i < tests.size(); i++) {
-        auto [input, want] = tests[i];
-        auto [root, k] = input;
-        int got = kthElement(root, k);
-        if (got != want) {
-          throw std::runtime_error("\nkth_element(root, " + std::to_string(k) +
-                                   "): got: " + std::to_string(got) +
-                                   ", want: " + std::to_string(want) + "\n");
-        }
-      }
+//    TreeNode* root = new TreeNode(
+//          5,
+//          new TreeNode(2, new TreeNode(1, nullptr, nullptr), new TreeNode(4, nullptr, nullptr)),
+//          new TreeNode(8, new TreeNode(6, nullptr, nullptr),
+//                   new TreeNode(9, nullptr, nullptr)));
+//
+//      std::vector<std::pair<std::pair<TreeNode*, int>, int>> tests = {
+//          {{new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
+//                     new TreeNode(9, new TreeNode(9, nullptr, nullptr),
+//                              new TreeNode(11, nullptr, nullptr))),
+//            4},
+//           9},
+//          {{new TreeNode(1, nullptr, nullptr), 0}, 1},  // Single node
+//          {{root, 0}, 1},
+//          {{root, 1}, 2},
+//          {{root, 2}, 4},
+//          {{root, 3}, 5},
+//          {{root, 4}, 6},
+//          {{root, 5}, 8},
+//          {{root, 6}, 9},
+//      };
+//
+//      for (int i = 0; i < tests.size(); i++) {
+//        auto [input, want] = tests[i];
+//        auto [root, k] = input;
+//        int got = kthElement(root, k);
+//        if (got != want) {
+//          throw std::runtime_error("\nkth_element(root, " + std::to_string(k) +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL BST KTH ELEMENT TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL BST KTH ELEMENT TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 35.17 - BST Merge into Array
+    
+    TreeNode* root1 = new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
+                           new TreeNode(9, new TreeNode(9, nullptr, nullptr),
+                                    new TreeNode(11, nullptr, nullptr)));
+
+    TreeNode* root2 = new TreeNode(3, new TreeNode(2, new TreeNode(1, nullptr, nullptr), nullptr),
+                           new TreeNode(7, new TreeNode(6, nullptr, nullptr),
+                                    new TreeNode(8, nullptr, nullptr)));
+
+    TreeNode* root3 =
+        new TreeNode(2, new TreeNode(2, nullptr, nullptr), new TreeNode(2, nullptr, nullptr));
+
+    TreeNode* root4 =
+        new TreeNode(2, new TreeNode(2, nullptr, nullptr), new TreeNode(2, nullptr, nullptr));
+
+    std::vector<std::pair<std::pair<TreeNode*, TreeNode*>, std::vector<int>>> tests = {
+        // Example 1 from the book
+        {{root1, root2}, {1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 9, 11}},
+        // Example 2 from the book
+        {{root3, root4}, {2, 2, 2, 2, 2, 2}},
+        // Edge cases
+        {{nullptr, nullptr}, {}},
+        {{new TreeNode(1, nullptr, nullptr), nullptr}, {1}},
+        {{nullptr, new TreeNode(1, nullptr, nullptr)}, {1}},
+        {{new TreeNode(1, nullptr, nullptr), new TreeNode(2, nullptr, nullptr)}, {1, 2}},
+    };
+
+    for (int i = 0; i < tests.size(); i++) {
+      auto [input, want] = tests[i];
+      auto [root1, root2] = input;
+      auto got = mergeIntoArray(root1, root2);
+      if (got != want) {
+        std::string error_msg = "\nmerge_into_array(): got: [";
+        for (size_t j = 0; j < got.size(); j++) {
+          if (j > 0) error_msg += ", ";
+          error_msg += std::to_string(got[j]);
+        }
+        error_msg += "], want: [";
+        for (size_t j = 0; j < want.size(); j++) {
+          if (j > 0) error_msg += ", ";
+          error_msg += std::to_string(want[j]);
+        }
+        error_msg += "]\n";
+        throw std::runtime_error(error_msg);
+      }
+    }
+    
+    cout << "ALL BST MERGE INTO ARRAY TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

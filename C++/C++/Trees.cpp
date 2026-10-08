@@ -520,3 +520,61 @@ int kthElement(TreeNode* root, int k)
     
     return kthValue;
 }
+
+void mergeDFS(TreeNode* node, vector<int>& sortedVector)
+{
+    //Problem 35.17 - BST Merge into Array
+    
+    if(!node) return;
+    
+    mergeDFS(node->left, sortedVector);
+    sortedVector.push_back(node->val);
+    mergeDFS(node->right, sortedVector);
+}
+
+vector<int> mergeIntoArray(TreeNode* root1, TreeNode* root2)
+{
+    //Problem 35.17 - BST Merge into Array
+    
+    vector<int> root1Vector;
+    vector<int> root2Vector;
+    
+    
+    mergeDFS(root1, root1Vector);
+    mergeDFS(root2, root2Vector);
+    
+    int root1Pointer = 0;
+    int root2Pointer = 0;
+    
+    vector<int> sortedVector;
+    while((root1Pointer < root1Vector.size()) and (root2Pointer < root2Vector.size()))
+    {
+        if(root1Vector[root1Pointer] < root2Vector[root2Pointer])
+        {
+            sortedVector.push_back(root1Vector[root1Pointer]);
+            root1Pointer++;
+        }
+        else
+        {
+            sortedVector.push_back(root2Vector[root2Pointer]);
+            root2Pointer++;
+        }
+    }
+        
+    if(root1Pointer == root1Vector.size())
+    {
+        for(int index = root2Pointer; index < root2Vector.size(); index++)
+        {
+            sortedVector.push_back(root2Vector[index]);
+        }
+    }
+    else
+    {
+        for(int index = root1Pointer; index < root1Vector.size(); index++)
+        {
+            sortedVector.push_back(root1Vector[index]);
+        }
+    }
+        
+    return sortedVector;
+}
