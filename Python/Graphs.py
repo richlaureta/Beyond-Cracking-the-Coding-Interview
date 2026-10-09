@@ -1,6 +1,25 @@
+from collections import defaultdict
+
 def validate(graph):
     #Problem 36.1 - Adjacency List Validation
-    pass
+    
+    node_set_dictionary = defaultdict(set)
+    for index, node in enumerate(graph):
+        for number in node:
+            if (number > len(graph) - 1 or 
+                number < 0 or 
+                number == index or
+                number in node_set_dictionary[index]):
+                return False
+            
+            node_set_dictionary[index].add(number)
+    
+    for index, node in enumerate(graph):
+        for number in node:
+            if index not in node_set_dictionary[number]:
+                return False
+    
+    return True
 
 #TESTS
 def run_validate_tests():
