@@ -4741,53 +4741,107 @@ int main(int argc, const char *argv[]) {
     
     //Problem 35.17 - BST Merge into Array
     
-    TreeNode* root1 = new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
-                           new TreeNode(9, new TreeNode(9, nullptr, nullptr),
-                                    new TreeNode(11, nullptr, nullptr)));
+//    TreeNode* root1 = new TreeNode(5, new TreeNode(2, nullptr, new TreeNode(4, nullptr, nullptr)),
+//                           new TreeNode(9, new TreeNode(9, nullptr, nullptr),
+//                                    new TreeNode(11, nullptr, nullptr)));
+//
+//    TreeNode* root2 = new TreeNode(3, new TreeNode(2, new TreeNode(1, nullptr, nullptr), nullptr),
+//                           new TreeNode(7, new TreeNode(6, nullptr, nullptr),
+//                                    new TreeNode(8, nullptr, nullptr)));
+//
+//    TreeNode* root3 =
+//        new TreeNode(2, new TreeNode(2, nullptr, nullptr), new TreeNode(2, nullptr, nullptr));
+//
+//    TreeNode* root4 =
+//        new TreeNode(2, new TreeNode(2, nullptr, nullptr), new TreeNode(2, nullptr, nullptr));
+//
+//    std::vector<std::pair<std::pair<TreeNode*, TreeNode*>, std::vector<int>>> tests = {
+//        // Example 1 from the book
+//        {{root1, root2}, {1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 9, 11}},
+//        // Example 2 from the book
+//        {{root3, root4}, {2, 2, 2, 2, 2, 2}},
+//        // Edge cases
+//        {{nullptr, nullptr}, {}},
+//        {{new TreeNode(1, nullptr, nullptr), nullptr}, {1}},
+//        {{nullptr, new TreeNode(1, nullptr, nullptr)}, {1}},
+//        {{new TreeNode(1, nullptr, nullptr), new TreeNode(2, nullptr, nullptr)}, {1, 2}},
+//    };
+//
+//    for (int i = 0; i < tests.size(); i++) {
+//      auto [input, want] = tests[i];
+//      auto [root1, root2] = input;
+//      auto got = mergeIntoArray(root1, root2);
+//      if (got != want) {
+//        std::string error_msg = "\nmerge_into_array(): got: [";
+//        for (size_t j = 0; j < got.size(); j++) {
+//          if (j > 0) error_msg += ", ";
+//          error_msg += std::to_string(got[j]);
+//        }
+//        error_msg += "], want: [";
+//        for (size_t j = 0; j < want.size(); j++) {
+//          if (j > 0) error_msg += ", ";
+//          error_msg += std::to_string(want[j]);
+//        }
+//        error_msg += "]\n";
+//        throw std::runtime_error(error_msg);
+//      }
+//    }
+//    
+//    cout << "ALL BST MERGE INTO ARRAY TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 36.1 - Adjacency List Validation
+    
+    std::vector<std::pair<std::vector<std::vector<int>>, bool>> tests = {
+        // Valid cases
+        {{{1}, {0}}, true},                // Simple valid graph
+        {{{1, 2}, {0, 2}, {0, 1}}, true},  // Triangle graph
+        {{}, true},                        // Empty graph
+        {{
+             {},
+         },
+         true},  // Single isolated node
 
-    TreeNode* root2 = new TreeNode(3, new TreeNode(2, new TreeNode(1, nullptr, nullptr), nullptr),
-                           new TreeNode(7, new TreeNode(6, nullptr, nullptr),
-                                    new TreeNode(8, nullptr, nullptr)));
+        // Invalid node index cases
+        {{{2}, {0}}, false},  // Node index too large
+        {{{-1}, {}}, false},  // Negative node index
 
-    TreeNode* root3 =
-        new TreeNode(2, new TreeNode(2, nullptr, nullptr), new TreeNode(2, nullptr, nullptr));
+        // Self-loop cases
+        {{{0}, {}}, false},   // Self loop
+        {{{1}, {1}}, false},  // Self loop in second node
 
-    TreeNode* root4 =
-        new TreeNode(2, new TreeNode(2, nullptr, nullptr), new TreeNode(2, nullptr, nullptr));
+        // Parallel edge cases
+        {{{1, 1}, {0, 0}}, false},       // Same edge twice from first node
+        {{{1}, {0, 2, 0}, {1}}, false},  // Same edge twice from second node
 
-    std::vector<std::pair<std::pair<TreeNode*, TreeNode*>, std::vector<int>>> tests = {
-        // Example 1 from the book
-        {{root1, root2}, {1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 9, 11}},
-        // Example 2 from the book
-        {{root3, root4}, {2, 2, 2, 2, 2, 2}},
-        // Edge cases
-        {{nullptr, nullptr}, {}},
-        {{new TreeNode(1, nullptr, nullptr), nullptr}, {1}},
-        {{nullptr, new TreeNode(1, nullptr, nullptr)}, {1}},
-        {{new TreeNode(1, nullptr, nullptr), new TreeNode(2, nullptr, nullptr)}, {1, 2}},
+        // Unmatched edge cases
+        {{{1}, {}}, false},          // Edge only in one direction
+        {{{1, 2}, {0}, {}}, false},  // Some edges missing their pairs
+        {{{1}, {2}, {0}}, false},    // Cycle with unmatched edges
     };
 
-    for (int i = 0; i < tests.size(); i++) {
-      auto [input, want] = tests[i];
-      auto [root1, root2] = input;
-      auto got = mergeIntoArray(root1, root2);
+    for (const auto& [graph, want] : tests) {
+      bool got = validate(graph);
+
+      std::string graph_str = "[";
+      for (size_t i = 0; i < graph.size(); i++) {
+        if (i > 0) graph_str += ", ";
+        graph_str += "[";
+        for (size_t j = 0; j < graph[i].size(); j++) {
+          if (j > 0) graph_str += ", ";
+          graph_str += std::to_string(graph[i][j]);
+        }
+        graph_str += "]";
+      }
+      graph_str += "]";
+
       if (got != want) {
-        std::string error_msg = "\nmerge_into_array(): got: [";
-        for (size_t j = 0; j < got.size(); j++) {
-          if (j > 0) error_msg += ", ";
-          error_msg += std::to_string(got[j]);
-        }
-        error_msg += "], want: [";
-        for (size_t j = 0; j < want.size(); j++) {
-          if (j > 0) error_msg += ", ";
-          error_msg += std::to_string(want[j]);
-        }
-        error_msg += "]\n";
-        throw std::runtime_error(error_msg);
+        throw std::runtime_error("\nvalidate(" + graph_str +
+                                 "): got: " + std::to_string(got) +
+                                 ", want: " + std::to_string(want) + "\n");
       }
     }
     
-    cout << "ALL BST MERGE INTO ARRAY TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL ADJACENCY LIST VALIDATION TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

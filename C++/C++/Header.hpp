@@ -354,4 +354,7 @@ int kthElement(TreeNode* root, int k);
 void mergeDFS(TreeNode* node, vector<int>& sortedVector);
 vector<int> mergeIntoArray(TreeNode* root1, TreeNode* root2);
 
+//Graphs
+bool validate(const vector<vector<int>>& graph);
+
 #endif // HEADER_HPP
