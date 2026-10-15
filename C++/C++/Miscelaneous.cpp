@@ -35,7 +35,7 @@ int romanToInt(string s)
         }
         else
         {
-            countInteger += romanValueMap[s[pointer]]
+            countInteger += romanValueMap[s[pointer]];
             pointer++;
         }
     }
