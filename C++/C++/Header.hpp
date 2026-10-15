@@ -357,4 +357,6 @@ vector<int> mergeIntoArray(TreeNode* root1, TreeNode* root2);
 //Graphs
 bool validate(const vector<vector<int>>& graph);
 
+//Miscelaneous
+
 #endif // HEADER_HPP
