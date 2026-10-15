@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 def romanToInt(s: str) -> int:
     #LeetCode Problem 13 - Roman to Integer
     
@@ -31,6 +29,5 @@ def romanToInt(s: str) -> int:
     return count_integer
     
 if __name__ == "__main__":
-    #1476
     s = "MCMXCIV"
     print(romanToInt(s))
