@@ -358,5 +358,6 @@ vector<int> mergeIntoArray(TreeNode* root1, TreeNode* root2);
 bool validate(const vector<vector<int>>& graph);
 
 //Miscelaneous
+int romanToInt(string s);
 
 #endif // HEADER_HPP
