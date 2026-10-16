@@ -29,5 +29,7 @@ def romanToInt(s: str) -> int:
     return count_integer
     
 if __name__ == "__main__":
+    #Confirmation Testing
+    
     s = "MCMXCIV"
     print(romanToInt(s))
