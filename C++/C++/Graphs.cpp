@@ -38,3 +38,92 @@ bool validate(const vector<vector<int>>& graph)
     
     return true;
 }
+
+vector<int> pathBfs(const vector<vector<int>>& graph, int node1, int node2) {
+    //Problem 36.2 - Graph Path - Part of the Tests
+    
+  std::queue<int> Q;
+  Q.push(node2);
+  std::unordered_map<int, int> predecessors;
+  predecessors[node2] = -1;
+  while (!Q.empty()) {
+    int node = Q.front();
+    Q.pop();
+    for (int nbr : graph[node]) {
+      if (predecessors.find(nbr) == predecessors.end()) {
+        predecessors[nbr] = node;
+        Q.push(nbr);
+      }
+    }
+  }
+  if (predecessors.find(node1) == predecessors.end()) {
+    return std::vector<int>();
+  }
+  std::vector<int> path = {node1};
+  while (path.back() != node2) {
+    path.push_back(predecessors[path.back()]);
+  }
+  return path;
+}
+
+void pathDfs(const vector<vector<int>> &graph, int nodeIndex, int node2, vector<int> &pathVector, vector<int> &temporaryPathVector, unordered_set<int> &pathSet, bool &foundFlag)
+{
+    //Problem 36.2 - Graph Path
+    
+    for(int index = 0; index < graph[nodeIndex].size(); index++)
+    {
+        if(graph[nodeIndex][index] == node2)
+        {
+            pathVector.insert(pathVector.end(), temporaryPathVector.begin(), temporaryPathVector.end());
+            pathVector.push_back(graph[nodeIndex][index]);
+            foundFlag = true;
+            return;
+        }
+        
+        if (pathSet.find(graph[nodeIndex][index]) != pathSet.end()) continue;
+            
+        pathSet.insert(graph[nodeIndex][index]);
+        temporaryPathVector.push_back(graph[nodeIndex][index]);
+            
+        pathDfs(graph, graph[nodeIndex][index], node2, pathVector, temporaryPathVector, pathSet, foundFlag);
+            
+        if(foundFlag == true) return;
+            
+        temporaryPathVector.pop_back();
+    }
+}
+
+vector<int> path(const vector<vector<int>> &graph, int node1, int node2)
+{
+    //Problem 36.2 - Graph Path
+    
+    if(node1 == node2) return {node1};
+    
+    vector<int> pathVector = {node1};
+    vector<int> temporaryPathVector;
+    unordered_set<int> pathSet = {node1};
+    
+    bool foundFlag = false;
+            
+    for(int index = 0; index < graph[node1].size(); index++)
+    {
+        if(graph[node1][index] == node2)
+        {
+            pathVector.push_back(graph[node1][index]);
+            return pathVector;
+        }
+        
+        pathSet.insert(graph[node1][index]);
+        temporaryPathVector.push_back(graph[node1][index]);
+        
+        pathDfs(graph, graph[node1][index], node2, pathVector, temporaryPathVector, pathSet, foundFlag);
+        
+        if(foundFlag == true) break;
+        
+        temporaryPathVector.pop_back();
+    }
+    
+    if(foundFlag == false) return {};
+    
+    return pathVector;
+}

@@ -4791,36 +4791,83 @@ int main(int argc, const char *argv[]) {
     
     //Problem 36.1 - Adjacency List Validation
     
-    std::vector<std::pair<std::vector<std::vector<int>>, bool>> tests = {
-        // Valid cases
-        {{{1}, {0}}, true},                // Simple valid graph
-        {{{1, 2}, {0, 2}, {0, 1}}, true},  // Triangle graph
-        {{}, true},                        // Empty graph
-        {{
-             {},
-         },
-         true},  // Single isolated node
+//    std::vector<std::pair<std::vector<std::vector<int>>, bool>> tests = {
+//        // Valid cases
+//        {{{1}, {0}}, true},                // Simple valid graph
+//        {{{1, 2}, {0, 2}, {0, 1}}, true},  // Triangle graph
+//        {{}, true},                        // Empty graph
+//        {{
+//             {},
+//         },
+//         true},  // Single isolated node
+//
+//        // Invalid node index cases
+//        {{{2}, {0}}, false},  // Node index too large
+//        {{{-1}, {}}, false},  // Negative node index
+//
+//        // Self-loop cases
+//        {{{0}, {}}, false},   // Self loop
+//        {{{1}, {1}}, false},  // Self loop in second node
+//
+//        // Parallel edge cases
+//        {{{1, 1}, {0, 0}}, false},       // Same edge twice from first node
+//        {{{1}, {0, 2, 0}, {1}}, false},  // Same edge twice from second node
+//
+//        // Unmatched edge cases
+//        {{{1}, {}}, false},          // Edge only in one direction
+//        {{{1, 2}, {0}, {}}, false},  // Some edges missing their pairs
+//        {{{1}, {2}, {0}}, false},    // Cycle with unmatched edges
+//    };
+//
+//    for (const auto& [graph, want] : tests) {
+//      bool got = validate(graph);
+//
+//      std::string graph_str = "[";
+//      for (size_t i = 0; i < graph.size(); i++) {
+//        if (i > 0) graph_str += ", ";
+//        graph_str += "[";
+//        for (size_t j = 0; j < graph[i].size(); j++) {
+//          if (j > 0) graph_str += ", ";
+//          graph_str += std::to_string(graph[i][j]);
+//        }
+//        graph_str += "]";
+//      }
+//      graph_str += "]";
+//
+//      if (got != want) {
+//        throw std::runtime_error("\nvalidate(" + graph_str +
+//                                 "): got: " + std::to_string(got) +
+//                                 ", want: " + std::to_string(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL ADJACENCY LIST VALIDATION TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 36.2 - Graph Path
+    
+    std::vector<
+        std::tuple<std::vector<std::vector<int>>, int, int, std::vector<int>>>
+        tests = {
+            // Example 1 from book - graph from Figure 8
+            {{{1}, {0, 2, 5, 4}, {1, 4, 5}, {}, {5, 2, 1}, {1, 2, 4}},
+             0,
+             4,
+             {0, 1, 4}},
+            // Example 2 from book - graph from Figure 8, no path exists
+            {{{1}, {0, 2, 5, 4}, {1, 4, 5}, {}, {5, 2, 1}, {1, 2, 4}}, 0, 3, {}},
+            // Simple line graph
+            {{{1}, {0, 2}, {1}}, 0, 2, {0, 1, 2}},
+            // Cycle graph
+            {{{1, 3}, {0, 2}, {1, 3}, {0, 2}}, 0, 2, {0, 1, 2}},
+            // Disconnected graph
+            {{{1}, {0}, {3}, {2}}, 0, 2, {}},
+            // Complete graph
+            {{{1, 2}, {0, 2}, {0, 1}}, 0, 2, {0, 2}}};
 
-        // Invalid node index cases
-        {{{2}, {0}}, false},  // Node index too large
-        {{{-1}, {}}, false},  // Negative node index
+    for (const auto& [graph, node1, node2, want] : tests) {
 
-        // Self-loop cases
-        {{{0}, {}}, false},   // Self loop
-        {{{1}, {1}}, false},  // Self loop in second node
-
-        // Parallel edge cases
-        {{{1, 1}, {0, 0}}, false},       // Same edge twice from first node
-        {{{1}, {0, 2, 0}, {1}}, false},  // Same edge twice from second node
-
-        // Unmatched edge cases
-        {{{1}, {}}, false},          // Edge only in one direction
-        {{{1, 2}, {0}, {}}, false},  // Some edges missing their pairs
-        {{{1}, {2}, {0}}, false},    // Cycle with unmatched edges
-    };
-
-    for (const auto& [graph, want] : tests) {
-      bool got = validate(graph);
+      std::vector<int> got = path(graph, node1, node2);
+      std::vector<int> gotBfs = pathBfs(graph, node1, node2);
 
       std::string graph_str = "[";
       for (size_t i = 0; i < graph.size(); i++) {
@@ -4834,14 +4881,95 @@ int main(int argc, const char *argv[]) {
       }
       graph_str += "]";
 
-      if (got != want) {
-        throw std::runtime_error("\nvalidate(" + graph_str +
-                                 "): got: " + std::to_string(got) +
-                                 ", want: " + std::to_string(want) + "\n");
+      // For this problem, there can be multiple valid paths
+      // So we need to verify:
+      // 1. If want is empty, got should be empty
+      // 2. If want is not empty:
+      //    - got should start with node1 and end with node2
+      //    - got should be a valid path in the graph
+      //    - got should not have duplicates
+      if (want.empty()) {
+        if (!got.empty()) {
+          throw std::runtime_error(
+              "\npath(" + graph_str + ", " + std::to_string(node1) + ", " +
+              std::to_string(node2) + "): got: " + std::to_string(got[0]) +
+              ", want empty path\n");
+        }
+        if (!gotBfs.empty()) {
+          throw std::runtime_error(
+              "\npathBfs(" + graph_str + ", " + std::to_string(node1) + ", " +
+              std::to_string(node2) + "): got non-empty, want empty path\n");
+        }
+        continue;
+      }
+
+      if (got[0] != node1 || got.back() != node2) {
+        throw std::runtime_error(
+            "\npath(" + graph_str + ", " + std::to_string(node1) + ", " +
+            std::to_string(node2) + "): path should start with " +
+            std::to_string(node1) + " and end with " + std::to_string(node2) +
+            "\n");
+      }
+      if (gotBfs[0] != node1 || gotBfs.back() != node2) {
+        throw std::runtime_error(
+            "\npathBfs(" + graph_str + ", " + std::to_string(node1) + ", " +
+            std::to_string(node2) + "): path should start with " +
+            std::to_string(node1) + " and end with " + std::to_string(node2) +
+            "\n");
+      }
+
+      // Verify path is valid
+      for (size_t i = 0; i < got.size() - 1; i++) {
+        bool valid = false;
+        for (int nbr : graph[got[i]]) {
+          if (nbr == got[i + 1]) {
+            valid = true;
+            break;
+          }
+        }
+        if (!valid) {
+          throw std::runtime_error(
+              "\npath(" + graph_str + ", " + std::to_string(node1) + ", " +
+              std::to_string(node2) + "): invalid path - no edge between " +
+              std::to_string(got[i]) + " and " + std::to_string(got[i + 1]) +
+              "\n");
+        }
+      }
+
+      // Verify path is valid for BFS
+      for (size_t i = 0; i < gotBfs.size() - 1; i++) {
+        bool valid = false;
+        for (int nbr : graph[gotBfs[i]]) {
+          if (nbr == gotBfs[i + 1]) {
+            valid = true;
+            break;
+          }
+        }
+        if (!valid) {
+          throw std::runtime_error(
+              "\npathBfs(" + graph_str + ", " + std::to_string(node1) + ", " +
+              std::to_string(node2) + "): invalid path - no edge between " +
+              std::to_string(gotBfs[i]) + " and " +
+              std::to_string(gotBfs[i + 1]) + "\n");
+        }
+      }
+
+      // Verify no duplicates
+      std::unordered_set<int> unique(got.begin(), got.end());
+      if (unique.size() != got.size()) {
+        throw std::runtime_error(
+            "\npath(" + graph_str + ", " + std::to_string(node1) + ", " +
+            std::to_string(node2) + "): path contains duplicates\n");
+      }
+      std::unordered_set<int> uniqueBfs(gotBfs.begin(), gotBfs.end());
+      if (uniqueBfs.size() != gotBfs.size()) {
+        throw std::runtime_error(
+            "\npathBfs(" + graph_str + ", " + std::to_string(node1) + ", " +
+            std::to_string(node2) + "): path contains duplicates\n");
       }
     }
     
-    cout << "ALL ADJACENCY LIST VALIDATION TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL GRAPH PATH TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

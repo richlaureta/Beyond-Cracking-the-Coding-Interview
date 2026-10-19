@@ -23,7 +23,7 @@ def validate(graph):
     return True
 
 def path(graph, node1, node2):
-    #Problem 36.2 - Connectivity
+    #Problem 36.2 - Graph Path
     
     if node1 == node2:
         return [node1]
@@ -77,7 +77,7 @@ def path(graph, node1, node2):
 #TESTS
 
 def path_bfs(graph, node1, node2):
-    #Problem 36.2 - Connectivity - Part of Tests
+    #Problem 36.2 - Graph Path - Part of Tests
     
   Q = deque()
   Q.append(node2)
@@ -184,7 +184,6 @@ def run_connectivity_tests():
 
   print("ALL CONNECTIVITY TESTS PROVIDED HAVE PASSED.")
 
-#TESTING
 #ALL TESTS
 
 def Run_All_Graphs_Tests():
