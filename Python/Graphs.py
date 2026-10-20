@@ -88,11 +88,10 @@ def is_tree(graph):
         
         node_set.add(popped_node)
         for node_point in graph[popped_node]:
-            if node_point in node_set and node_point != ancestor_node:
-                return False
-            
             if node_point not in node_set:
                 node_dequeue.append((node_point, popped_node))
+            elif node_point != ancestor_node:
+                return False
             
     if len(graph) == len(node_set):
         return True
