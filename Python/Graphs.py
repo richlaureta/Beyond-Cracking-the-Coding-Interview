@@ -73,6 +73,31 @@ def path(graph, node1, node2):
         return [] 
     
     return path_list
+
+def is_tree(graph):
+    #Problem 36.3 - Tree Check
+    
+    if not graph:
+        return True
+    
+    node_dequeue = deque([(0, -1)])
+    node_set = set()
+    
+    while node_dequeue:
+        popped_node, ancestor_node = node_dequeue.popleft()
+        
+        node_set.add(popped_node)
+        for node_point in graph[popped_node]:
+            if node_point in node_set and node_point != ancestor_node:
+                return False
+            
+            if node_point not in node_set:
+                node_dequeue.append((node_point, popped_node))
+            
+    if len(graph) == len(node_set):
+        return True
+    
+    return False
     
 #TESTS
 
@@ -184,16 +209,47 @@ def run_connectivity_tests():
 
   print("ALL CONNECTIVITY TESTS PROVIDED HAVE PASSED.")
 
+def run_tree_check_tests():
+  tests = [
+    # Example 1 from the book
+    ([[2], [2, 5], [0, 1, 3, 4], [2], [2], [1]], True),
+    # Example 2 from the book
+    ([[2], [5], [0, 3], [2], [], [1]], False),
+    # Example 3 from the book
+    ([[1], [0, 2, 5], [1, 3, 4], [2], [2, 5], [1, 4]], False),
+    # Single node
+    ([[]], True),
+    # Two nodes connected
+    ([[1], [0]], True),
+    # Two nodes disconnected
+    ([[], []], False),
+    # Line graph (valid tree)
+    ([[1], [0, 2], [1, 3], [2]], True),
+    # Cycle
+    ([[1, 3], [2, 0], [3, 1], [0, 2]], False),
+    # Complete graph K4 (not a tree)
+    ([[1, 2, 3], [0, 2, 3], [0, 1, 3], [0, 1, 2]], False),
+    # Star graph
+    ([[1, 2, 3, 4], [0], [0], [0], [0]], True),
+  ]
+  
+  for graph, want in tests:
+    got = is_tree(graph)
+    assert got == want, f"\nis_tree({graph}): got: {got}, want: {want}\n"
+  
+  print("ALL TREE CHECK TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Graphs_Tests():
     run_validate_tests()
     run_connectivity_tests()
-      
+    run_tree_check_tests()
+    
     print()
     print("------------------------------------------")
     print("ALL GRAPHS TESTS IN THE FILE HAVE PASSED. |")
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Graphs_Tests()
+    run_tree_check_tests()
