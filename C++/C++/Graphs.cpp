@@ -127,3 +127,32 @@ vector<int> path(const vector<vector<int>> &graph, int node1, int node2)
     
     return pathVector;
 }
+
+bool isTree(const vector<vector<int>> &graph)
+{
+    //Problem 36.3 - Tree Check
+    
+    if(graph.size() == 0) return true;
+    
+    deque<pair<int, int>> nodeDequeue = {{0, -1}};
+    unordered_set<int> nodeSet;
+    
+    while(nodeDequeue.size() > 0)
+    {
+        int poppedNode = nodeDequeue.front().first;
+        int connectionNode = nodeDequeue.front().second;
+        
+        nodeDequeue.pop_front();
+        
+        nodeSet.insert(poppedNode);
+        for (int nodePoint : graph[poppedNode])
+        {
+            if(nodeSet.find(nodePoint) == nodeSet.end()) nodeDequeue.push_back({nodePoint, poppedNode});
+            else if(nodePoint != connectionNode) return false;
+        }
+    }
+    
+    if(graph.size() == nodeSet.size()) return true;
+    
+    return false;
+}

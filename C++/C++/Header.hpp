@@ -359,6 +359,7 @@ bool validate(const vector<vector<int>>& graph);
 vector<int> pathBfs(const vector<vector<int>>& graph, int node1, int node2);
 void pathDfs(const vector<vector<int>> &graph, int nodeIndex, int node2, vector<int> &pathVector, vector<int> &temporaryPathList, unordered_set<int> &pathSet, bool &foundFlag);
 vector<int> path(const vector<vector<int>> &graph, int node1, int node2);
+bool isTree(const vector<vector<int>> &graph);
 
 //Miscelaneous
 int romanToInt(string s);
