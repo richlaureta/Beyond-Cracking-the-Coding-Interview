@@ -104,18 +104,18 @@ def spanning_tree(graph):
     node_set = set()
     spanning_connection_list = []
     
-    def dfs_spanning(node, node_set):
+    def dfs_spanning(node):
         for node_index in graph[node]:
             if node_index in node_set:
                 continue
             
             node_set.add(node_index)
             spanning_connection_list.append([node, node_index])
-            dfs_spanning(node_index, node_set)
+            dfs_spanning(node_index)
         
     node_set.add(0)
         
-    dfs_spanning(0, node_set)
+    dfs_spanning(0)
     
     return spanning_connection_list    
 
