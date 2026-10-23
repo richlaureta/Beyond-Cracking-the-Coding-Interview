@@ -330,4 +330,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_spanning_tree_tests()
+    Run_All_Graphs_Tests()
