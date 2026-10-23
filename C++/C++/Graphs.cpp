@@ -156,3 +156,32 @@ bool isTree(const vector<vector<int>> &graph)
     
     return false;
 }
+
+void dfsSpanning(int node, unordered_set<int> &nodeSet, vector<vector<int>> &spanningConnectionVector,
+                 const vector<vector<int>> &graph)
+{
+    //Problem 36.4 - Spanning Tree
+    
+    for(int nodeIndex : graph[node])
+    {
+        if(nodeSet.find(nodeIndex) != nodeSet.end()) continue;
+            
+        nodeSet.insert(nodeIndex);
+        spanningConnectionVector.push_back({node, nodeIndex});
+        dfsSpanning(nodeIndex, nodeSet, spanningConnectionVector, graph);
+    }
+}
+
+vector<vector<int>> spanningTree(const vector<vector<int>> &graph)
+{
+    //Problem 36.4 - Spanning Tree
+    
+    unordered_set<int> nodeSet;
+    vector<vector<int>> spanningConnectionVector;
+        
+    nodeSet.insert(0);
+        
+    dfsSpanning(0, nodeSet, spanningConnectionVector, graph);
+    
+    return spanningConnectionVector;
+}
