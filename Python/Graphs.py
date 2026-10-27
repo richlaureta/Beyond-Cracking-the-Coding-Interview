@@ -119,6 +119,44 @@ def spanning_tree(graph):
     
     return spanning_connection_list    
 
+def connected_component_queries(graph, queries):
+    #Problem 36.5 - Reachability Queries
+    
+    visited_node_set = set()
+    node_can_be_visited_dictionary = defaultdict(set)
+    node_path = []
+
+    def dfs_connection(node):
+        if node in visited_node_set:
+            return
+        
+        visited_node_set.add(node)
+        node_path.append(node)
+        
+        for index in range(len(graph[node])):
+            dfs_connection(graph[node][index])
+    
+    for index0 in range(len(graph)):
+        if index0 in visited_node_set:
+            continue
+        
+        dfs_connection(index0)
+    
+        for index1, node_1 in enumerate(node_path):
+            for index2 in range(len(node_path)):
+                node_can_be_visited_dictionary[node_1].add(node_path[index2])
+                
+        node_path = []
+    
+    is_query_connected_list = []
+    for query in queries:
+        if query[1] in node_can_be_visited_dictionary[query[0]]:
+            is_query_connected_list.append(True)
+        else:
+            is_query_connected_list.append(False)
+    
+    return is_query_connected_list
+
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -315,7 +353,47 @@ def run_spanning_tree_tests():
         f"\nspanning_tree({graph}): edges do not form a tree: {got}"
     
   print("ALL SPANNING TREE TESTS PROVIDED HAVE PASSED.")
+
+def run_reachability_queries_tests():
+  tests = [
+      # Cycle graph with 6 nodes
+      [[[1, 5], [0, 2, 4], [1, 3, 5], [2, 4], [1, 3, 5], [0, 2, 4]],
+       [(0, 4), (0, 3)],
+          [True, True]],
+      # Example
+      [[[1], [0, 2, 5, 4], [1, 4, 5], [], [5, 2, 1], [1, 2, 4]],
+       [(0, 4), (0, 3)],
+          [True, False]],
+      # Simple line graph
+      [[[1], [0, 2], [1]],
+          [(0, 2), (0, 1)],
+          [True, True]],
+      # Disconnected components
+      [[[1], [0], [3], [2]],
+          [(0, 1), (0, 2), (2, 3)],
+          [True, False, True]],
+      # Complete graph
+      [[[1, 2], [0, 2], [0, 1]],
+          [(0, 1), (1, 2), (0, 2)],
+          [True, True, True]],
+      # Single node
+      [[[]],
+          [(0, 0)],
+          [True]],
+      # Empty queries
+      [[[1], [0]],
+          [],
+          []]
+  ]
+  
+  for graph, queries, want in tests:
+    got = connected_component_queries(graph, queries)
+    assert got == want, f"\nconnected_component_queries({graph}, {queries}): got: {
+        got}, want: {want}\n"
     
+  print("ALL REACHABILITY QUERIES TESTS PROVIDED PASSED.")
+  
+
 #ALL TESTS
 
 def Run_All_Graphs_Tests():
@@ -323,6 +401,7 @@ def Run_All_Graphs_Tests():
     run_connectivity_tests()
     run_tree_check_tests()
     run_spanning_tree_tests()
+    run_reachability_queries_tests()
     
     print()
     print("------------------------------------------")
@@ -330,4 +409,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Graphs_Tests()
+    run_reachability_queries_tests()
