@@ -176,15 +176,8 @@ def strongly_connected(graph):
         
         node_set.add(node)
         
-        for node1 in graph[node]:
-            if node1 == connected_node and len(graph) == 1 :
-                strongly_connected_flag[0] = False
-                break
-            
+        for node1 in graph[node]:            
             dfs_stongly_connected(node1, node)
-            
-            if strongly_connected_flag[0] == False:
-                return
     
     dfs_stongly_connected(0, -1)
 
