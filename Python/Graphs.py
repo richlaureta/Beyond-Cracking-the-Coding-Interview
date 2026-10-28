@@ -157,6 +157,39 @@ def connected_component_queries(graph, queries):
     
     return is_query_connected_list
 
+def strongly_connected(graph):
+    #Problem 36.6 - Strongly Connected Graph
+    
+    if len(graph) == 1 and not graph[0]:
+        return True
+    
+    strongly_connected_flag = [True]
+    node_set = set()
+    
+    def dfs_stongly_connected(node, connected_node):
+        if not graph[node]:
+            strongly_connected_flag[0] = False
+            return 
+        
+        if node in node_set:
+            return
+        
+        node_set.add(node)
+        
+        for node1 in graph[node]:
+            if node1 == connected_node and len(graph) == 1 :
+                strongly_connected_flag[0] = False
+                break
+            
+            dfs_stongly_connected(node1, node)
+            
+            if strongly_connected_flag[0] == False:
+                return
+    
+    dfs_stongly_connected(0, -1)
+
+    return strongly_connected_flag[0]
+
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -394,6 +427,33 @@ def run_reachability_queries_tests():
   print("ALL REACHABILITY QUERIES TESTS PROVIDED PASSED.")
   
 
+def run_strongly_connected_graph_tests():
+  tests = [
+      # Example strongly connected
+      [[[1], [2], [0]], True],
+      # Example not strongly connected
+      [[[1], [2], []], False],
+      # Single node
+      [[[]], True],
+      # Two nodes, strongly connected
+      [[[1], [0]], True],
+      # Two nodes, not strongly connected
+      [[[1], []], False],
+      # Cycle of 4 nodes
+      [[[1], [2], [3], [0]], True],
+      # Almost cycle of 4 nodes, missing one edge
+      [[[1], [2], [3], []], False],
+      # Complete graph
+      [[[1, 2], [0, 2], [0, 1]], True],
+  ]
+  
+  for graph, want in tests:
+    got = strongly_connected(graph)
+    assert got == want, f"\nstrongly_connected({graph}): got: {
+        got}, want: {want}\n"
+
+  print("ALL STRONGLY CONNECTED GRAPH TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Graphs_Tests():
@@ -402,6 +462,7 @@ def Run_All_Graphs_Tests():
     run_tree_check_tests()
     run_spanning_tree_tests()
     run_reachability_queries_tests()
+    run_strongly_connected_graph_tests()
     
     print()
     print("------------------------------------------")
@@ -409,4 +470,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_reachability_queries_tests()
+    run_strongly_connected_graph_tests()
