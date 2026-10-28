@@ -185,3 +185,48 @@ vector<vector<int>> spanningTree(const vector<vector<int>> &graph)
     
     return spanningConnectionVector;
 }
+
+void dfsConnection(int node, const vector<vector<int>> &graph, unordered_set<int> &visitedNodeSet, vector<int> &nodePath)
+{
+    //Problem 36.5 - Reachability Queries
+    
+    if (visitedNodeSet.find(node) != visitedNodeSet.end()) return;
+        
+    visitedNodeSet.insert(node);
+    nodePath.push_back(node);
+    
+    for(int index = 0; index < graph[node].size(); index++) dfsConnection(graph[node][index], graph, visitedNodeSet, nodePath);
+}
+
+vector<bool> connectedComponentQueries(const vector<vector<int>> &graph, const vector<pair<int, int>> &queries)
+{
+    //Problem 36.5 - Reachability Queries
+    
+    unordered_set<int> visitedNodeSet;
+    unordered_map<int, unordered_set<int>> nodeCanBeVisitedMap;
+    vector<int> nodePath;
+    
+    for(int index0 = 0; index0 < graph.size(); index0++)
+    {
+        if (visitedNodeSet.find(index0) != visitedNodeSet.end()) continue;
+            
+        dfsConnection(index0, graph, visitedNodeSet, nodePath);
+        
+        for(int node1 : nodePath)
+        {
+            for(int index2 = 0; index2 < nodePath.size(); index2++) nodeCanBeVisitedMap[node1].insert(nodePath[index2]);
+        }
+                
+        nodePath = {};
+    }
+    
+    vector<bool> isQueryConnectedVector;
+    
+    for(pair<int, int> query : queries)
+    {
+        if(nodeCanBeVisitedMap[query.first].find(query.second) != nodeCanBeVisitedMap[query.first].end()) isQueryConnectedVector.push_back(true);
+        else isQueryConnectedVector.push_back(false);
+    }
+    
+    return isQueryConnectedVector;
+}

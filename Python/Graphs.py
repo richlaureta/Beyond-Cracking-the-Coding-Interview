@@ -142,7 +142,7 @@ def connected_component_queries(graph, queries):
         
         dfs_connection(index0)
     
-        for index1, node_1 in enumerate(node_path):
+        for node_1 in node_path:
             for index2 in range(len(node_path)):
                 node_can_be_visited_dictionary[node_1].add(node_path[index2])
                 

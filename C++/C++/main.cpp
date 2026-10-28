@@ -5027,91 +5027,161 @@ int main(int argc, const char *argv[]) {
     
     //Problem 36.4 - Spanning Tree
     
-    std::vector<std::vector<std::vector<int>>> tests = {
-          // Example from the book
-          {{1}, {0, 2, 5}, {1, 3, 4}, {2}, {2, 5}, {1, 4}},
-          // Single edge
-          {{1}, {0}},
-          // Line graph
-          {{1}, {0, 2}, {1}},
-          // Star graph
-          {{1, 2, 3}, {0}, {0}, {0}},
-          // Complete graph
-          {{1, 2}, {0, 2}, {0, 1}},
-          // Single node graph
-          {{}}};
-
-      for (const auto& graph : tests) {
-        auto got = spanningTree(graph);
-
-        // Since there can be multiple valid spanning trees,
-        // we check that:
-        // 1. We have V-1 edges
-        // 2. Each edge connects valid nodes
-        // 3. The edges form a tree (no cycles)
-        int V = (int)graph.size();
-        if (got.size() != V - 1) {
-          throw std::runtime_error("\nspanning_tree: got wrong number of edges");
-        }
-
-        // Check edges are valid
-        for (const auto& edge : got) {
-          int u = edge[0], v = edge[1];
-          if (u < 0 || u >= V || v < 0 || v >= V) {
-            throw std::runtime_error("\nspanning_tree: invalid node in edge");
-          }
-          bool valid = false;
-          for (int nbr : graph[u]) {
-            if (nbr == v) {
-              valid = true;
-              break;
-            }
-          }
-          for (int nbr : graph[v]) {
-            if (nbr == u) {
-              valid = true;
-              break;
-            }
-          }
-          if (!valid) {
-            throw std::runtime_error("\nspanning_tree: invalid edge");
-          }
-        }
-
-        // Check no cycles by counting reachable nodes
-        std::vector<std::vector<int>> adj(V);
-        for (const auto& edge : got) {
-          adj[edge[0]].push_back(edge[1]);
-          adj[edge[1]].push_back(edge[0]);
-        }
-
-        std::unordered_set<int> visited;
-        std::queue<std::pair<int, int>> Q;
-        Q.push({0, -1});  // node, parent
-        visited.insert(0);
-        bool hasCycle = true;
-        while (!Q.empty()) {
-          auto [node, parent] = Q.front();
-          Q.pop();
-          for (int nbr : adj[node]) {
-            if (nbr != parent) {
-              if (visited.find(nbr) != visited.end()) {
-                hasCycle = false;
-                break;
-              }
-              visited.insert(nbr);
-              Q.push({nbr, node});
-            }
-          }
-          if (!hasCycle) break;
-        }
-
-        if (!hasCycle || visited.size() != V) {
-          throw std::runtime_error("\nspanning_tree: edges do not form a tree");
-        }
-      }
+//    std::vector<std::vector<std::vector<int>>> tests = {
+//          // Example from the book
+//          {{1}, {0, 2, 5}, {1, 3, 4}, {2}, {2, 5}, {1, 4}},
+//          // Single edge
+//          {{1}, {0}},
+//          // Line graph
+//          {{1}, {0, 2}, {1}},
+//          // Star graph
+//          {{1, 2, 3}, {0}, {0}, {0}},
+//          // Complete graph
+//          {{1, 2}, {0, 2}, {0, 1}},
+//          // Single node graph
+//          {{}}};
+//
+//      for (const auto& graph : tests) {
+//        auto got = spanningTree(graph);
+//
+//        // Since there can be multiple valid spanning trees,
+//        // we check that:
+//        // 1. We have V-1 edges
+//        // 2. Each edge connects valid nodes
+//        // 3. The edges form a tree (no cycles)
+//        int V = (int)graph.size();
+//        if (got.size() != V - 1) {
+//          throw std::runtime_error("\nspanning_tree: got wrong number of edges");
+//        }
+//
+//        // Check edges are valid
+//        for (const auto& edge : got) {
+//          int u = edge[0], v = edge[1];
+//          if (u < 0 || u >= V || v < 0 || v >= V) {
+//            throw std::runtime_error("\nspanning_tree: invalid node in edge");
+//          }
+//          bool valid = false;
+//          for (int nbr : graph[u]) {
+//            if (nbr == v) {
+//              valid = true;
+//              break;
+//            }
+//          }
+//          for (int nbr : graph[v]) {
+//            if (nbr == u) {
+//              valid = true;
+//              break;
+//            }
+//          }
+//          if (!valid) {
+//            throw std::runtime_error("\nspanning_tree: invalid edge");
+//          }
+//        }
+//
+//        // Check no cycles by counting reachable nodes
+//        std::vector<std::vector<int>> adj(V);
+//        for (const auto& edge : got) {
+//          adj[edge[0]].push_back(edge[1]);
+//          adj[edge[1]].push_back(edge[0]);
+//        }
+//
+//        std::unordered_set<int> visited;
+//        std::queue<std::pair<int, int>> Q;
+//        Q.push({0, -1});  // node, parent
+//        visited.insert(0);
+//        bool hasCycle = true;
+//        while (!Q.empty()) {
+//          auto [node, parent] = Q.front();
+//          Q.pop();
+//          for (int nbr : adj[node]) {
+//            if (nbr != parent) {
+//              if (visited.find(nbr) != visited.end()) {
+//                hasCycle = false;
+//                break;
+//              }
+//              visited.insert(nbr);
+//              Q.push({nbr, node});
+//            }
+//          }
+//          if (!hasCycle) break;
+//        }
+//
+//        if (!hasCycle || visited.size() != V) {
+//          throw std::runtime_error("\nspanning_tree: edges do not form a tree");
+//        }
+//      }
+//    
+//    cout << "ALL SPANNING TREE TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL SPANNING TREE TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 36.5 - Reachability Queries
+    
+    auto vecToStr = [](const std::vector<int>& vec) {
+      std::string str = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) str += ", ";
+        str += std::to_string(vec[i]);
+      }
+      str += "]";
+      return str;
+    };
+
+    auto vecVecToStr = [&vecToStr](const std::vector<std::vector<int>>& vec) {
+      std::string str = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) str += ", ";
+        str += vecToStr(vec[i]);
+      }
+      str += "]";
+      return str;
+    };
+
+    auto queriesToStr = [](const std::vector<std::pair<int, int>>& queries) {
+      std::string str = "[";
+      for (size_t i = 0; i < queries.size(); i++) {
+        if (i > 0) str += ", ";
+        str += "(" + std::to_string(queries[i].first) + ", " +
+               std::to_string(queries[i].second) + ")";
+      }
+      str += "]";
+      return str;
+    };
+
+    std::vector<std::tuple<const std::vector<std::vector<int>>,
+                           const std::vector<std::pair<int, int>>, std::vector<bool>>>
+        tests = {
+            // Cycle graph with 6 nodes
+            {{{1, 5}, {0, 2, 4}, {1, 3, 5}, {2, 4}, {1, 3, 5}, {0, 2, 4}},
+             {{0, 4}, {0, 3}},
+             {true, true}},
+            // Example
+            {{{1}, {0, 2, 5, 4}, {1, 4, 5}, {}, {5, 2, 1}, {1, 2, 4}},
+             {{0, 4}, {0, 3}},
+             {true, false}},
+            // Simple line graph
+            {{{1}, {0, 2}, {1}}, {{0, 2}, {0, 1}}, {true, true}},
+            // Disconnected components
+            {{{1}, {0}, {3}, {2}}, {{0, 1}, {0, 2}, {2, 3}}, {true, false, true}},
+            // Complete graph
+            {{{1, 2}, {0, 2}, {0, 1}},
+             {{0, 1}, {1, 2}, {0, 2}},
+             {true, true, true}},
+            // Single node
+            {{{}}, {{0, 0}}, {true}},
+            // Empty queries
+            {{{1}, {0}}, {}, {}}};
+
+    for (const auto& [graph, queries, want] : tests) {
+      auto got = connectedComponentQueries(graph, queries);
+
+      if (got != want) {
+        throw std::runtime_error("\nsolve(" + vecVecToStr(graph) + ", " +
+                               queriesToStr(queries) +
+                               "): got: " + std::to_string(got[0]) +
+                               ", want: " + std::to_string(want[0]) + "\n");
+      }
+    }
+    
+    cout << "ALL REACHABILITY QUERIES TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     
