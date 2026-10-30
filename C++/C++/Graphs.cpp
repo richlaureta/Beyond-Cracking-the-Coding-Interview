@@ -230,3 +230,4 @@ vector<bool> connectedComponentQueries(const vector<vector<int>> &graph, const v
     
     return isQueryConnectedVector;
 }
+

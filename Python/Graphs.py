@@ -181,6 +181,9 @@ def strongly_connected(graph):
     
     dfs_stongly_connected(0, -1)
 
+    if len(node_set) < len(graph):
+        return False
+    
     return strongly_connected_flag[0]
 
 #TESTS
