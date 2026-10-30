@@ -166,7 +166,7 @@ def strongly_connected(graph):
     strongly_connected_flag = [True]
     node_set = set()
     
-    def dfs_stongly_connected(node, connected_node):
+    def dfs_strongly_connected(node):
         if not graph[node]:
             strongly_connected_flag[0] = False
             return 
@@ -177,9 +177,9 @@ def strongly_connected(graph):
         node_set.add(node)
         
         for node1 in graph[node]:            
-            dfs_stongly_connected(node1, node)
+            dfs_strongly_connected(node1)
     
-    dfs_stongly_connected(0, -1)
+    dfs_strongly_connected(0)
 
     if len(node_set) < len(graph):
         return False

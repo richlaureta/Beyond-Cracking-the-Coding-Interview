@@ -5115,73 +5115,121 @@ int main(int argc, const char *argv[]) {
     
     //Problem 36.5 - Reachability Queries
     
-    auto vecToStr = [](const std::vector<int>& vec) {
-      std::string str = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) str += ", ";
-        str += std::to_string(vec[i]);
-      }
-      str += "]";
-      return str;
-    };
-
-    auto vecVecToStr = [&vecToStr](const std::vector<std::vector<int>>& vec) {
-      std::string str = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) str += ", ";
-        str += vecToStr(vec[i]);
-      }
-      str += "]";
-      return str;
-    };
-
-    auto queriesToStr = [](const std::vector<std::pair<int, int>>& queries) {
-      std::string str = "[";
-      for (size_t i = 0; i < queries.size(); i++) {
-        if (i > 0) str += ", ";
-        str += "(" + std::to_string(queries[i].first) + ", " +
-               std::to_string(queries[i].second) + ")";
-      }
-      str += "]";
-      return str;
-    };
-
-    std::vector<std::tuple<const std::vector<std::vector<int>>,
-                           const std::vector<std::pair<int, int>>, std::vector<bool>>>
-        tests = {
-            // Cycle graph with 6 nodes
-            {{{1, 5}, {0, 2, 4}, {1, 3, 5}, {2, 4}, {1, 3, 5}, {0, 2, 4}},
-             {{0, 4}, {0, 3}},
-             {true, true}},
-            // Example
-            {{{1}, {0, 2, 5, 4}, {1, 4, 5}, {}, {5, 2, 1}, {1, 2, 4}},
-             {{0, 4}, {0, 3}},
-             {true, false}},
-            // Simple line graph
-            {{{1}, {0, 2}, {1}}, {{0, 2}, {0, 1}}, {true, true}},
-            // Disconnected components
-            {{{1}, {0}, {3}, {2}}, {{0, 1}, {0, 2}, {2, 3}}, {true, false, true}},
-            // Complete graph
-            {{{1, 2}, {0, 2}, {0, 1}},
-             {{0, 1}, {1, 2}, {0, 2}},
-             {true, true, true}},
-            // Single node
-            {{{}}, {{0, 0}}, {true}},
-            // Empty queries
-            {{{1}, {0}}, {}, {}}};
-
-    for (const auto& [graph, queries, want] : tests) {
-      auto got = connectedComponentQueries(graph, queries);
-
-      if (got != want) {
-        throw std::runtime_error("\nsolve(" + vecVecToStr(graph) + ", " +
-                               queriesToStr(queries) +
-                               "): got: " + std::to_string(got[0]) +
-                               ", want: " + std::to_string(want[0]) + "\n");
-      }
-    }
+//    auto vecToStr = [](const std::vector<int>& vec) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) str += ", ";
+//        str += std::to_string(vec[i]);
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    auto vecVecToStr = [&vecToStr](const std::vector<std::vector<int>>& vec) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) str += ", ";
+//        str += vecToStr(vec[i]);
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    auto queriesToStr = [](const std::vector<std::pair<int, int>>& queries) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < queries.size(); i++) {
+//        if (i > 0) str += ", ";
+//        str += "(" + std::to_string(queries[i].first) + ", " +
+//               std::to_string(queries[i].second) + ")";
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    std::vector<std::tuple<const std::vector<std::vector<int>>,
+//                           const std::vector<std::pair<int, int>>, std::vector<bool>>>
+//        tests = {
+//            // Cycle graph with 6 nodes
+//            {{{1, 5}, {0, 2, 4}, {1, 3, 5}, {2, 4}, {1, 3, 5}, {0, 2, 4}},
+//             {{0, 4}, {0, 3}},
+//             {true, true}},
+//            // Example
+//            {{{1}, {0, 2, 5, 4}, {1, 4, 5}, {}, {5, 2, 1}, {1, 2, 4}},
+//             {{0, 4}, {0, 3}},
+//             {true, false}},
+//            // Simple line graph
+//            {{{1}, {0, 2}, {1}}, {{0, 2}, {0, 1}}, {true, true}},
+//            // Disconnected components
+//            {{{1}, {0}, {3}, {2}}, {{0, 1}, {0, 2}, {2, 3}}, {true, false, true}},
+//            // Complete graph
+//            {{{1, 2}, {0, 2}, {0, 1}},
+//             {{0, 1}, {1, 2}, {0, 2}},
+//             {true, true, true}},
+//            // Single node
+//            {{{}}, {{0, 0}}, {true}},
+//            // Empty queries
+//            {{{1}, {0}}, {}, {}}};
+//
+//    for (const auto& [graph, queries, want] : tests) {
+//      auto got = connectedComponentQueries(graph, queries);
+//
+//      if (got != want) {
+//        throw std::runtime_error("\nsolve(" + vecVecToStr(graph) + ", " +
+//                               queriesToStr(queries) +
+//                               "): got: " + std::to_string(got[0]) +
+//                               ", want: " + std::to_string(want[0]) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL REACHABILITY QUERIES TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL REACHABILITY QUERIES TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 36.6 - Strongly Connected Graph
+    
+    std::vector<std::pair<const std::vector<std::vector<int>>, bool>> tests = {
+          // Example strongly connected
+          {{{1}, {2}, {0}}, true},
+          // Example not strongly connected
+          {{{1}, {2}, {}}, false},
+          // Single node
+          {{{
+               {},
+           }},
+           true},
+          // Two nodes, strongly connected
+          {{{1}, {0}}, true},
+          // Two nodes, not strongly connected
+          {{{1}, {}}, false},
+          // Cycle of 4 nodes
+          {{{1}, {2}, {3}, {0}}, true},
+          // Almost cycle of 4 nodes, missing one edge
+          {{{1}, {2}, {3}, {}}, false},
+          // Complete graph
+          {{{1, 2}, {0, 2}, {0, 1}}, true},
+      };
+
+      for (const auto& [graph, want] : tests) {
+        bool got = stronglyConnected(graph);
+
+        std::string graph_str = "[";
+        for (size_t i = 0; i < graph.size(); i++) {
+          if (i > 0) graph_str += ", ";
+          graph_str += "[";
+          for (size_t j = 0; j < graph[i].size(); j++) {
+            if (j > 0) graph_str += ", ";
+            graph_str += std::to_string(graph[i][j]);
+          }
+          graph_str += "]";
+        }
+        graph_str += "]";
+
+        if (got != want) {
+          throw std::runtime_error("\nstronglyConnected(" + graph_str +
+                                   "): got: " + std::to_string(got) +
+                                   ", want: " + std::to_string(want) + "\n");
+        }
+      }
+    
+    cout << "ALL STRONGLY CONNECTED GRAPH TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

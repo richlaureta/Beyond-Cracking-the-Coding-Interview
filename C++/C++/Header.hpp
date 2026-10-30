@@ -364,6 +364,8 @@ void dfsSpanning(int node, unordered_set<int> &nodeSet, vector<vector<int>> &spa
 vector<vector<int>> spanningTree(const vector<vector<int>> &graph);
 void dfsConnection(int node, vector<vector<int>> &graph, unordered_set<int> &visitedNodeSet, vector<int> &nodePath);
 vector<bool> connectedComponentQueries(const vector<vector<int>> &graph, const vector<pair<int, int>> &queries);
+void dfsStronglyConnected(const vector<vector<int>> &graph, bool &stronglyConnectedFlag, unordered_set<int> &nodeSet);
+bool stronglyConnected(const vector<vector<int>> &graph);
 
 //Miscelaneous
 int romanToInt(string s);

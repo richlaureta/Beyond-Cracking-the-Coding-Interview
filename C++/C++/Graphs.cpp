@@ -231,3 +231,38 @@ vector<bool> connectedComponentQueries(const vector<vector<int>> &graph, const v
     return isQueryConnectedVector;
 }
 
+void dfsStronglyConnected(int node, const vector<vector<int>> &graph, bool &stronglyConnectedFlag, unordered_set<int> &nodeSet)
+{
+    //Problem 36.6 - Strongly Connected Graph
+    
+    if(graph[node].size() == 0)
+    {
+        stronglyConnectedFlag = false;
+        return;
+    }
+    
+    if(nodeSet.find(node) != nodeSet.end()) return;
+    
+    nodeSet.insert(node);
+    
+    for(int node1 : graph[node])
+    {
+        dfsStronglyConnected(node1, graph, stronglyConnectedFlag, nodeSet);
+    }
+}
+
+bool stronglyConnected(const vector<vector<int>> &graph)
+{
+    //Problem 36.6 - Strongly Connected Graph
+    
+    if(graph.size() == 1 and graph[0].size() == 0) return true;
+    
+    bool stronglyConnectedFlag = true;
+    unordered_set<int> nodeSet;
+    
+    dfsStronglyConnected(0, graph, stronglyConnectedFlag, nodeSet);
+
+    if (nodeSet.size() < graph.size()) return false;
+    
+    return stronglyConnectedFlag;
+}
