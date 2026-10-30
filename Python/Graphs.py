@@ -466,4 +466,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_strongly_connected_graph_tests()
+    Run_All_Graphs_Tests()
