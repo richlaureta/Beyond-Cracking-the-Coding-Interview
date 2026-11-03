@@ -186,6 +186,43 @@ def strongly_connected(graph):
     
     return strongly_connected_flag[0]
 
+def max_hilliness(graph, heights):
+    #Problem 36.7 - Hilliest Connected Component
+    
+    max_average_hilliness = 0.0
+    visited_node_to_node_set = set()
+    
+    hilli_list = []
+    connected_component_node_count = [0]
+    
+    def dfs_max_hilliness(node):        
+        for node_1 in graph[node]:
+            if ((node, node_1) in visited_node_to_node_set) or ((node_1, node) in visited_node_to_node_set):
+                continue
+            
+            visited_node_to_node_set.add((node, node_1))
+            visited_node_to_node_set.add((node_1, node))
+            connected_component_node_count[0] += 1
+            
+            difference_absolute_value = abs(heights[node] - heights[node_1])
+            hilli_list.append(difference_absolute_value)
+            
+            dfs_max_hilliness(node_1)
+            
+    for index in range(len(graph)):
+        dfs_max_hilliness(index)
+        
+        if connected_component_node_count[0] == 0:
+            continue
+            
+        connected_component_average_hilliness = sum(hilli_list) / connected_component_node_count[0]
+        max_average_hilliness = max(max_average_hilliness, connected_component_average_hilliness)
+        connected_component_node_count[0] = 0
+        hilli_list = []
+        
+    return max_average_hilliness
+
+
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -449,6 +486,30 @@ def run_strongly_connected_graph_tests():
         got}, want: {want}\n"
 
   print("ALL STRONGLY CONNECTED GRAPH TESTS PROVIDED HAVE PASSED.")
+
+def run_hilliest_connected_component_tests():
+  tests = [
+      # Example
+      [[[1, 3], [0, 2], [1, 3], [0, 2]], [4, 1, 3, 2], 2],
+      # Single node component
+      [[[]], [5], 0],
+      # Two disconnected components
+      [[[1], [0], [3], [2]], [1.5, 5.5, 0.0, 5.0], 5],
+      # All nodes same height
+      [[[1, 2], [0, 2], [0, 1]], [3, 3, 3], 0],
+      # Line graph
+      [[[1], [0, 2], [1]], [1, 5, 2], 3.5],
+      # Complete graph
+      [[[1, 2, 3], [0, 2, 3], [0, 1, 3], [0, 1, 2]],
+       [1, 4, 7, 10], (3 + 6 + 9 + 3 + 6 + 3) / 6]
+  ]
+  
+  for graph, heights, want in tests:
+    got = max_hilliness(graph, heights)
+    assert abs(
+        got - want) < 0.0001, f"\nmax_hilliness({graph}, {heights}): got: {got}, want: {want}\n"
+  
+  print("ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED.")
   
 #ALL TESTS TESTING
 
@@ -466,4 +527,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Graphs_Tests()
+    run_hilliest_connected_component_tests()
