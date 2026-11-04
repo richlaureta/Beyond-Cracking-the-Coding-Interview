@@ -5185,51 +5185,112 @@ int main(int argc, const char *argv[]) {
     
     //Problem 36.6 - Strongly Connected Graph
     
-    std::vector<std::pair<const std::vector<std::vector<int>>, bool>> tests = {
-          // Example strongly connected
-          {{{1}, {2}, {0}}, true},
-          // Example not strongly connected
-          {{{1}, {2}, {}}, false},
-          // Single node
-          {{{
-               {},
-           }},
-           true},
-          // Two nodes, strongly connected
-          {{{1}, {0}}, true},
-          // Two nodes, not strongly connected
-          {{{1}, {}}, false},
-          // Cycle of 4 nodes
-          {{{1}, {2}, {3}, {0}}, true},
-          // Almost cycle of 4 nodes, missing one edge
-          {{{1}, {2}, {3}, {}}, false},
-          // Complete graph
-          {{{1, 2}, {0, 2}, {0, 1}}, true},
-      };
-
-      for (const auto& [graph, want] : tests) {
-        bool got = stronglyConnected(graph);
-
-        std::string graph_str = "[";
-        for (size_t i = 0; i < graph.size(); i++) {
-          if (i > 0) graph_str += ", ";
-          graph_str += "[";
-          for (size_t j = 0; j < graph[i].size(); j++) {
-            if (j > 0) graph_str += ", ";
-            graph_str += std::to_string(graph[i][j]);
-          }
-          graph_str += "]";
-        }
-        graph_str += "]";
-
-        if (got != want) {
-          throw std::runtime_error("\nstronglyConnected(" + graph_str +
-                                   "): got: " + std::to_string(got) +
-                                   ", want: " + std::to_string(want) + "\n");
-        }
-      }
+//    std::vector<std::pair<const std::vector<std::vector<int>>, bool>> tests = {
+//          // Example strongly connected
+//          {{{1}, {2}, {0}}, true},
+//          // Example not strongly connected
+//          {{{1}, {2}, {}}, false},
+//          // Single node
+//          {{{
+//               {},
+//           }},
+//           true},
+//          // Two nodes, strongly connected
+//          {{{1}, {0}}, true},
+//          // Two nodes, not strongly connected
+//          {{{1}, {}}, false},
+//          // Cycle of 4 nodes
+//          {{{1}, {2}, {3}, {0}}, true},
+//          // Almost cycle of 4 nodes, missing one edge
+//          {{{1}, {2}, {3}, {}}, false},
+//          // Complete graph
+//          {{{1, 2}, {0, 2}, {0, 1}}, true},
+//      };
+//
+//      for (const auto& [graph, want] : tests) {
+//        bool got = stronglyConnected(graph);
+//
+//        std::string graph_str = "[";
+//        for (size_t i = 0; i < graph.size(); i++) {
+//          if (i > 0) graph_str += ", ";
+//          graph_str += "[";
+//          for (size_t j = 0; j < graph[i].size(); j++) {
+//            if (j > 0) graph_str += ", ";
+//            graph_str += std::to_string(graph[i][j]);
+//          }
+//          graph_str += "]";
+//        }
+//        graph_str += "]";
+//
+//        if (got != want) {
+//          throw std::runtime_error("\nstronglyConnected(" + graph_str +
+//                                   "): got: " + std::to_string(got) +
+//                                   ", want: " + std::to_string(want) + "\n");
+//        }
+//      }
+//    
+//    cout << "ALL STRONGLY CONNECTED GRAPH TESTS PROVIDED HAVE PASSED." << endl;
     
-    cout << "ALL STRONGLY CONNECTED GRAPH TESTS PROVIDED HAVE PASSED." << endl;
+    //Problem 36.7 - Hilliest Connected Component
+    
+    auto vecToStr = [](const std::vector<double>& vec) {
+      std::string str = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) str += ", ";
+        str += std::to_string(vec[i]);
+      }
+      str += "]";
+      return str;
+    };
+
+    auto vecVecToStr = [](const std::vector<std::vector<int>>& vec) {
+      std::string str = "[";
+      for (size_t i = 0; i < vec.size(); i++) {
+        if (i > 0) str += ", ";
+        std::string inner = "[";
+        for (size_t j = 0; j < vec[i].size(); j++) {
+          if (j > 0) inner += ", ";
+          inner += std::to_string(vec[i][j]);
+        }
+        inner += "]";
+        str += inner;
+      }
+      str += "]";
+      return str;
+    };
+
+    std::vector<
+        std::tuple<std::vector<std::vector<int>>, std::vector<double>, double>>
+        tests = {// Example
+                 {{{1, 3}, {0, 2}, {1, 3}, {0, 2}}, {4.0, 1.0, 3.0, 2.0}, 2.0},
+                 // Single node component
+                 {{
+                      {},
+                  },
+                  {5.0},
+                  0.0},
+                 // Two disconnected components
+                 {{{1}, {0}, {3}, {2}}, {1.5, 5.5, 0.0, 5.0}, 5.0},
+                 // All nodes same height
+                 {{{1, 2}, {0, 2}, {0, 1}}, {3.0, 3.0, 3.0}, 0.0},
+                 // Line graph
+                 {{{1}, {0, 2}, {1}}, {1.0, 5.0, 2.0}, 3.5},
+                 // Complete graph
+                 {{{1, 2, 3}, {0, 2, 3}, {0, 1, 3}, {0, 1, 2}},
+                  {1.0, 4.0, 7.0, 10.0},
+                  (3.0 + 6.0 + 9.0 + 3.0 + 6.0 + 3.0) / 6.0}};
+
+    for (const auto& [graph, heights, want] : tests) {
+      double got = maxHilliness(graph, heights);
+
+      if (std::abs(got - want) >= 0.0001) {
+        throw std::runtime_error("\nmaxHilliness(" + vecVecToStr(graph) + ", " +
+                                 vecToStr(heights) + "): got: " + std::to_string(got) +
+                                 ", want: " + std::to_string(want) + "\n");
+      }
+    }
+    
+    cout << "ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

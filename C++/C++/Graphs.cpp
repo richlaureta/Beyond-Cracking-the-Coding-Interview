@@ -266,3 +266,49 @@ bool stronglyConnected(const vector<vector<int>> &graph)
     
     return stronglyConnectedFlag;
 }
+
+void dfsMaxHilliness(int node, const vector<vector<int>> &graph, const vector<double> &heights, set<pair<int, int>> &visitedNodeToNodeSet, vector<double> &hilliVector, int &connectedComponentNodeCount)
+{
+    //Problem 36.7 - Hilliest Connected Component
+    
+    for(int node1 : graph[node])
+    {
+        if ((visitedNodeToNodeSet.find({node, node1}) != visitedNodeToNodeSet.end()) or (visitedNodeToNodeSet.find({node1, node}) != visitedNodeToNodeSet.end())) continue;
+            
+        visitedNodeToNodeSet.insert({node, node1});
+        visitedNodeToNodeSet.insert({node1, node});
+        connectedComponentNodeCount++;
+            
+        double differenceAbsoluteValue = abs(heights[node] - heights[node1]);
+        hilliVector.push_back(differenceAbsoluteValue);
+            
+        dfsMaxHilliness(node1, graph, heights, visitedNodeToNodeSet, hilliVector, connectedComponentNodeCount);
+    }
+}
+
+double maxHilliness(const vector<vector<int>>& graph, const vector<double>& heights)
+{
+    //Problem 36.7 - Hilliest Connected Component
+    
+    double maxAverageHilliness = 0.0;
+    set<pair<int, int>> visitedNodeToNodeSet;
+    
+    vector<double> hilliVector;
+    int connectedComponentNodeCount = 0;
+            
+    for(int index = 0; index < graph.size(); index++)
+    {
+        dfsMaxHilliness(index, graph, heights, visitedNodeToNodeSet, hilliVector, connectedComponentNodeCount);
+        
+        if(connectedComponentNodeCount == 0) continue;
+        
+        double sum = accumulate(hilliVector.begin(), hilliVector.end(), 0);
+        
+        double connectedComponentAverageHilliness = sum / connectedComponentNodeCount;
+        maxAverageHilliness = max(maxAverageHilliness, connectedComponentAverageHilliness);
+        connectedComponentNodeCount = 0;
+        hilliVector = {};
+    }
+        
+    return maxAverageHilliness;
+}

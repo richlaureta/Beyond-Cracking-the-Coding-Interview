@@ -25,6 +25,9 @@
 #include <system_error>
 #include <optional>
 #include <map>
+#include <numeric>
+#include <set>
+#include <utility>
 
 using namespace std;
 
@@ -366,6 +369,8 @@ void dfsConnection(int node, vector<vector<int>> &graph, unordered_set<int> &vis
 vector<bool> connectedComponentQueries(const vector<vector<int>> &graph, const vector<pair<int, int>> &queries);
 void dfsStronglyConnected(const vector<vector<int>> &graph, bool &stronglyConnectedFlag, unordered_set<int> &nodeSet);
 bool stronglyConnected(const vector<vector<int>> &graph);
+void dfsMaxHilliness(int node, const vector<vector<int>> &graph, const vector<double> &heights, set<pair<int, int>> &visitedNodeToNodeSet, vector<double> &hilliVector, int &connectedComponentNodeCount);
+double maxHilliness(const vector<vector<int>>& graph, const vector<double>& heights);
 
 //Miscelaneous
 int romanToInt(string s);

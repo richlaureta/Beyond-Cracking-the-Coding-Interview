@@ -222,7 +222,6 @@ def max_hilliness(graph, heights):
         
     return max_average_hilliness
 
-
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -459,7 +458,6 @@ def run_reachability_queries_tests():
     
   print("ALL REACHABILITY QUERIES TESTS PROVIDED PASSED.")
   
-
 def run_strongly_connected_graph_tests():
   tests = [
       # Example strongly connected
@@ -510,7 +508,7 @@ def run_hilliest_connected_component_tests():
         got - want) < 0.0001, f"\nmax_hilliness({graph}, {heights}): got: {got}, want: {want}\n"
   
   print("ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED.")
-  
+
 #ALL TESTS TESTING
 
 def Run_All_Graphs_Tests():
