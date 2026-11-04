@@ -276,7 +276,6 @@ void dfsMaxHilliness(int node, const vector<vector<int>> &graph, const vector<do
         if ((visitedNodeToNodeSet.find({node, node1}) != visitedNodeToNodeSet.end())) continue;
             
         visitedNodeToNodeSet.insert({node, node1});
-        visitedNodeToNodeSet.insert({node1, node});
         connectedComponentNodeCount++;
             
         double differenceAbsoluteValue = abs(heights[node] - heights[node1]);

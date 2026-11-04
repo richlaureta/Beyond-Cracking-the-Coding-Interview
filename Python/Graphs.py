@@ -201,7 +201,6 @@ def max_hilliness(graph, heights):
                 continue
             
             visited_node_to_node_set.add((node, node_1))
-            visited_node_to_node_set.add((node_1, node))
             connected_component_node_count[0] += 1
             
             difference_absolute_value = abs(heights[node] - heights[node_1])
