@@ -197,7 +197,7 @@ def max_hilliness(graph, heights):
     
     def dfs_max_hilliness(node):        
         for node_1 in graph[node]:
-            if ((node, node_1) in visited_node_to_node_set):
+            if (node, node_1) in visited_node_to_node_set:
                 continue
             
             visited_node_to_node_set.add((node, node_1))
