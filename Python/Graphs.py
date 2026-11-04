@@ -508,7 +508,7 @@ def run_hilliest_connected_component_tests():
   
   print("ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED.")
 
-#ALL TESTS TESTING
+#ALL TESTS
 
 def Run_All_Graphs_Tests():
     run_validate_tests()
