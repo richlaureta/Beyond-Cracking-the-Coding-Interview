@@ -221,6 +221,30 @@ def max_hilliness(graph, heights):
         
     return max_average_hilliness
 
+def highest_average_elevation_gain(V, edges):
+    #Problem 36.8 - Highest Average Elevation Gain
+    
+    if not edges:
+        return 0
+    
+    elevation_list = []
+    previous_edge = [-1, 0, 0]
+    highest_average_elevation =  float('-inf')
+    
+    for edge in edges:
+        if previous_edge[1] != edge[0]:
+            highest_average_elevation = max(highest_average_elevation, sum(elevation_list) / len(elevation_list))
+            previous_edge = edge
+            elevation_list = [edge[2]]
+            continue
+            
+        previous_edge = edge
+        elevation_list.append(edge[2])
+    
+    highest_average_elevation = max(highest_average_elevation, sum(elevation_list) / len(elevation_list))
+    
+    return highest_average_elevation
+
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -508,6 +532,48 @@ def run_hilliest_connected_component_tests():
   
   print("ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED.")
 
+def run_highest_average_elevation_gain_tests():
+  tests = [
+      # Example from the book
+      (
+          4,  # V
+          [[0, 1, 3], [1, 2, 2], [2, 3, 1], [3, 0, 2]],  # edges
+          2  # want
+      ),
+      # Single edge
+      (
+          2,
+          [[0, 1, 5]],
+          5
+      ),
+      # No edges
+      (
+          3,
+          [],
+          0
+      ),
+      # Multiple components
+      (
+          6,
+          [[0, 1, 1], [1, 2, 2],  # Component 1: avg 1.5
+           [3, 4, 3], [4, 5, 5]],  # Component 2: avg 4.0
+          4
+      ),
+      # Single node component
+      (
+          3,
+          [[0, 1, 2]],  # Node 2 is isolated
+          2
+      )
+  ]
+
+  for V, edges, want in tests:
+    got = highest_average_elevation_gain(V, edges)
+    assert abs(got - want) < 1e-6, \
+        f"\nhighest_average_elevation_gain({V}, {edges}): got: {got}, want: {want}\n"
+  
+  print("ALL HIGHEST AVERAGE ELEVATION GAIN TESTS PROVIDED HAVE PASSED.")
+
 #ALL TESTS
 
 def Run_All_Graphs_Tests():
@@ -517,6 +583,7 @@ def Run_All_Graphs_Tests():
     run_spanning_tree_tests()
     run_reachability_queries_tests()
     run_strongly_connected_graph_tests()
+    run_highest_average_elevation_gain_tests()
     
     print()
     print("------------------------------------------")
@@ -524,4 +591,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_hilliest_connected_component_tests()
+    run_highest_average_elevation_gain_tests()
