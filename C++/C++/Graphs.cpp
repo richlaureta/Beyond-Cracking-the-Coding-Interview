@@ -311,3 +311,32 @@ double maxHilliness(const vector<vector<int>>& graph, const vector<double>& heig
         
     return maxAverageHilliness;
 }
+
+double highestAverageElevationGain(int V, const vector<vector<int>> edges)
+{
+    //Problem 36.8 - Highest Average Elevation Gain
+    
+    if(edges.size() == 0) return 0;
+    
+    vector<int> elevationVector;
+    vector<int> previousEdge = {-1, 0, 0};
+    double highestAverageElevation =  INT_MIN;
+    
+    for(vector<int> edge : edges)
+    {
+        if( previousEdge[1] != edge[0])
+        {
+            double sum = accumulate(elevationVector.begin(), elevationVector.end(), 0);
+            highestAverageElevation = max(highestAverageElevation, sum / elevationVector.size());
+            elevationVector = {};
+        }
+            
+        previousEdge = edge;
+        elevationVector.push_back(edge[2]);
+    }
+    
+    double sum = accumulate(elevationVector.begin(), elevationVector.end(), 0);
+    highestAverageElevation = max(highestAverageElevation, sum / elevationVector.size());
+    
+    return highestAverageElevation;
+}

@@ -5233,64 +5233,111 @@ int main(int argc, const char *argv[]) {
     
     //Problem 36.7 - Hilliest Connected Component
     
-    auto vecToStr = [](const std::vector<double>& vec) {
-      std::string str = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) str += ", ";
-        str += std::to_string(vec[i]);
+//    auto vecToStr = [](const std::vector<double>& vec) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) str += ", ";
+//        str += std::to_string(vec[i]);
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    auto vecVecToStr = [](const std::vector<std::vector<int>>& vec) {
+//      std::string str = "[";
+//      for (size_t i = 0; i < vec.size(); i++) {
+//        if (i > 0) str += ", ";
+//        std::string inner = "[";
+//        for (size_t j = 0; j < vec[i].size(); j++) {
+//          if (j > 0) inner += ", ";
+//          inner += std::to_string(vec[i][j]);
+//        }
+//        inner += "]";
+//        str += inner;
+//      }
+//      str += "]";
+//      return str;
+//    };
+//
+//    std::vector<
+//        std::tuple<std::vector<std::vector<int>>, std::vector<double>, double>>
+//        tests = {// Example
+//                 {{{1, 3}, {0, 2}, {1, 3}, {0, 2}}, {4.0, 1.0, 3.0, 2.0}, 2.0},
+//                 // Single node component
+//                 {{
+//                      {},
+//                  },
+//                  {5.0},
+//                  0.0},
+//                 // Two disconnected components
+//                 {{{1}, {0}, {3}, {2}}, {1.5, 5.5, 0.0, 5.0}, 5.0},
+//                 // All nodes same height
+//                 {{{1, 2}, {0, 2}, {0, 1}}, {3.0, 3.0, 3.0}, 0.0},
+//                 // Line graph
+//                 {{{1}, {0, 2}, {1}}, {1.0, 5.0, 2.0}, 3.5},
+//                 // Complete graph
+//                 {{{1, 2, 3}, {0, 2, 3}, {0, 1, 3}, {0, 1, 2}},
+//                  {1.0, 4.0, 7.0, 10.0},
+//                  (3.0 + 6.0 + 9.0 + 3.0 + 6.0 + 3.0) / 6.0}};
+//
+//    for (const auto& [graph, heights, want] : tests) {
+//      double got = maxHilliness(graph, heights);
+//
+//      if (std::abs(got - want) >= 0.0001) {
+//        throw std::runtime_error("\nmaxHilliness(" + vecVecToStr(graph) + ", " +
+//                                 vecToStr(heights) + "): got: " + std::to_string(got) +
+//                                 ", want: " + std::to_string(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 37.8 - Highest Average Elevation Gain
+    
+    std::vector<std::tuple<int, const std::vector<std::vector<int>>, double>> tests = {
+        // Example from the book
+        {
+            4,                                             // V
+            {{0, 1, 3}, {1, 2, 2}, {2, 3, 1}, {3, 0, 2}},  // edges
+            2                                              // want
+        },
+        // Single edge
+        {2, {{0, 1, 5}}, 5},
+        // No edges
+        {3, {}, 0},
+        // Multiple components
+        {6,
+         {{0, 1, 1},
+          {1, 2, 2},  // Component 1: avg 1.5
+          {3, 4, 3},
+          {4, 5, 5}},  // Component 2: avg 4.0
+         4},
+        // Single node component
+        {3,
+         {{0, 1, 2}},  // Node 2 is isolated
+         2}};
+
+    for (const auto& [V, edges, want] : tests) {
+      double got = highestAverageElevationGain(V, edges);
+
+      std::string edges_str = "[";
+      for (size_t i = 0; i < edges.size(); i++) {
+        if (i > 0) edges_str += ", ";
+        edges_str += "[" + std::to_string(edges[i][0]) + ", " +
+                     std::to_string(edges[i][1]) + ", " +
+                     std::to_string(edges[i][2]) + "]";
       }
-      str += "]";
-      return str;
-    };
+      edges_str += "]";
 
-    auto vecVecToStr = [](const std::vector<std::vector<int>>& vec) {
-      std::string str = "[";
-      for (size_t i = 0; i < vec.size(); i++) {
-        if (i > 0) str += ", ";
-        std::string inner = "[";
-        for (size_t j = 0; j < vec[i].size(); j++) {
-          if (j > 0) inner += ", ";
-          inner += std::to_string(vec[i][j]);
-        }
-        inner += "]";
-        str += inner;
-      }
-      str += "]";
-      return str;
-    };
-
-    std::vector<
-        std::tuple<std::vector<std::vector<int>>, std::vector<double>, double>>
-        tests = {// Example
-                 {{{1, 3}, {0, 2}, {1, 3}, {0, 2}}, {4.0, 1.0, 3.0, 2.0}, 2.0},
-                 // Single node component
-                 {{
-                      {},
-                  },
-                  {5.0},
-                  0.0},
-                 // Two disconnected components
-                 {{{1}, {0}, {3}, {2}}, {1.5, 5.5, 0.0, 5.0}, 5.0},
-                 // All nodes same height
-                 {{{1, 2}, {0, 2}, {0, 1}}, {3.0, 3.0, 3.0}, 0.0},
-                 // Line graph
-                 {{{1}, {0, 2}, {1}}, {1.0, 5.0, 2.0}, 3.5},
-                 // Complete graph
-                 {{{1, 2, 3}, {0, 2, 3}, {0, 1, 3}, {0, 1, 2}},
-                  {1.0, 4.0, 7.0, 10.0},
-                  (3.0 + 6.0 + 9.0 + 3.0 + 6.0 + 3.0) / 6.0}};
-
-    for (const auto& [graph, heights, want] : tests) {
-      double got = maxHilliness(graph, heights);
-
-      if (std::abs(got - want) >= 0.0001) {
-        throw std::runtime_error("\nmaxHilliness(" + vecVecToStr(graph) + ", " +
-                                 vecToStr(heights) + "): got: " + std::to_string(got) +
+      if (std::abs(got - want) >= 1e-6) {
+        throw std::runtime_error("\nhighestAverageElevationGain(" +
+                                 std::to_string(V) + ", " + edges_str +
+                                 "): got: " + std::to_string(got) +
                                  ", want: " + std::to_string(want) + "\n");
       }
     }
     
-    cout << "ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL HIGHEST AVERAGE ELEVATION GAIN TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

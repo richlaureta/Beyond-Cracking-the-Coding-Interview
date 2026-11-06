@@ -371,7 +371,7 @@ void dfsStronglyConnected(const vector<vector<int>> &graph, bool &stronglyConnec
 bool stronglyConnected(const vector<vector<int>> &graph);
 void dfsMaxHilliness(int node, const vector<vector<int>> &graph, const vector<double> &heights, set<pair<int, int>> &visitedNodeToNodeSet, vector<double> &hilliVector, int &connectedComponentNodeCount);
 double maxHilliness(const vector<vector<int>>& graph, const vector<double>& heights);
-
+double highestAverageElevationGain(int V, const vector<vector<int>> edges);
 //Miscelaneous
 int romanToInt(string s);
 
