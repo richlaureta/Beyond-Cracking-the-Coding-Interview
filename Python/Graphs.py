@@ -234,9 +234,7 @@ def highest_average_elevation_gain(V, edges):
     for edge in edges:
         if previous_edge[1] != edge[0]:
             highest_average_elevation = max(highest_average_elevation, sum(elevation_list) / len(elevation_list))
-            previous_edge = edge
-            elevation_list = [edge[2]]
-            continue
+            elevation_list = []
             
         previous_edge = edge
         elevation_list.append(edge[2])
