@@ -1,5 +1,6 @@
 from collections import defaultdict
 from collections import deque
+from decimal import Decimal, getcontext
 
 def validate(graph):
     #Problem 36.1 - Adjacency List Validation
@@ -222,27 +223,8 @@ def max_hilliness(graph, heights):
     return max_average_hilliness
 
 def highest_average_elevation_gain(V, edges):
-    #Problem 36.8 - Highest Average Elevation Gain
-    
-    if not edges:
-        return 0
-    
-    elevation_list = []
-    previous_edge = [-1, 0, 0]
-    highest_average_elevation =  float('-inf')
-    
-    for edge in edges:
-        if previous_edge[1] != edge[0]:
-            highest_average_elevation = max(highest_average_elevation, sum(elevation_list) / len(elevation_list))
-            elevation_list = []
-            
-        previous_edge = edge
-        elevation_list.append(edge[2])
-    
-    highest_average_elevation = max(highest_average_elevation, sum(elevation_list) / len(elevation_list))
-    
-    return highest_average_elevation
-
+    #Problem 36.8 - Highest Average Elevation Gain - Redoing the solution for this problem.
+    pass
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -556,6 +538,12 @@ def run_highest_average_elevation_gain_tests():
           [[0, 1, 1], [1, 2, 2],  # Component 1: avg 1.5
            [3, 4, 3], [4, 5, 5]],  # Component 2: avg 4.0
           4
+      ),
+      (
+          6,
+          [[0, 1, 1], [1, 2, 2],  # Component 1: avg 1.5
+           [3, 4, 3], [4, 0, 5]],  # Component 2: avg 4.0
+          2.750000
       ),
       # Single node component
       (
