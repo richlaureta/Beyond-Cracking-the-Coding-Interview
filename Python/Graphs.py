@@ -224,7 +224,97 @@ def max_hilliness(graph, heights):
 
 def highest_average_elevation_gain(V, edges):
     #Problem 36.8 - Highest Average Elevation Gain - Redoing the solution for this problem.
-    pass
+    
+    if not edges:
+        return 0
+    
+    getcontext().prec = 6
+    
+    node_connected_components_dictionary = defaultdict(set)
+    node_elevation_sum_dictionary = defaultdict(list)
+    node_component_count_dictionary = defaultdict(int)
+    
+    previous_edge = edges[0]
+    
+    node_connected_components_dictionary[previous_edge[0]].add(previous_edge[0])
+    node_connected_components_dictionary[previous_edge[0]].add(previous_edge[1])
+    
+    node_connected_components_dictionary[previous_edge[1]].add(previous_edge[0])
+    node_connected_components_dictionary[previous_edge[1]].add(previous_edge[1])
+    
+    node_elevation_sum_dictionary[previous_edge[0]] = previous_edge[2]
+    node_elevation_sum_dictionary[previous_edge[1]] = previous_edge[2]
+    
+    node_component_count_dictionary[previous_edge[0]] = 1
+    node_component_count_dictionary[previous_edge[1]] = 1
+    
+    for edge in edges[1:]:
+        if edge[0] not in node_connected_components_dictionary and edge[1] not in node_connected_components_dictionary:
+            node_connected_components_dictionary[edge[0]].add(edge[0])
+            node_connected_components_dictionary[edge[0]].add(edge[1])
+            node_connected_components_dictionary[edge[1]].add(edge[0])
+            node_connected_components_dictionary[edge[1]].add(edge[1])
+            
+            node_elevation_sum_dictionary[edge[0]] = edge[2]
+            node_elevation_sum_dictionary[edge[1]] = edge[2]
+            
+            node_component_count_dictionary[edge[0]] = 1
+            node_component_count_dictionary[edge[1]] = 1
+        elif edge[0] in node_connected_components_dictionary and edge[1] not in node_connected_components_dictionary:
+            node_connected_components_dictionary[edge[1]] = node_connected_components_dictionary[edge[0]].copy()
+            node_elevation_sum_dictionary[edge[1]] = node_elevation_sum_dictionary[edge[0]]
+            node_component_count_dictionary[edge[1]] = node_component_count_dictionary[edge[0]]
+            node_connected_components_dictionary[edge[1]].add(edge[1])
+            for node in node_connected_components_dictionary[edge[1]]:
+                node_connected_components_dictionary[node].add(edge[1])
+                node_elevation_sum_dictionary[node] += edge[2]
+                node_component_count_dictionary[node] += 1
+        elif edge[0] not in  node_connected_components_dictionary and edge[1] in node_connected_components_dictionary:
+            node_connected_components_dictionary[edge[0]] = node_connected_components_dictionary[edge[1]].copy()
+            node_elevation_sum_dictionary[edge[0]] = node_elevation_sum_dictionary[edge[1]]
+            node_component_count_dictionary[edge[0]] = node_component_count_dictionary[edge[1]]
+            node_connected_components_dictionary[edge[0]].add(edge[0])
+            for node in node_connected_components_dictionary[edge[0]]:
+                node_connected_components_dictionary[node].add(edge[0])
+                node_elevation_sum_dictionary[node] += edge[2]
+                node_component_count_dictionary[node] += 1
+        elif edge[0] in node_connected_components_dictionary and edge[1] in node_connected_components_dictionary:
+            iteration_node_0 = node_connected_components_dictionary[edge[0]].copy()
+            iteration_node_1 = node_connected_components_dictionary[edge[1]].copy()
+            
+            if edge[0] not in node_connected_components_dictionary[edge[1]]:
+                for node in iteration_node_0:
+                    node_elevation_sum_dictionary[node] += edge[2]
+                elevation_total_sum = node_elevation_sum_dictionary[edge[0]] + node_elevation_sum_dictionary[edge[1]]
+                connected_components_sum = node_component_count_dictionary[edge[0]] + node_component_count_dictionary[edge[1]] + 1
+                for node in iteration_node_0:
+                    node_elevation_sum_dictionary[node] = elevation_total_sum
+                    node_component_count_dictionary[node] = connected_components_sum
+                
+                for node in iteration_node_1:
+                    node_elevation_sum_dictionary[node] = elevation_total_sum
+                    node_component_count_dictionary[node] = connected_components_sum
+            elif edge[0] in node_connected_components_dictionary[edge[1]]:
+                for node in iteration_node_0:
+                    node_elevation_sum_dictionary[node] += edge[2]
+                    node_component_count_dictionary[node] += 1
+                continue
+            
+            for node in iteration_node_0:
+                for node1 in iteration_node_1:
+                    node_connected_components_dictionary[node].add(node1)
+            for node in iteration_node_1:
+                for node1 in iteration_node_0:
+                    node_connected_components_dictionary[node].add(node1)
+            
+        previous_edge = edge
+    
+    max_average_elevation = float('-inf')
+    for node in node_elevation_sum_dictionary:
+        max_average_elevation = max(max_average_elevation, node_elevation_sum_dictionary[node] / node_component_count_dictionary[node])
+    
+    return max_average_elevation
+
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -541,9 +631,9 @@ def run_highest_average_elevation_gain_tests():
       ),
       (
           6,
-          [[0, 1, 1], [1, 2, 2],  # Component 1: avg 1.5
-           [3, 4, 3], [4, 0, 5]],  # Component 2: avg 4.0
-          2.750000
+          [[0, 1, 1], [1, 2, 2],  
+           [3, 4, 3], [4, 0, 5]],
+          2.75
       ),
       # Single node component
       (
