@@ -315,6 +315,41 @@ def highest_average_elevation_gain(V, edges):
     
     return max_average_elevation
 
+def first_time_all_connected(V, cables):
+    #Problem 36.9 - First Time All Connected
+    
+    computer_node_components_dictionary = defaultdict(set)
+    
+    for index, cable in enumerate(cables):
+        if cable[0] in computer_node_components_dictionary and cable[1] not in computer_node_components_dictionary:
+            computer_node_components_dictionary[cable[1]] = computer_node_components_dictionary[cable[0]]
+            computer_node_components_dictionary[cable[1]].add(cable[1])
+            for computer_node in computer_node_components_dictionary[cable[0]]:
+                computer_node_components_dictionary[computer_node].add(cable[1])
+        elif cable[0] not in computer_node_components_dictionary and cable[1] in computer_node_components_dictionary:
+            computer_node_components_dictionary[cable[0]] = computer_node_components_dictionary[cable[1]]
+            computer_node_components_dictionary[cable[0]].add(cable[0])
+            for computer_node in computer_node_components_dictionary[cable[1]]:
+                computer_node_components_dictionary[computer_node].add(cable[0])
+        elif cable[0] not in computer_node_components_dictionary and cable[1] not in computer_node_components_dictionary:
+            computer_node_components_dictionary[cable[0]].add(cable[0])
+            computer_node_components_dictionary[cable[0]].add(cable[1])
+            computer_node_components_dictionary[cable[1]].add(cable[0])
+            computer_node_components_dictionary[cable[1]].add(cable[1])
+        else:
+            if cable[0] not in computer_node_components_dictionary[cable[1]]:
+                set1 = computer_node_components_dictionary[cable[0]].copy()
+                set2 = computer_node_components_dictionary[cable[1]].copy()
+                union_set = set1.union(set2)
+                
+                for computer_node in union_set:
+                    computer_node_components_dictionary[computer_node] = union_set.copy()
+                            
+        if len(computer_node_components_dictionary[cable[0]]) == V:
+            return index
+    
+    return -1
+
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -650,6 +685,88 @@ def run_highest_average_elevation_gain_tests():
   
   print("ALL HIGHEST AVERAGE ELEVATION GAIN TESTS PROVIDED HAVE PASSED.")
 
+class UnionFind:
+    #Problem 36.8 - First Time All Connected - Part of the tests from the website
+    
+  def __init__(self):
+    self.parent = {}
+    self.size = {}
+
+  # Assumes x is not already in the UnionFind.
+  def add(self, x):
+    self.parent[x] = x
+    self.size[x] = 1
+
+  # Assumes x is already in the UnionFind.
+  def find(self, x):
+    root = self.parent[x]
+    while self.parent[root] != root:
+      root = self.parent[root]
+    while x != root:
+      self.parent[x], x = root, self.parent[x]
+    return root
+
+  # Assumes x and y are already in the UnionFind.
+  def union(self, x, y):
+    repr_x, repr_y = self.find(x), self.find(y)
+    if repr_x == repr_y:
+      return  # They are already in the same set.
+    if self.size[repr_x] < self.size[repr_y]:
+      self.size[repr_y] += self.size[repr_x]
+      self.parent[repr_x] = repr_y
+    else:
+      self.size[repr_x] += self.size[repr_y]
+      self.parent[repr_y] = repr_x
+
+def first_time_all_connected_union_find(V, cables):
+    #Problem 36.8 - First Time All Connected - Part of the tests from the website.
+    
+  uf = UnionFind()
+  for x in range(V):
+    uf.add(x)
+  groups = V
+  for i in range(len(cables)):
+    x, y = cables[i]
+
+    # If x and y are not in the same group yet, union their groups.
+    if uf.find(x) != uf.find(y):
+      uf.union(x, y)
+      groups -= 1
+      if groups == 1:
+        return i
+  return -1
+
+def run_first_time_all_connected_tests():
+  tests = [
+      # Case from picture - becomes connected after cables[2].
+      (4, [(0, 2), (1, 3), (0, 1), (1, 2)], 2),
+      # Edge case - never gets fully connected
+      (3, [(0, 1)], -1),
+      # Edge case - gets connected with final cable
+      (3, [(0, 1), (1, 2)], 1),
+      # Larger test case
+      (5, [(0, 1), (2, 3), (1, 2), (3, 4), (0, 4)], 3),
+      # Edge case - redundant cables don't affect result
+      (4, [(0, 1), (1, 2), (2, 0), (2, 3), (3, 0)], 3),
+      # No edges added.
+      (4, [], -1),
+      # One edge added.
+      (4, [(0, 1)], -1),
+  ]
+  
+  for V, cables, want in tests:
+    got = first_time_all_connected(V, cables)
+    assert (
+        got == want
+    ), f"first_time_all_connected({V}, {cables}): got: {got}, want {want}\n"
+    got = first_time_all_connected_union_find(V, cables)
+    assert (
+        got == want
+    ), f"first_time_all_connected_union_find({V}, {cables}): got: {got}, want {want}\n"
+    
+  print("ALL FIRST TIME ALL CONNECTED TESTS PROVIDED HAVE PASSED.")
+
+
 #ALL TESTS TESTING
 
 def Run_All_Graphs_Tests():
@@ -660,6 +777,7 @@ def Run_All_Graphs_Tests():
     run_reachability_queries_tests()
     run_strongly_connected_graph_tests()
     run_highest_average_elevation_gain_tests()
+    run_first_time_all_connected_tests()
     
     print()
     print("------------------------------------------")
@@ -667,4 +785,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Graphs_Tests()
+    run_first_time_all_connected_tests()
