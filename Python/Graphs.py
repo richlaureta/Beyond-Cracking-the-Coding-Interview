@@ -650,7 +650,7 @@ def run_highest_average_elevation_gain_tests():
   
   print("ALL HIGHEST AVERAGE ELEVATION GAIN TESTS PROVIDED HAVE PASSED.")
 
-#ALL TESTS
+#ALL TESTS TESTING
 
 def Run_All_Graphs_Tests():
     run_validate_tests()
@@ -667,4 +667,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_highest_average_elevation_gain_tests()
+    Run_All_Graphs_Tests()
