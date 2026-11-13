@@ -737,6 +737,8 @@ def first_time_all_connected_union_find(V, cables):
   return -1
 
 def run_first_time_all_connected_tests():
+    #Problem 36.8 - First Time All Connected - Part of the tests from the website.
+    
   tests = [
       # Case from picture - becomes connected after cables[2].
       (4, [(0, 2), (1, 3), (0, 1), (1, 2)], 2),
@@ -767,7 +769,7 @@ def run_first_time_all_connected_tests():
   print("ALL FIRST TIME ALL CONNECTED TESTS PROVIDED HAVE PASSED.")
 
 
-#ALL TESTS TESTING
+#ALL TESTS
 
 def Run_All_Graphs_Tests():
     run_validate_tests()
@@ -785,4 +787,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_first_time_all_connected_tests()
+    Run_All_Graphs_Tests()
