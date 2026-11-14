@@ -5292,52 +5292,99 @@ int main(int argc, const char *argv[]) {
 //    
 //    cout << "ALL HILLIEST CONNECTED COMPONENT TESTS PROVIDED HAVE PASSED." << endl;
     
-    //Problem 37.8 - Highest Average Elevation Gain
+    //Problem 36.8 - Highest Average Elevation Gain
     
-    std::vector<std::tuple<int, const std::vector<std::vector<int>>, double>> tests = {
-        // Example from the book
-        {
-            4,                                             // V
-            {{0, 1, 3}, {1, 2, 2}, {2, 3, 1}, {3, 0, 2}},  // edges
-            2                                              // want
-        },
-        // Single edge
-        {2, {{0, 1, 5}}, 5},
-        // No edges
-        {3, {}, 0},
-        // Multiple components
-        {6,
-         {{0, 1, 1},
-          {1, 2, 2},  // Component 1: avg 1.5
-          {3, 4, 3},
-          {4, 5, 5}},  // Component 2: avg 4.0
-         4},
-        // Single node component
-        {3,
-         {{0, 1, 2}},  // Node 2 is isolated
-         2}};
+//    std::vector<std::tuple<int, const std::vector<std::vector<int>>, double>> tests = {
+//        // Example from the book
+//        {
+//            4,                                             // V
+//            {{0, 1, 3}, {1, 2, 2}, {2, 3, 1}, {3, 0, 2}},  // edges
+//            2                                              // want
+//        },
+//        // Single edge
+//        {2, {{0, 1, 5}}, 5},
+//        // No edges
+//        {3, {}, 0},
+//        // Multiple components
+//        {6,
+//         {{0, 1, 1},
+//          {1, 2, 2},  // Component 1: avg 1.5
+//          {3, 4, 3},
+//          {4, 5, 5}},  // Component 2: avg 4.0
+//         4},
+//        // Single node component
+//        {3,
+//         {{0, 1, 2}},  // Node 2 is isolated
+//         2}};
+//
+//    for (const auto& [V, edges, want] : tests) {
+//      double got = highestAverageElevationGain(V, edges);
+//
+//      std::string edges_str = "[";
+//      for (size_t i = 0; i < edges.size(); i++) {
+//        if (i > 0) edges_str += ", ";
+//        edges_str += "[" + std::to_string(edges[i][0]) + ", " +
+//                     std::to_string(edges[i][1]) + ", " +
+//                     std::to_string(edges[i][2]) + "]";
+//      }
+//      edges_str += "]";
+//
+//      if (std::abs(got - want) >= 1e-6) {
+//        throw std::runtime_error("\nhighestAverageElevationGain(" +
+//                                 std::to_string(V) + ", " + edges_str +
+//                                 "): got: " + std::to_string(got) +
+//                                 ", want: " + std::to_string(want) + "\n");
+//      }
+//    }
+//    
+//    cout << "ALL HIGHEST AVERAGE ELEVATION GAIN TESTS PROVIDED HAVE PASSED." << endl;
+    
+    //Problem 36.9 - First Time All Connected
+    
+    std::vector<std::pair<std::pair<int, std::vector<std::pair<int, int>>>, int>>
+        tests = {// Case from picture - becomes connected after cables[2]
+                 {{4, {{0, 2}, {1, 3}, {0, 1}, {1, 2}}}, 2},
+                 // Edge case - never gets fully connected
+                 {{3, {{0, 1}}}, -1},
+                 // Edge case - gets connected with final cable
+                 {{3, {{0, 1}, {1, 2}}}, 1},
+                 // Larger test case
+                 {{5, {{0, 1}, {2, 3}, {1, 2}, {3, 4}, {0, 4}}}, 3},
+                 // Edge case - redundant cables don't affect result
+                 {{4, {{0, 1}, {1, 2}, {2, 0}, {2, 3}, {3, 0}}}, 3},
+                 // No edges added
+                 {{4, {}}, -1},
+                 // One edge added
+                 {{4, {{0, 1}}}, -1}};
 
-    for (const auto& [V, edges, want] : tests) {
-      double got = highestAverageElevationGain(V, edges);
+    for (const auto& [input, want] : tests) {
+      const auto& [V, cables] = input;
+        int got1 = firstTimeAllConnected(V, cables);
+//      int got2 = firstTimeAllConnectedUnionFind(V, cables);
 
-      std::string edges_str = "[";
-      for (size_t i = 0; i < edges.size(); i++) {
-        if (i > 0) edges_str += ", ";
-        edges_str += "[" + std::to_string(edges[i][0]) + ", " +
-                     std::to_string(edges[i][1]) + ", " +
-                     std::to_string(edges[i][2]) + "]";
+      std::string cables_str = "[";
+      for (size_t i = 0; i < cables.size(); i++) {
+        if (i > 0) cables_str += ", ";
+        cables_str += "(" + std::to_string(cables[i].first) + ", " +
+                      std::to_string(cables[i].second) + ")";
       }
-      edges_str += "]";
+      cables_str += "]";
 
-      if (std::abs(got - want) >= 1e-6) {
-        throw std::runtime_error("\nhighestAverageElevationGain(" +
-                                 std::to_string(V) + ", " + edges_str +
-                                 "): got: " + std::to_string(got) +
+      if (got1 != want) {
+        throw std::runtime_error("\nfirst_time_all_connected(" +
+                                 std::to_string(V) + ", " + cables_str +
+                                 "): got: " + std::to_string(got1) +
                                  ", want: " + std::to_string(want) + "\n");
       }
+//      if (got2 != want) {
+//        throw std::runtime_error("\nfirst_time_all_connected_union_find(" +
+//                                 std::to_string(V) + ", " + cables_str +
+//                                 "): got: " + std::to_string(got2) +
+//                                 ", want: " + std::to_string(want) + "\n");
+//      }
     }
     
-    cout << "ALL HIGHEST AVERAGE ELEVATION GAIN TESTS PROVIDED HAVE PASSED." << endl;
+    cout << "ALL FIRST TIME ALL CONNECTED TESTS PROVIDED HAVE PASSED." << endl;
     
     cout << "RUN SUCCESSFUL." << endl;
     

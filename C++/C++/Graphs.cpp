@@ -340,3 +340,50 @@ double highestAverageElevationGain(int V, const vector<vector<int>> edges)
     
     return highestAverageElevation;
 }
+
+int firstTimeAllConnected(int V, const vector<pair<int, int>>& cables)
+{
+    //Problem 36.9 - First Time All Connected
+    
+    unordered_map<int, unordered_set<int>> computerNodeComponentsMap;
+    
+    for(int index = 0; index < cables.size(); index++)
+    {
+        if((computerNodeComponentsMap.contains(cables[index].first)) and (computerNodeComponentsMap.contains(cables[index].second) == false))
+        {
+            computerNodeComponentsMap[cables[index].second] = computerNodeComponentsMap[cables[index].first];
+            computerNodeComponentsMap[cables[index].second].insert(cables[index].second);
+            
+            for(int computerNode : computerNodeComponentsMap[cables[index].first]) computerNodeComponentsMap[computerNode].insert(cables[index].second);
+        }
+        else if((computerNodeComponentsMap.contains(cables[index].first) == false) and computerNodeComponentsMap.contains(cables[index].second))
+        {
+            computerNodeComponentsMap[cables[index].first] = computerNodeComponentsMap[cables[index].second];
+            computerNodeComponentsMap[cables[index].first].insert(cables[index].first);
+            for(int computerNode : computerNodeComponentsMap[cables[index].second]) computerNodeComponentsMap[computerNode].insert(cables[index].first);
+        }
+        else if((computerNodeComponentsMap.contains(cables[index].first) == false) and (computerNodeComponentsMap.contains(cables[index].second) == false))
+        {
+            computerNodeComponentsMap[cables[index].first].insert(cables[index].first);
+            computerNodeComponentsMap[cables[index].first].insert(cables[index].second);
+            computerNodeComponentsMap[cables[index].second].insert(cables[index].first);
+            computerNodeComponentsMap[cables[index].second].insert(cables[index].second);
+        }
+        else
+        {
+            if(computerNodeComponentsMap[cables[index].second].contains(cables[index].first) == false)
+            {
+                unordered_set<int> set1 = computerNodeComponentsMap[cables[index].first];
+                unordered_set<int> set2 = computerNodeComponentsMap[cables[index].second];
+                set1.insert(set2.begin(), set2.end());
+                
+                for(const auto& computerNode : set1) computerNodeComponentsMap[computerNode] = set1;
+            }
+                
+        }
+        
+        if (computerNodeComponentsMap[cables[index].first].size() == V) return index;
+    }
+    
+    return -1;
+}
