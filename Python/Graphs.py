@@ -350,7 +350,7 @@ def first_time_all_connected(V, cables):
     
     return -1
 
-#TESTS TESTING
+#TESTS
 
 def path_bfs(graph, node1, node2):
     #Problem 36.2 - Graph Path - Part of Tests
