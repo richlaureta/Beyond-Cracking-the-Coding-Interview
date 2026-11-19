@@ -350,6 +350,45 @@ def first_time_all_connected(V, cables):
     
     return -1
 
+def shortest_path_queries(graph, start, queries):
+    #Problem 36.10 - Shortest-Path Queries
+    
+    start_end_tuple_index_size_dictionary = defaultdict(tuple)
+    path_list = []
+    temporary_path_list = []
+    temporary_node_set = set()
+    
+    
+    def dfs_shortest_path(index_node):
+        temporary_path_list.append(index_node)
+        path_list.append(temporary_path_list.copy())
+        temporary_node_set.add(index_node)
+        
+        if (start, index_node) not in start_end_tuple_index_size_dictionary:
+            start_end_tuple_index_size_dictionary[(start, index_node)] = (len(path_list) - 1, len(temporary_path_list))
+        elif len(temporary_path_list) < start_end_tuple_index_size_dictionary[(start, index_node)][1]:
+            start_end_tuple_index_size_dictionary[(start, index_node)] = (len(path_list) - 1, len(temporary_path_list))
+            
+        for node_index in graph[index_node]:
+            if node_index in temporary_node_set:
+                continue
+            dfs_shortest_path(node_index)
+        
+        temporary_path_list.pop()
+        temporary_node_set.remove(index_node)
+    
+    dfs_shortest_path(start)
+
+    shortest_path_list = []
+    for end_node in queries:
+        if (start, end_node) not in start_end_tuple_index_size_dictionary:
+            shortest_path_list.append([])
+            continue
+        
+        shortest_path_list.append(path_list[start_end_tuple_index_size_dictionary[(start, end_node)][0]])
+    
+    return shortest_path_list
+    
 #TESTS
 
 def path_bfs(graph, node1, node2):
@@ -768,7 +807,35 @@ def run_first_time_all_connected_tests():
     
   print("ALL FIRST TIME ALL CONNECTED TESTS PROVIDED HAVE PASSED.")
 
-
+def run_shortest_path_queries_tests():
+  tests = [
+      # Example
+      [[[1], [0, 2, 5, 4], [1, 4, 5], [], [5, 2, 1], [1, 2, 4]], 0, [1, 0, 3, 4],
+       [[0, 1], [0], [], [0, 1, 4]]],
+      # Simple line graph
+      [[[1], [0, 2], [1]], 0, [1, 2],
+          [[0, 1], [0, 1, 2]]],
+      # Disconnected components
+      [[[1], [0], [3], [2]], 0, [1, 2, 3],
+          [[0, 1], [], []]],
+      # Complete graph
+      [[[1, 2], [0, 2], [0, 1]], 0, [1, 2],
+          [[0, 1], [0, 2]]],
+      # Single node
+      [[[]], 0, [0],
+          [[0]]],
+      # Empty queries
+      [[[1], [0]], 0, [],
+          []]
+  ]
+  
+  for graph, start, queries, want in tests:
+    got = shortest_path_queries(graph, start, queries)
+    assert got == want, f"\nshortest_path_queries({graph}, {start}, {queries}): got: {
+        got}, want: {want}\n"
+  
+  print("ALL SHORTEST-PATH QUERIES TESTS PROVIDED HAVE PASSED.")
+  
 #ALL TESTS
 
 def Run_All_Graphs_Tests():
@@ -780,6 +847,7 @@ def Run_All_Graphs_Tests():
     run_strongly_connected_graph_tests()
     run_highest_average_elevation_gain_tests()
     run_first_time_all_connected_tests()
+    run_shortest_path_queries_tests()
     
     print()
     print("------------------------------------------")
@@ -787,4 +855,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    Run_All_Graphs_Tests()
+    run_shortest_path_queries_tests()
