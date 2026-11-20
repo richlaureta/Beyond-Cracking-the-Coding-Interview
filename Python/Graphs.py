@@ -358,7 +358,6 @@ def shortest_path_queries(graph, start, queries):
     temporary_path_list = []
     temporary_node_set = set()
     
-    
     def dfs_shortest_path(index_node):
         temporary_path_list.append(index_node)
         path_list.append(temporary_path_list.copy())
@@ -389,7 +388,7 @@ def shortest_path_queries(graph, start, queries):
     
     return shortest_path_list
     
-#TESTS
+#TESTS TESTING
 
 def path_bfs(graph, node1, node2):
     #Problem 36.2 - Graph Path - Part of Tests
@@ -855,4 +854,4 @@ def Run_All_Graphs_Tests():
     print("------------------------------------------")
 
 if __name__ == "__main__":
-    run_shortest_path_queries_tests()
+    Run_All_Graphs_Tests()
