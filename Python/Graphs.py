@@ -388,7 +388,7 @@ def shortest_path_queries(graph, start, queries):
     
     return shortest_path_list
     
-#TESTS TESTING
+#TESTS
 
 def path_bfs(graph, node1, node2):
     #Problem 36.2 - Graph Path - Part of Tests
